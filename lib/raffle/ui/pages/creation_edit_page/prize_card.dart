@@ -56,7 +56,7 @@ class PrizeCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: RaffleColorConstants.textDark,
                 ),
               ),
@@ -69,7 +69,7 @@ class PrizeCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.white,
                 ),
               ),
@@ -184,7 +184,7 @@ class PrizeCard extends StatelessWidget {
                                     "Tirer",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                 ],
@@ -205,7 +205,7 @@ class PrizeCard extends StatelessWidget {
                                   "Tiré",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               ],
@@ -219,7 +219,7 @@ class PrizeCard extends StatelessWidget {
                               "En Attente",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),

@@ -88,7 +88,7 @@ class CancelButton extends ConsumerWidget {
                     'Annuler (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
                     style: TextStyle(
                       color: MyPaymentColors.onGradient,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 20,
                     ),
                   ),

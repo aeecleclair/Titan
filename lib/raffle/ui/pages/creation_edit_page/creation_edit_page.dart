@@ -88,7 +88,7 @@ class CreationPage extends HookConsumerWidget {
                   RaffleTextConstants.editRaffle,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: Color.fromARGB(255, 149, 149, 149),
                   ),
                 ),
@@ -239,7 +239,7 @@ class CreationPage extends HookConsumerWidget {
                 RaffleTextConstants.editRaffle,
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: RaffleColorConstants.textDark,
                 ),
               ),

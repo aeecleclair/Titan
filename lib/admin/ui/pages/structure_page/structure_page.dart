@@ -49,7 +49,7 @@ class StructurePage extends HookConsumerWidget {
                   AdminTextConstants.structures,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -70,10 +70,7 @@ class StructurePage extends HookConsumerWidget {
                             bankAccountHolder.id == ""
                                 ? AdminTextConstants.noBankAccountHolder
                                 : "${AdminTextConstants.currentBankAccountHolder}: ${bankAccountHolder.name}",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyle(fontSize: 16, fontWeight: .bold),
                           ),
                           const SizedBox(height: 10),
                           GestureDetector(

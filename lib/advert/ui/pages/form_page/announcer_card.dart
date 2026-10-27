@@ -14,10 +14,7 @@ class AnnouncerCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [
-          Text(
-            e.name,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
+          Text(e.name, style: const TextStyle(fontSize: 18, fontWeight: .w500)),
           HeroIcon(
             icon,
             size: 25,

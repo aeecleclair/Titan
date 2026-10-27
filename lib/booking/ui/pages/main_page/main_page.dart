@@ -104,7 +104,7 @@ class BookingMainPage extends HookConsumerWidget {
                       BookingTextConstants.myBookings,
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Theme.of(context).colorScheme.secondaryFixed,
                       ),
                     ),

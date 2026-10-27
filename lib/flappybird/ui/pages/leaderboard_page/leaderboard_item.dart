@@ -16,7 +16,7 @@ class LeaderBoardItem extends ConsumerWidget {
     final style = GoogleFonts.silkscreen(
       textStyle: TextStyle(
         fontSize: 20,
-        fontWeight: FontWeight.w700,
+        fontWeight: .w700,
         color: score.position == 1
             ? Colors.yellow.shade700
             : score.position == 2

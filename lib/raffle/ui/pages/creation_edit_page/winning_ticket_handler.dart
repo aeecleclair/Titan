@@ -19,7 +19,7 @@ class WinningTicketHandler extends HookConsumerWidget {
             "Tickets gagnants",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),

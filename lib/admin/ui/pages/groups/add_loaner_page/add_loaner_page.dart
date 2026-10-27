@@ -86,7 +86,7 @@ class AddLoanerPage extends HookConsumerWidget {
                                                 e.name,
                                                 style: const TextStyle(
                                                   fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: .w500,
                                                 ),
                                               ),
                                               HeroIcon(

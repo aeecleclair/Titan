@@ -34,7 +34,7 @@ class PlantDetailPage extends HookConsumerWidget {
         children: [
           Text(
             SeedLibraryTextConstants.plantDetail,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: .bold, fontSize: 20),
           ),
           AsyncChild(
             value: plant,
@@ -54,10 +54,7 @@ class PlantDetailPage extends HookConsumerWidget {
                   children: [
                     Text(
                       '${SeedLibraryTextConstants.reference} ${plantComplete.plantReference}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                      style: TextStyle(fontWeight: .bold, fontSize: 20),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -181,7 +178,7 @@ class PlantDetailPage extends HookConsumerWidget {
                         SeedLibraryTextConstants.borrowPlant,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),

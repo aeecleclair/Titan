@@ -47,7 +47,7 @@ class InformationPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),
@@ -56,7 +56,7 @@ class InformationPage extends HookConsumerWidget {
                   SeedLibraryTextConstants.information,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     foreground: Paint()
                       ..shader =
                           const RadialGradient(
@@ -75,7 +75,7 @@ class InformationPage extends HookConsumerWidget {
                   info.description,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: SeedLibraryColorConstants.textDark,
                   ),
                 ),
@@ -83,7 +83,7 @@ class InformationPage extends HookConsumerWidget {
                   SeedLibraryTextConstants.contact,
                   style: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: SeedLibraryColorConstants.textDark,
                   ),
                 ),
@@ -91,7 +91,7 @@ class InformationPage extends HookConsumerWidget {
                   info.contact,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: SeedLibraryColorConstants.textDark,
                   ),
                 ),

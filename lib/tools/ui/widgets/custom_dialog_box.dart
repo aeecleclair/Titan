@@ -76,7 +76,7 @@ class CustomDialogBox extends StatelessWidget {
                         title,
                         style: const TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                         ),
                       ),
                       const SizedBox(height: 12.0),
@@ -116,7 +116,7 @@ class CustomDialogBox extends StatelessWidget {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onSecondary,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               ),
@@ -153,7 +153,7 @@ class CustomDialogBox extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 yesText ?? "Confirmer",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: .bold),
                               ),
                             ),
                           ),

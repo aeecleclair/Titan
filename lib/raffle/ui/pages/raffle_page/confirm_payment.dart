@@ -166,7 +166,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 40,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ],
@@ -178,7 +178,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 38,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -191,7 +191,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 50,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ),

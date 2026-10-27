@@ -59,7 +59,7 @@ class FundPage extends ConsumerWidget {
               style: TextStyle(
                 color: MyPaymentColors.onGradient,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 5),
@@ -81,7 +81,7 @@ class FundPage extends ConsumerWidget {
                                 ? MyPaymentColors.onGradient
                                 : MyPaymentColors.errorText,
                             fontSize: 50,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       );
@@ -94,7 +94,7 @@ class FundPage extends ConsumerWidget {
                               ? MyPaymentColors.onGradient
                               : MyPaymentColors.errorText,
                           fontSize: 50,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                   ],

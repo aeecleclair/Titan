@@ -38,20 +38,14 @@ class LeftPanel extends HookConsumerWidget {
                       const SizedBox(width: 20),
                       const Text(
                         'MyECL',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                       const SizedBox(width: 15),
                       const Text("-", style: TextStyle(fontSize: 25)),
                       const SizedBox(width: 15),
                       const Text(
                         "L'application de l'associatif centralien",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                       ),
                     ],
                   ),
@@ -130,7 +124,7 @@ class LeftPanel extends HookConsumerWidget {
                       LoginTextConstants.signIn,
                       style: TextStyle(
                         fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),

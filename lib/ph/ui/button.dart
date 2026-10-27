@@ -39,7 +39,7 @@ class MyButton extends StatelessWidget {
         child: AutoSizeText(
           text,
           style: TextStyle(
-            fontWeight: FontWeight.w700,
+            fontWeight: .w700,
             color: enabled
                 ? Theme.of(context).colorScheme.onPrimaryContainer
                 : Theme.of(context).colorScheme.onSurface,

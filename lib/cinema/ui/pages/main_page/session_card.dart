@@ -146,7 +146,7 @@ class SessionCard extends HookConsumerWidget {
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
                                         fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                     ),
                                     const SizedBox(height: 10),
@@ -238,10 +238,7 @@ class SessionCard extends HookConsumerWidget {
                   Text(
                     session.name,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   const SizedBox(height: 10),
                   Row(

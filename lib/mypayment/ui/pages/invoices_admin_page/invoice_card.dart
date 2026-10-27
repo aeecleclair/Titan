@@ -169,10 +169,7 @@ class InvoiceCard extends HookConsumerWidget {
                   children: [
                     Text(
                       invoice.reference,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: .w600),
                     ),
                     const SizedBox(height: 5),
                     Text(
@@ -192,10 +189,7 @@ class InvoiceCard extends HookConsumerWidget {
                         children: [
                           Text(
                             '${(invoice.total / 100).toStringAsFixed(2)} €',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: TextStyle(fontSize: 16, fontWeight: .w500),
                           ),
                           AutoSizeText(
                             "Du ${processDate(invoice.startDate)} au ${processDate(invoice.endDate)}",
@@ -212,7 +206,7 @@ class InvoiceCard extends HookConsumerWidget {
                           : "En attente",
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: .w500,
                         // It's ok to leave these hard-coded: not used anywhere else, only seen by one user (the bank account holder)
                         color: invoice.received
                             ? Colors.green

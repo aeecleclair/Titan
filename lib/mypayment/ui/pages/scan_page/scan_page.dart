@@ -186,7 +186,7 @@ class ScanPage extends HookConsumerWidget {
                                             Text(
                                               '${formatter.format(barcode.tot / 100)} ʍ',
                                               style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight: .bold,
                                                 fontSize: 25,
                                                 color: Theme.of(
                                                   context,
@@ -265,7 +265,7 @@ class ScanPage extends HookConsumerWidget {
                                           'Scanner un code',
                                           style: TextStyle(
                                             fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: .bold,
                                             color: Theme.of(
                                               context,
                                             ).colorScheme.onSecondary,
@@ -306,7 +306,7 @@ class ScanPage extends HookConsumerWidget {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onPrimary,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -402,7 +402,7 @@ class ScanPage extends HookConsumerWidget {
                                           color: Theme.of(
                                             context,
                                           ).colorScheme.onPrimary,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                           fontSize: 20,
                                         ),
                                       ),

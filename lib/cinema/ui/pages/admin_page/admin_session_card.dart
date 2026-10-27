@@ -81,10 +81,7 @@ class AdminSessionCard extends HookConsumerWidget {
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 15, fontWeight: .bold),
                     ),
                     const Spacer(),
                     Row(

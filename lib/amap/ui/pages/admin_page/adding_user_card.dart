@@ -44,7 +44,7 @@ class AddingUserCard extends HookConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: AMAPColors(isDarkTheme).textOnSecondary,
                   ),
                 ),
@@ -57,7 +57,7 @@ class AddingUserCard extends HookConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),

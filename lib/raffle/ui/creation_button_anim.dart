@@ -31,7 +31,7 @@ class CustomButton extends HookConsumerWidget {
             text,
             style: const TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.white,
             ),
           ),

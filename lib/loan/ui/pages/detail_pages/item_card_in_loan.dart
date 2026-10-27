@@ -26,7 +26,7 @@ class ItemCardInLoan extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
@@ -35,7 +35,7 @@ class ItemCardInLoan extends StatelessWidget {
             '${itemQty.quantity} ${itemQty.quantity <= 1 ? LoanTextConstants.borrowed : LoanTextConstants.borrowedMultiple}',
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),

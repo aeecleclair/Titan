@@ -75,7 +75,7 @@ class ListBooking extends HookConsumerWidget {
                       "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),

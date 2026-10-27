@@ -106,7 +106,7 @@ class UserCashUi extends HookConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: Colors.white,
                               ),
                             ),
@@ -119,7 +119,7 @@ class UserCashUi extends HookConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: RaffleColorConstants.textDark,
                               ),
                             ),
@@ -134,7 +134,7 @@ class UserCashUi extends HookConsumerWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -203,7 +203,7 @@ class UserCashUi extends HookConsumerWidget {
                                       suffixStyle: TextStyle(
                                         color: RaffleColorConstants.textDark,
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                       contentPadding: EdgeInsets.all(0),
                                       focusedBorder: UnderlineInputBorder(

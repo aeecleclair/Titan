@@ -30,7 +30,7 @@ class SectionChip extends StatelessWidget {
               label,
               style: TextStyle(
                 color: selected ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: 18.0,
               ),
             ),

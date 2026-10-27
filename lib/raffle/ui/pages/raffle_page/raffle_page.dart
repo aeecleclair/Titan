@@ -55,10 +55,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                 ).createShader(bounds),
                 child: Text(
                   raffle.name,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 30, fontWeight: .bold),
                 ),
               ),
             ),
@@ -70,7 +67,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                   "${RaffleTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
                   style: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.gradient2,
                   ),
                 ),
@@ -124,7 +121,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                               style: TextStyle(
                                 fontSize: 25,
                                 color: RaffleColorConstants.gradient2,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -173,7 +170,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                       style: TextStyle(
                         fontSize: 25,
                         color: RaffleColorConstants.gradient2,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -194,7 +191,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                   RaffleTextConstants.description,
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.gradient2,
                   ),
                 ),

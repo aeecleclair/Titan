@@ -126,7 +126,7 @@ class AddEditEventPage extends HookConsumerWidget {
                       calendarEventTypeToString(value),
                       style: TextStyle(
                         color: selected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   );
@@ -311,7 +311,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           EventTextConstants.room,
                           style: TextStyle(
                             color: isRoom.value ? Colors.white : Colors.black,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -324,7 +324,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           EventTextConstants.other,
                           style: TextStyle(
                             color: isRoom.value ? Colors.black : Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -356,7 +356,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                           color: selected
                                               ? Colors.white
                                               : Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                         ),
                                       ),
                                     );
@@ -522,7 +522,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),

@@ -50,17 +50,11 @@ class DetailDeliveryPage extends HookConsumerWidget {
                 children: [
                   Text(
                     delivery.name,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 30, fontWeight: .bold),
                   ),
                   Text(
                     "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   const SizedBox(height: 20),
                   AlignLeftText(
@@ -95,10 +89,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                   children: [
                     Text(
                       key,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 20, fontWeight: .bold),
                     ),
                     const SizedBox(height: 5),
                     Wrap(

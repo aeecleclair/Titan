@@ -51,7 +51,7 @@ class StoreSellerCard extends ConsumerWidget {
                 style: TextStyle(
                   color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: isSelected ? .bold : .normal,
                 ),
               ),
             ),

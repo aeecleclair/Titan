@@ -58,7 +58,7 @@ class ReFundPage extends ConsumerWidget {
               style: const TextStyle(
                 color: MyPaymentColors.onGradient,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 5),
@@ -83,7 +83,7 @@ class ReFundPage extends ConsumerWidget {
                                 ? MyPaymentColors.onGradient
                                 : MyPaymentColors.errorText,
                             fontSize: 50,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       );
@@ -96,7 +96,7 @@ class ReFundPage extends ConsumerWidget {
                               ? MyPaymentColors.onGradient
                               : MyPaymentColors.errorText,
                           fontSize: 50,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                   ],
@@ -180,7 +180,7 @@ class ReFundPage extends ConsumerWidget {
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),

@@ -40,7 +40,7 @@ class AddingUserCard extends HookConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.gradient2,
                   ),
                 ),
@@ -53,7 +53,7 @@ class AddingUserCard extends HookConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.textDark,
                   ),
                 ),

@@ -36,7 +36,7 @@ class MemberCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.black,
             ),
           ),
@@ -49,7 +49,7 @@ class MemberCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.grey.shade400,
             ),
           ),
@@ -62,7 +62,7 @@ class MemberCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.black,
             ),
           ),

@@ -41,7 +41,7 @@ class ItemBar extends HookConsumerWidget {
               child: Center(
                 child: Text(
                   LoanTextConstants.noItems,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 18, fontWeight: .w500),
                 ),
               ),
             );
@@ -56,10 +56,7 @@ class ItemBar extends HookConsumerWidget {
                   child: Center(
                     child: Text(
                       LoanTextConstants.noItems,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: .w500),
                     ),
                   ),
                 );
@@ -135,7 +132,7 @@ class ItemBar extends HookConsumerWidget {
                                 currentValue.toString(),
                                 style: TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                   color: currentValue == 0
                                       ? Theme.of(context).colorScheme.tertiary
                                       : Theme.of(context).colorScheme.onPrimary,

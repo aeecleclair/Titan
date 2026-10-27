@@ -73,7 +73,7 @@ class Button extends StatelessWidget {
                       ).colorScheme.secondaryContainer,
                     },
               fontSize: fontSize ?? 18,
-              fontWeight: FontWeight.w900,
+              fontWeight: .w900,
             ),
           ),
         ),

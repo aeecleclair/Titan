@@ -78,10 +78,7 @@ class TopBar extends HookConsumerWidget {
                   maxLines: 1,
                   style:
                       textStyle ??
-                      const TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      const TextStyle(fontSize: 30, fontWeight: .w700),
                 ),
               ),
             ),

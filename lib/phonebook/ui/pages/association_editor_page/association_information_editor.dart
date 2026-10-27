@@ -80,7 +80,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           PhonebookTextConstants.namePure,
                                       labelStyle: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                       suffixIcon: Container(
                                         padding: const EdgeInsets.all(10),
@@ -128,7 +128,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           PhonebookTextConstants.description,
                                       labelStyle: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                       suffixIcon: Container(
                                         padding: const EdgeInsets.all(10),
@@ -197,7 +197,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               PhonebookTextConstants.edit,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: .w600,
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onPrimaryContainer,
@@ -221,7 +221,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                           PhonebookTextConstants.deactivatedAssociationWarning,
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(context).colorScheme.error,
                           ),
                         ),
@@ -230,10 +230,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
                         association.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontSize: 18, fontWeight: .bold),
                       ),
                     ),
                     Container(
@@ -243,7 +240,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                           association.description,
                           style: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -295,7 +292,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           group.name,
                                           style: const TextStyle(
                                             fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: .bold,
                                           ),
                                         ),
                                       ),
@@ -365,7 +362,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     PhonebookTextConstants.updateGroups,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: .w600,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),

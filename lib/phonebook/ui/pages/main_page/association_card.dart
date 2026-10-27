@@ -30,10 +30,7 @@ class AssociationCard extends HookConsumerWidget {
               Expanded(
                 child: Text(
                   association.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 16, fontWeight: .bold),
                 ),
               ),
               Text(groupement.name),

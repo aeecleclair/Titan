@@ -108,7 +108,7 @@ class WebMemberCard extends HookConsumerWidget {
                                 SelectableText(
                                   member.member.nickname!,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -116,7 +116,7 @@ class WebMemberCard extends HookConsumerWidget {
                                 SelectableText(
                                   "(${member.member.name} ${member.member.firstname})",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     fontSize: 20,
                                     color: Theme.of(
                                       context,
@@ -129,7 +129,7 @@ class WebMemberCard extends HookConsumerWidget {
                             SelectableText(
                               "${member.member.name} ${member.member.firstname}",
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontSize: 20,
                               ),
                             ),
@@ -171,7 +171,7 @@ class WebMemberCard extends HookConsumerWidget {
                               ? PhonebookTextConstants.noMemberRole
                               : assoMembership.apparentName,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 20,
                           ),
                         ),
@@ -194,7 +194,7 @@ class WebMemberCard extends HookConsumerWidget {
                             SelectableText(
                               member.member.nickname!,
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontSize: 20,
                               ),
                             ),
@@ -202,7 +202,7 @@ class WebMemberCard extends HookConsumerWidget {
                             SelectableText(
                               "(${member.member.name} ${member.member.firstname})",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontSize: 20,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),
@@ -213,7 +213,7 @@ class WebMemberCard extends HookConsumerWidget {
                         SelectableText(
                           "${member.member.name} ${member.member.firstname}",
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 20,
                           ),
                         ),
@@ -268,10 +268,7 @@ class WebMemberCard extends HookConsumerWidget {
                         assoMembership == null
                             ? PhonebookTextConstants.noMemberRole
                             : assoMembership.apparentName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                        style: const TextStyle(fontWeight: .bold, fontSize: 20),
                       ),
                     ],
                   ),

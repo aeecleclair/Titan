@@ -101,7 +101,7 @@ class ConfirmButton extends ConsumerWidget {
                         'Fermer',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 20,
                         ),
                       ),

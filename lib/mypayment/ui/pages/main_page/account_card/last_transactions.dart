@@ -31,7 +31,7 @@ class LastTransactions extends ConsumerWidget {
                 style: TextStyle(
                   color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
             ),

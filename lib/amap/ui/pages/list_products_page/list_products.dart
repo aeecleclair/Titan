@@ -51,10 +51,7 @@ class ListProducts extends HookConsumerWidget {
                     const Center(
                       child: Text(
                         AMAPTextConstants.noProduct,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                       ),
                     ),
                   ]

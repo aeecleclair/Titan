@@ -29,7 +29,7 @@ class StructureAdminPage extends ConsumerWidget {
               "Gestion des associations ${structure.name}",
               color: Theme.of(context).colorScheme.tertiary,
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               padding: EdgeInsets.only(left: 30),
             ),
             const SizedBox(height: 10),

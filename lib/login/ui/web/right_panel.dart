@@ -91,7 +91,7 @@ class RightPanel extends HookConsumerWidget {
                           screenShot.title,
                           style: TextStyle(
                             fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(
                               context,
                             ).colorScheme.onPrimaryContainer,
@@ -102,7 +102,7 @@ class RightPanel extends HookConsumerWidget {
                           " - ",
                           style: TextStyle(
                             fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(
                               context,
                             ).colorScheme.onPrimaryContainer,
@@ -114,7 +114,7 @@ class RightPanel extends HookConsumerWidget {
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(
                               context,
                             ).colorScheme.onPrimaryContainer,
@@ -235,7 +235,7 @@ class RightPanel extends HookConsumerWidget {
               const SizedBox(height: 30),
               const Text(
                 "Développé par ECLAIR",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: .bold),
               ),
               const SizedBox(height: 50),
             ],

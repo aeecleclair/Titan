@@ -59,7 +59,7 @@ class TOSDialogBox extends ConsumerWidget {
                   title,
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: .w800,
                     color: titleColor,
                   ),
                 ),
@@ -88,7 +88,7 @@ class TOSDialogBox extends ConsumerWidget {
                           "Refuser",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: noColor,
                           ),
                         ),
@@ -105,7 +105,7 @@ class TOSDialogBox extends ConsumerWidget {
                           "Accepter",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: yesColor,
                           ),
                         ),

@@ -32,7 +32,7 @@ class StockPage extends HookConsumerWidget {
             children: [
               const Text(
                 SeedLibraryTextConstants.stocks,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: .bold),
               ),
               const ResearchBar(),
               const FiltersBar(),
@@ -40,10 +40,7 @@ class StockPage extends HookConsumerWidget {
               plantFilteredList.isEmpty
                   ? const Text(
                       SeedLibraryTextConstants.noStockPlants,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(fontSize: 16, fontWeight: .w600),
                     )
                   : SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),

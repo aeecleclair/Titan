@@ -10,7 +10,7 @@ class AlignLeftText extends StatelessWidget {
     this.title, {
     super.key,
     this.fontSize = 18,
-    this.fontWeight = FontWeight.bold,
+    this.fontWeight = .bold,
     this.color,
     this.padding = const EdgeInsets.all(0),
   });

@@ -47,7 +47,7 @@ class PrizeHandler extends HookConsumerWidget {
                     "Gagnant${winningTickets.length > 1 ? 's' : ''}",
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: RaffleColorConstants.textDark,
                     ),
                   ),
@@ -63,7 +63,7 @@ class PrizeHandler extends HookConsumerWidget {
                             winningTickets[index].user.getName(),
                             style: const TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: RaffleColorConstants.textDark,
                             ),
                           ),
@@ -88,7 +88,7 @@ class PrizeHandler extends HookConsumerWidget {
             "Lots",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),

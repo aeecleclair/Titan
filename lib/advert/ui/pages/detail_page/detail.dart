@@ -87,10 +87,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                         advert.title,
                         maxLines: 2,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                     ),
                     const SizedBox(height: 15),

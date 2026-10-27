@@ -48,10 +48,7 @@ class SpeciesPage extends HookConsumerWidget {
             children: [
               Text(
                 SeedLibraryTextConstants.speciesPlural,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontSize: 20, fontWeight: .bold),
               ),
               const SizedBox(height: 20),
               GestureDetector(
@@ -92,10 +89,7 @@ class SpeciesPage extends HookConsumerWidget {
                 builder: (context, speciesList) => speciesList.isEmpty
                     ? const Text(
                         SeedLibraryTextConstants.noSpecies,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                       )
                     : Column(
                         children: [

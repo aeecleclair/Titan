@@ -67,7 +67,7 @@ class CinemaMainPage extends HookConsumerWidget {
                         CinemaTextConstants.incomingSession,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -95,7 +95,7 @@ class CinemaMainPage extends HookConsumerWidget {
                           CinemaTextConstants.noSession,
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),

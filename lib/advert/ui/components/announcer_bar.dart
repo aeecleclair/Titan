@@ -58,7 +58,7 @@ class AnnouncerBar extends HookConsumerWidget {
                     : isNotClickable
                     ? Theme.of(context).colorScheme.secondaryContainer
                     : Theme.of(context).colorScheme.onSurface,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
           ),

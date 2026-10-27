@@ -49,11 +49,7 @@ class StoreAdminPage extends HookConsumerWidget {
               alignment: .centerLeft,
               child: Text(
                 "Les vendeurs de ${store.name}",
-                style: TextStyle(
-                  color: color,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: color, fontSize: 20, fontWeight: .bold),
               ),
             ),
             if (!isSearching.value) ...[

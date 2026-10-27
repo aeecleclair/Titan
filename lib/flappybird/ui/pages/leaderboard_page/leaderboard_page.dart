@@ -40,7 +40,7 @@ class LeaderBoardPage extends HookConsumerWidget {
                           style: GoogleFonts.silkscreen(
                             textStyle: TextStyle(
                               fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: FlappyBirdColors(isDarkTheme).text,
                             ),
                           ),

@@ -37,7 +37,7 @@ class ItemCard extends StatelessWidget {
             item.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: .bold),
           ),
           const SizedBox(height: 5),
           Text(
@@ -46,7 +46,7 @@ class ItemCard extends StatelessWidget {
                 : LoanTextConstants.unavailable,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: availableQuantity > 0
                   ? Theme.of(context).colorScheme.tertiary
                   : Theme.of(context).colorScheme.error,
@@ -57,7 +57,7 @@ class ItemCard extends StatelessWidget {
             '${item.caution.toStringAsFixed(2)} €',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: .bold),
           ),
           const Spacer(),
           if (showButtons)

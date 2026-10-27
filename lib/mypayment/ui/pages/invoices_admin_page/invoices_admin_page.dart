@@ -113,7 +113,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
                                 "Sélectionnez une structure",
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               SizedBox(

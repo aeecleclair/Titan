@@ -37,7 +37,7 @@ class AdminShrinkButton extends StatelessWidget {
         style: TextStyle(
           color: Theme.of(context).colorScheme.onSecondary,
           fontSize: 25,
-          fontWeight: FontWeight.bold,
+          fontWeight: .bold,
         ),
       ),
     );

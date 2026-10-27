@@ -52,7 +52,7 @@ class ModulesPage extends HookConsumerWidget {
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 20,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: .w500,
                       ),
                       textAlign: TextAlign.left,
                     ),

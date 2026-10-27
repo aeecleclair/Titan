@@ -45,7 +45,7 @@ class IntegerExampleState extends State<DelayDialog> {
             children: <Widget>[
               const Text(
                 LoanTextConstants.delay,
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
+                style: TextStyle(fontSize: 25, fontWeight: .w800),
               ),
               const SizedBox(height: 15),
               NumberPicker(
@@ -70,7 +70,7 @@ class IntegerExampleState extends State<DelayDialog> {
                         LoanTextConstants.cancel,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
@@ -84,7 +84,7 @@ class IntegerExampleState extends State<DelayDialog> {
                         LoanTextConstants.confirm,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),

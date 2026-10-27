@@ -70,7 +70,7 @@ class PlantDepositPage extends HookConsumerWidget {
             ? const Center(
                 child: Text(
                   SeedLibraryTextConstants.depositNotAvailable,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: .bold),
                 ),
               )
             : Form(
@@ -79,19 +79,13 @@ class PlantDepositPage extends HookConsumerWidget {
                   children: [
                     Text(
                       SeedLibraryTextConstants.addPlant,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 20, fontWeight: .bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 30),
                     const Text(
                       SeedLibraryTextConstants.ancestor,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: .w600),
                     ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -124,10 +118,7 @@ class PlantDepositPage extends HookConsumerWidget {
                     if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
                       Text(
                         SeedLibraryTextConstants.speciesSimple,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 18, fontWeight: .w600),
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -289,7 +280,7 @@ class PlantDepositPage extends HookConsumerWidget {
                               SeedLibraryTextConstants.add,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: .w600,
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),

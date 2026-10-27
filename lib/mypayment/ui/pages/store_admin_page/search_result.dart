@@ -130,8 +130,8 @@ class SearchResult extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: simpleUser.id == newAdmin.id
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                                ? .bold
+                                : .normal,
                           ),
                         ),
                         const Spacer(),

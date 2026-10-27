@@ -249,7 +249,7 @@ class DevicesPage extends HookConsumerWidget {
                               style: TextStyle(
                                 color: MyPaymentColors.onGradient,
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -262,7 +262,7 @@ class DevicesPage extends HookConsumerWidget {
                             'Appareils révoqués',
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),

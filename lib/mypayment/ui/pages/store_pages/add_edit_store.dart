@@ -111,7 +111,7 @@ class AddEditStorePage extends HookConsumerWidget {
                             style: const TextStyle(
                               color: MyPaymentColors.onGradient,
                               fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),

@@ -104,7 +104,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               key,
                                               style: const TextStyle(
                                                 fontSize: 20,
-                                                fontWeight: FontWeight.w800,
+                                                fontWeight: .w800,
                                               ),
                                             ),
                                           ),
@@ -216,7 +216,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                   : AMAPTextConstants.addDelivery,
                               style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: .w700,
                                 color: AMAPColors(isDarkTheme).background,
                               ),
                             ),

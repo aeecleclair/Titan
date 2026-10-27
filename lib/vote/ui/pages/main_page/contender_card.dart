@@ -77,7 +77,7 @@ class ContenderCard extends HookConsumerWidget {
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),
@@ -119,7 +119,7 @@ class ContenderCard extends HookConsumerWidget {
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               )
@@ -187,7 +187,7 @@ class ContenderCard extends HookConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: Colors.black,
                               ),
                             ),
@@ -197,7 +197,7 @@ class ContenderCard extends HookConsumerWidget {
                               ),
                               style: const TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: Colors.black,
                               ),
                             ),
@@ -228,7 +228,7 @@ class ContenderCard extends HookConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Colors.grey.shade400,
                       ),
                     ),
@@ -262,7 +262,7 @@ class ContenderCard extends HookConsumerWidget {
                                 VoteTextConstants.selected,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                   color: Colors.black,
                                 ),
                               ),

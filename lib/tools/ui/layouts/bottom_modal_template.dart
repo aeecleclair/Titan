@@ -54,7 +54,7 @@ class BottomModalTemplate extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: .w900,
                     color: Theme.of(context).colorScheme.secondaryContainer,
                   ),
                 ),

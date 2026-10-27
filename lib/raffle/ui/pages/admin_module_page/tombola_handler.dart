@@ -32,7 +32,7 @@ class TombolaHandler extends HookConsumerWidget {
                     "Pour quel groupe ?",
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: RaffleColorConstants.textDark,
                     ),
                   ),
@@ -55,7 +55,7 @@ class TombolaHandler extends HookConsumerWidget {
                               groups[index].name,
                               style: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: RaffleColorConstants.textDark,
                               ),
                             ),
@@ -81,7 +81,7 @@ class TombolaHandler extends HookConsumerWidget {
             RaffleTextConstants.raffle,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),

@@ -51,7 +51,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                   "${AdminTextConstants.associationMembership} ${associationMembership.name}",
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -64,7 +64,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     AdminTextConstants.members,
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
@@ -73,7 +73,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     "(${associationMembershipFilteredList.length} ${AdminTextConstants.members})",
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),

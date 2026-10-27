@@ -34,11 +34,7 @@ class SignInUpBar extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  color: color,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: .w800, color: color),
               ),
               child,
             ],

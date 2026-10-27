@@ -62,7 +62,7 @@ class ContenderCard extends HookConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Colors.black,
                       ),
                     ),
@@ -70,7 +70,7 @@ class ContenderCard extends HookConsumerWidget {
                       capitalize(contender.listType.toString().split('.').last),
                       style: const TextStyle(
                         fontSize: 13,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Colors.black,
                       ),
                     ),
@@ -101,7 +101,7 @@ class ContenderCard extends HookConsumerWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: Colors.grey.shade400,
               ),
             ),

@@ -89,7 +89,7 @@ class AmapMainPage extends HookConsumerWidget {
                         "${AMAPTextConstants.amount} : ${(s.balance / 100).toStringAsFixed(2)}€",
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: AMAPColors(isDarkTheme).lightGradientSecondary,
                         ),
                       ),
@@ -292,7 +292,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 AMAPTextConstants.nextStep,
                                 style: TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: .w900,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSecondary,

@@ -71,18 +71,12 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                 isEdit
                     ? Text(
                         SeedLibraryTextConstants.editSpecies,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                         textAlign: TextAlign.center,
                       )
                     : Text(
                         SeedLibraryTextConstants.addSpecies,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                         textAlign: TextAlign.center,
                       ),
                 const SizedBox(height: 30),
@@ -333,7 +327,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                             : SeedLibraryTextConstants.add,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),

@@ -93,7 +93,7 @@ class VoteBars extends HookConsumerWidget {
                     rod.toY.toInt().toString(),
                     const TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 18,
                     ),
                   );
@@ -141,7 +141,7 @@ class VoteBars extends HookConsumerWidget {
                             '${((voteValue[sectionIds[value.toInt()]] ?? 0) / total * 100).toStringAsFixed(2)}%',
                             style: const TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               fontSize: 12,
                             ),
                           ),
@@ -150,7 +150,7 @@ class VoteBars extends HookConsumerWidget {
                             '${voteValue[sectionIds[value.toInt()]] ?? 0} ${VoteTextConstants.votes}',
                             style: const TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               fontSize: 12,
                             ),
                           ),

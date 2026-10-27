@@ -30,7 +30,7 @@ class RadioChip extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.0,
                 color: selected ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
           ),

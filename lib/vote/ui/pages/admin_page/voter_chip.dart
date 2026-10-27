@@ -23,7 +23,7 @@ class VoterChip extends StatelessWidget {
           label,
           style: TextStyle(
             color: selected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
           ),
         ),
       ),

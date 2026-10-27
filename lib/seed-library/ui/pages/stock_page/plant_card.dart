@@ -35,10 +35,7 @@ class PlantCard extends HookConsumerWidget {
                     AutoSizeText(
                       plantSpecies.name,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: const TextStyle(fontWeight: .bold, fontSize: 16),
                     ),
                     AutoSizeText(
                       plant.nickname ?? plant.plantReference,

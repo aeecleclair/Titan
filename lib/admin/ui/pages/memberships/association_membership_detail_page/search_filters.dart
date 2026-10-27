@@ -141,7 +141,7 @@ class SearchFilters extends HookConsumerWidget {
                   AdminTextConstants.validateFilters,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                   textAlign: TextAlign.center,
@@ -175,7 +175,7 @@ class SearchFilters extends HookConsumerWidget {
                   AdminTextConstants.clearFilters,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                   textAlign: TextAlign.center,

@@ -21,10 +21,7 @@ class PermissionRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Row(
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
+          Text(label, style: const TextStyle(fontSize: 20, fontWeight: .w500)),
           const Spacer(),
           GestureDetector(
             onTap: isAuthorized ? onUnauthorize : onAuthorize,

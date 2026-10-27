@@ -132,7 +132,7 @@ class BuyPackTicket extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ],
@@ -144,7 +144,7 @@ class BuyPackTicket extends HookConsumerWidget {
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.8),
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const Spacer(),
@@ -177,7 +177,7 @@ class BuyPackTicket extends HookConsumerWidget {
                     color: raffle.raffleStatusType != RaffleStatusType.open
                         ? Colors.white
                         : RaffleColorConstants.gradient2,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),

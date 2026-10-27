@@ -48,7 +48,7 @@ class TombolaCard extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.white,
                 ),
               ),
@@ -59,7 +59,7 @@ class TombolaCard extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: RaffleColorConstants.textDark,
                 ),
               ),
@@ -71,7 +71,7 @@ class TombolaCard extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.white,
                 ),
               ),

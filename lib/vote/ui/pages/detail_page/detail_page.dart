@@ -111,7 +111,7 @@ class DetailPage extends HookConsumerWidget {
                                 contender.section.name,
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               AlignLeftText(

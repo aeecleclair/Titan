@@ -167,7 +167,7 @@ class Calendar extends HookConsumerWidget {
                 todayHighlightColor: Theme.of(context).colorScheme.secondary,
                 todayTextStyle: TextStyle(
                   color: Theme.of(context).colorScheme.onSecondary,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
                 firstDayOfWeek: 1,
                 timeZone: 'Europe/Paris',
@@ -179,19 +179,19 @@ class Calendar extends HookConsumerWidget {
                   dayTextStyle: TextStyle(
                     color: Theme.of(context).colorScheme.tertiary,
                     fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                   ),
                   dateTextStyle: TextStyle(
                     color: Theme.of(context).colorScheme.tertiary,
                     fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                   ),
                 ),
                 headerStyle: CalendarHeaderStyle(
                   textAlign: TextAlign.center,
                   textStyle: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),

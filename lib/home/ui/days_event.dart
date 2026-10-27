@@ -85,7 +85,7 @@ class DaysEvent extends HookConsumerWidget {
                           style: TextStyle(
                             color: textColor,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),

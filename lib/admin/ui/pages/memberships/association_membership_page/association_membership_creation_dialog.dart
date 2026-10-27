@@ -60,7 +60,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                   AdminTextConstants.createAssociationMembership,
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: .w800,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -104,7 +104,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                           "Créer",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
@@ -120,7 +120,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                           "Annuler",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: Theme.of(context).colorScheme.error,
                           ),
                         ),

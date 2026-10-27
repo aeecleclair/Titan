@@ -46,17 +46,11 @@ class TicketCard extends HookConsumerWidget {
                   children: [
                     Text(
                       "${ticket.name} - Scans : ${ticket.scanCount}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 16, fontWeight: .bold),
                     ),
                     Text(
                       "${ticket.maxUse} scan${ticket.maxUse > 1 ? 's' : ""} maximun - Valide jusqu'au ${processDate(ticket.expiration)}",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 12, fontWeight: .bold),
                     ),
                   ],
                 ),

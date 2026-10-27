@@ -113,7 +113,7 @@ class TicketWidget extends HookConsumerWidget {
                         style: TextStyle(
                           color: isWinningTicket ? Colors.black : Colors.white,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),
@@ -130,7 +130,7 @@ class TicketWidget extends HookConsumerWidget {
                         ? Colors.black.withValues(alpha: 0.8)
                         : Colors.white.withValues(alpha: 0.8),
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -141,7 +141,7 @@ class TicketWidget extends HookConsumerWidget {
                   style: TextStyle(
                     color: isWinningTicket ? Colors.black : Colors.white,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ],

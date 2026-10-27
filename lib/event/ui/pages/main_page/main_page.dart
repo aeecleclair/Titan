@@ -48,7 +48,7 @@ class EventMainPage extends HookConsumerWidget {
                             : EventTextConstants.myEvents,
                         style: const TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Colors.grey,
                         ),
                       ),

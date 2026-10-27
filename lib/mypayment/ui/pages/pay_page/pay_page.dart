@@ -51,7 +51,7 @@ class PayPage extends ConsumerWidget {
               style: const TextStyle(
                 color: MyPaymentColors.onGradient,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 5),
@@ -76,7 +76,7 @@ class PayPage extends ConsumerWidget {
                                 ? MyPaymentColors.onGradient
                                 : MyPaymentColors.errorText,
                             fontSize: 50,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       );
@@ -89,7 +89,7 @@ class PayPage extends ConsumerWidget {
                               ? MyPaymentColors.onGradient
                               : MyPaymentColors.errorText,
                           fontSize: 50,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                   ],

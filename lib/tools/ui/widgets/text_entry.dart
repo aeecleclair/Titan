@@ -71,7 +71,7 @@ class TextEntry extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 10),
                 child: Text(prefix, style: TextStyle(color: color_)),
               ),
-        floatingLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        floatingLabelStyle: TextStyle(fontWeight: .bold),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: enabledColor ?? Theme.of(context).colorScheme.onPrimary,

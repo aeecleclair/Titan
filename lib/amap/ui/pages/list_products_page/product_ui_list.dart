@@ -96,10 +96,7 @@ class ProductUiInList extends ConsumerWidget {
                 alignment: .center,
                 child: Text(
                   quantity.toString(),
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: const TextStyle(fontSize: 15, fontWeight: .w700),
                 ),
               ),
               const SizedBox(width: 3),

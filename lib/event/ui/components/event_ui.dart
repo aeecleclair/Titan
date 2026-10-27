@@ -98,7 +98,7 @@ class EventUi extends ConsumerWidget {
                       style: TextStyle(
                         color: textColor,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),
@@ -180,7 +180,7 @@ class EventUi extends ConsumerWidget {
                   style: TextStyle(
                     color: textColor,
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -213,7 +213,7 @@ class EventUi extends ConsumerWidget {
                                   style: TextStyle(
                                     color: textColor,
                                     fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               ),
@@ -269,7 +269,7 @@ class EventUi extends ConsumerWidget {
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),

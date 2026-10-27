@@ -88,17 +88,11 @@ class MembershipEditorPage extends HookConsumerWidget {
                 member.member.nickname == null
                     ? Text(
                         "${member.member.firstname} ${member.member.name}",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: const TextStyle(fontSize: 18, fontWeight: .w600),
                       )
                     : Text(
                         "${member.member.nickname} (${member.member.firstname} ${member.member.name})",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: const TextStyle(fontSize: 18, fontWeight: .w600),
                       ),
               const SizedBox(height: 10),
               SizedBox(
@@ -174,7 +168,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                       : PhonebookTextConstants.edit,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),

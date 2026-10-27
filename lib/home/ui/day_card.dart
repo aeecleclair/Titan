@@ -85,7 +85,7 @@ class DayCard extends HookConsumerWidget {
                   color: isToday
                       ? Theme.of(context).colorScheme.onPrimaryContainer
                       : Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   fontSize: 30,
                 ),
               ),
@@ -101,7 +101,7 @@ class DayCard extends HookConsumerWidget {
                   color: isToday
                       ? Theme.of(context).colorScheme.onPrimaryContainer
                       : Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   fontSize: 12,
                 ),
               ),
@@ -135,7 +135,7 @@ class DayCard extends HookConsumerWidget {
                           color: isToday
                               ? Theme.of(context).colorScheme.onPrimaryContainer
                               : Theme.of(context).colorScheme.onPrimary,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 12,
                         ),
                       ),

@@ -18,7 +18,7 @@ class SectionTitle extends HookConsumerWidget {
           : VoteTextConstants.noSection,
       padding: const EdgeInsets.only(left: 20),
       fontSize: 20,
-      fontWeight: FontWeight.w700,
+      fontWeight: .w700,
     );
   }
 }

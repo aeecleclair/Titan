@@ -51,7 +51,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                     child: Text(
                       RaffleTextConstants.addTypeTicketSimple,
                       style: TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: .w800,
                         fontSize: 25,
                         color: RaffleColorConstants.gradient1,
                       ),
@@ -64,7 +64,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                       "Nombre de ticket",
                       style: TextStyle(
                         color: RaffleColorConstants.gradient2,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         fontSize: 20,
                       ),
                     ),
@@ -89,7 +89,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                       "Prix",
                       style: TextStyle(
                         color: RaffleColorConstants.gradient2,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         fontSize: 20,
                       ),
                     ),

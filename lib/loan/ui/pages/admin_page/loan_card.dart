@@ -71,7 +71,7 @@ class LoanCard extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: shouldReturn
                               ? LoanColorConstants.contrast
                               : Theme.of(context).colorScheme.onSurface,
@@ -100,7 +100,7 @@ class LoanCard extends StatelessWidget {
               maxLines: 1,
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: shouldReturn
                     ? LoanColorConstants.contrast
                     : Theme.of(context).colorScheme.onSurface,
@@ -112,7 +112,7 @@ class LoanCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 13,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: shouldReturn
                     ? LoanColorConstants.contrast.withValues(alpha: 0.8)
                     : Theme.of(context).colorScheme.tertiary,
@@ -124,7 +124,7 @@ class LoanCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: shouldReturn
                     ? LoanColorConstants.contrast
                     : Theme.of(context).colorScheme.onSurface,
@@ -142,7 +142,7 @@ class LoanCard extends StatelessWidget {
                       : LoanTextConstants.onGoing,
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: shouldReturn
                         ? LoanColorConstants.urgentRed
                         : Theme.of(context).colorScheme.tertiary,
@@ -156,7 +156,7 @@ class LoanCard extends StatelessWidget {
                       : processDate(loan.end),
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: shouldReturn
                         ? LoanColorConstants.contrast.withValues(alpha: 0.8)
                         : Theme.of(context).colorScheme.tertiary,

@@ -48,7 +48,7 @@ class SumUpCard extends StatelessWidget {
               title,
               style: TextStyle(
                 color: MyPaymentColors.onGradient.withValues(alpha: 0.8),
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: 13,
               ),
             ),
@@ -57,7 +57,7 @@ class SumUpCard extends StatelessWidget {
               amount,
               style: const TextStyle(
                 color: MyPaymentColors.onGradient,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: 15,
               ),
             ),

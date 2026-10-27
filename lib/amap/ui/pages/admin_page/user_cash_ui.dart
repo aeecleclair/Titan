@@ -80,7 +80,7 @@ class UserCashUi extends HookConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: AMAPColors(isDarkTheme).primaryGreen,
                           ),
                         ),
@@ -93,7 +93,7 @@ class UserCashUi extends HookConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: AMAPColors(isDarkTheme).secondaryGreen,
                           ),
                         ),
@@ -108,7 +108,7 @@ class UserCashUi extends HookConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: AMAPColors(isDarkTheme).primaryGreen,
                               ),
                             ),

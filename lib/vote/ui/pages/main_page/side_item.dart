@@ -29,7 +29,7 @@ class SideItem extends HookConsumerWidget {
                 section.name,
                 style: TextStyle(
                   fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: !alreadyVoted || isSelected
                       ? Colors.black
                       : Colors.grey.shade500,

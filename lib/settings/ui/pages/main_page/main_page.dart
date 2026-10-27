@@ -104,7 +104,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                         me.nickname ?? me.firstname,
                                         style: const TextStyle(
                                           fontSize: 25,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                         ),
                                       ),
                                     ],
@@ -139,7 +139,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   capitalize(item.name),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSecondary,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -311,7 +311,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     "${SettingsTextConstants.version} $titanVersion",
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
@@ -322,7 +322,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     minFontSize: 10,
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),

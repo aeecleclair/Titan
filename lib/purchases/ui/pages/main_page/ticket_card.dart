@@ -26,17 +26,11 @@ class TicketCard extends HookConsumerWidget {
               children: [
                 Text(
                   ticket.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 16, fontWeight: .bold),
                 ),
                 Text(
                   "${ticket.scanLeft} scan${ticket.scanLeft > 1 ? 's' : ""} restant${ticket.scanLeft > 1 ? 's' : ""} - Valide jusqu'au ${processDate(ticket.expirationDate)}",
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 12, fontWeight: .bold),
                 ),
               ],
             ),

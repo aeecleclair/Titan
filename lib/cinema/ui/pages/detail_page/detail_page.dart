@@ -110,10 +110,7 @@ class DetailPage extends HookConsumerWidget {
                         session.name,
                         maxLines: 2,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -146,7 +143,7 @@ class DetailPage extends HookConsumerWidget {
                           genre,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSecondary,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),

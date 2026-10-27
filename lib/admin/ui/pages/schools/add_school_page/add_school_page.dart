@@ -73,7 +73,7 @@ class AddSchoolPage extends HookConsumerWidget {
                     AdminTextConstants.add,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: .w600,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),

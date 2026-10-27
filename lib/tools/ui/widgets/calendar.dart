@@ -47,7 +47,7 @@ class Calendar extends HookConsumerWidget {
                           maxLines: 2,
                           style: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -58,7 +58,7 @@ class Calendar extends HookConsumerWidget {
                             appointmentDetails.isAllDay,
                           ),
                           style: TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: .w400,
                             color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 15,
                           ),
@@ -67,7 +67,7 @@ class Calendar extends HookConsumerWidget {
                         Text(
                           appointmentDetails.notes ?? "",
                           style: const TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: .w400,
                             fontSize: 15,
                           ),
                         ),
@@ -126,7 +126,7 @@ class Calendar extends HookConsumerWidget {
                       ).colorScheme.secondary,
                       todayTextStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                       firstDayOfWeek: 1,
                       timeZone: 'Europe/Paris',
@@ -137,19 +137,19 @@ class Calendar extends HookConsumerWidget {
                         dayTextStyle: TextStyle(
                           color: Theme.of(context).colorScheme.tertiary,
                           fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                         ),
                         dateTextStyle: TextStyle(
                           color: Theme.of(context).colorScheme.tertiary,
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                         ),
                       ),
                       headerStyle: CalendarHeaderStyle(
                         textAlign: TextAlign.center,
                         textStyle: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),

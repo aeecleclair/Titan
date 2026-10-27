@@ -89,7 +89,7 @@ class AddSectionPage extends HookConsumerWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),

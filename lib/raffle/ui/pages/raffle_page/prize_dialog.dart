@@ -55,7 +55,7 @@ class PrizeDialog extends HookConsumerWidget {
                   style: const TextStyle(
                     color: RaffleColorConstants.writtenWhite,
                     fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -69,7 +69,7 @@ class PrizeDialog extends HookConsumerWidget {
                   style: const TextStyle(
                     color: RaffleColorConstants.writtenWhite,
                     fontSize: 50,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -84,7 +84,7 @@ class PrizeDialog extends HookConsumerWidget {
               style: const TextStyle(
                 color: RaffleColorConstants.writtenWhite,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 20),

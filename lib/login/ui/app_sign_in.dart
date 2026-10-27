@@ -41,7 +41,7 @@ class AppSignIn extends HookConsumerWidget {
                   style: GoogleFonts.elMessiri(
                     textStyle: TextStyle(
                       fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),

@@ -58,7 +58,7 @@ class DeviceItem extends ConsumerWidget {
                           style: TextStyle(
                             color: secondaryGreen,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                         if (isActual)
@@ -67,7 +67,7 @@ class DeviceItem extends ConsumerWidget {
                             style: TextStyle(
                               color: secondaryGreen,
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                       ],

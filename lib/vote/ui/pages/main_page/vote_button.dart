@@ -124,7 +124,7 @@ class VoteButton extends HookConsumerWidget {
                     ? Colors.black
                     : Colors.white,
                 fontSize: 20,
-                fontWeight: FontWeight.w700,
+                fontWeight: .w700,
               ),
             ),
           ),

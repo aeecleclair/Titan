@@ -107,7 +107,7 @@ void displayToast(
                     style: TextStyle(
                       color: color,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                     maxLines: 8,
                   ),

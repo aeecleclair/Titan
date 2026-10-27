@@ -43,7 +43,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
               capitalize(uiCollectionSlotToString(collectionSlot)),
               style: TextStyle(
                 fontSize: 25,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: isSelected
                     ? AMAPColors(isDarkTheme).greenGradientSecondary
                     : Theme.of(context).colorScheme.onSecondary,

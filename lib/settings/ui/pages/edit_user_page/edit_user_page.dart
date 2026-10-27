@@ -204,19 +204,13 @@ class EditUserPage extends HookConsumerWidget {
                     margin: const EdgeInsets.only(bottom: 20),
                     child: Text(
                       '${SettingsTextConstants.promo} ${user.promo}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: const TextStyle(fontSize: 20, fontWeight: .w500),
                     ),
                   ),
                 AutoSizeText(
                   '${SettingsTextConstants.email} : ${user.email}',
                   maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: const TextStyle(fontSize: 18, fontWeight: .w500),
                 ),
                 const SizedBox(height: 50),
                 UserFieldModifier(
@@ -239,7 +233,7 @@ class EditUserPage extends HookConsumerWidget {
                         SettingsTextConstants.birthday,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: .w400,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -305,7 +299,7 @@ class EditUserPage extends HookConsumerWidget {
                         SettingsTextConstants.floor,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: .w400,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -319,7 +313,7 @@ class EditUserPage extends HookConsumerWidget {
                         //   SettingsTextConstants.floor,
                         //   style: TextStyle(
                         //     fontSize: 15,
-                        //     fontWeight: FontWeight.w400,
+                        //     fontWeight: .w400,
                         //     color: Colors.grey.shade500,
                         //   ),
                         // ),
@@ -351,7 +345,7 @@ class EditUserPage extends HookConsumerWidget {
                                 context,
                               ).colorScheme.primaryContainer,
                               height: 0.5,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),
@@ -407,7 +401,7 @@ class EditUserPage extends HookConsumerWidget {
                       SettingsTextConstants.save,
                       style: TextStyle(
                         fontSize: 25,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: .w400,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),

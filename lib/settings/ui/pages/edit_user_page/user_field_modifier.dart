@@ -22,7 +22,7 @@ class UserFieldModifier extends StatelessWidget {
             label,
             style: TextStyle(
               fontSize: 15,
-              fontWeight: FontWeight.w400,
+              fontWeight: .w400,
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),

@@ -47,7 +47,7 @@ class CalendarDialog extends StatelessWidget {
                 '${booking.room.name} - ${booking.reason}',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -60,7 +60,7 @@ class CalendarDialog extends StatelessWidget {
                   false,
                 ),
                 style: TextStyle(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: .w400,
                   color: Theme.of(context).colorScheme.tertiary,
                   fontSize: 15,
                 ),
@@ -68,10 +68,7 @@ class CalendarDialog extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 "${BookingTextConstants.bookedfor} ${booking.entity} ${BookingTextConstants.by} ${booking.applicant.getName()}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
+                style: const TextStyle(fontWeight: .w400, fontSize: 15),
               ),
               if (isManager) ...[
                 const SizedBox(height: 10),
@@ -84,7 +81,7 @@ class CalendarDialog extends StatelessWidget {
                   Text(
                     booking.note!,
                     style: TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontWeight: .w400,
                       color: Theme.of(context).colorScheme.tertiary,
                       fontSize: 15,
                     ),
@@ -101,10 +98,7 @@ class CalendarDialog extends StatelessWidget {
                     Flexible(
                       child: Text(
                         booking.applicant.email.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(fontWeight: .w400, fontSize: 15),
                       ),
                     ),
                   ],
@@ -124,10 +118,7 @@ class CalendarDialog extends StatelessWidget {
                       child: Text(
                         booking.applicant.phone ??
                             BookingTextConstants.noPhoneRegistered,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(fontWeight: .w400, fontSize: 15),
                       ),
                     ),
                   ],

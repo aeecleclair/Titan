@@ -119,7 +119,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 "${AMAPTextConstants.confirm} (${(order.amount / 100).toStringAsFixed(2)}€)",
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).background,
                 ),
               ),

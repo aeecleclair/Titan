@@ -44,7 +44,7 @@ class WinningTicketUI extends HookConsumerWidget {
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
               Column(
@@ -55,7 +55,7 @@ class WinningTicketUI extends HookConsumerWidget {
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -69,7 +69,7 @@ class WinningTicketUI extends HookConsumerWidget {
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(height: 4),

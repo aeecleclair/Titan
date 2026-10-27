@@ -202,7 +202,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                   decoration: InputDecoration(
                     floatingLabelStyle: const TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                     focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 2.0),
@@ -303,7 +303,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 25,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                 ),
@@ -441,7 +441,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ),

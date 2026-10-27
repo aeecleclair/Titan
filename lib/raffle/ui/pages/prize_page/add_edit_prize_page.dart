@@ -137,7 +137,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                             : RaffleTextConstants.addPrize,
                         style: const TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: RaffleColorConstants.gradient2,
                         ),
                       ),

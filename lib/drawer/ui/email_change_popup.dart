@@ -80,10 +80,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                     children: [
                       const Text(
                         Consts.titleMigration,
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: TextStyle(fontSize: 24.0, fontWeight: .w700),
                       ),
                       const SizedBox(height: 20.0),
                       displayForm.value
@@ -155,7 +152,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                             "Annuler",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: .bold,
                                             ),
                                           ),
                                         ),
@@ -216,9 +213,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       child: const Center(
                                         child: Text(
                                           "Confirmer",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style: TextStyle(fontWeight: .bold),
                                         ),
                                       ),
                                     ),
@@ -240,7 +235,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                   const SizedBox(height: 30.0),
@@ -267,9 +262,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       child: const Center(
                                         child: Text(
                                           "Fermer",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style: TextStyle(fontWeight: .bold),
                                         ),
                                       ),
                                     ),

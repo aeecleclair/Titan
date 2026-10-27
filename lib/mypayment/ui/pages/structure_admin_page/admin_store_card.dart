@@ -53,7 +53,7 @@ class AdminStoreCard extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 20,
                   color: MyPaymentColors(isDarkTheme).backgroundGradient2,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
               const Spacer(),

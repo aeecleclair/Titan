@@ -59,7 +59,7 @@ class AccountHandler extends HookConsumerWidget {
               labelText: RaffleTextConstants.accounts,
               labelStyle: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: RaffleColorConstants.textDark,
               ),
               suffixIcon: Icon(

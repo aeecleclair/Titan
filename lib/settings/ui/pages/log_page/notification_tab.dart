@@ -24,7 +24,7 @@ class NotificationTab extends HookConsumerWidget {
               SettingsTextConstants.notifications,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: Theme.of(context).colorScheme.secondaryContainer,
               ),
             ),

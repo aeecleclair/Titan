@@ -59,7 +59,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 decisionToString(booking.decision),
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               if (booking.note != null)
@@ -69,7 +69,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                   booking.note!,
                                   style: const TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                             ],
@@ -83,7 +83,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 booking.applicant.getName(),
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 15),
@@ -118,7 +118,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                       "${BookingTextConstants.bookedfor} ${booking.entity}",
                                       style: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                     ),
                                   ],

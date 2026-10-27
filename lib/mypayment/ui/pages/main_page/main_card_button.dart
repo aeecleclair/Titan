@@ -53,7 +53,7 @@ class MainCardButton extends StatelessWidget {
           style: TextStyle(
             color: colors.first,
             fontSize: 12,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
           ),
         ),
       ],

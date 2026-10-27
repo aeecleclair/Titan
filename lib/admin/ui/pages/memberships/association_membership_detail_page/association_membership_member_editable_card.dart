@@ -46,7 +46,7 @@ class MemberEditableCard extends HookConsumerWidget {
                 AutoSizeText(
                   (associationMembership.user.nickname ??
                       "${associationMembership.user.firstname} ${associationMembership.user.name}"),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: .bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

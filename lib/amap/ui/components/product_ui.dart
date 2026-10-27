@@ -45,7 +45,7 @@ class ProductCard extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
@@ -56,7 +56,7 @@ class ProductCard extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: AMAPColors(isDarkTheme).primaryGreen,
             ),
           ),
@@ -68,7 +68,7 @@ class ProductCard extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
@@ -112,7 +112,7 @@ class ProductCard extends ConsumerWidget {
                     "${AMAPTextConstants.quantity} : ${product.quantity}",
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: AMAPColors(isDarkTheme).secondaryGreen,
                     ),
                   ),

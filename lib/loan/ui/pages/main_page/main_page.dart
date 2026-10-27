@@ -99,7 +99,7 @@ class LoanMainPage extends HookConsumerWidget {
                                   LoanTextConstants.noLoan,
                                   style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.secondaryFixed,

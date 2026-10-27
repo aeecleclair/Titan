@@ -41,7 +41,7 @@ class OrderUI extends HookConsumerWidget {
     final tp = TextPainter(
       text: TextSpan(
         text: order.deliveryName,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18, fontWeight: .bold),
       ),
       textDirection: TextDirection.ltr,
       maxLines: isDetail ? 3 : 2,
@@ -76,7 +76,7 @@ class OrderUI extends HookConsumerWidget {
                       order.deliveryName,
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: AMAPColors(isDarkTheme).secondaryGreen,
                       ),
                       maxLines: isDetail ? 3 : 2,
@@ -86,7 +86,7 @@ class OrderUI extends HookConsumerWidget {
                     '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: AMAPColors(isDarkTheme).secondaryGreen,
                     ),
                   ),
@@ -114,7 +114,7 @@ class OrderUI extends HookConsumerWidget {
                 "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -123,7 +123,7 @@ class OrderUI extends HookConsumerWidget {
                 "${(order.amount / 100).toStringAsFixed(2)}€",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -134,7 +134,7 @@ class OrderUI extends HookConsumerWidget {
             uiCollectionSlotToString(order.collectionSlot),
             style: TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.w700,
+              fontWeight: .w700,
               color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
@@ -208,7 +208,7 @@ class OrderUI extends HookConsumerWidget {
                     AMAPTextConstants.locked,
                     style: TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).secondaryGreen,
                     ),
                   ),

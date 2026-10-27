@@ -13,7 +13,7 @@ class SectionTitle extends StatelessWidget {
         text,
         style: const TextStyle(
           color: RaffleColorConstants.gradient2,
-          fontWeight: FontWeight.bold,
+          fontWeight: .bold,
           fontSize: 20,
         ),
       ),

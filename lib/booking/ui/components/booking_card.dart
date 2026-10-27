@@ -112,7 +112,7 @@ class BookingCard extends ConsumerWidget {
                 booking.room.name,
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: bigTextColor,
                 ),
               ),
@@ -142,7 +142,7 @@ class BookingCard extends ConsumerWidget {
                   ),
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: smallTextColor,
                   ),
                 ),
@@ -156,7 +156,7 @@ class BookingCard extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: bigTextColor,
             ),
           ),
@@ -172,7 +172,7 @@ class BookingCard extends ConsumerWidget {
                     : BookingTextConstants.declined,
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: smallTextColor,
                 ),
               ),
@@ -180,7 +180,7 @@ class BookingCard extends ConsumerWidget {
                 '${BookingTextConstants.keysRequested}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: smallTextColor,
                 ),
               ),

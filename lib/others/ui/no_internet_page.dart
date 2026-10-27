@@ -81,7 +81,7 @@ class NoInternetPage extends HookConsumerWidget {
                           color: Theme.of(
                             context,
                           ).colorScheme.onPrimaryContainer,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ],

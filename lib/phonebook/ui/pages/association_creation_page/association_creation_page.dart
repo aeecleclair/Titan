@@ -54,7 +54,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                     PhonebookTextConstants.addAssociation,
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
@@ -148,7 +148,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                         AdminTextConstants.add,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(
                             context,
                           ).colorScheme.onPrimaryContainer,

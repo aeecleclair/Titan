@@ -104,14 +104,14 @@ class MemberCard extends HookConsumerWidget {
                         Text(
                           member.member.nickname!,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 16,
                           ),
                         ),
                         Text(
                           "(${member.member.name} ${member.member.firstname})",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 16,
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
@@ -121,10 +121,7 @@ class MemberCard extends HookConsumerWidget {
                   ] else
                     Text(
                       "${member.member.name} ${member.member.firstname}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: const TextStyle(fontWeight: .bold, fontSize: 16),
                     ),
                 ],
               ),
@@ -134,10 +131,7 @@ class MemberCard extends HookConsumerWidget {
                   assoMembership == null
                       ? PhonebookTextConstants.noMemberRole
                       : assoMembership.apparentName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontWeight: .bold, fontSize: 16),
                 ),
               ),
             ],

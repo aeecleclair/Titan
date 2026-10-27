@@ -56,7 +56,7 @@ class EditInformationPage extends HookConsumerWidget {
                         SeedLibraryTextConstants.editInformation,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: ColorConstants.gradient1,
                         ),
                       ),
@@ -127,7 +127,7 @@ class EditInformationPage extends HookConsumerWidget {
                         SeedLibraryTextConstants.update,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Colors.white,
                         ),
                       ),

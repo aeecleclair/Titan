@@ -96,7 +96,7 @@ class TransactionCard extends ConsumerWidget {
                           style: TextStyle(
                             color: MyPaymentColors(isDarkTheme).secondaryGreen,
                             fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -116,7 +116,7 @@ class TransactionCard extends ConsumerWidget {
                             style: TextStyle(
                               color: canceledColor,
                               fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),
@@ -147,7 +147,7 @@ class TransactionCard extends ConsumerWidget {
               style: TextStyle(
                 color: MyPaymentColors(isDarkTheme).secondaryGreen,
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 decoration:
                     (transaction.status == TransactionStatus.confirmed ||
                         transaction.status == TransactionStatus.refunded)

@@ -45,7 +45,7 @@ class SchoolsPage extends HookConsumerWidget {
                   AdminTextConstants.schools,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),

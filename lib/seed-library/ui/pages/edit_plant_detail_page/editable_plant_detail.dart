@@ -53,7 +53,7 @@ class EditablePlantDetail extends HookConsumerWidget {
           children: [
             Text(
               SeedLibraryTextConstants.plantDetail,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: .bold),
             ),
             TextEntry(controller: name, label: SeedLibraryTextConstants.name),
             const SizedBox(height: 20),

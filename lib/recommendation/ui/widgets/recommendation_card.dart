@@ -74,10 +74,7 @@ class RecommendationCard extends HookConsumerWidget {
                   Text(
                     recommendation.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   if (recommendation.code != null)
                     Row(
@@ -89,7 +86,7 @@ class RecommendationCard extends HookConsumerWidget {
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),

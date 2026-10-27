@@ -298,7 +298,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                       builder: (child) => AddEditButtonLayout(child: child),

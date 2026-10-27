@@ -85,7 +85,7 @@ class UserListPage extends HookConsumerWidget {
                         tag,
                         style: TextStyle(
                           color: selected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     );

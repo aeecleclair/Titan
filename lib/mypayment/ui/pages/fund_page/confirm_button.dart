@@ -167,7 +167,7 @@ class ConfirmFundButton extends ConsumerWidget {
                   ? helloAssoBlue
                   : helloAssoBlue.withValues(alpha: 0.5),
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
         ],

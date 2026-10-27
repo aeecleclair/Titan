@@ -29,10 +29,7 @@ class MembershipCard extends HookConsumerWidget {
               const SizedBox(width: 10),
               Text(
                 "${association.name} - ${membership.mandateYear}",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontSize: 16, fontWeight: .bold),
               ),
               const Spacer(flex: 1),
               Text(membership.apparentName),

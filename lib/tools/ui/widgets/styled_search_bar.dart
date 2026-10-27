@@ -43,11 +43,7 @@ class StyledSearchBar extends HookConsumerWidget {
         cursorColor: color_,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: color_,
-          ),
+          labelStyle: TextStyle(fontSize: 18, fontWeight: .bold, color: color_),
           suffixIcon: onSuffixIconTap == null
               ? suffixIcon ?? Icon(Icons.search, color: color_, size: 30)
               : GestureDetector(

@@ -48,7 +48,7 @@ class TicketUI extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   SizedBox(height: showButton ? 5 : 10),
@@ -57,7 +57,7 @@ class TicketUI extends HookConsumerWidget {
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ],

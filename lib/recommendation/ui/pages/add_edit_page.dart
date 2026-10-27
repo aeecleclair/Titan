@@ -140,7 +140,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   onTap: () async {

@@ -59,7 +59,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                           labelText: AdminTextConstants.name,
                           labelStyle: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                           suffixIcon: Container(
                             padding: const EdgeInsets.all(10),
@@ -91,7 +91,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                 alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.group,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: .bold),
                 ),
               ),
               DropdownButtonFormField<String>(
@@ -153,7 +153,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   AdminTextConstants.edit,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),

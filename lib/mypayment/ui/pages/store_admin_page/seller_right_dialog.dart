@@ -74,7 +74,7 @@ class SellerRightDialog extends ConsumerWidget {
                         title,
                         style: const TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                         ),
                       ),
                       const SizedBox(height: 12.0),
@@ -110,7 +110,7 @@ class SellerRightDialog extends ConsumerWidget {
                             child: const Center(
                               child: Text(
                                 "Ajouter",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: .bold),
                               ),
                             ),
                           ),

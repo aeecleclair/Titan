@@ -72,7 +72,7 @@ class HomePage extends HookConsumerWidget {
                           HomeTextConstants.noEvents,
                           style: TextStyle(
                             fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),

@@ -38,7 +38,7 @@ class PresentationPage extends HookConsumerWidget {
                         text: info.description,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           foreground: Paint()
                             ..shader =
                                 RadialGradient(
@@ -60,7 +60,7 @@ class PresentationPage extends HookConsumerWidget {
                         text: info.link,
                         style: const TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           decoration: TextDecoration.underline,
                           color: Colors.blue,
                         ),
@@ -84,7 +84,7 @@ class PresentationPage extends HookConsumerWidget {
                         text: AMAPTextConstants.contactUs,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           foreground: Paint()
                             ..shader =
                                 RadialGradient(
@@ -109,7 +109,7 @@ class PresentationPage extends HookConsumerWidget {
                   "${AMAPTextConstants.contact}${info.manager}	",
                   style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),

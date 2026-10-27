@@ -111,7 +111,7 @@ class AdminPage extends HookConsumerWidget {
                         VoteTextConstants.vote,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Colors.grey,
                         ),
                       ),
@@ -152,7 +152,7 @@ class AdminPage extends HookConsumerWidget {
                                   VoteTextConstants.publish,
                                   style: TextStyle(
                                     fontSize: 13,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -201,7 +201,7 @@ class AdminPage extends HookConsumerWidget {
                             VoteTextConstants.clear,
                             style: TextStyle(
                               fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: Colors.white,
                             ),
                           ),
@@ -240,7 +240,7 @@ class AdminPage extends HookConsumerWidget {
                                     VoteTextConstants.showVotes,
                                     style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -283,7 +283,7 @@ class AdminPage extends HookConsumerWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: .w700,
                               ),
                             ),
                           ),
@@ -327,7 +327,7 @@ class AdminPage extends HookConsumerWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: .w700,
                               ),
                             ),
                           ),
@@ -380,7 +380,7 @@ class AdminPage extends HookConsumerWidget {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: .w700,
                                     ),
                                   ),
                                 ),
@@ -452,7 +452,7 @@ class AdminPage extends HookConsumerWidget {
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontWeight: .w700,
                                                 ),
                                               ),
                                               SizedBox(width: 10),
@@ -530,7 +530,7 @@ class AdminPage extends HookConsumerWidget {
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontWeight: .w700,
                                                 ),
                                               ),
                                               SizedBox(width: 10),

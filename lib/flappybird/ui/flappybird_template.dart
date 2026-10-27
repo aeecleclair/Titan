@@ -30,7 +30,7 @@ class FlappyBirdTemplate extends HookConsumerWidget {
               textStyle: GoogleFonts.silkscreen(
                 textStyle: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: FlappyBirdColors(isDarkTheme).text,
                 ),
               ),

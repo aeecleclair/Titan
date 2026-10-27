@@ -51,7 +51,7 @@ class AdminButton extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: textColor ?? Theme.of(context).colorScheme.onSecondary,
               ),
             ),

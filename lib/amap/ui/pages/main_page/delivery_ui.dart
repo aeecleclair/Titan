@@ -72,7 +72,7 @@ class DeliveryUi extends HookConsumerWidget {
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: (selected && showSelected)
                             ? Theme.of(context).colorScheme.onSecondary
                             : AMAPColors(isDarkTheme).textOnPrimary,
@@ -83,7 +83,7 @@ class DeliveryUi extends HookConsumerWidget {
                     '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: (selected && showSelected)
                           ? Theme.of(context).colorScheme.onSecondary
                           : AMAPColors(isDarkTheme).textOnPrimary,
@@ -96,7 +96,7 @@ class DeliveryUi extends HookConsumerWidget {
                 "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: (selected && showSelected)
                       ? Theme.of(context).colorScheme.onSecondary
                       : AMAPColors(isDarkTheme).textOnSecondary,

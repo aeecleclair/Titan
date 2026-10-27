@@ -40,7 +40,7 @@ Widget statusTagWidget(Color color, String text) {
     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
     child: Text(
       text,
-      style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 18),
+      style: TextStyle(color: color, fontWeight: .bold, fontSize: 18),
     ),
   );
 }

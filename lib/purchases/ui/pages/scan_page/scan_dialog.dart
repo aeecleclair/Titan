@@ -60,7 +60,7 @@ class ScanDialog extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 const Text(
                   "Ajouter un tag pour les scans",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: .bold),
                 ),
                 const SizedBox(height: 20),
                 Material(
@@ -101,7 +101,7 @@ class ScanDialog extends HookConsumerWidget {
                       "Scanner",
                       style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         fontSize: 20,
                       ),
                     ),
@@ -116,10 +116,7 @@ class ScanDialog extends HookConsumerWidget {
                   const SizedBox(height: 10),
                   Text(
                     ticket.name,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 24, fontWeight: .bold),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -127,10 +124,7 @@ class ScanDialog extends HookConsumerWidget {
                     children: [
                       Text(
                         tag.isNotEmpty ? "Tag : $tag" : "Aucun tag",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontSize: 16, fontWeight: .bold),
                       ),
                       const SizedBox(width: 10),
                       CardButton(
@@ -208,7 +202,7 @@ class ScanDialog extends HookConsumerWidget {
                                           "Annuler",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: .bold,
                                             fontSize: 20,
                                           ),
                                         ),
@@ -269,7 +263,7 @@ class ScanDialog extends HookConsumerWidget {
                                         "Valider",
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                           fontSize: 20,
                                         ),
                                       ),

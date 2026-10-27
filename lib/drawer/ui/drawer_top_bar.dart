@@ -158,7 +158,7 @@ class DrawerTopBar extends HookConsumerWidget {
                               style: TextStyle(
                                 color: Colors.grey.shade100,
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -301,7 +301,7 @@ class DrawerTopBar extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(width: 10),

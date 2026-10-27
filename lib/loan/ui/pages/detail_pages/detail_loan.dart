@@ -51,7 +51,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -59,7 +59,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                 capitalize(loan.loaner.name),
                                 style: const TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 30),

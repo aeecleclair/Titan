@@ -59,7 +59,7 @@ class DetailOrderUI extends HookConsumerWidget {
               maxLines: 1,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: AMAPColors(isDarkTheme).secondaryGreen,
               ),
             ),
@@ -76,7 +76,7 @@ class DetailOrderUI extends HookConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).primaryGreen,
                     ),
                   ),
@@ -88,7 +88,7 @@ class DetailOrderUI extends HookConsumerWidget {
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).primaryGreen,
                     ),
                   ),
@@ -110,7 +110,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -119,7 +119,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 "${(order.amount / 100).toStringAsFixed(2)}€",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -132,7 +132,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 "${AMAPTextConstants.amount} : ${(userCash.balance / 100).toStringAsFixed(2)}€",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).secondaryGreen,
                 ),
               ),

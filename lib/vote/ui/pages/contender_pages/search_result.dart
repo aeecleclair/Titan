@@ -39,8 +39,8 @@ class SearchResult extends HookConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: (borrower.value.id == e.id)
-                                      ? FontWeight.bold
-                                      : FontWeight.w400,
+                                      ? .bold
+                                      : .w400,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),

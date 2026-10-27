@@ -77,7 +77,7 @@ class PrizeCard extends HookConsumerWidget {
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),

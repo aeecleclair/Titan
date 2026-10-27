@@ -43,7 +43,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 22,
-                fontWeight: FontWeight.w800,
+                fontWeight: .w800,
               ),
               textAlign: TextAlign.center,
             ),

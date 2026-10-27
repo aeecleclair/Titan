@@ -65,7 +65,7 @@ class AdminPage extends HookConsumerWidget {
                         BookingTextConstants.room,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -112,7 +112,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSurface,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),
@@ -139,7 +139,7 @@ class AdminPage extends HookConsumerWidget {
                         BookingTextConstants.manager,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -186,7 +186,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSurface,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),

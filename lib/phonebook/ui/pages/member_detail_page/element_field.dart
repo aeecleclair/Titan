@@ -23,7 +23,7 @@ class ElementField extends StatelessWidget {
             child: SelectableText(
               value,
               maxLines: 1,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: const TextStyle(fontWeight: .bold, fontSize: 16),
               onTap: () {
                 Clipboard.setData(ClipboardData(text: value));
                 displayToastWithContext(

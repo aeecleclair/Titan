@@ -31,7 +31,7 @@ class AdminPhCard extends StatelessWidget {
                   children: [
                     const Text(
                       PhTextConstants.nameField,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: .bold),
                       textAlign: TextAlign.left,
                     ),
                     Text(shortenText(ph.name, 28)),
@@ -41,7 +41,7 @@ class AdminPhCard extends StatelessWidget {
                   children: [
                     const Text(
                       PhTextConstants.dateField,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: .bold),
                       textAlign: TextAlign.left,
                     ),
                     Text(shortenText(phFormatDate(ph.date), 28)),

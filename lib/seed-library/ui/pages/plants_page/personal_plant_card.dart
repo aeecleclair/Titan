@@ -39,10 +39,7 @@ class PersonalPlantCard extends HookConsumerWidget {
                   children: [
                     AutoSizeText(
                       plantSpecies.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: const TextStyle(fontWeight: .bold, fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                     AutoSizeText(

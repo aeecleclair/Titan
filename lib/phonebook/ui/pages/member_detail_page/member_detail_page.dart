@@ -70,10 +70,7 @@ class MemberDetailPage extends HookConsumerWidget {
                 memberProvider.memberships.length == 1
                     ? PhonebookTextConstants.association
                     : PhonebookTextConstants.associations,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: const TextStyle(fontWeight: .bold, fontSize: 20),
               ),
             const SizedBox(height: 20),
             AsyncChild(

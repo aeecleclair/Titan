@@ -19,7 +19,7 @@ class TextEditing extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 3),
             label,
             fontSize: 14,
-            fontWeight: FontWeight.w400,
+            fontWeight: .w400,
             color: Theme.of(context).colorScheme.secondaryFixed,
           ),
           TextEntry(

@@ -28,7 +28,7 @@ class UpdatePage extends HookConsumerWidget {
             const Spacer(flex: 3),
             Text(
               "${OthersTextConstants.version} $titanVersion",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 15, fontWeight: .w500),
             ),
             const SizedBox(height: 20),
           ],

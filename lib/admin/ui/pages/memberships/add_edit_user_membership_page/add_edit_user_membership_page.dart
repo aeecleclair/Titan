@@ -72,10 +72,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               ] else
                 Text(
                   membership.user.getName(),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: const TextStyle(fontSize: 18, fontWeight: .w600),
                 ),
               const SizedBox(height: 10),
               DateEntry(
@@ -112,7 +109,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   !isEdit ? AdminTextConstants.add : AdminTextConstants.edit,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),

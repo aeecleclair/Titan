@@ -162,7 +162,7 @@ class SellerRightCard extends ConsumerWidget {
                           style: TextStyle(
                             color: MyPaymentColors(isDarkTheme).gradient3,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),

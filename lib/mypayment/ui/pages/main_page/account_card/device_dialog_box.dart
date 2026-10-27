@@ -73,7 +73,7 @@ class DeviceDialogBox extends ConsumerWidget {
                         title,
                         style: const TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                         ),
                       ),
                       const SizedBox(height: 12.0),
@@ -126,7 +126,7 @@ class DeviceDialogBox extends ConsumerWidget {
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.onSecondary,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                 ),

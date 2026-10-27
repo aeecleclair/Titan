@@ -89,7 +89,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.start),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -126,7 +126,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.start),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -180,7 +180,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.end),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -217,7 +217,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.end),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),

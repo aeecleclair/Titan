@@ -111,7 +111,7 @@ class MemberEditableCard extends HookConsumerWidget {
               children: [
                 AutoSizeText(
                   "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: .bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

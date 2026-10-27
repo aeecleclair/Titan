@@ -141,7 +141,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           color: selected
                               ? Theme.of(context).colorScheme.onSecondary
                               : Theme.of(context).colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     );
@@ -482,7 +482,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),

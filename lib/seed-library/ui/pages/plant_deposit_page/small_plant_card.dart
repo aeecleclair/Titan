@@ -34,10 +34,7 @@ class SmallPlantCard extends StatelessWidget {
             children: [
               Text(
                 plantSpecies.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: const TextStyle(fontWeight: .bold, fontSize: 16),
               ),
               Text(plant.nickname ?? plant.plantReference),
             ],

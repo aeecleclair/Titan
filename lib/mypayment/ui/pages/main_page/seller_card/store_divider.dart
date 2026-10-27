@@ -28,7 +28,7 @@ class StoreDivider extends ConsumerWidget {
                 style: TextStyle(
                   color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
             ),

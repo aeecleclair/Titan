@@ -50,7 +50,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                     : BookingTextConstants.addRoom,
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
@@ -85,7 +85,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                               color: selected
                                   ? Theme.of(context).colorScheme.onSecondary
                                   : Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         );

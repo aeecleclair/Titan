@@ -72,7 +72,7 @@ class AddDeviceButton extends ConsumerWidget {
                         style: TextStyle(
                           color: secondaryGreen,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                       Spacer(),
