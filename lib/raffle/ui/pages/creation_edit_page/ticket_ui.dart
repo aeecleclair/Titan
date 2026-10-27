@@ -79,8 +79,8 @@ class TicketUI extends HookConsumerWidget {
                               Colors.grey.shade100,
                               Colors.grey.shade200,
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
@@ -110,8 +110,8 @@ class TicketUI extends HookConsumerWidget {
                               RaffleColorConstants.redGradient1,
                               RaffleColorConstants.redGradient2,
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [

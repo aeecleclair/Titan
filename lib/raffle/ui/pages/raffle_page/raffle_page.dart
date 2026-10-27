@@ -51,7 +51,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                   ],
                   radius: 6.0,
                   tileMode: TileMode.mirror,
-                  center: Alignment.topLeft,
+                  center: .topLeft,
                 ).createShader(bounds),
                 child: Text(
                   raffle.name,

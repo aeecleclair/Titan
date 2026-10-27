@@ -58,7 +58,7 @@ class CancelButton extends ConsumerWidget {
                               isDarkTheme,
                             ).redGradient2.withValues(alpha: 0.8),
                           ],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [

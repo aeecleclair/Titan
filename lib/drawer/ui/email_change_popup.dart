@@ -139,8 +139,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                                               Colors.black87,
                                               Colors.black,
                                             ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
+                                            begin: .topLeft,
+                                            end: .bottomRight,
                                           ),
                                           boxShadow: [
                                             BoxShadow(
@@ -298,8 +298,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 Consts.greenGradient1,
                                 Consts.greenGradient2,
                               ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -329,8 +329,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 Consts.redGradient1,
                                 Consts.redGradient2,
                               ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(

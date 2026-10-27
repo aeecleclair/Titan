@@ -223,7 +223,7 @@ class DevicesPage extends HookConsumerWidget {
                                 MyPaymentColors(isDarkTheme).gradient1,
                                 MyPaymentColors(isDarkTheme).gradient3,
                               ],
-                              center: Alignment.topLeft,
+                              center: .topLeft,
                               radius: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(15),

@@ -40,8 +40,8 @@ class TagChip extends ConsumerWidget {
       height: 30,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomLeft,
+          begin: .topLeft,
+          end: .bottomLeft,
           colors: [bgColor, secondaryBgColor],
           stops: const [0.7, 1.0],
         ),

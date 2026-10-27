@@ -86,8 +86,8 @@ class VoteButton extends HookConsumerWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: .topLeft,
+              end: .bottomRight,
               colors:
                   (selectedContender.id == "" && s != Status.open) ||
                       alreadyVotedSection.contains(section.id)

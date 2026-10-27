@@ -44,8 +44,8 @@ class DayCard extends HookConsumerWidget {
             width: 2,
           ),
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
             colors: isToday
                 ? [
                     Theme.of(context).colorScheme.primaryContainer,

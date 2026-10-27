@@ -53,8 +53,8 @@ class PrizeCard extends HookConsumerWidget {
                         Colors.black.withValues(alpha: 0.7),
                       ],
                       stops: const [0, 0.3],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: .topCenter,
+                      end: .bottomCenter,
                     ),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(20),

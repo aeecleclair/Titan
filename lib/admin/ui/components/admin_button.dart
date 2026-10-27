@@ -10,7 +10,7 @@ class AdminButton extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
+      alignment: .center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [

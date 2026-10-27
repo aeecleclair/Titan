@@ -172,8 +172,8 @@ class CustomDialogBox extends StatelessWidget {
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
                         colors: [Consts.redGradient1, Consts.redGradient2],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(

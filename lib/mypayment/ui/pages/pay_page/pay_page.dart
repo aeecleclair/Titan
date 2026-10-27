@@ -39,8 +39,8 @@ class PayPage extends ConsumerWidget {
               MyPaymentColors(isDarkTheme).gradient1,
               MyPaymentColors(isDarkTheme).gradient2,
             ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
           ),
         ),
         child: Column(

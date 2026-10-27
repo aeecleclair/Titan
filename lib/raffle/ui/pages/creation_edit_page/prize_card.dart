@@ -31,7 +31,7 @@ class PrizeCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: const RadialGradient(
             colors: [Color(0xff0193a5), Color(0xff004a59)],
-            center: Alignment.topLeft,
+            center: .topLeft,
             radius: 1.5,
           ),
           borderRadius: BorderRadius.circular(30),
@@ -90,8 +90,8 @@ class PrizeCard extends StatelessWidget {
                                   RaffleColorConstants.gradient2,
                                   RaffleColorConstants.textDark,
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                                begin: .topLeft,
+                                end: .bottomRight,
                               ),
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
@@ -120,8 +120,8 @@ class PrizeCard extends StatelessWidget {
                                   RaffleColorConstants.redGradient1,
                                   RaffleColorConstants.redGradient2,
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                                begin: .topLeft,
+                                end: .bottomRight,
                               ),
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
@@ -157,8 +157,8 @@ class PrizeCard extends StatelessWidget {
                                       RaffleColorConstants.gradient2,
                                       RaffleColorConstants.textDark,
                                     ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    begin: .topLeft,
+                                    end: .bottomRight,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                   boxShadow: [

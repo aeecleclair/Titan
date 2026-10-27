@@ -148,7 +148,7 @@ class AssociationPage extends HookConsumerWidget {
                             Theme.of(context).colorScheme.tertiary,
                             Theme.of(context).colorScheme.secondary,
                           ],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
@@ -194,7 +194,7 @@ class AssociationPage extends HookConsumerWidget {
                             Theme.of(context).colorScheme.tertiary,
                             Theme.of(context).colorScheme.secondary,
                           ],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [

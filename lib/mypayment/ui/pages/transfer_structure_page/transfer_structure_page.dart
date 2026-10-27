@@ -44,8 +44,8 @@ class TransferStructurePage extends HookConsumerWidget {
                         MyPaymentColors(isDarkTheme).backgroundGradient1,
                         MyPaymentColors(isDarkTheme).backgroundGradient2,
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      begin: .topLeft,
+                      end: .bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(

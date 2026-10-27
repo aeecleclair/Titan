@@ -94,7 +94,7 @@ class AccountHandler extends HookConsumerWidget {
                           RaffleColorConstants.gradient1,
                           RaffleColorConstants.gradient2,
                         ],
-                        center: Alignment.topLeft,
+                        center: .topLeft,
                         radius: 1.8,
                       ),
                       borderRadius: BorderRadius.circular(30),

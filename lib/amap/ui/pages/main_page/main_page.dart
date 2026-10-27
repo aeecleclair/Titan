@@ -164,7 +164,7 @@ class AmapMainPage extends HookConsumerWidget {
                           AMAPColors(isDarkTheme).textOnSecondary,
                           AMAPColors(isDarkTheme).greenGradientPrimary,
                         ],
-                        center: Alignment.topRight,
+                        center: .topRight,
                         radius: 1.5,
                       ),
                       borderRadius: const BorderRadius.only(
@@ -268,8 +268,8 @@ class AmapMainPage extends HookConsumerWidget {
                                   ).greenGradientSecondary,
                                   AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                                begin: .topLeft,
+                                end: .bottomRight,
                               ),
                               boxShadow: [
                                 BoxShadow(

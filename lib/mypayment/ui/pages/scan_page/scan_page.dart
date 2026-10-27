@@ -167,7 +167,7 @@ class ScanPage extends HookConsumerWidget {
                                               MyPaymentColors
                                                   .scannerGreenGradient2,
                                             ],
-                                            center: Alignment.topLeft,
+                                            center: .topLeft,
                                             radius: 2,
                                           ),
                                           borderRadius: BorderRadius.circular(
@@ -213,7 +213,7 @@ class ScanPage extends HookConsumerWidget {
                                               MyPaymentColors
                                                   .scannerRedGradient2,
                                             ],
-                                            center: Alignment.topLeft,
+                                            center: .topLeft,
                                             radius: 2,
                                           ),
                                           borderRadius: BorderRadius.circular(
@@ -246,7 +246,7 @@ class ScanPage extends HookConsumerWidget {
                                               context,
                                             ).colorScheme.secondaryFixed,
                                           ],
-                                          center: Alignment.topLeft,
+                                          center: .topLeft,
                                           radius: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(20),

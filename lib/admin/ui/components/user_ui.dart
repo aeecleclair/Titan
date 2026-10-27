@@ -33,8 +33,8 @@ class UserUi extends HookConsumerWidget {
                     Theme.of(context).colorScheme.secondaryContainer,
                     Theme.of(context).colorScheme.secondary,
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(

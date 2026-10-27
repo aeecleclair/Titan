@@ -122,8 +122,8 @@ class DrawerTopBar extends HookConsumerWidget {
                                               ColorConstants.gradient1,
                                               ColorConstants.gradient2,
                                             ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
+                                            begin: .topLeft,
+                                            end: .bottomRight,
                                           ),
                                           boxShadow: [
                                             BoxShadow(
@@ -289,8 +289,8 @@ class DrawerTopBar extends HookConsumerWidget {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [ColorConstants.gradient1, ColorConstants.gradient2],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(20),
               ),

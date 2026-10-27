@@ -23,8 +23,8 @@ class MonthSectionSummary extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+          begin: .centerLeft,
+          end: .centerRight,
 
           colors: [secondaryColor, color, secondaryColor],
         ),

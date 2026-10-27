@@ -33,11 +33,7 @@ class CardButton extends StatelessWidget {
         borderRadius: borderRadius,
         color: color ?? Theme.of(context).colorScheme.secondaryFixed,
         gradient: useColors
-            ? RadialGradient(
-                colors: colors!,
-                center: Alignment.topLeft,
-                radius: 1.3,
-              )
+            ? RadialGradient(colors: colors!, center: .topLeft, radius: 1.3)
             : null,
         border: borderColor != null
             ? Border.all(color: borderColor!, width: 2)

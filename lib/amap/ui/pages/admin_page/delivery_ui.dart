@@ -355,8 +355,8 @@ class DeliveryUi extends HookConsumerWidget {
                                 AMAPColors(isDarkTheme).greenGradientPrimary,
                                 AMAPColors(isDarkTheme).greenGradientSecondary,
                               ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(

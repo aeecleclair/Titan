@@ -139,8 +139,8 @@ class CategoryPage extends HookConsumerWidget {
                                         isDarkTheme,
                                       ).secondaryFixedGreen,
                                     ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    begin: .topLeft,
+                                    end: .bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(

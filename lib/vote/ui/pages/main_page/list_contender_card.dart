@@ -153,8 +153,8 @@ class ListContenderCard extends HookConsumerWidget {
                             ColorConstants.background2.withValues(alpha: 0.8),
                             Colors.black.withValues(alpha: 0.8),
                           ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                          begin: .topLeft,
+                          end: .bottomRight,
                         ),
                         boxShadow: [
                           BoxShadow(

@@ -18,8 +18,8 @@ class BlueBtn extends StatelessWidget {
             RaffleColorConstants.gradient1,
             RaffleColorConstants.gradient2,
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
         ),
         boxShadow: [
           BoxShadow(

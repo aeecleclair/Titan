@@ -156,8 +156,8 @@ class CreationPage extends HookConsumerWidget {
                                 RaffleColorConstants.gradient1,
                                 RaffleColorConstants.gradient2,
                               ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(

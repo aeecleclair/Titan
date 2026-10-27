@@ -79,8 +79,8 @@ class SearchUser extends HookConsumerWidget {
                         Theme.of(context).colorScheme.primaryContainer,
                         Theme.of(context).colorScheme.primaryFixed,
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      begin: .topLeft,
+                      end: .bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(

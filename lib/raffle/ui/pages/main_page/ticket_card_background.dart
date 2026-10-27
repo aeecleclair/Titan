@@ -71,7 +71,7 @@ class TicketCardBackground extends HookConsumerWidget {
                   RaffleColorConstants.gradient1,
                   RaffleColorConstants.gradient2,
                 ],
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
               borderRadius: const BorderRadius.all(Radius.circular(20)),

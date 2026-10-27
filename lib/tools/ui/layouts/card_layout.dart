@@ -41,11 +41,7 @@ class CardLayout extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           gradient: useColors
-              ? RadialGradient(
-                  colors: colors!,
-                  center: Alignment.topLeft,
-                  radius: 1.3,
-                )
+              ? RadialGradient(colors: colors!, center: .topLeft, radius: 1.3)
               : null,
           color: useColors
               ? null

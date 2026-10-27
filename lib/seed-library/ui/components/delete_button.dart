@@ -25,8 +25,8 @@ class DeleteButton extends StatelessWidget {
             colors: !deactivated
                 ? [ColorConstants.gradient1, ColorConstants.gradient2]
                 : [ColorConstants.deactivated1, ColorConstants.deactivated2],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
           ),
           boxShadow: [
             BoxShadow(

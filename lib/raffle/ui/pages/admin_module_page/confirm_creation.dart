@@ -53,7 +53,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   RaffleColorConstants.gradient2,
                 ],
                 transform: GradientRotation(360 * animation.value * pi / 180),
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
             ),
@@ -133,8 +133,8 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         ),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                             colors: [
                               RaffleColorConstants.redGradient1,
                               RaffleColorConstants.redGradient2,

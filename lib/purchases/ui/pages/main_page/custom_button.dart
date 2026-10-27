@@ -28,11 +28,7 @@ class CustomButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           gradient: useColors
-              ? RadialGradient(
-                  colors: colors!,
-                  center: Alignment.topLeft,
-                  radius: 2,
-                )
+              ? RadialGradient(colors: colors!, center: .topLeft, radius: 2)
               : null,
           color: color,
           borderRadius: BorderRadius.circular(10),

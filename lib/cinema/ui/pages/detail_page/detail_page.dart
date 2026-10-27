@@ -85,8 +85,8 @@ class DetailPage extends HookConsumerWidget {
                 height: 250,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    begin: .topCenter,
+                    end: .bottomCenter,
                     colors: [
                       Colors.transparent,
                       Theme.of(
@@ -240,8 +240,8 @@ class DetailPage extends HookConsumerWidget {
               height: 140,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  begin: .topCenter,
+                  end: .bottomCenter,
                   colors: [
                     Colors.transparent,
                     Theme.of(

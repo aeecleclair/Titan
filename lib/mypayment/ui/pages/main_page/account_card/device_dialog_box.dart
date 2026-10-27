@@ -108,8 +108,8 @@ class DeviceDialogBox extends ConsumerWidget {
                                       ).colorScheme.secondaryContainer,
                                       Theme.of(context).colorScheme.secondary,
                                     ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    begin: .topLeft,
+                                    end: .bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -150,8 +150,8 @@ class DeviceDialogBox extends ConsumerWidget {
                           MyPaymentColors(isDarkTheme).redGradient1,
                           MyPaymentColors(isDarkTheme).redGradient2,
                         ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(

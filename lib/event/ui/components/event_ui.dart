@@ -60,8 +60,8 @@ class EventUi extends ConsumerWidget {
         width: 250,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
             colors: event.end.compareTo(now) < 0
                 ? [Colors.grey.shade700, Colors.grey.shade800]
                 : event.start.compareTo(now) <= 0

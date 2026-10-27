@@ -49,8 +49,8 @@ void displayToast(
           Theme.of(context).colorScheme.primaryContainer,
           Theme.of(context).colorScheme.primaryFixed,
         ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: .topLeft,
+        end: .bottomRight,
       );
       color = Theme.of(context).colorScheme.onPrimaryContainer;
       icon = HeroIcons.check;
@@ -62,8 +62,8 @@ void displayToast(
           Theme.of(context).colorScheme.secondaryContainer,
           Theme.of(context).colorScheme.secondary,
         ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: .topLeft,
+        end: .bottomRight,
       );
       color = Theme.of(context).colorScheme.onSecondary;
       icon = HeroIcons.exclamationTriangle;

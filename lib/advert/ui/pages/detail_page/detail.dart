@@ -62,8 +62,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    begin: .topCenter,
+                    end: .bottomCenter,
                     colors: [
                       Colors.transparent,
                       Theme.of(

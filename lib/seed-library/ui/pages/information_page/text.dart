@@ -64,7 +64,7 @@ class InformationPage extends HookConsumerWidget {
                               SeedLibraryColorConstants.greenGradient1,
                               SeedLibraryColorConstants.textDark,
                             ],
-                            center: Alignment.topLeft,
+                            center: .topLeft,
                             radius: 10,
                           ).createShader(
                             const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),

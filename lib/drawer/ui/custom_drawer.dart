@@ -16,8 +16,8 @@ class CustomDrawer extends HookConsumerWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
           colors: [
             DrawerColorConstants.lightBlue,
             DrawerColorConstants.darkBlue,

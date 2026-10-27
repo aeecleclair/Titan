@@ -30,8 +30,8 @@ class DeleteButton extends StatelessWidget {
                     Theme.of(context).colorScheme.secondaryFixed,
                     Theme.of(context).colorScheme.tertiary,
                   ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
           ),
           boxShadow: [
             BoxShadow(

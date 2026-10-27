@@ -28,8 +28,8 @@ class SumUpCard extends StatelessWidget {
         decoration: ShapeDecoration(
           shape: const MessageBorder(),
           gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+            begin: .centerLeft,
+            end: .centerRight,
             colors: [secondaryColor, color, secondaryColor],
           ),
           shadows: [

@@ -68,7 +68,7 @@ class TransactionCard extends ConsumerWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [colors[0], colors[1]],
-                  center: Alignment.topLeft,
+                  center: .topLeft,
                   radius: 1,
                 ),
               ),

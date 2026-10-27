@@ -18,8 +18,8 @@ class AssociationMembershipButton extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [gradient1, gradient2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
         ),
         boxShadow: [
           BoxShadow(

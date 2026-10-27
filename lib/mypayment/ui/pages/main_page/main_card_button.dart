@@ -30,7 +30,7 @@ class MainCardButton extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: RadialGradient(
                 colors: colors,
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
               borderRadius: BorderRadius.circular(15),

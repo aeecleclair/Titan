@@ -49,8 +49,8 @@ class ProductChoiceButton extends HookConsumerWidget {
                       AMAPColors(isDarkTheme).greenGradientPrimary,
                       AMAPColors(isDarkTheme).greenGradientSecondary,
                     ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                    begin: .topLeft,
+                    end: .bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -135,8 +135,8 @@ class ProductChoiceButton extends HookConsumerWidget {
                     AMAPColors(isDarkTheme).redGradientPrimary,
                     AMAPColors(isDarkTheme).redGradientSecondary,
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(

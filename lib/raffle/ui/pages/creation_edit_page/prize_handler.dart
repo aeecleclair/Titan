@@ -120,7 +120,7 @@ class PrizeHandler extends HookConsumerWidget {
                       decoration: BoxDecoration(
                         gradient: const RadialGradient(
                           colors: [Color(0xff0193a5), Color(0xff004a59)],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.2,
                         ),
                         borderRadius: BorderRadius.circular(30),
