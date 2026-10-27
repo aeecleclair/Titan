@@ -34,7 +34,7 @@ class CalendarDialog extends StatelessWidget {
         (isNotEnded && booking.decision == Decision.pending) || isManager;
 
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(30)),
       backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
       child: Stack(
         clipBehavior: Clip.none,
@@ -207,7 +207,7 @@ class CalendarDialog extends StatelessWidget {
                       spreadRadius: 1,
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: .circular(15),
                 ),
                 child: const HeroIcon(HeroIcons.xMark, size: 20),
               ),

@@ -21,7 +21,7 @@ class EditionButton extends HookConsumerWidget {
           color: !deactivated
               ? Theme.of(context).colorScheme.secondaryFixed
               : Theme.of(context).colorScheme.tertiary,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,

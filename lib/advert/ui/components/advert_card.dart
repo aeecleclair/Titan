@@ -43,14 +43,12 @@ class AdvertCard extends HookConsumerWidget {
             ? Container(
                 height: maxHeight,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                ),
+                decoration: BoxDecoration(borderRadius: .circular(30)),
                 child: Row(
                   mainAxisAlignment: .spaceBetween,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: .circular(30),
                       child: AspectRatio(
                         aspectRatio: 2 / 3,
                         child: AutoLoaderChild(
@@ -120,7 +118,7 @@ class AdvertCard extends HookConsumerWidget {
                       spreadRadius: 3,
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: .circular(20),
                 ),
                 child: Stack(
                   children: [
@@ -136,7 +134,7 @@ class AdvertCard extends HookConsumerWidget {
                             width: width,
                             height: imageHeight,
                             decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: .only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                               ),
@@ -147,7 +145,7 @@ class AdvertCard extends HookConsumerWidget {
                             width: width,
                             height: imageHeight,
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
+                              borderRadius: const .only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
                               ),
@@ -212,9 +210,7 @@ class AdvertCard extends HookConsumerWidget {
                       left: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(Radius.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -225,9 +221,7 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(Radius.circular(8)),
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 50,
@@ -278,9 +272,7 @@ class AdvertCard extends HookConsumerWidget {
                       right: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(Radius.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -291,9 +283,7 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(Radius.circular(8)),
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 30,

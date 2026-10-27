@@ -123,7 +123,7 @@ class PrizeHandler extends HookConsumerWidget {
                           center: .topLeft,
                           radius: 1.2,
                         ),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: .circular(30),
                         boxShadow: [
                           BoxShadow(
                             color: RaffleColorConstants.textDark.withValues(

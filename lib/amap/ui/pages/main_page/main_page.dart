@@ -167,7 +167,7 @@ class AmapMainPage extends HookConsumerWidget {
                         center: .topRight,
                         radius: 1.5,
                       ),
-                      borderRadius: const BorderRadius.only(
+                      borderRadius: const .only(
                         topLeft: Radius.circular(50),
                         topRight: Radius.circular(50),
                       ),
@@ -219,7 +219,7 @@ class AmapMainPage extends HookConsumerWidget {
                             height: 70,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: .circular(25),
                               border: Border.all(
                                 color: Theme.of(
                                   context,
@@ -260,7 +260,7 @@ class AmapMainPage extends HookConsumerWidget {
                             margin: const EdgeInsets.symmetric(horizontal: 30),
                             height: 70,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: .circular(25),
                               gradient: LinearGradient(
                                 colors: [
                                   AMAPColors(

@@ -174,7 +174,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.secondaryFixed,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: .circular(20),
                               ),
                               child: HeroIcon(
                                 HeroIcons.camera,

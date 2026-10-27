@@ -28,7 +28,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
+            borderRadius: .only(
               topLeft: Radius.circular(isFirst ? 22 : 0),
               bottomLeft: Radius.circular(isFirst ? 22 : 0),
               topRight: Radius.circular(!isFirst ? 22 : 0),

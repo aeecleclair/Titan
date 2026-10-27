@@ -27,7 +27,7 @@ class SearchResult extends HookConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         color: Theme.of(context).colorScheme.surface,
                         boxShadow: [
                           BoxShadow(

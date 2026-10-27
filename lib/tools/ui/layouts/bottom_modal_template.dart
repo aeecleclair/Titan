@@ -27,7 +27,7 @@ class BottomModalTemplate extends StatelessWidget {
             height: 4,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: .circular(2),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
@@ -43,7 +43,7 @@ class BottomModalTemplate extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              borderRadius: .vertical(top: Radius.circular(30)),
             ),
             padding: EdgeInsets.all(20),
             child: Column(

@@ -11,7 +11,7 @@ class FakePage extends StatelessWidget {
       width: MediaQuery.of(context).size.width - 220,
       height: 420,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: .circular(30),
         boxShadow: const [
           BoxShadow(
             color: DrawerColorConstants.fakePageShadow,

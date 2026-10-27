@@ -142,7 +142,7 @@ class ConfirmFundButton extends ConsumerWidget {
               offset: const Offset(1, 2),
             ),
           ],
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: .circular(25),
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -18,7 +18,7 @@ class ModuleCard extends HookConsumerWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: const .all(Radius.circular(20)),
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
@@ -33,7 +33,7 @@ class ModuleCard extends HookConsumerWidget {
       child: TextButton(
         style: ButtonStyle(
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            RoundedRectangleBorder(borderRadius: .circular(20.0)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
             Theme.of(context).shadowColor,
@@ -54,7 +54,7 @@ class ModuleCard extends HookConsumerWidget {
                     spreadRadius: 2,
                   ),
                 ],
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: .circular(15),
               ),
               margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3),
               width: 45,

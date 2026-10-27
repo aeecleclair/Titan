@@ -22,7 +22,7 @@ class LikedCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                borderRadius: const .all(Radius.circular(20)),
                 color: Theme.of(context).colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
@@ -47,7 +47,7 @@ class LikedCard extends StatelessWidget {
                           spreadRadius: 2,
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: .circular(15),
                     ),
                     child: module.icon.endsWith('.svg')
                         ? SvgPicture.network(

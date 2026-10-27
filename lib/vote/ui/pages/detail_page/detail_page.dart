@@ -32,7 +32,7 @@ class DetailPage extends HookConsumerWidget {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Colors.grey.shade50,
                       boxShadow: [
                         BoxShadow(

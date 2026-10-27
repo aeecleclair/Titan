@@ -33,7 +33,7 @@ class MainCardButton extends StatelessWidget {
                 center: .topLeft,
                 radius: 1.5,
               ),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: .circular(15),
               boxShadow: [
                 BoxShadow(
                   color: colors.last.withValues(alpha: 0.2),

@@ -36,7 +36,7 @@ class DetailBookingPage extends HookConsumerWidget {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Theme.of(context).colorScheme.surface,
                       boxShadow: [
                         BoxShadow(

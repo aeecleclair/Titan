@@ -28,7 +28,7 @@ class ItemChip extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: .circular(30.0),
           color: selected
               ? Theme.of(context).colorScheme.secondary
               : Theme.of(context).colorScheme.secondaryFixed,

@@ -28,7 +28,7 @@ class AdminButton extends StatelessWidget {
             spreadRadius: 2,
           ),
         ],
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: .circular(15),
       ),
       child: child,
     );

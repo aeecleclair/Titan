@@ -140,7 +140,7 @@ class DetailPage extends HookConsumerWidget {
                           color: Theme.of(
                             context,
                           ).colorScheme.secondaryContainer,
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: .circular(18),
                         ),
                         child: Text(
                           genre,
@@ -181,7 +181,7 @@ class DetailPage extends HookConsumerWidget {
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: .circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).shadowColor,
@@ -205,7 +205,7 @@ class DetailPage extends HookConsumerWidget {
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: .circular(18),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -266,7 +266,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: .circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).shadowColor,

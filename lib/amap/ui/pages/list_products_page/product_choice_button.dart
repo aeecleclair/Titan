@@ -61,7 +61,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                       blurRadius: 5,
                     ),
                   ],
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  borderRadius: const .all(Radius.circular(15)),
                 ),
                 alignment: .center,
                 child: child,
@@ -147,7 +147,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                     blurRadius: 5,
                   ),
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                borderRadius: const .all(Radius.circular(15)),
               ),
               alignment: .center,
               child: HeroIcon(

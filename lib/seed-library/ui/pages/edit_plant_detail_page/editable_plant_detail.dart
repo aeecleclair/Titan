@@ -46,7 +46,7 @@ class EditablePlantDetail extends HookConsumerWidget {
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.lightGreen.withAlpha(50),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
       ),
       child: SingleChildScrollView(
         child: Column(

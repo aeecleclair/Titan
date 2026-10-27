@@ -226,7 +226,7 @@ class DevicesPage extends HookConsumerWidget {
                               center: .topLeft,
                               radius: 1.5,
                             ),
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: .circular(15),
                             boxShadow: [
                               BoxShadow(
                                 color: MyPaymentColors(

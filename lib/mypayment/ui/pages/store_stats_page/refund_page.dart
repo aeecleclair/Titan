@@ -35,7 +35,7 @@ class ReFundPage extends ConsumerWidget {
     }
 
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
+      borderRadius: const .only(
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
       ),

@@ -37,7 +37,7 @@ class DeleteButton extends StatelessWidget {
               offset: const Offset(2, 3),
             ),
           ],
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
         ),
         child: HeroIcon(
           deletion ? HeroIcons.trash : HeroIcons.noSymbol,

@@ -35,11 +35,11 @@ class TicketCardBackground extends HookConsumerWidget {
               ],
               color: Colors.white,
               border: Border.all(color: Colors.white, width: 3),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(Radius.circular(20)),
             ),
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(Radius.circular(20)),
               child: Stack(
                 children: [
                   CustomPaint(
@@ -74,7 +74,7 @@ class TicketCardBackground extends HookConsumerWidget {
                 center: .topLeft,
                 radius: 1.5,
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(Radius.circular(20)),
             ),
             child: child,
           );

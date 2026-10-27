@@ -103,7 +103,7 @@ class SessionCard extends HookConsumerWidget {
             Container(
               height: maxHeight * scale,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: .circular(30),
                 boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).shadowColor,
@@ -122,13 +122,13 @@ class SessionCard extends HookConsumerWidget {
                   return isWebFormat
                       ? Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: .circular(30),
                           ),
                           child: Row(
                             mainAxisAlignment: .spaceBetween,
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: .circular(30),
                                 child: AspectRatio(
                                   aspectRatio: 2 / 3,
                                   child: Image(
@@ -179,7 +179,7 @@ class SessionCard extends HookConsumerWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: .circular(30),
                                 image: DecorationImage(
                                   image: data.first.image,
                                   fit: BoxFit.cover,
@@ -208,7 +208,7 @@ class SessionCard extends HookConsumerWidget {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.secondary,
-                                    borderRadius: const BorderRadius.only(
+                                    borderRadius: const .only(
                                       topRight: Radius.circular(30),
                                       bottomLeft: Radius.circular(30),
                                     ),

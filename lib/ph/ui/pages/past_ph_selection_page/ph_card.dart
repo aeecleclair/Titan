@@ -43,7 +43,7 @@ class PhCard extends HookConsumerWidget {
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: .circular(24),
               child: AsyncChild(
                 value: phCover,
                 builder: (context, value) => Image.memory(value),
@@ -85,7 +85,7 @@ class PhCard extends HookConsumerWidget {
                   }
                 },
                 child: CardButton(
-                  borderRadius: const BorderRadius.all(Radius.circular(10000)),
+                  borderRadius: const .all(Radius.circular(10000)),
                   size: 60,
                   color: Theme.of(context).shadowColor,
                   child: HeroIcon(

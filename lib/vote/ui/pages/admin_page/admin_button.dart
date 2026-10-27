@@ -9,7 +9,7 @@ class AdminButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: .circular(8),
         color: Colors.black,
       ),
       child: child,

@@ -13,7 +13,7 @@ class MenuCardUi extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor,

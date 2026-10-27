@@ -34,7 +34,7 @@ class PrizeCard extends StatelessWidget {
             center: .topLeft,
             radius: 1.5,
           ),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: .circular(30),
           boxShadow: [
             BoxShadow(
               color: RaffleColorConstants.textDark.withValues(alpha: 0.2),
@@ -93,7 +93,7 @@ class PrizeCard extends StatelessWidget {
                                 begin: .topLeft,
                                 end: .bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: .circular(15),
                               boxShadow: [
                                 BoxShadow(
                                   color: RaffleColorConstants.textDark
@@ -123,7 +123,7 @@ class PrizeCard extends StatelessWidget {
                                 begin: .topLeft,
                                 end: .bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: .circular(15),
                               boxShadow: [
                                 BoxShadow(
                                   color: RaffleColorConstants.redGradient2
@@ -160,7 +160,7 @@ class PrizeCard extends StatelessWidget {
                                     begin: .topLeft,
                                     end: .bottomRight,
                                   ),
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: .circular(15),
                                   boxShadow: [
                                     BoxShadow(
                                       color: RaffleColorConstants.textDark

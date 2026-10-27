@@ -30,7 +30,7 @@ class AddingUserCard extends HookConsumerWidget {
           height: 75,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: .circular(25),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),

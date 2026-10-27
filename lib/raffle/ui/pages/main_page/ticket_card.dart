@@ -56,9 +56,7 @@ class TicketWidget extends HookConsumerWidget {
                             offset: const Offset(2, 3),
                           ),
                         ],
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
+                        borderRadius: const .all(Radius.circular(15)),
                       ),
                       child: Center(
                         child: Builder(

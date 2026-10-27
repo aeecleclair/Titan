@@ -22,7 +22,7 @@ class EditionButton extends HookConsumerWidget {
           color: !deactivated
               ? Colors.grey.shade200
               : ColorConstants.deactivated1,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withValues(alpha: 0.2),

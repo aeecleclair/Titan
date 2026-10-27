@@ -93,7 +93,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
+                                borderRadius: .circular(50.0),
                                 image: DecorationImage(
                                   image: logoBytes.value != null
                                       ? Image.memory(logoBytes.value!).image

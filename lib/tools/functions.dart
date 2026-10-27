@@ -85,7 +85,7 @@ void displayToast(
         content: Container(
           alignment: .topCenter,
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            borderRadius: const .all(Radius.circular(15)),
             gradient: linearGradient,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

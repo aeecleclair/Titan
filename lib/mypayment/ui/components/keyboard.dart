@@ -94,7 +94,7 @@ class NumericKeyboard extends StatelessWidget {
 
   Widget _calcButton(String value) {
     return InkWell(
-      borderRadius: BorderRadius.circular(45),
+      borderRadius: .circular(45),
       onTap: () {
         onKeyboardTap(value);
       },

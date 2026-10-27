@@ -64,7 +64,7 @@ class NoInternetPage extends HookConsumerWidget {
                         offset: const Offset(0, 5),
                       ),
                     ],
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: .circular(15),
                   ),
                   child: Row(
                     mainAxisAlignment: .spaceEvenly,

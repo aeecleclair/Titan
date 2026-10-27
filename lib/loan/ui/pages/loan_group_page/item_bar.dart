@@ -82,7 +82,7 @@ class ItemBar extends HookConsumerWidget {
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(
@@ -146,7 +146,7 @@ class ItemBar extends HookConsumerWidget {
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(

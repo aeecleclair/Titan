@@ -11,7 +11,7 @@ class ContactButton extends StatelessWidget {
       height: 80,
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: .circular(30),
         border: Border.all(
           color: Theme.of(context).colorScheme.onSurface,
           width: 2,

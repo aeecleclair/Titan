@@ -30,9 +30,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
     groupIdController.text = groups.first.id;
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          MembershipCreationDialogBox._padding,
-        ),
+        borderRadius: .circular(MembershipCreationDialogBox._padding),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -46,9 +44,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(
-                MembershipCreationDialogBox._padding,
-              ),
+              borderRadius: .circular(MembershipCreationDialogBox._padding),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,

@@ -19,7 +19,7 @@ class AddEditButtonLayout extends StatelessWidget {
       height: 50,
       alignment: .center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
         gradient: useColors
             ? RadialGradient(colors: colors!, center: .topLeft, radius: 1.3)
             : null,

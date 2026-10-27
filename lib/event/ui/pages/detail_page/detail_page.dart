@@ -33,7 +33,7 @@ class DetailPage extends HookConsumerWidget {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Colors.grey.shade50,
                       boxShadow: [
                         BoxShadow(
@@ -126,8 +126,7 @@ class DetailPage extends HookConsumerWidget {
                                             height: 80,
                                             padding: const EdgeInsets.all(15.0),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
+                                              borderRadius: .circular(30),
                                               border: Border.all(
                                                 color: Colors.black,
                                                 width: 2,
@@ -172,8 +171,7 @@ class DetailPage extends HookConsumerWidget {
                                             height: 80,
                                             padding: const EdgeInsets.all(15.0),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
+                                              borderRadius: .circular(30),
                                               border: Border.all(
                                                 color: Colors.black,
                                                 width: 2,

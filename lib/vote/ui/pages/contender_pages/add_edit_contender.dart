@@ -208,9 +208,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                       borderSide: BorderSide(color: Colors.black, width: 2.0),
                     ),
                     labelText: VoteTextConstants.addMember,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+                    border: OutlineInputBorder(borderRadius: .circular(10.0)),
                   ),
                   child: Form(
                     key: addMemberKey,
@@ -285,7 +283,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   alignment: .center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: .circular(10),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.grey.withValues(
@@ -337,7 +335,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                     alignment: .center,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: .circular(10),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withValues(alpha: 0.5),

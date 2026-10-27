@@ -13,7 +13,7 @@ class MenuCardUi extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withValues(alpha: 0.2),

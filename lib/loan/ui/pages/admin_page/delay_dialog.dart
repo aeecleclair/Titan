@@ -15,7 +15,7 @@ class IntegerExampleState extends State<DelayDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(20)),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: contentBox(context),
@@ -31,7 +31,7 @@ class IntegerExampleState extends State<DelayDialog> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: .circular(20),
             boxShadow: [
               BoxShadow(
                 color: Theme.of(context).shadowColor,

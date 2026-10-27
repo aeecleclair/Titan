@@ -29,7 +29,7 @@ class AssociationMembershipButton extends StatelessWidget {
             offset: const Offset(2, 3),
           ),
         ],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
       ),
       child: Center(child: child),
     );

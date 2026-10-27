@@ -152,7 +152,7 @@ class ScanDialog extends HookConsumerWidget {
                     margin: const EdgeInsets.all(20),
                     height: 300,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       child: QRCodeScannerScreen(
                         sellerId: sellerId,
                         productId: productId,

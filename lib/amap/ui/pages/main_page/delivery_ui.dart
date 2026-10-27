@@ -30,7 +30,7 @@ class DeliveryUi extends HookConsumerWidget {
         height: 70,
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: .circular(20),
           gradient: LinearGradient(
             colors: [
               (selected && showSelected)

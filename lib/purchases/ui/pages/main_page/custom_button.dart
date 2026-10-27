@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
               ? RadialGradient(colors: colors!, center: .topLeft, radius: 2)
               : null,
           color: color,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           boxShadow: [
             BoxShadow(
               color: (useColors ? colors!.last : color)!.withValues(alpha: 0.2),

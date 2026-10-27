@@ -68,7 +68,7 @@ class EventUi extends ConsumerWidget {
                 ? [ColorConstants.gradient1, ColorConstants.gradient2]
                 : [Colors.white, Colors.white],
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: .circular(20),
           boxShadow: [
             BoxShadow(
               color: event.end.compareTo(now) < 0

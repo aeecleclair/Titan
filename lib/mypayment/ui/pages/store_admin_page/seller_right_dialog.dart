@@ -39,7 +39,7 @@ class SellerRightDialog extends ConsumerWidget {
           onTap: () {},
           child: Dialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: .all(Radius.circular(20.0)),
             ),
             elevation: 0.0,
             insetPadding: const EdgeInsets.all(20.0),
@@ -58,7 +58,7 @@ class SellerRightDialog extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -93,7 +93,7 @@ class SellerRightDialog extends ConsumerWidget {
                                   4 * Consts.padding,
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.secondaryFixed,

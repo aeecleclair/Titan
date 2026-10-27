@@ -145,7 +145,7 @@ class SellerRightCard extends ConsumerWidget {
                 MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
-                borderRadius: const BorderRadius.only(
+                borderRadius: const .only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
                 ),

@@ -63,7 +63,7 @@ class ConfirmButton extends ConsumerWidget {
             // So the whole modal has hard-coded colors
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: .circular(40),
             ),
             margin: const EdgeInsets.all(30.0),
             child: Column(
@@ -183,7 +183,7 @@ class ConfirmButton extends ConsumerWidget {
               offset: const Offset(1, 2),
             ),
           ],
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: .circular(25),
         ),
         child: HeroIcon(
           HeroIcons.qrCode,

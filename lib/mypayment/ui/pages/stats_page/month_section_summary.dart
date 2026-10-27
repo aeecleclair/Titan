@@ -21,7 +21,7 @@ class MonthSectionSummary extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: .circular(8),
         gradient: LinearGradient(
           begin: .centerLeft,
           end: .centerRight,

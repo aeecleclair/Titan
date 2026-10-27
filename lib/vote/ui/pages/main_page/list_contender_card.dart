@@ -165,9 +165,7 @@ class ListContenderCard extends HookConsumerWidget {
                             blurRadius: 5,
                           ),
                         ],
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(25),
-                        ),
+                        borderRadius: const .all(Radius.circular(25)),
                       ),
                       alignment: .center,
                       child: Row(

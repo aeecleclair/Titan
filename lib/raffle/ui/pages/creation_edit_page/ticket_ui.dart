@@ -36,7 +36,7 @@ class TicketUI extends HookConsumerWidget {
               ),
             ],
             color: RaffleColorConstants.ticketBack,
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
+            borderRadius: const .all(Radius.circular(30)),
           ),
           child: Column(
             mainAxisAlignment: .spaceAround,
@@ -82,7 +82,7 @@ class TicketUI extends HookConsumerWidget {
                             begin: .topLeft,
                             end: .bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: .circular(15),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.shade300.withValues(
@@ -113,7 +113,7 @@ class TicketUI extends HookConsumerWidget {
                             begin: .topLeft,
                             end: .bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: .circular(15),
                           boxShadow: [
                             BoxShadow(
                               color: RaffleColorConstants.redGradient2

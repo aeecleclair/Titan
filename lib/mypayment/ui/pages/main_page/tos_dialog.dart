@@ -31,7 +31,7 @@ class TOSDialogBox extends ConsumerWidget {
     final background = Theme.of(context).colorScheme.surface;
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(TOSDialogBox._padding),
+        borderRadius: .circular(TOSDialogBox._padding),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -43,7 +43,7 @@ class TOSDialogBox extends ConsumerWidget {
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: background,
-              borderRadius: BorderRadius.circular(TOSDialogBox._padding),
+              borderRadius: .circular(TOSDialogBox._padding),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,

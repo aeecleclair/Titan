@@ -48,7 +48,7 @@ class LogTab extends HookConsumerWidget {
                 ),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: .circular(10),
                   boxShadow: [
                     BoxShadow(
                       color: Theme.of(context).shadowColor,

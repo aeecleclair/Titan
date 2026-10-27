@@ -39,7 +39,7 @@ class ModulesPage extends HookConsumerWidget {
                   ),
                 ],
                 color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: .circular(15),
               ),
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),

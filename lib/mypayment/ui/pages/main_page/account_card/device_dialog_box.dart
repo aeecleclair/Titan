@@ -38,7 +38,7 @@ class DeviceDialogBox extends ConsumerWidget {
           onTap: () {},
           child: Dialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: .all(Radius.circular(20.0)),
             ),
             elevation: 0.0,
             insetPadding: const EdgeInsets.all(20.0),
@@ -57,7 +57,7 @@ class DeviceDialogBox extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -100,7 +100,7 @@ class DeviceDialogBox extends ConsumerWidget {
                                   vertical: 16,
                                 ),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: .circular(10),
                                   gradient: LinearGradient(
                                     colors: [
                                       Theme.of(

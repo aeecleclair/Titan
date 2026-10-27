@@ -283,7 +283,7 @@ class EditUserPage extends HookConsumerWidget {
                               offset: const Offset(0, 3),
                             ),
                           ],
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: .circular(10),
                         ),
                         child: HeroIcon(
                           HeroIcons.calendar,

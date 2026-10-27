@@ -109,7 +109,7 @@ class LeftPanel extends HookConsumerWidget {
                       begin: .topLeft,
                       end: .bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: .circular(20),
                     boxShadow: [
                       BoxShadow(
                         color: LoginColors.gradientVariant2.withValues(

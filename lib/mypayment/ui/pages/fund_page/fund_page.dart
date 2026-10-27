@@ -36,7 +36,7 @@ class FundPage extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
 
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
+      borderRadius: const .only(
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
       ),

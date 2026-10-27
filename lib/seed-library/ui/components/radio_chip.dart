@@ -18,7 +18,7 @@ class RadioChip extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: .circular(30.0),
           color: selected ? Colors.black : Colors.grey.shade200,
         ),
         child: Align(

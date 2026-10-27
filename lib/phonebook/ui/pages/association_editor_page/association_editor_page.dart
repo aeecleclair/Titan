@@ -112,7 +112,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                                 !association.deactivated
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Theme.of(context).colorScheme.tertiary,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: child,
                     ),

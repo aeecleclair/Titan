@@ -33,7 +33,7 @@ class CalendarDialogButton extends StatelessWidget {
         height: 40,
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: .circular(15.0),
           border: Border.all(
             color: Theme.of(context).colorScheme.onSurface,
             width: 2,

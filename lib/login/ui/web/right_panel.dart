@@ -156,7 +156,7 @@ class RightPanel extends HookConsumerWidget {
                               ..rotateY(-0.0005 * offset.value.dx),
                             alignment: FractionalOffset.center,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: .circular(20),
                               child: BackdropFilter(
                                 filter: ImageFilter.blur(
                                   sigmaX: 10,
@@ -169,7 +169,7 @@ class RightPanel extends HookConsumerWidget {
                                         .colorScheme
                                         .secondaryFixed
                                         .withValues(alpha: 0.2),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: .circular(20),
                                     border: Border.all(
                                       color: Theme.of(context)
                                           .colorScheme

@@ -77,7 +77,7 @@ class ScanPage extends HookConsumerWidget {
                                       context,
                                     ).colorScheme.onPrimary,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
+                                      borderRadius: .circular(5),
                                     ),
                                     side: BorderSide(
                                       color: Theme.of(
@@ -170,9 +170,7 @@ class ScanPage extends HookConsumerWidget {
                                             center: .topLeft,
                                             radius: 2,
                                           ),
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          ),
+                                          borderRadius: .circular(20),
                                         ),
                                         child: Column(
                                           children: [
@@ -216,9 +214,7 @@ class ScanPage extends HookConsumerWidget {
                                             center: .topLeft,
                                             radius: 2,
                                           ),
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          ),
+                                          borderRadius: .circular(20),
                                         ),
                                         child: Text(
                                           (error as AppException).message,
@@ -249,7 +245,7 @@ class ScanPage extends HookConsumerWidget {
                                           center: .topLeft,
                                           radius: 2,
                                         ),
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: .circular(20),
                                       ),
                                       child: Loader(),
                                     ),
@@ -299,7 +295,7 @@ class ScanPage extends HookConsumerWidget {
                                 height: 50,
                                 alignment: .center,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: .circular(10),
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.surface.withValues(alpha: 0.8),
@@ -394,7 +390,7 @@ class ScanPage extends HookConsumerWidget {
                                       height: 50,
                                       alignment: .center,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: .circular(10),
                                         color: Theme.of(context)
                                             .colorScheme
                                             .surface

@@ -63,7 +63,7 @@ class RecommendationCard extends HookConsumerWidget {
           mainAxisAlignment: .spaceBetween,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: .circular(20.0),
               child: Image(width: 50, image: data.first.image),
             ),
             const SizedBox(width: 20),

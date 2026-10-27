@@ -48,7 +48,7 @@ class PlantDetailPage extends HookConsumerWidget {
                 margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.lightGreen.withAlpha(100),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: .circular(10),
                 ),
                 child: Column(
                   children: [

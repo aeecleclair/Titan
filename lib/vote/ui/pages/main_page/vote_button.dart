@@ -94,7 +94,7 @@ class VoteButton extends HookConsumerWidget {
                   ? [Colors.white, Colors.grey.shade50]
                   : [Colors.grey.shade900, Colors.black],
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: .circular(20),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withValues(alpha: 0.2),

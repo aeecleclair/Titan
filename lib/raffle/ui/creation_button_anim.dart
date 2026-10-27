@@ -21,7 +21,7 @@ class CustomButton extends HookConsumerWidget {
           ),
         ],
         color: RaffleColorConstants.gradient2,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: const .all(Radius.circular(10)),
       ),
       child: Row(
         children: [

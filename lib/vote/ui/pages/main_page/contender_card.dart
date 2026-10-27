@@ -96,7 +96,7 @@ class ContenderCard extends HookConsumerWidget {
                             votesPercent,
                         decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius: const BorderRadius.only(
+                          borderRadius: const .only(
                             topLeft: Radius.circular(20),
                             bottomLeft: Radius.circular(20),
                           ),
@@ -152,7 +152,7 @@ class ContenderCard extends HookConsumerWidget {
             height: (s == Status.open && enableVote) ? 160 : 120,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.only(
+              borderRadius: const .only(
                 topLeft: Radius.circular(20),
                 bottomLeft: Radius.circular(20),
               ),

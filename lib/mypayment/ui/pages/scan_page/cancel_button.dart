@@ -26,7 +26,7 @@ class CancelButton extends ConsumerWidget {
           height: 50,
           alignment: .center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: .circular(10),
             color: Theme.of(context).colorScheme.tertiary,
           ),
           child: child,
@@ -48,7 +48,7 @@ class CancelButton extends ConsumerWidget {
                           (1 - disablingAnimationController.value),
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         gradient: RadialGradient(
                           colors: [
                             MyPaymentColors(

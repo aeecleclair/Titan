@@ -28,14 +28,14 @@ class BlueBtn extends StatelessWidget {
             blurRadius: 5,
           ),
         ],
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        borderRadius: const .all(Radius.circular(15)),
       ),
       child: Container(
         alignment: .center,
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(13)),
+          borderRadius: .all(Radius.circular(13)),
           color: Colors.white,
         ),
         child: child,

@@ -38,7 +38,7 @@ class AdminSessionCard extends HookConsumerWidget {
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: .circular(18),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -49,7 +49,7 @@ class AdminSessionCard extends HookConsumerWidget {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: .circular(18),
           child: Column(
             children: [
               SizedBox(

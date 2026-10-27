@@ -28,7 +28,7 @@ class PayPage extends ConsumerWidget {
 
     final isValid = currentAmount - amountToSub >= 0;
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
+      borderRadius: const .only(
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
       ),

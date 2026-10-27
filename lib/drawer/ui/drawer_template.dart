@@ -87,7 +87,7 @@ class DrawerTemplate extends HookConsumerWidget {
                           }
                         },
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(cornerVal),
+                          borderRadius: .circular(cornerVal),
                           child: Stack(
                             children: [
                               Container(

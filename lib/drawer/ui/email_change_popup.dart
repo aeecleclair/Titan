@@ -66,7 +66,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: const [
                       BoxShadow(
                         color: Colors.black26,
@@ -131,9 +131,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                           vertical: 16,
                                         ),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
+                                          borderRadius: .circular(10),
                                           gradient: const LinearGradient(
                                             colors: [
                                               Colors.black87,
@@ -201,9 +199,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                           vertical: 16,
                                         ),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
+                                          borderRadius: .circular(10),
                                           color: Colors.grey.shade300,
                                           boxShadow: [
                                             BoxShadow(
@@ -256,7 +252,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                         vertical: 16,
                                       ),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: .circular(10),
                                         color: Colors.grey.shade300,
                                         boxShadow: [
                                           BoxShadow(

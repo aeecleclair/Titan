@@ -142,7 +142,7 @@ class AssociationPage extends HookConsumerWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         gradient: RadialGradient(
                           colors: [
                             Theme.of(context).colorScheme.tertiary,
@@ -188,7 +188,7 @@ class AssociationPage extends HookConsumerWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         gradient: RadialGradient(
                           colors: [
                             Theme.of(context).colorScheme.tertiary,

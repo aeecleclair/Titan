@@ -35,7 +35,7 @@ class MemberEditableCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         border: Border.all(),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: const .all(Radius.circular(20)),
       ),
       child: Row(
         children: [

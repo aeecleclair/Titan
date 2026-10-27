@@ -31,7 +31,7 @@ class EditableAssociationCard extends HookConsumerWidget {
         color: association.deactivated
             ? Theme.of(context).colorScheme.tertiary
             : Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: .circular(15),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor,

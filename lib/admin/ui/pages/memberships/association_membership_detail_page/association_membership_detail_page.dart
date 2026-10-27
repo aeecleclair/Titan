@@ -83,7 +83,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                       child: child,

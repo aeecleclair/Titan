@@ -141,7 +141,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       color: Theme.of(
                         context,
                       ).colorScheme.surface.withValues(alpha: 0.75),
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: .circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).shadowColor,
@@ -167,7 +167,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     color: Theme.of(
                       context,
                     ).colorScheme.surface.withValues(alpha: 0.75),
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: .circular(18),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,

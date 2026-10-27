@@ -292,7 +292,7 @@ class DrawerTopBar extends HookConsumerWidget {
                   begin: .topLeft,
                   end: .bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: .circular(20),
               ),
               child: Row(
                 children: [

@@ -40,7 +40,7 @@ class InformationPage extends HookConsumerWidget {
                       alignment: .center,
                       decoration: BoxDecoration(
                         color: SeedLibraryColorConstants.greenGradient1,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: const Text(
                         SeedLibraryTextConstants.editInformation,

@@ -23,7 +23,7 @@ class MainCardTemplate extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: .circular(30),
         gradient: LinearGradient(
           begin: .topLeft,
           end: .bottomRight,
@@ -91,7 +91,7 @@ class MainCardTemplate extends StatelessWidget {
             height: 80,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.only(
+              borderRadius: .only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),

@@ -70,7 +70,7 @@ class TicketHandler extends HookConsumerWidget {
                     height: 125,
                     width: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: .circular(30),
                       color: RaffleColorConstants.ticketBack,
                       boxShadow: [
                         BoxShadow(

@@ -109,7 +109,7 @@ class TransactionCard extends ConsumerWidget {
                           ),
                           decoration: BoxDecoration(
                             color: canceledColor.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: .circular(5),
                           ),
                           child: Text(
                             "Annulé",

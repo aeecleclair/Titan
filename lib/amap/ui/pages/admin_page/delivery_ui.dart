@@ -344,7 +344,7 @@ class DeliveryUi extends HookConsumerWidget {
                       horizontal: 15,
                     ),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: .circular(15),
                       gradient: LinearGradient(
                         colors: !(delivery.status == DeliveryStatus.creation)
                             ? [

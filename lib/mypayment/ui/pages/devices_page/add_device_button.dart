@@ -18,7 +18,7 @@ class AddDeviceButton extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        borderRadius: const .all(Radius.circular(25)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
@@ -55,7 +55,7 @@ class AddDeviceButton extends ConsumerWidget {
                                     .colorScheme
                                     .secondaryFixed
                                     .withValues(alpha: 0.9),
-                                borderRadius: BorderRadius.circular(50),
+                                borderRadius: .circular(50),
                               ),
                               child: HeroIcon(
                                 HeroIcons.plus,

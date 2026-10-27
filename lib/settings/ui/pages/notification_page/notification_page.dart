@@ -71,7 +71,7 @@ class NotificationPage extends HookConsumerWidget {
                                       : Theme.of(
                                           context,
                                         ).colorScheme.secondaryFixed,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: .circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
@@ -98,7 +98,7 @@ class NotificationPage extends HookConsumerWidget {
                                 spinStrokeWidth: 2,
                                 thumbDecoration: (value, _) => BoxDecoration(
                                   color: Theme.of(context).colorScheme.surface,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: .circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
