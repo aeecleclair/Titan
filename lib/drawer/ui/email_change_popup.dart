@@ -76,7 +76,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                     ],
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min, // To make the card compact
+                    mainAxisSize: .min, // To make the card compact
                     children: [
                       const Text(
                         Consts.titleMigration,

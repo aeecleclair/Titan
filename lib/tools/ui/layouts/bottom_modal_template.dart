@@ -17,7 +17,7 @@ class BottomModalTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       crossAxisAlignment: .stretch,
       children: [
         Center(
@@ -47,7 +47,7 @@ class BottomModalTemplate extends StatelessWidget {
             ),
             padding: EdgeInsets.all(20),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               crossAxisAlignment: .center,
               children: [
                 Text(

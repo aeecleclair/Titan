@@ -54,7 +54,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
               ],
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: <Widget>[
                 Text(
                   AdminTextConstants.createAssociationMembership,

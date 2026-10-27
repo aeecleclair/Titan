@@ -54,7 +54,7 @@ class SearchResult extends HookConsumerWidget {
               return SellerRightDialog(
                 title: "Droit du vendeur",
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
                   children: [
                     RightCheckBox(title: "Peut encaisser", index: 0),
                     RightCheckBox(title: "Peut voir l'historique", index: 1),

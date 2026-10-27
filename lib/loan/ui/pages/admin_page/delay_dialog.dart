@@ -41,7 +41,7 @@ class IntegerExampleState extends State<DelayDialog> {
             ],
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: <Widget>[
               const Text(
                 LoanTextConstants.delay,

@@ -53,7 +53,7 @@ class TOSDialogBox extends ConsumerWidget {
               ],
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: <Widget>[
                 Text(
                   title,
