@@ -10,7 +10,7 @@ class CustomButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const .symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

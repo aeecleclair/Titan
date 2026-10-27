@@ -22,7 +22,7 @@ class SearchResult extends HookConsumerWidget {
               (simpleUser) => GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const .all(8.0),
                   child: Row(
                     mainAxisAlignment: .spaceBetween,
                     children: [

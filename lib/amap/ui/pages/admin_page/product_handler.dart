@@ -40,7 +40,7 @@ class ProductHandler extends HookConsumerWidget {
     return Column(
       children: [
         AlignLeftText(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           AMAPTextConstants.products,
           color: AMAPColors(isDarkTheme).textOnPrimary,
         ),

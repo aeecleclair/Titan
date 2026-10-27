@@ -137,10 +137,7 @@ class AssociationPage extends HookConsumerWidget {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
+                      padding: const .symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
                         borderRadius: .circular(10),
                         gradient: RadialGradient(
@@ -183,10 +180,7 @@ class AssociationPage extends HookConsumerWidget {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
+                      padding: const .symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
                         borderRadius: .circular(10),
                         gradient: RadialGradient(

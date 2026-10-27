@@ -44,7 +44,7 @@ class AddEditStorePage extends HookConsumerWidget {
               const SizedBox(height: 10),
               AlignLeftText(
                 "${isEdit ? 'Modifier' : 'Ajouter'} une association ${structure.name}",
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 color: Theme.of(context).colorScheme.tertiary,
               ),
               const SizedBox(height: 20),
@@ -52,7 +52,7 @@ class AddEditStorePage extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const .symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         TextEntry(

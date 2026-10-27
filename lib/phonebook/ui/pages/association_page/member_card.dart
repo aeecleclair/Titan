@@ -46,7 +46,7 @@ class MemberCard extends HookConsumerWidget {
         QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+        padding: const .symmetric(horizontal: 30, vertical: 5),
         child: CardLayout(
           color: getColorFromTagList(
             context,
@@ -59,7 +59,7 @@ class MemberCard extends HookConsumerWidget {
                 )
                 .rolesTags,
           ),
-          margin: EdgeInsets.zero,
+          margin: .zero,
           child: Row(
             mainAxisAlignment: .spaceBetween,
             children: [

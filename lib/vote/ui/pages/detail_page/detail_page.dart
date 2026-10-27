@@ -25,7 +25,7 @@ class DetailPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
@@ -46,7 +46,7 @@ class DetailPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 50),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          padding: const .symmetric(horizontal: 30.0),
                           alignment: .center,
                           width: double.infinity,
                           child: Column(
@@ -116,10 +116,7 @@ class DetailPage extends HookConsumerWidget {
                               ),
                               AlignLeftText(
                                 contender.description,
-                                padding: const EdgeInsets.only(
-                                  top: 15,
-                                  bottom: 20,
-                                ),
+                                padding: const .only(top: 15, bottom: 20),
                               ),
                             ],
                           ),
@@ -136,7 +133,7 @@ class DetailPage extends HookConsumerWidget {
                             : const SizedBox(),
                         const SizedBox(height: 20),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          padding: const .symmetric(horizontal: 30.0),
                           child: Text(
                             contender.program,
                             style: const TextStyle(fontSize: 15),
@@ -151,7 +148,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(child: ContenderCard(contender: contender)),
             ),
           ],

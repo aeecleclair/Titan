@@ -65,7 +65,7 @@ class ConfirmButton extends ConsumerWidget {
               color: Colors.white,
               borderRadius: .circular(40),
             ),
-            margin: const EdgeInsets.all(30.0),
+            margin: const .all(30.0),
             child: Column(
               children: [
                 const SizedBox(height: 30),
@@ -90,10 +90,10 @@ class ConfirmButton extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Padding(padding: EdgeInsets.all(10.0), child: QrCode()),
+                const Padding(padding: .all(10.0), child: QrCode()),
                 const SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const .symmetric(horizontal: 20),
                   child: GestureDetector(
                     child: AddEditButtonLayout(
                       color: Colors.grey.shade200.withValues(alpha: 0.5),

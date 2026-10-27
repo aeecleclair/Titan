@@ -57,7 +57,7 @@ class CategoryPage extends HookConsumerWidget {
         270 -
         50 * (sortedDeliveryProductsList[category]!.length + 1);
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const .all(10),
       child: Column(
         children: [
           SizedBox(height: height),
@@ -70,11 +70,7 @@ class CategoryPage extends HookConsumerWidget {
                     height: 50,
                     child: AlignLeftText(
                       capitalize(category),
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        top: 20,
-                        right: 20,
-                      ),
+                      padding: const .only(left: 20, top: 20, right: 20),
                       color: AMAPColors(isDarkTheme).textOnPrimary,
                       fontSize: 25,
                     ),

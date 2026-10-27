@@ -67,7 +67,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     TextEntry(
@@ -209,7 +209,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     TextEntry(

@@ -38,7 +38,7 @@ class CentralisationMainPage extends HookConsumerWidget {
             children: [
               if (favorites.isNotEmpty)
                 Container(
-                  padding: const EdgeInsets.only(top: 15, bottom: 5),
+                  padding: const .only(top: 15, bottom: 5),
                   height: 135,
                   child: ReorderableListView(
                     physics: const BouncingScrollPhysics(),

@@ -68,8 +68,8 @@ class ContenderCard extends HookConsumerWidget {
                   Expanded(
                     child: (votesPercent) < 0.3
                         ? Container(
-                            padding: const EdgeInsets.all(10.0),
-                            margin: const EdgeInsets.only(bottom: 15),
+                            padding: const .all(10.0),
+                            margin: const .only(bottom: 15),
                             child: Align(
                               alignment: .bottomRight,
                               child: Text(
@@ -88,8 +88,8 @@ class ContenderCard extends HookConsumerWidget {
                     children: [
                       const Spacer(),
                       Container(
-                        padding: const EdgeInsets.all(10.0),
-                        margin: const EdgeInsets.only(bottom: 15),
+                        padding: const .all(10.0),
+                        margin: const .only(bottom: 15),
                         height: 70,
                         width:
                             (MediaQuery.of(context).size.width - 92) *
@@ -147,8 +147,8 @@ class ContenderCard extends HookConsumerWidget {
                 ),
               ),
           child: Container(
-            padding: const EdgeInsets.all(10.0),
-            margin: const EdgeInsets.only(bottom: 15, left: 10),
+            padding: const .all(10.0),
+            margin: const .only(bottom: 15, left: 10),
             height: (s == Status.open && enableVote) ? 160 : 120,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -166,7 +166,7 @@ class ContenderCard extends HookConsumerWidget {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const .symmetric(horizontal: 15.0),
               child: Column(
                 mainAxisAlignment: .start,
                 crossAxisAlignment: .start,

@@ -50,7 +50,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
           refreshInvoices();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const .symmetric(horizontal: 20),
           child: Async2Children(
             values: Tuple2(invoices, structures),
             builder: (context, invoices, structures) {

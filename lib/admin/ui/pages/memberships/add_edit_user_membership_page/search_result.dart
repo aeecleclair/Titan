@@ -24,7 +24,7 @@ class SearchResult extends HookConsumerWidget {
                 (user) => GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    padding: const .symmetric(vertical: 4.0),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: .circular(10),
@@ -39,7 +39,7 @@ class SearchResult extends HookConsumerWidget {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const .symmetric(vertical: 14),
                         child: Row(
                           mainAxisAlignment: .spaceBetween,
                           children: [

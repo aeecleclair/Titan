@@ -37,8 +37,8 @@ class AdvertCard extends HookConsumerWidget {
         }
       },
       child: Container(
-        margin: const EdgeInsets.all(10),
-        padding: EdgeInsets.all(isWebFormat ? 50 : 0),
+        margin: const .all(10),
+        padding: .all(isWebFormat ? 50 : 0),
         child: isWebFormat
             ? Container(
                 height: maxHeight,
@@ -105,7 +105,7 @@ class AdvertCard extends HookConsumerWidget {
                 ),
               )
             : Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: const .symmetric(vertical: 10),
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
@@ -157,11 +157,7 @@ class AdvertCard extends HookConsumerWidget {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                            left: 10,
-                            right: 10,
-                          ),
+                          padding: const .only(top: 20, left: 10, right: 10),
                           width: width,
                           height: height - imageHeight,
                           child: Column(
@@ -170,7 +166,7 @@ class AdvertCard extends HookConsumerWidget {
                                 children: [
                                   Container(
                                     width: width,
-                                    margin: const EdgeInsets.only(bottom: 5),
+                                    margin: const .only(bottom: 5),
                                     child: AutoSizeText(
                                       advert.title.trim(),
                                       textAlign: .left,
@@ -226,7 +222,7 @@ class AdvertCard extends HookConsumerWidget {
                             color: Theme.of(context).colorScheme.surface,
                             height: 50,
                             width: 50,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               horizontal: 5,
                               vertical: 5,
                             ),
@@ -287,7 +283,7 @@ class AdvertCard extends HookConsumerWidget {
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 30,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               vertical: 5,
                               horizontal: 10,
                             ),

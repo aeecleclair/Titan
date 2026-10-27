@@ -20,8 +20,8 @@ class CardLayout extends StatelessWidget {
     this.color,
     this.shadowColor,
     this.borderColor,
-    this.padding = const EdgeInsets.all(12.0),
-    this.margin = const EdgeInsets.symmetric(horizontal: 15.0),
+    this.padding = const .all(12.0),
+    this.margin = const .symmetric(horizontal: 15.0),
     this.borderRadius = const .all(Radius.circular(30)),
   });
 

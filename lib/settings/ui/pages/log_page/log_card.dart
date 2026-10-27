@@ -26,8 +26,8 @@ class LogCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+      margin: const .symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 18, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: .circular(20),
         gradient: LinearGradient(

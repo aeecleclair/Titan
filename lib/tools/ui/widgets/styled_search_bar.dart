@@ -30,7 +30,7 @@ class StyledSearchBar extends HookConsumerWidget {
         this.editingController ?? useTextEditingController();
     final color_ = color ?? Theme.of(context).colorScheme.tertiary;
     return Container(
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
+      padding: padding ?? const .symmetric(horizontal: 30),
       alignment: .centerLeft,
       child: TextField(
         focusNode: focusNode,

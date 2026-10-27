@@ -57,7 +57,7 @@ class TransactionCard extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const .symmetric(horizontal: 20),
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
@@ -103,10 +103,7 @@ class TransactionCard extends ConsumerWidget {
                       const SizedBox(width: 10),
                       if (transaction.status == TransactionStatus.canceled)
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 2,
-                          ),
+                          padding: const .symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
                             color: canceledColor.withValues(alpha: 0.2),
                             borderRadius: .circular(5),

@@ -62,7 +62,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
           parent: BouncingScrollPhysics(),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const .all(15.0),
           child: Form(
             key: key,
             child: Column(
@@ -83,7 +83,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                 TypesBar(),
                 Column(
                   children: [
-                    Container(margin: const EdgeInsets.symmetric(vertical: 10)),
+                    Container(margin: const .symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
                       label: SeedLibraryTextConstants.name,

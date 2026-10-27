@@ -19,7 +19,7 @@ class DetailLoanPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
@@ -40,7 +40,7 @@ class DetailLoanPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 100),
                         Container(
-                          padding: const EdgeInsets.all(30.0),
+                          padding: const .all(30.0),
                           alignment: .centerLeft,
                           child: Column(
                             crossAxisAlignment: .start,
@@ -90,7 +90,7 @@ class DetailLoanPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(child: LoanCard(loan: loan, isDetail: true)),
             ),
           ],

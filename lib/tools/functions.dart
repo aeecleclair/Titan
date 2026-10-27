@@ -81,14 +81,14 @@ void displayToast(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+        margin: const .only(top: 30, left: 20, right: 20),
         content: Container(
           alignment: .topCenter,
           decoration: BoxDecoration(
             borderRadius: const .all(Radius.circular(15)),
             gradient: linearGradient,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const .symmetric(horizontal: 20, vertical: 10),
           height: 50 + text.length / 2,
           child: Row(
             mainAxisAlignment: .spaceBetween,

@@ -74,7 +74,7 @@ class AddEditSessionPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           child: Form(
             key: key,
             child: Column(
@@ -96,7 +96,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                       fontSize: 20,
                     ),
                     suffixIcon: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const .all(10),
                       child: WaitingButton(
                         onTap: () async {
                           if (tmdbUrl.text.isEmpty) {
@@ -166,7 +166,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                 (logo.value == null)
                     ? logoFile.value == null
                           ? Container(
-                              padding: const EdgeInsets.symmetric(
+                              padding: const .symmetric(
                                 vertical: 50,
                                 horizontal: 30,
                               ),

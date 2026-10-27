@@ -27,7 +27,7 @@ class StockPage extends HookConsumerWidget {
           await plantListNotifier.loadPlants();
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const .all(8.0),
           child: Column(
             children: [
               const Text(

@@ -12,7 +12,7 @@ class DayDivider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = ref.watch(themeProvider);
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 5),
+      padding: const .only(top: 10, left: 30, right: 30, bottom: 5),
       child: Row(
         children: [
           Expanded(
@@ -22,7 +22,7 @@ class DayDivider extends ConsumerWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const .symmetric(horizontal: 15),
             child: Center(
               child: Text(
                 capitalize(date),

@@ -12,7 +12,7 @@ class TombolaCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: const .all(12.0),
       child: Container(
         width: 150,
         height: 100,
@@ -36,7 +36,7 @@ class TombolaCard extends HookConsumerWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),
+          padding: const .symmetric(horizontal: 17.0, vertical: 5),
           child: Column(
             mainAxisAlignment: .start,
             crossAxisAlignment: .start,

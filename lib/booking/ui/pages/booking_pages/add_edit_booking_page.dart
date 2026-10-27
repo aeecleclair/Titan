@@ -103,7 +103,7 @@ class AddEditBookingPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: AlignLeftText(
                   isEdit
                       ? BookingTextConstants.editBooking
@@ -150,7 +150,7 @@ class AddEditBookingPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
                     TextEntry(

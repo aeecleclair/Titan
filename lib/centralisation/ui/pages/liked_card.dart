@@ -16,11 +16,11 @@ class LikedCard extends StatelessWidget {
         openLink(module.url);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+        padding: const .symmetric(horizontal: 8.0, vertical: 12),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const .all(10),
               decoration: BoxDecoration(
                 borderRadius: const .all(Radius.circular(20)),
                 color: Theme.of(context).colorScheme.primary,
@@ -37,7 +37,7 @@ class LikedCard extends StatelessWidget {
                 mainAxisAlignment: .center,
                 children: [
                   Container(
-                    margin: const EdgeInsets.all(4.0),
+                    margin: const .all(4.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -65,7 +65,7 @@ class LikedCard extends StatelessWidget {
                     alignment: .center,
                     width: 60,
                     height: 30,
-                    padding: const EdgeInsets.only(bottom: 7),
+                    padding: const .only(bottom: 7),
                     child: AutoSizeText(
                       module.name,
                       style: const TextStyle(fontSize: 16),

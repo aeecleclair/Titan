@@ -29,7 +29,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
 
     return AdvertTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const .symmetric(horizontal: 30.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),

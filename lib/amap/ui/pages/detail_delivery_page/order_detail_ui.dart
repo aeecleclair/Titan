@@ -47,7 +47,7 @@ class DetailOrderUI extends HookConsumerWidget {
         AMAPColors(isDarkTheme).lightGradientPrimary,
         AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
+      padding: const .symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,
@@ -102,7 +102,7 @@ class DetailOrderUI extends HookConsumerWidget {
               color: AMAPColors(isDarkTheme).primaryGreen,
               borderRadius: const .all(Radius.circular(10)),
             ),
-            margin: const EdgeInsets.symmetric(vertical: 7),
+            margin: const .symmetric(vertical: 7),
           ),
           Row(
             children: [

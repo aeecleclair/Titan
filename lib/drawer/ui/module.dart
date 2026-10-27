@@ -26,7 +26,7 @@ class ModuleUI extends HookConsumerWidget {
       behavior: HitTestBehavior.translucent,
       key: ValueKey(module.root),
       child: Container(
-        margin: const EdgeInsets.only(top: 8, bottom: 8),
+        margin: const .only(top: 8, bottom: 8),
         width: 220,
         child: Column(
           mainAxisAlignment: .start,

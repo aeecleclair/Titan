@@ -37,8 +37,8 @@ class PhCard extends HookConsumerWidget {
         QR.to(PhRouter.root + PhRouter.past_ph_selection + PhRouter.view_ph);
       },
       child: CardLayout(
-        padding: const EdgeInsets.all(0),
-        margin: const EdgeInsets.all(6),
+        padding: const .all(0),
+        margin: const .all(6),
         color: Colors.transparent,
         child: Stack(
           children: [

@@ -61,7 +61,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
         return Dialog(
           backgroundColor: Colors.transparent,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const .symmetric(horizontal: 10, vertical: 10),
             width: 300,
             height: 450,
             decoration: BoxDecoration(
@@ -87,10 +87,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
               mainAxisAlignment: .spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
+                  margin: const .symmetric(horizontal: 20, vertical: 20),
                   child: Row(
                     mainAxisAlignment: .spaceBetween,
                     children: [
@@ -183,7 +180,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 30),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const .symmetric(horizontal: 10),
                   child: AutoSizeText(
                     raffle.name,
                     maxLines: 2,
@@ -197,11 +194,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                 ),
                 const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20,
-                    bottom: 12,
-                  ),
+                  padding: const .only(left: 20.0, right: 20, bottom: 12),
                   child: Row(
                     mainAxisAlignment: .center,
                     children: [
@@ -209,7 +202,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                       WaitingButton(
                         waitingColor: RaffleColorConstants.textDark,
                         builder: (child) => Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: const .symmetric(
                             vertical: 10,
                             horizontal: 12,
                           ),
@@ -273,7 +266,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           navigationPop();
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: const .symmetric(
                             vertical: 10,
                             horizontal: 12,
                           ),

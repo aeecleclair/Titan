@@ -14,7 +14,7 @@ class RecommendationCardLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      margin: const .symmetric(vertical: 10, horizontal: 30),
       color: backgroundColor,
       shadowColor: Colors.grey.withValues(alpha: 0.2),
       child: child,

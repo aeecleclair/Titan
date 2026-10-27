@@ -38,8 +38,8 @@ class TOSDialogBox extends ConsumerWidget {
       child: Stack(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(TOSDialogBox._padding),
-            margin: const EdgeInsets.only(top: TOSDialogBox._avatarRadius),
+            padding: const .all(TOSDialogBox._padding),
+            margin: const .only(top: TOSDialogBox._avatarRadius),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: background,
@@ -68,7 +68,7 @@ class TOSDialogBox extends ConsumerWidget {
                   data: descriptions,
                   selectable: true,
                   styleSheet: MarkdownStyleSheet(
-                    h2Padding: const EdgeInsets.only(top: 20.0),
+                    h2Padding: const .only(top: 20.0),
                     textAlign: WrapAlignment.spaceAround,
                   ),
                 ),

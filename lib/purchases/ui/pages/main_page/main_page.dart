@@ -33,7 +33,7 @@ class PurchasesMainPage extends HookConsumerWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
@@ -56,7 +56,7 @@ class PurchasesMainPage extends HookConsumerWidget {
               ),
             ),
             const AlignLeftText(
-              padding: EdgeInsets.only(left: 30),
+              padding: .only(left: 30),
               PurchasesTextConstants.tickets,
               fontSize: 20,
             ),

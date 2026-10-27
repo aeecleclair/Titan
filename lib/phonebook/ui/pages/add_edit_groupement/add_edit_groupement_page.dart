@@ -36,7 +36,7 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        padding: .symmetric(horizontal: 30.0),
         child: Column(
           children: [
             const SizedBox(height: 30),

@@ -147,7 +147,7 @@ class SettingsMainPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const .symmetric(horizontal: 30.0),
               child: Column(
                 children: [
                   const AlignLeftText(

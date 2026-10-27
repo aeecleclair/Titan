@@ -31,7 +31,7 @@ class PlantsPage extends HookConsumerWidget {
           await plantListNotifier.loadPlants();
         },
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const .all(15.0),
           child: Column(
             children: [
               const Text(

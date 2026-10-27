@@ -18,7 +18,7 @@ class DeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return WaitingButton(
       builder: (child) => Container(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: !deactivated

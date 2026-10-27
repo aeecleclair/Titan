@@ -26,7 +26,7 @@ class DetailPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
@@ -47,7 +47,7 @@ class DetailPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 60),
                         Container(
-                          padding: const EdgeInsets.all(30.0),
+                          padding: const .all(30.0),
                           alignment: .centerLeft,
                           child: Column(
                             crossAxisAlignment: .start,
@@ -124,7 +124,7 @@ class DetailPage extends HookConsumerWidget {
                                           child: Container(
                                             width: 80,
                                             height: 80,
-                                            padding: const EdgeInsets.all(15.0),
+                                            padding: const .all(15.0),
                                             decoration: BoxDecoration(
                                               borderRadius: .circular(30),
                                               border: .all(
@@ -169,7 +169,7 @@ class DetailPage extends HookConsumerWidget {
                                           child: Container(
                                             width: 80,
                                             height: 80,
-                                            padding: const EdgeInsets.all(15.0),
+                                            padding: const .all(15.0),
                                             decoration: BoxDecoration(
                                               borderRadius: .circular(30),
                                               border: .all(
@@ -210,7 +210,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(child: EventUi(event: event, isDetailPage: true)),
             ),
           ],

@@ -44,7 +44,7 @@ class EditInformationPage extends HookConsumerWidget {
               parent: BouncingScrollPhysics(),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const .all(15.0),
               child: Form(
                 key: key,
                 child: Column(

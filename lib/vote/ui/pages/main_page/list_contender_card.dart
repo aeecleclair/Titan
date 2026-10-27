@@ -143,10 +143,7 @@ class ListContenderCard extends HookConsumerWidget {
                           ),
                         ),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 8,
-                      ),
+                      padding: const .symmetric(horizontal: 15, vertical: 8),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [

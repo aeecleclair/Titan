@@ -28,7 +28,7 @@ class StoreList extends ConsumerWidget {
           children: [
             const SizedBox(height: 25),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               alignment: .centerLeft,
               child: Text(
                 "Associations",

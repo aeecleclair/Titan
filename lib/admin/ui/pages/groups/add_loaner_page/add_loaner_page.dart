@@ -28,7 +28,7 @@ class AddLoanerPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const .symmetric(horizontal: 30.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
@@ -76,7 +76,7 @@ class AddLoanerPage extends HookConsumerWidget {
                                           });
                                         },
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(
+                                          padding: const .symmetric(
                                             vertical: 20,
                                           ),
                                           child: Row(

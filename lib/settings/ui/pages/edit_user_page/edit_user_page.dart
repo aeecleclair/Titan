@@ -62,7 +62,7 @@ class EditUserPage extends HookConsumerWidget {
           await asyncUserNotifier.loadMe();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Form(
             key: key,
             child: Column(
@@ -201,7 +201,7 @@ class EditUserPage extends HookConsumerWidget {
                 const SizedBox(height: 50),
                 if (user.promo != null)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const .only(bottom: 20),
                     child: Text(
                       '${SettingsTextConstants.promo} ${user.promo}',
                       style: const TextStyle(fontSize: 20, fontWeight: .w500),
@@ -256,8 +256,8 @@ class EditUserPage extends HookConsumerWidget {
                         lastDate: DateTime.now(),
                       ),
                       child: Container(
-                        margin: const EdgeInsets.only(left: 30),
-                        padding: const EdgeInsets.all(12),
+                        margin: const .only(left: 30),
+                        padding: const .all(12),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -327,9 +327,7 @@ class EditUserPage extends HookConsumerWidget {
                           ).colorScheme.secondaryContainer,
                         ),
                         decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
+                          contentPadding: const .symmetric(vertical: 10),
                           isDense: true,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(

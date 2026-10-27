@@ -36,7 +36,7 @@ class EditSchoolPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const .symmetric(horizontal: 30.0),
         child: Column(
           children: [
             AlignLeftText(
@@ -50,7 +50,7 @@ class EditSchoolPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: const .symmetric(vertical: 10),
                     alignment: .centerLeft,
                     child: TextEntry(
                       controller: name,
@@ -61,7 +61,7 @@ class EditSchoolPage extends HookConsumerWidget {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: const .symmetric(vertical: 10),
                     alignment: .centerLeft,
                     child: TextEntry(
                       controller: emailRegex,

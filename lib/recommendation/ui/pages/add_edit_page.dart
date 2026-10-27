@@ -65,7 +65,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
       child: Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: SingleChildScrollView(
             child: Column(
               children: [

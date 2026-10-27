@@ -138,7 +138,7 @@ class Calendar extends HookConsumerWidget {
     return bookings.when(
       data: (res) {
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5),
+          margin: const .symmetric(horizontal: 5),
           child: Stack(
             children: [
               SfCalendar(

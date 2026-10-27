@@ -125,10 +125,7 @@ class RightPanel extends HookConsumerWidget {
                   ),
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 15,
-                      ),
+                      margin: const .symmetric(vertical: 20, horizontal: 15),
                       child: LayoutBuilder(
                         builder: (context, constraints) => MouseRegion(
                           onHover: (event) {
@@ -179,7 +176,7 @@ class RightPanel extends HookConsumerWidget {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const .all(10),
                                     child: Image.asset(
                                       screenShot.path,
                                       fit: BoxFit.contain,

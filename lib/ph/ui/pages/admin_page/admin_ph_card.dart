@@ -21,7 +21,7 @@ class AdminPhCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: CardLayout(
-        margin: const EdgeInsets.all(5),
+        margin: const .all(5),
         child: Row(
           children: [
             Column(

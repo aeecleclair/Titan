@@ -38,7 +38,7 @@ class AddEditManagerPage extends HookConsumerWidget {
 
     return BookingTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const .symmetric(horizontal: 30),
         child: Column(
           children: [
             const SizedBox(height: 50),

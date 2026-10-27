@@ -136,7 +136,7 @@ class ReFundPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: .symmetric(horizontal: 20),
                   child: WaitingButton(
                     onTap: () async {
                       final value = await transactionNotifier.refundTransaction(

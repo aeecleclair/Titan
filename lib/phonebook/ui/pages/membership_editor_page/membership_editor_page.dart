@@ -59,7 +59,7 @@ class MembershipEditorPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const .all(30.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -70,7 +70,7 @@ class MembershipEditorPage extends HookConsumerWidget {
               ),
               if (!isEdit) ...[
                 StyledSearchBar(
-                  padding: EdgeInsets.zero,
+                  padding: .zero,
                   label: PhonebookTextConstants.member,
                   editingController: queryController,
                   onChanged: (value) async {

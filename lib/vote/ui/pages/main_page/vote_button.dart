@@ -44,7 +44,7 @@ class VoteButton extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 30.0),
+      padding: const .only(right: 30.0),
       child: GestureDetector(
         onTap: () {
           if (selectedContender.id != "" &&
@@ -82,7 +82,7 @@ class VoteButton extends HookConsumerWidget {
           }
         },
         child: Container(
-          padding: const EdgeInsets.only(top: 10, bottom: 12),
+          padding: const .only(top: 10, bottom: 12),
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(

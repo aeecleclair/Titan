@@ -37,7 +37,7 @@ class TicketCardBackground extends HookConsumerWidget {
               border: .all(color: Colors.white, width: 3),
               borderRadius: const .all(Radius.circular(20)),
             ),
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            margin: const .symmetric(horizontal: 5, vertical: 5),
             child: ClipRRect(
               borderRadius: const .all(Radius.circular(20)),
               child: Stack(
@@ -57,7 +57,7 @@ class TicketCardBackground extends HookConsumerWidget {
         : Container(
             width: 160,
             height: 200,
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            margin: const .symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(

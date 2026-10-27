@@ -22,7 +22,7 @@ class SideItem extends HookConsumerWidget {
       child: RotatedBox(
         quarterTurns: 3,
         child: Container(
-          margin: const EdgeInsets.only(left: 25, bottom: 15, right: 25),
+          margin: const .only(left: 25, bottom: 15, right: 25),
           child: Column(
             children: [
               Text(

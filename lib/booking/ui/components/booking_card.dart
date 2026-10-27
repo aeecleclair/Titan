@@ -100,7 +100,7 @@ class BookingCard extends ConsumerWidget {
       width: 250,
       colors: cardColor,
       shadowColor: cardBoxShadow,
-      padding: const EdgeInsets.all(15.0),
+      padding: const .all(15.0),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,

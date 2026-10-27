@@ -72,14 +72,14 @@ class VoteBars extends HookConsumerWidget {
 
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const .only(top: 10),
         child: BarChart(
           BarChartData(
             gridData: const FlGridData(show: false),
             barTouchData: BarTouchData(
               touchTooltipData: BarTouchTooltipData(
                 tooltipBorderRadius: .circular(20),
-                tooltipPadding: const EdgeInsets.only(
+                tooltipPadding: const .only(
                   left: 10,
                   right: 10,
                   top: 12,
@@ -126,7 +126,7 @@ class VoteBars extends HookConsumerWidget {
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 12.0),
+                      padding: const .only(top: 12.0),
                       child: Column(
                         children: [
                           Text(

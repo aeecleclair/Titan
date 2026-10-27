@@ -26,7 +26,7 @@ class MainCardButton extends StatelessWidget {
           builder: (child) => Container(
             height: 40,
             width: 40,
-            padding: const EdgeInsets.all(7),
+            padding: const .all(7),
             decoration: BoxDecoration(
               gradient: RadialGradient(
                 colors: colors,

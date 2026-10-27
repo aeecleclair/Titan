@@ -16,7 +16,7 @@ class SectionTitle extends HookConsumerWidget {
       section.id != Section.empty().id
           ? section.name
           : VoteTextConstants.noSection,
-      padding: const EdgeInsets.only(left: 20),
+      padding: const .only(left: 20),
       fontSize: 20,
       fontWeight: .w700,
     );

@@ -25,8 +25,8 @@ class DeliveryUi extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+        margin: const .symmetric(vertical: 10.0),
+        padding: const .symmetric(horizontal: 10.0, vertical: 8),
         height: 70,
         width: double.infinity,
         decoration: BoxDecoration(

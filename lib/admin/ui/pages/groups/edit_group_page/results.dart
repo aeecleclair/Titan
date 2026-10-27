@@ -33,7 +33,7 @@ class MemberResults extends HookConsumerWidget {
         children: value
             .map(
               (e) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const .symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: .spaceBetween,
                   children: [

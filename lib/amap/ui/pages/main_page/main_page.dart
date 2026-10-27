@@ -77,12 +77,12 @@ class AmapMainPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const .symmetric(vertical: 8),
                     child: AsyncChild(
                       value: balance,
                       builder: (context, s) => Text(
@@ -186,7 +186,7 @@ class AmapMainPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 20),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const .symmetric(horizontal: 30),
                           child: Row(
                             mainAxisAlignment: .spaceBetween,
                             children: [
@@ -214,7 +214,7 @@ class AmapMainPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 50),
+                          padding: const .symmetric(horizontal: 50),
                           child: Container(
                             height: 70,
                             width: double.infinity,
@@ -257,7 +257,7 @@ class AmapMainPage extends HookConsumerWidget {
                             }
                           },
                           builder: (child) => Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 30),
+                            margin: const .symmetric(horizontal: 30),
                             height: 70,
                             decoration: BoxDecoration(
                               borderRadius: .circular(25),
@@ -285,7 +285,7 @@ class AmapMainPage extends HookConsumerWidget {
                             child: child,
                           ),
                           child: Container(
-                            padding: const EdgeInsets.only(bottom: 5),
+                            padding: const .only(bottom: 5),
                             width: double.infinity,
                             child: Center(
                               child: Text(

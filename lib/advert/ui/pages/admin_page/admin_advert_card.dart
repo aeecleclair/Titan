@@ -22,7 +22,7 @@ class AdminAdvertCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const .symmetric(horizontal: 30),
       child: Stack(
         children: [
           AdvertCard(onTap: onTap, advert: advert),
@@ -30,7 +30,7 @@ class AdminAdvertCard extends HookConsumerWidget {
             top: 10,
             right: 15,
             child: Container(
-              margin: const EdgeInsets.only(top: 30),
+              margin: const .only(top: 30),
               child: Row(
                 mainAxisAlignment: .center,
                 children: [

@@ -81,7 +81,7 @@ class CreationPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 30),
             const Padding(
-              padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+              padding: .only(top: 10, left: 30, right: 30),
               child: Align(
                 alignment: .centerLeft,
                 child: Text(
@@ -148,7 +148,7 @@ class CreationPage extends HookConsumerWidget {
                         child: Container(
                           height: 40,
                           width: 40,
-                          padding: const EdgeInsets.all(7),
+                          padding: const .all(7),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: const LinearGradient(
@@ -181,7 +181,7 @@ class CreationPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const .symmetric(horizontal: 20.0),
               child: Center(
                 child: Form(
                   key: formKey,
@@ -197,7 +197,7 @@ class CreationPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 20),
             Container(
-              margin: const EdgeInsets.only(left: 30, right: 30, top: 15),
+              margin: const .only(left: 30, right: 30, top: 15),
               child: WaitingButton(
                 builder: (child) => BlueBtn(child: child),
                 onTap: () async {
@@ -233,7 +233,7 @@ class CreationPage extends HookConsumerWidget {
             const SizedBox(height: 30),
             const PrizeHandler(),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               alignment: .centerLeft,
               child: const Text(
                 RaffleTextConstants.editRaffle,
@@ -246,10 +246,7 @@ class CreationPage extends HookConsumerWidget {
             ),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 12,
-                    ),
+                    padding: const .symmetric(horizontal: 30, vertical: 12),
                     child: WaitingButton(
                       builder: (child) => BlueBtn(child: child),
                       onTap: () async {
@@ -313,7 +310,7 @@ class CreationPage extends HookConsumerWidget {
                     ),
                   )
                 : Container(
-                    margin: const EdgeInsets.only(bottom: 30),
+                    margin: const .only(bottom: 30),
                     child: Row(
                       children: [
                         const Spacer(),

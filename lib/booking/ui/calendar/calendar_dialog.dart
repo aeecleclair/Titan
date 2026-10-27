@@ -41,7 +41,7 @@ class CalendarDialog extends StatelessWidget {
         children: [
           ListView(
             shrinkWrap: true,
-            padding: const EdgeInsets.all(20),
+            padding: const .all(20),
             children: [
               Text(
                 '${booking.room.name} - ${booking.reason}',
@@ -188,7 +188,7 @@ class CalendarDialog extends StatelessWidget {
               child: Container(
                 height: 40,
                 width: 40,
-                padding: const EdgeInsets.all(7),
+                padding: const .all(7),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surface,
                   boxShadow: [

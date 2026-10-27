@@ -47,7 +47,7 @@ class EmailChangeDialog extends HookConsumerWidget {
         child: GestureDetector(
           onTap: () {},
           child: Container(
-            margin: EdgeInsets.only(
+            margin: .only(
               left: Consts.padding,
               right: Consts.padding,
               top: MediaQuery.of(context).size.height * 0.20,
@@ -56,13 +56,13 @@ class EmailChangeDialog extends HookConsumerWidget {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  padding: const .only(
                     top: Consts.avatarRadius + Consts.padding,
                     bottom: Consts.padding,
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: const EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: const .only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.rectangle,
@@ -124,9 +124,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       onTap: emailPopupStateNotifier.close,
                                       child: Container(
                                         width: 100,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 16,
-                                        ),
+                                        padding: const .symmetric(vertical: 16),
                                         decoration: BoxDecoration(
                                           borderRadius: .circular(10),
                                           gradient: const LinearGradient(
@@ -192,9 +190,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       waitingColor: Colors.black,
                                       builder: (child) => Container(
                                         width: 100,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 16,
-                                        ),
+                                        padding: const .symmetric(vertical: 16),
                                         decoration: BoxDecoration(
                                           borderRadius: .circular(10),
                                           color: Colors.grey.shade300,
@@ -243,9 +239,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                     onTap: emailPopupStateNotifier.close,
                                     child: Container(
                                       width: 100,
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 16,
-                                      ),
+                                      padding: const .symmetric(vertical: 16),
                                       decoration: BoxDecoration(
                                         borderRadius: .circular(10),
                                         color: Colors.grey.shade300,

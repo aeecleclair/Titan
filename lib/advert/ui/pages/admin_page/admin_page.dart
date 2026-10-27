@@ -80,7 +80,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     );
                   },
                   child: CardLayout(
-                    margin: const EdgeInsets.only(
+                    margin: const .only(
                       bottom: 10,
                       top: 20,
                       left: 30,

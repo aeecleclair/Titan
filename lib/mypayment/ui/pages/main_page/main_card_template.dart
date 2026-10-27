@@ -21,7 +21,7 @@ class MainCardTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+      margin: const .fromLTRB(30, 10, 30, 0),
       decoration: BoxDecoration(
         borderRadius: .circular(30),
         gradient: LinearGradient(
@@ -43,7 +43,7 @@ class MainCardTemplate extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const .symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: .start,
                 children: [

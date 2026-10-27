@@ -58,7 +58,7 @@ class OrderUI extends HookConsumerWidget {
         AMAPColors(isDarkTheme).lightGradientPrimary,
         AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 12),
+      padding: const .symmetric(horizontal: 17.0, vertical: 12),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,

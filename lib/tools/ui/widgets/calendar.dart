@@ -38,7 +38,7 @@ class Calendar extends HookConsumerWidget {
                   Container(
                     height:
                         220 + (appointmentDetails.notes!.length / 30 - 5) * 15,
-                    padding: const EdgeInsets.all(20),
+                    padding: const .all(20),
                     child: Column(
                       crossAxisAlignment: .start,
                       children: [
@@ -104,7 +104,7 @@ class Calendar extends HookConsumerWidget {
             value: items,
             builder: (context, res) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
+                margin: const .symmetric(horizontal: 5),
                 child: Stack(
                   children: [
                     SfCalendar(

@@ -19,7 +19,7 @@ class MonthSectionSummary extends StatelessWidget {
     return Container(
       height: 60,
       width: 100,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const .symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: .circular(8),
         gradient: LinearGradient(

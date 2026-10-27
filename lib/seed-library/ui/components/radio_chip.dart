@@ -16,7 +16,7 @@ class RadioChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        margin: const .symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           borderRadius: .circular(30.0),
           color: selected ? Colors.black : Colors.grey.shade200,
@@ -24,7 +24,7 @@ class RadioChip extends StatelessWidget {
         child: Align(
           alignment: .center,
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const .all(10.0),
             child: Text(
               label,
               style: TextStyle(

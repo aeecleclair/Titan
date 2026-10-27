@@ -76,7 +76,7 @@ class ItemBar extends HookConsumerWidget {
                           mainAxisAlignment: .spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(5),
+                              padding: const .all(5),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: .circular(10),
@@ -125,9 +125,7 @@ class ItemBar extends HookConsumerWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                              ),
+                              padding: const .symmetric(horizontal: 6),
                               child: Text(
                                 currentValue.toString(),
                                 style: TextStyle(
@@ -140,7 +138,7 @@ class ItemBar extends HookConsumerWidget {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.all(5),
+                              padding: const .all(5),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
                                 borderRadius: .circular(10),

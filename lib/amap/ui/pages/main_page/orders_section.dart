@@ -42,7 +42,7 @@ class OrderSection extends HookConsumerWidget {
       children: [
         AlignLeftText(
           AMAPTextConstants.orders,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),

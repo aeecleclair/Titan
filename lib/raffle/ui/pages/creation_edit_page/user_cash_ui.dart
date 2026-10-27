@@ -65,7 +65,7 @@ class UserCashUi extends HookConsumerWidget {
             transform: transform,
             child: isFrontImage(angle.abs())
                 ? Container(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const .all(12.0),
                     child: Container(
                       width: 150,
                       height: 100,
@@ -91,7 +91,7 @@ class UserCashUi extends HookConsumerWidget {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: const .symmetric(
                           horizontal: 17.0,
                           vertical: 5,
                         ),
@@ -155,8 +155,8 @@ class UserCashUi extends HookConsumerWidget {
                     transform: Matrix4.identity()..rotateX(pi),
                     alignment: .center,
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      padding: const EdgeInsets.all(12.0),
+                      margin: const .symmetric(horizontal: 5.0),
+                      padding: const .all(12.0),
                       child: Container(
                         width: 140,
                         height: 100,
@@ -182,7 +182,7 @@ class UserCashUi extends HookConsumerWidget {
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                          padding: const .symmetric(horizontal: 17.0),
                           child: Form(
                             key: key,
                             autovalidateMode:
@@ -205,7 +205,7 @@ class UserCashUi extends HookConsumerWidget {
                                         fontSize: 18,
                                         fontWeight: .bold,
                                       ),
-                                      contentPadding: EdgeInsets.all(0),
+                                      contentPadding: .all(0),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: RaffleColorConstants.textDark,

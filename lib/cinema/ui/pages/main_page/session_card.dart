@@ -94,8 +94,8 @@ class SessionCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(10),
-        padding: EdgeInsets.all(isWebFormat ? 50 : 0),
+        margin: const .all(10),
+        padding: .all(isWebFormat ? 50 : 0),
         child: Column(
           mainAxisAlignment: .start,
           children: [

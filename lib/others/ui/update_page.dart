@@ -12,7 +12,7 @@ class UpdatePage extends HookConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const .symmetric(horizontal: 30),
         child: Column(
           children: [
             const Spacer(flex: 2),

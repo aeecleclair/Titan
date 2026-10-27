@@ -67,7 +67,7 @@ class AddEditStructurePage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const .symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),

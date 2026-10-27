@@ -7,7 +7,7 @@ class AdminButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const .all(8.0),
       decoration: BoxDecoration(
         borderRadius: .circular(8),
         color: Colors.black,

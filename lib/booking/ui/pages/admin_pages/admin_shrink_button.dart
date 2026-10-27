@@ -15,7 +15,7 @@ class AdminShrinkButton extends StatelessWidget {
     return WaitingButton(
       builder: (child) => Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(top: 8, bottom: 12),
+        padding: const .only(top: 8, bottom: 12),
         alignment: .center,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,

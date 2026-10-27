@@ -38,7 +38,7 @@ class StructurePage extends HookConsumerWidget {
           await structuresNotifier.getStructures();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const .symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: .start,
             children: [

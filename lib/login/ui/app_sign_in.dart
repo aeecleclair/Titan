@@ -29,7 +29,7 @@ class AppSignIn extends HookConsumerWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const .all(20.0),
         child: Column(
           children: [
             Expanded(

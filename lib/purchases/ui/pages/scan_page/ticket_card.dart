@@ -32,7 +32,7 @@ class TicketCard extends HookConsumerWidget {
     final productIdNotifier = ref.read(productIdProvider.notifier);
     final tagListNotifier = ref.read(tagListProvider.notifier);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const .symmetric(horizontal: 10, vertical: 5),
       child: GestureDetector(
         onTap: onClicked,
         child: CardLayout(
@@ -40,7 +40,7 @@ class TicketCard extends HookConsumerWidget {
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const .symmetric(horizontal: 10),
                 child: Column(
                   crossAxisAlignment: .start,
                   children: [

@@ -40,8 +40,8 @@ class BuyPackTicket extends HookConsumerWidget {
       },
       child: Container(
         width: 160,
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        margin: const .symmetric(horizontal: 5, vertical: 5),
+        padding: const .symmetric(vertical: 12),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -64,7 +64,7 @@ class BuyPackTicket extends HookConsumerWidget {
           mainAxisAlignment: .spaceBetween,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 17),
+              margin: const .symmetric(horizontal: 17),
               child: Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
@@ -149,8 +149,8 @@ class BuyPackTicket extends HookConsumerWidget {
             ),
             const Spacer(),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              margin: const .symmetric(horizontal: 12),
+              padding: const .symmetric(vertical: 10, horizontal: 10),
               width: 150,
               decoration: BoxDecoration(
                 gradient: LinearGradient(

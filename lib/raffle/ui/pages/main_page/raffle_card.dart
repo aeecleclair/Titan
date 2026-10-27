@@ -42,8 +42,8 @@ class RaffleWidget extends HookConsumerWidget {
         behavior: HitTestBehavior.opaque,
         child: Center(
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 15),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            margin: const .symmetric(vertical: 15),
+            padding: const .symmetric(vertical: 20, horizontal: 20),
             decoration: BoxDecoration(
               borderRadius: const .all(Radius.circular(25)),
               color: Colors.white,
@@ -66,7 +66,7 @@ class RaffleWidget extends HookConsumerWidget {
                       Image.asset("assets/images/soli.png"),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.only(left: 10),
+                          margin: const .only(left: 10),
                           child: AutoSizeText(
                             raffle.name,
                             maxLines: 2,

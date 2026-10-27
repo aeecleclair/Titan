@@ -29,12 +29,7 @@ class DayCard extends HookConsumerWidget {
       },
       child: Container(
         alignment: .center,
-        margin: const EdgeInsets.only(
-          left: 8.0,
-          right: 8.0,
-          top: 10.0,
-          bottom: 15,
-        ),
+        margin: const .only(left: 8.0, right: 8.0, top: 10.0, bottom: 15),
         decoration: BoxDecoration(
           borderRadius: .circular(70),
           border: .all(

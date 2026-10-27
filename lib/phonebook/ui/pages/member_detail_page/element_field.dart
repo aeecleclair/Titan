@@ -15,7 +15,7 @@ class ElementField extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      margin: const .symmetric(vertical: 5.0),
       child: Column(
         children: [
           Center(child: Text(label, style: const TextStyle(fontSize: 16))),

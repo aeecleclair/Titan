@@ -65,7 +65,7 @@ class ListBooking extends HookConsumerWidget {
               }
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const .symmetric(horizontal: 30.0),
               child: Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
@@ -94,7 +94,7 @@ class ListBooking extends HookConsumerWidget {
           ),
           if (toggle.value)
             Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const .only(top: 10),
               child: HorizontalListView.builder(
                 height: 210,
                 horizontalSpace: 10,

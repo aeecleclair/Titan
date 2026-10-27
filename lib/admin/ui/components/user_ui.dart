@@ -26,7 +26,7 @@ class UserUi extends HookConsumerWidget {
           GestureDetector(
             onTap: onDelete,
             child: Container(
-              padding: const EdgeInsets.all(7),
+              padding: const .all(7),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [

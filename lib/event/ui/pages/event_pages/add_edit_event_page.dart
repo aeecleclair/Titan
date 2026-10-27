@@ -107,7 +107,7 @@ class AddEditEventPage extends HookConsumerWidget {
                 isEdit
                     ? EventTextConstants.editEvent
                     : EventTextConstants.addEvent,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 color: Colors.grey,
               ),
               const SizedBox(height: 30),
@@ -136,7 +136,7 @@ class AddEditEventPage extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const .symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         TextEntry(
@@ -365,7 +365,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           ),
                         )
                       : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const .symmetric(horizontal: 30),
                           child: TextEntry(
                             controller: location,
                             label: EventTextConstants.location,
@@ -373,7 +373,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                   const SizedBox(height: 30),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const .symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         TextEntry(

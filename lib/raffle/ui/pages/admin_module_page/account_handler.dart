@@ -32,7 +32,7 @@ class AccountHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           alignment: .centerLeft,
           child: TextField(
             onChanged: (value) {
@@ -85,7 +85,7 @@ class AccountHandler extends HookConsumerWidget {
               children: [
                 const SizedBox(width: 15),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const .symmetric(horizontal: 12.0),
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
@@ -110,7 +110,7 @@ class AccountHandler extends HookConsumerWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      padding: const .symmetric(horizontal: 17.0),
                       child: !searchingAmapUser
                           ? Row(
                               children: [
@@ -124,9 +124,7 @@ class AccountHandler extends HookConsumerWidget {
                                     editingController.clear();
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0,
-                                    ),
+                                    padding: const .symmetric(horizontal: 12.0),
                                     child: const HeroIcon(
                                       HeroIcons.xMark,
                                       color: Colors.white,
@@ -155,9 +153,7 @@ class AccountHandler extends HookConsumerWidget {
                                 focusNotifier.setFocus(true);
                               },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0,
-                                ),
+                                padding: const .symmetric(horizontal: 12.0),
                                 child: const HeroIcon(
                                   HeroIcons.plus,
                                   color: Colors.white,

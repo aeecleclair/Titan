@@ -104,7 +104,7 @@ class DetailPage extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       alignment: .center,
                       child: AutoSizeText(
                         session.name,
@@ -115,7 +115,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       alignment: .center,
                       child: Text(
                         formatDate(session.start),
@@ -128,11 +128,8 @@ class DetailPage extends HookConsumerWidget {
                       items: genres,
                       horizontalSpace: 20,
                       itemBuilder: (context, genre, index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
+                        margin: const .symmetric(horizontal: 10),
+                        padding: const .symmetric(horizontal: 15, vertical: 10),
                         decoration: BoxDecoration(
                           color: Theme.of(
                             context,
@@ -150,7 +147,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       child: Text(
                         session.overview != null
                             ? session.overview!
@@ -175,7 +172,7 @@ class DetailPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: QR.back,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const .all(8),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
                       borderRadius: .circular(18),
@@ -196,10 +193,7 @@ class DetailPage extends HookConsumerWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 12,
-                  ),
+                  padding: const .symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     borderRadius: .circular(18),
@@ -255,7 +249,7 @@ class DetailPage extends HookConsumerWidget {
                   final sideMargin =
                       (MediaQuery.of(context).size.width - 300) / 2;
                   return Container(
-                    margin: EdgeInsets.only(
+                    margin: .only(
                       bottom: 35,
                       top: 55,
                       left: sideMargin,

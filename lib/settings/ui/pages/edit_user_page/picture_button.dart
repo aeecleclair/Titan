@@ -10,7 +10,7 @@ class PictureButton extends StatelessWidget {
     return Container(
       height: 40,
       width: 40,
-      padding: const EdgeInsets.all(7),
+      padding: const .all(7),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(

@@ -67,14 +67,14 @@ class DeliveryUi extends HookConsumerWidget {
       height: 155 + 26.0 * (lines),
       width: 280,
       shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.2),
-      padding: const EdgeInsets.all(10),
+      padding: const .all(10),
       child: Column(
         mainAxisAlignment: .spaceBetween,
         crossAxisAlignment: .start,
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const .symmetric(horizontal: 15.0),
               child: Column(
                 mainAxisAlignment: .spaceBetween,
                 crossAxisAlignment: .start,
@@ -160,8 +160,8 @@ class DeliveryUi extends HookConsumerWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 15, bottom: 5),
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+            margin: const .only(top: 15, bottom: 5),
+            padding: const .symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: (delivery.status == DeliveryStatus.creation)
                   ? .spaceBetween
@@ -339,10 +339,7 @@ class DeliveryUi extends HookConsumerWidget {
                     );
                   },
                   builder: (child) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 15,
-                    ),
+                    padding: const .symmetric(vertical: 8, horizontal: 15),
                     decoration: BoxDecoration(
                       borderRadius: .circular(15),
                       gradient: LinearGradient(
@@ -377,7 +374,7 @@ class DeliveryUi extends HookConsumerWidget {
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(bottom: 2),
+                        padding: const .only(bottom: 2),
                         child: Text(
                           delivery.status == DeliveryStatus.creation
                               ? AMAPTextConstants.openDelivery

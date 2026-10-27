@@ -23,8 +23,8 @@ class PrizeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
-      margin: const EdgeInsets.only(bottom: 10),
+      padding: const .all(12.0),
+      margin: const .only(bottom: 10),
       child: Container(
         width: 130,
         height: 125,
@@ -45,7 +45,7 @@ class PrizeCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
+          padding: const .only(left: 17.0, top: 5, right: 17),
           child: Column(
             mainAxisAlignment: .center,
             children: [
@@ -83,7 +83,7 @@ class PrizeCard extends StatelessWidget {
                           child: Container(
                             width: 40,
                             height: 40,
-                            padding: const EdgeInsets.all(7),
+                            padding: const .all(7),
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -113,7 +113,7 @@ class PrizeCard extends StatelessWidget {
                           builder: (child) => Container(
                             width: 40,
                             height: 40,
-                            padding: const EdgeInsets.all(7),
+                            padding: const .all(7),
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -150,7 +150,7 @@ class PrizeCard extends StatelessWidget {
                               builder: (child) => Container(
                                 width: 40,
                                 height: 40,
-                                padding: const EdgeInsets.all(7),
+                                padding: const .all(7),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
@@ -193,7 +193,7 @@ class PrizeCard extends StatelessWidget {
                           )
                         : Container(
                             height: 40,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               vertical: 7,
                               horizontal: 12,
                             ),

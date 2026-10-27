@@ -42,8 +42,8 @@ class EditablePlantDetail extends HookConsumerWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      padding: const EdgeInsets.all(30),
-      margin: const EdgeInsets.all(10),
+      padding: const .all(30),
+      margin: const .all(10),
       decoration: BoxDecoration(
         color: Colors.lightGreen.withAlpha(50),
         borderRadius: .circular(10),

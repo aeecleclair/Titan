@@ -64,7 +64,7 @@ class ToolBar extends ConsumerWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const .symmetric(horizontal: 20.0),
           child: Row(
             mainAxisAlignment: .spaceEvenly,
             children: [
@@ -72,10 +72,7 @@ class ToolBar extends ConsumerWidget {
                 children: [
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
@@ -109,10 +106,7 @@ class ToolBar extends ConsumerWidget {
                   SizedBox(width: 5),
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
@@ -163,10 +157,7 @@ class ToolBar extends ConsumerWidget {
                 children: [
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
@@ -200,10 +191,7 @@ class ToolBar extends ConsumerWidget {
                   SizedBox(width: 5),
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,

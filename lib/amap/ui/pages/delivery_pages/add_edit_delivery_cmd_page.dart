@@ -48,7 +48,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30),
+          margin: const .symmetric(horizontal: 30),
           child: Form(
             key: formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -71,7 +71,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                     ),
 
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30),
+                      margin: const .symmetric(vertical: 30),
                       child: DateEntry(
                         onTap: () => getOnlyDayDate(context, dateController),
                         label: AMAPTextConstants.commandDate,

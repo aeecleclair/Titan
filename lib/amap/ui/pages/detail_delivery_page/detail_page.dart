@@ -45,7 +45,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const .all(30),
               child: Column(
                 children: [
                   Text(
@@ -96,7 +96,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       children: value
                           .map(
                             (e) => Container(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              padding: const .symmetric(vertical: 5),
                               child: ProductDetailCard(
                                 product: e,
                                 quantity: productsQuantity[e.id] ?? 0,
@@ -113,12 +113,12 @@ class DetailDeliveryPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             AlignLeftText(
               "${AMAPTextConstants.orders} :",
-              padding: const EdgeInsets.only(left: 30),
+              padding: const .only(left: 30),
               color: AMAPColors(isDarkTheme).textOnPrimary,
             ),
             const SizedBox(height: 30),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
+              margin: const .symmetric(horizontal: 10),
               child: orders == null
                   ? Loader(
                       color: AMAPColors(isDarkTheme).greenGradientSecondary,
@@ -131,7 +131,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
                       builder: (context, data) {
                         if (data.isEmpty) {
                           return Container(
-                            margin: const EdgeInsets.only(bottom: 50),
+                            margin: const .only(bottom: 50),
                             child: const Center(
                               child: Text(AMAPTextConstants.noOrder),
                             ),

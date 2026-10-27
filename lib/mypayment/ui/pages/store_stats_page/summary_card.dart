@@ -54,7 +54,7 @@ class SummaryCard extends ConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     return Container(
       height: 75,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const .symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       child: Row(
         children: [

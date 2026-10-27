@@ -19,7 +19,7 @@ class DetailPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 60),
@@ -40,7 +40,7 @@ class DetailPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 110),
                         const AlignLeftText(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: .symmetric(horizontal: 20),
                           AMAPTextConstants.products,
                           fontSize: 25,
                         ),
@@ -64,7 +64,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(
                 child: OrderUI(order: order, showButton: false, isDetail: true),
               ),

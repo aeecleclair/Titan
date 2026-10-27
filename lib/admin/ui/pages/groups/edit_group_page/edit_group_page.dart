@@ -45,7 +45,7 @@ class EditGroupPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: AutoLoaderChild(
             group: simpleGroupsGroups,
             notifier: simpleGroupsGroupsNotifier,
@@ -70,7 +70,7 @@ class EditGroupPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          margin: const .symmetric(vertical: 10),
                           alignment: .centerLeft,
                           child: TextEntry(
                             controller: name,
@@ -83,7 +83,7 @@ class EditGroupPage extends HookConsumerWidget {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          margin: const .symmetric(vertical: 10),
                           alignment: .centerLeft,
                           child: TextEntry(
                             controller: description,

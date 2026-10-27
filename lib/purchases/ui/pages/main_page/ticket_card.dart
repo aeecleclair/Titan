@@ -13,14 +13,14 @@ class TicketCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const .symmetric(horizontal: 10, vertical: 5),
       child: GestureDetector(
         onTap: ticket.scanLeft > 0 ? onClicked : null,
         child: CardLayout(
           color: ticket.scanLeft > 0 ? Colors.white : Colors.grey[400]!,
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const .symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: .start,
               children: [

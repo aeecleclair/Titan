@@ -23,8 +23,8 @@ class MemberCard extends StatelessWidget {
       id: member.id,
       width: 150,
       height: isAdmin ? 145 : 110,
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      margin: const .all(10),
+      padding: const .symmetric(horizontal: 17.0),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,

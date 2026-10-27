@@ -16,7 +16,7 @@ class ModuleCard extends HookConsumerWidget {
     final favoritesProviderNotifier = ref.read(favoritesNameProvider.notifier);
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 7),
+      margin: const .symmetric(vertical: 7),
       decoration: BoxDecoration(
         borderRadius: const .all(Radius.circular(20)),
         color: Theme.of(context).colorScheme.primary,
@@ -56,7 +56,7 @@ class ModuleCard extends HookConsumerWidget {
                 ],
                 borderRadius: .circular(15),
               ),
-              margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3),
+              margin: const .only(left: 10.0, right: 10.0, bottom: 3),
               width: 45,
               height: 45,
               child: module.icon.endsWith('.svg')

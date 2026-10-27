@@ -34,7 +34,7 @@ class StructureAdministratorsPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               AlignLeftText(
@@ -48,7 +48,7 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                   StyledSearchBar(
                     label: "Rechercher un utilisateur",
                     color: Theme.of(context).colorScheme.primaryContainer,
-                    padding: const EdgeInsets.all(0),
+                    padding: const .all(0),
                     onChanged: (value) async {
                       if (value.isNotEmpty) {
                         await usersNotifier.filterUsers(value);
@@ -67,9 +67,9 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                       }
                     },
                     suffixIcon: Padding(
-                      padding: const EdgeInsets.all(7.0),
+                      padding: const .all(7.0),
                       child: Container(
-                        padding: const EdgeInsets.all(7),
+                        padding: const .all(7),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [

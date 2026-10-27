@@ -23,8 +23,8 @@ class SumUpCard extends StatelessWidget {
       width: 90,
       child: Container(
         height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        margin: const EdgeInsets.only(bottom: 60),
+        padding: const .symmetric(horizontal: 10, vertical: 8),
+        margin: const .only(bottom: 60),
         decoration: ShapeDecoration(
           shape: const MessageBorder(),
           gradient: LinearGradient(

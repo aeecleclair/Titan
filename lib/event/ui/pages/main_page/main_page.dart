@@ -36,7 +36,7 @@ class EventMainPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Align(
                   alignment: .centerLeft,
                   child: Row(
@@ -69,12 +69,7 @@ class EventMainPage extends HookConsumerWidget {
                   QR.to(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                    top: 20,
-                    left: 40,
-                    right: 40,
-                  ),
+                  margin: const .only(bottom: 10, top: 20, left: 40, right: 40),
                   width: double.infinity,
                   height: 100,
                   color: Colors.white,

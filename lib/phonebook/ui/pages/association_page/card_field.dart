@@ -15,7 +15,7 @@ class CardField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+      margin: const .symmetric(vertical: 5.0, horizontal: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: .center,

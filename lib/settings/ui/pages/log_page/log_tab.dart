@@ -42,10 +42,7 @@ class LogTab extends HookConsumerWidget {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 12,
-                ),
+                padding: const .symmetric(horizontal: 12, vertical: 12),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
                   borderRadius: .circular(10),

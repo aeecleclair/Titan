@@ -53,10 +53,7 @@ class EventUi extends ConsumerWidget {
         }
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: isDetailPage ? 20 : 40.0,
-          vertical: 10,
-        ),
+        margin: .symmetric(horizontal: isDetailPage ? 20 : 40.0, vertical: 10),
         width: 250,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -83,7 +80,7 @@ class EventUi extends ConsumerWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
+          padding: const .symmetric(horizontal: 15.0, vertical: 12),
           child: Column(
             crossAxisAlignment: .start,
             children: [

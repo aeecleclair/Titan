@@ -10,7 +10,7 @@ class AnnouncerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const .symmetric(vertical: 20),
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [

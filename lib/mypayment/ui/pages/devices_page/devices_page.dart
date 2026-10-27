@@ -208,7 +208,7 @@ class DevicesPage extends HookConsumerWidget {
                           showRovokedDevices.value = !showRovokedDevices.value;
                         },
                         child: Container(
-                          margin: const EdgeInsets.only(
+                          margin: const .only(
                             bottom: 10,
                             top: 20,
                             left: 30,
@@ -257,7 +257,7 @@ class DevicesPage extends HookConsumerWidget {
                       ),
                       if (showRovokedDevices.value) ...[
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const .all(16.0),
                           child: Text(
                             'Appareils révoqués',
                             style: TextStyle(

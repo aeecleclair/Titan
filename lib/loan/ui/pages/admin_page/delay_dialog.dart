@@ -26,8 +26,8 @@ class IntegerExampleState extends State<DelayDialog> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.only(top: 45),
+          padding: const .all(20),
+          margin: const .only(top: 45),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Theme.of(context).colorScheme.surface,

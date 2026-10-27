@@ -81,7 +81,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       alignment: .center,
                       child: AutoSizeText(
                         advert.title,
@@ -92,7 +92,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       alignment: .center,
                       child: Text(
                         formatDate(advert.date),
@@ -110,7 +110,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       child: TextWithHyperLink(
                         advert.content,
                         textAlign: .left,
@@ -133,7 +133,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: QR.back,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const .all(8),
                     decoration: BoxDecoration(
                       color: Theme.of(
                         context,
@@ -156,10 +156,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 12,
-                  ),
+                  padding: const .symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,

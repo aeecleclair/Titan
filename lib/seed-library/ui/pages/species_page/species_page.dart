@@ -43,7 +43,7 @@ class SpeciesPage extends HookConsumerWidget {
           await speciesListNotifier.loadSpecies();
         },
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const .all(5.0),
           child: Column(
             children: [
               Text(
@@ -65,12 +65,7 @@ class SpeciesPage extends HookConsumerWidget {
                   );
                 },
                 child: CardLayout(
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                  ),
+                  margin: const .only(bottom: 10, top: 20, left: 20, right: 20),
                   width: double.infinity,
                   height: 100,
                   color: Colors.white,

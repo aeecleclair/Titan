@@ -31,7 +31,7 @@ class CalendarDialogButton extends StatelessWidget {
       child: Container(
         width: 40,
         height: 40,
-        padding: const EdgeInsets.all(5.0),
+        padding: const .all(5.0),
         decoration: BoxDecoration(
           borderRadius: .circular(15.0),
           border: .all(

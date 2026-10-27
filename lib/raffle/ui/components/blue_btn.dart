@@ -10,7 +10,7 @@ class BlueBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+      padding: const .symmetric(horizontal: 3, vertical: 3),
       height: 60,
       decoration: BoxDecoration(
         gradient: const LinearGradient(

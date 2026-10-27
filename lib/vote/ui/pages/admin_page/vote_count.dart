@@ -25,7 +25,7 @@ class VoteCount extends HookConsumerWidget {
       )).maybeWhen(data: (data) => data, orElse: () => -1),
       dataBuilder: (context, data) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
+          padding: const .symmetric(horizontal: 30.0, vertical: 50),
           child: Center(
             child: Text(
               '$data votes',

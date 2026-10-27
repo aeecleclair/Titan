@@ -35,7 +35,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
         return Dialog(
           backgroundColor: Colors.transparent,
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const .all(20),
             width: 250,
             height: 350,
             decoration: BoxDecoration(
@@ -61,7 +61,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
               mainAxisAlignment: .spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 10),
+                  margin: const .only(top: 10),
                   child: Text(
                     "Voulez vous vraiment créer la tombola : ${group.name}",
                     textAlign: .center,
@@ -75,10 +75,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                     WaitingButton(
                       waitingColor: Colors.black,
                       builder: (child) => Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 12,
-                        ),
+                        padding: const .symmetric(vertical: 10, horizontal: 12),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -125,10 +122,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         navigationPop();
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 12,
-                        ),
+                        padding: const .symmetric(vertical: 10, horizontal: 12),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             begin: .topLeft,

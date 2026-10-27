@@ -25,8 +25,8 @@ class TicketUI extends HookConsumerWidget {
         Container(
           width: 130,
           height: 125,
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+          margin: const .symmetric(horizontal: 12, vertical: 12),
+          padding: const .symmetric(vertical: 12, horizontal: 17),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -72,7 +72,7 @@ class TicketUI extends HookConsumerWidget {
                       child: Container(
                         width: 40,
                         height: 40,
-                        padding: const EdgeInsets.all(7),
+                        padding: const .all(7),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -103,7 +103,7 @@ class TicketUI extends HookConsumerWidget {
                       builder: (child) => Container(
                         width: 40,
                         height: 40,
-                        padding: const EdgeInsets.all(7),
+                        padding: const .all(7),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [

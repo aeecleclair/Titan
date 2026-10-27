@@ -14,7 +14,7 @@ class GroupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const .all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [gradient1, gradient2],

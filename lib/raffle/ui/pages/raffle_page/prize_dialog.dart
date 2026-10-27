@@ -15,8 +15,8 @@ class PrizeDialog extends HookConsumerWidget {
       child: Container(
         width: 350,
         height: 300,
-        margin: const EdgeInsets.only(left: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        margin: const .only(left: 10),
+        padding: const .symmetric(horizontal: 30, vertical: 20),
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -39,7 +39,7 @@ class PrizeDialog extends HookConsumerWidget {
           mainAxisAlignment: .start,
           children: [
             Container(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const .only(bottom: 20),
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(

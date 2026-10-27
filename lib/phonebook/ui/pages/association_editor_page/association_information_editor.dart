@@ -60,11 +60,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                       restrictToManaged: !isPhonebookAdmin,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: const .symmetric(horizontal: 30),
                       child: Column(
                         children: [
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const .symmetric(vertical: 10),
                             child: Column(
                               mainAxisAlignment: .spaceBetween,
                               crossAxisAlignment: .start,
@@ -83,7 +83,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                         fontWeight: .bold,
                                       ),
                                       suffixIcon: Container(
-                                        padding: const EdgeInsets.all(10),
+                                        padding: const .all(10),
                                         child: const HeroIcon(HeroIcons.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
@@ -112,7 +112,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const .symmetric(vertical: 10),
                             child: Column(
                               mainAxisAlignment: .spaceBetween,
                               crossAxisAlignment: .start,
@@ -131,7 +131,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                         fontWeight: .bold,
                                       ),
                                       suffixIcon: Container(
-                                        padding: const EdgeInsets.all(10),
+                                        padding: const .all(10),
                                         child: const HeroIcon(HeroIcons.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
@@ -211,12 +211,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     if (association.deactivated)
                       Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        margin: const .symmetric(vertical: 10),
                         child: Text(
                           PhonebookTextConstants.deactivatedAssociationWarning,
                           style: TextStyle(
@@ -227,14 +227,14 @@ class AssociationInformationEditor extends HookConsumerWidget {
                         ),
                       ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      margin: const .symmetric(vertical: 10),
                       child: Text(
                         association.name,
                         style: const TextStyle(fontSize: 18, fontWeight: .bold),
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      margin: const .symmetric(vertical: 10),
                       child: SizedBox(
                         child: Text(
                           association.description,
@@ -250,11 +250,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
               ),
         if (isAdmin && !association.deactivated)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const .symmetric(horizontal: 30),
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: const .symmetric(vertical: 10),
                   child: Column(
                     mainAxisAlignment: .spaceBetween,
                     crossAxisAlignment: .start,
@@ -266,7 +266,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                             data: (data) {
                               return data.map((group) {
                                 return Container(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: const .symmetric(
                                     vertical: 10,
                                     horizontal: 20,
                                   ),

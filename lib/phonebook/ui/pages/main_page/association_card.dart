@@ -19,11 +19,11 @@ class AssociationCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      padding: const .symmetric(horizontal: 30, vertical: 5),
       child: GestureDetector(
         onTap: onClicked,
         child: CardLayout(
-          margin: EdgeInsets.zero,
+          margin: .zero,
           child: Row(
             children: [
               const SizedBox(width: 10),

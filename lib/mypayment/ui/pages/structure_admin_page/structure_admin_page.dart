@@ -30,7 +30,7 @@ class StructureAdminPage extends ConsumerWidget {
               color: Theme.of(context).colorScheme.tertiary,
               fontSize: 20,
               fontWeight: .bold,
-              padding: EdgeInsets.only(left: 30),
+              padding: .only(left: 30),
             ),
             const SizedBox(height: 10),
             const AddStoreCard(),

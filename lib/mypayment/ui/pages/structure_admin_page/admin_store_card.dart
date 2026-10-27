@@ -29,8 +29,8 @@ class AdminStoreCard extends ConsumerWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      margin: const .symmetric(vertical: 10, horizontal: 20),
+      padding: const .symmetric(vertical: 10, horizontal: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: .circular(15),

@@ -21,7 +21,7 @@ class PermissionsPage extends HookConsumerWidget {
     final accountTypes = ref.watch(allAccountTypesListProvider);
     return AdminTemplate(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const .symmetric(horizontal: 20),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

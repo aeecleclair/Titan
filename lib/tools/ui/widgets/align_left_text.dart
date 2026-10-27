@@ -12,7 +12,7 @@ class AlignLeftText extends StatelessWidget {
     this.fontSize = 18,
     this.fontWeight = .bold,
     this.color,
-    this.padding = const EdgeInsets.all(0),
+    this.padding = const .all(0),
   });
 
   @override

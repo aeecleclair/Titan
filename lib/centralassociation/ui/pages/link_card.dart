@@ -13,7 +13,7 @@ class LinkCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 7),
+      margin: const .symmetric(vertical: 7),
       decoration: BoxDecoration(
         borderRadius: const .all(Radius.circular(20)),
         color: Theme.of(context).colorScheme.primary,
@@ -36,7 +36,7 @@ class LinkCard extends HookConsumerWidget {
         child: Row(
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3),
+              margin: const .only(left: 10.0, right: 10.0, bottom: 3),
               width: 45,
               height: 45,
               decoration: BoxDecoration(
@@ -62,7 +62,7 @@ class LinkCard extends HookConsumerWidget {
             Expanded(
               child: Container(
                 alignment: .center,
-                padding: const EdgeInsets.only(bottom: 7),
+                padding: const .only(bottom: 7),
                 child: AutoSizeText(
                   link.name,
                   style: TextStyle(

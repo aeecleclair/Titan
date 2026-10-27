@@ -17,7 +17,7 @@ class EditionButton extends HookConsumerWidget {
     return GestureDetector(
       onTap: !deactivated ? onEdition : null,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         decoration: BoxDecoration(
           color: !deactivated
               ? Colors.grey.shade200

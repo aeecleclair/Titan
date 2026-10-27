@@ -114,7 +114,7 @@ class DrawerTopBar extends HookConsumerWidget {
                                       child: Container(
                                         height: 18,
                                         width: 18,
-                                        padding: const EdgeInsets.all(3),
+                                        padding: const .all(3),
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           gradient: const LinearGradient(
@@ -184,7 +184,7 @@ class DrawerTopBar extends HookConsumerWidget {
             ),
             if (!isConnected)
               Container(
-                margin: const EdgeInsets.only(right: 20),
+                margin: const .only(right: 20),
                 child: const HeroIcon(
                   HeroIcons.signalSlash,
                   color: Colors.white,
@@ -198,7 +198,7 @@ class DrawerTopBar extends HookConsumerWidget {
             return Opacity(
               opacity: dropDownAnimation.value,
               child: Padding(
-                padding: const EdgeInsets.only(left: 25, top: 15),
+                padding: const .only(left: 25, top: 15),
                 child: Column(
                   children: [
                     Transform.translate(
@@ -284,8 +284,8 @@ class DrawerTopBar extends HookConsumerWidget {
             onTap: emailPopupStateNotifier.open,
             child: Container(
               width: 170,
-              margin: const EdgeInsets.only(left: 15),
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              margin: const .only(left: 15),
+              padding: const .symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [ColorConstants.gradient1, ColorConstants.gradient2],

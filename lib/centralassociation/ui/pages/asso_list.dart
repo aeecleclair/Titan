@@ -9,7 +9,7 @@ class AssoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+      padding: const .symmetric(vertical: 10.0, horizontal: 30.0),
       child: Column(
         crossAxisAlignment: .start,
         children: [

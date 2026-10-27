@@ -34,7 +34,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const .symmetric(horizontal: 30),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(

@@ -50,7 +50,7 @@ class RaffleMainPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 30),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: Row(
                 mainAxisAlignment: .spaceBetween,
                 children: [
@@ -109,7 +109,7 @@ class RaffleMainPage extends HookConsumerWidget {
                           height: 135,
                           items: ticketSum.keys.toList(),
                           itemBuilder: (context, key, index) => Container(
-                            margin: const EdgeInsets.symmetric(
+                            margin: const .symmetric(
                               horizontal: 10,
                               vertical: 10,
                             ),
@@ -123,7 +123,7 @@ class RaffleMainPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: AsyncChild(
                 value: raffleList,
                 builder: (context, raffles) {
@@ -148,11 +148,7 @@ class RaffleMainPage extends HookConsumerWidget {
                     children: [
                       if (onGoingRaffles.isNotEmpty)
                         Container(
-                          margin: const EdgeInsets.only(
-                            bottom: 10,
-                            top: 20,
-                            left: 5,
-                          ),
+                          margin: const .only(bottom: 10, top: 20, left: 5),
                           child: const SectionTitle(
                             text: RaffleTextConstants.actualRaffles,
                           ),
@@ -160,11 +156,7 @@ class RaffleMainPage extends HookConsumerWidget {
                       ...onGoingRaffles.map((e) => RaffleWidget(raffle: e)),
                       if (incomingRaffles.isNotEmpty)
                         Container(
-                          margin: const EdgeInsets.only(
-                            bottom: 10,
-                            top: 20,
-                            left: 5,
-                          ),
+                          margin: const .only(bottom: 10, top: 20, left: 5),
                           child: const SectionTitle(
                             text: RaffleTextConstants.nextRaffles,
                           ),
@@ -172,11 +164,7 @@ class RaffleMainPage extends HookConsumerWidget {
                       ...incomingRaffles.map((e) => RaffleWidget(raffle: e)),
                       if (pastRaffles.isNotEmpty)
                         Container(
-                          margin: const EdgeInsets.only(
-                            bottom: 10,
-                            top: 20,
-                            left: 5,
-                          ),
+                          margin: const .only(bottom: 10, top: 20, left: 5),
                           child: const SectionTitle(
                             text: RaffleTextConstants.pastRaffles,
                           ),

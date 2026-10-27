@@ -42,7 +42,7 @@ class WebMemberCard extends HookConsumerWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      padding: const .symmetric(horizontal: 30, vertical: 5),
       child: GestureDetector(
         onTap: () {
           memberNotifier.setCompleteMember(member);
@@ -60,7 +60,7 @@ class WebMemberCard extends HookConsumerWidget {
                 )
                 .rolesTags,
           ),
-          margin: EdgeInsets.zero,
+          margin: .zero,
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth > 700) {

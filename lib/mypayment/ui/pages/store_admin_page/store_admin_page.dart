@@ -45,7 +45,7 @@ class StoreAdminPage extends HookConsumerWidget {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              padding: const .symmetric(horizontal: 30, vertical: 20),
               alignment: .centerLeft,
               child: Text(
                 "Les vendeurs de ${store.name}",
@@ -58,7 +58,7 @@ class StoreAdminPage extends HookConsumerWidget {
                   isSearching.value = true;
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const .symmetric(horizontal: 30),
                   child: Row(
                     crossAxisAlignment: .center,
                     children: [
@@ -112,7 +112,7 @@ class StoreAdminPage extends HookConsumerWidget {
             ],
             if (isSearching.value) ...[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Row(
                   children: [
                     Expanded(

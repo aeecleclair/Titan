@@ -57,7 +57,7 @@ class CinemaMainPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Align(
                   alignment: .centerLeft,
                   child: Row(

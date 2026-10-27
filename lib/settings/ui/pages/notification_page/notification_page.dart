@@ -23,12 +23,12 @@ class NotificationPage extends HookConsumerWidget {
           await topicsNotifier.getTopics();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               AlignLeftText(
                 SettingsTextConstants.updateNotification,
-                padding: const EdgeInsets.symmetric(vertical: 30),
+                padding: const .symmetric(vertical: 30),
                 color: Theme.of(context).colorScheme.tertiary,
               ),
               AsyncChild(
@@ -37,7 +37,7 @@ class NotificationPage extends HookConsumerWidget {
                   children: Topic.values
                       .map(
                         (e) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const .symmetric(vertical: 12),
                           child: Row(
                             mainAxisAlignment: .spaceBetween,
                             children: [

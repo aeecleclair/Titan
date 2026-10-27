@@ -28,7 +28,7 @@ class LeaderBoardItem extends ConsumerWidget {
     );
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [

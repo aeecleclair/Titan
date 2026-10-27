@@ -22,10 +22,10 @@ class PlantCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onClicked,
       child: Card(
-        margin: const EdgeInsets.all(10),
+        margin: const .all(10),
         shape: RoundedRectangleBorder(borderRadius: .circular(15)),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const .all(10),
           child: Row(
             children: [
               SizedBox(

@@ -22,7 +22,7 @@ class SignInUpBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 10),
       child: Container(
         height: 50,
         width: double.infinity,
@@ -40,7 +40,7 @@ class SignInUpBar extends StatelessWidget {
             ],
           ),
           child: Container(
-            margin: const EdgeInsets.only(left: 20),
+            margin: const .only(left: 20),
             child: isLoading ? Loader(color: color) : icon,
           ),
         ),

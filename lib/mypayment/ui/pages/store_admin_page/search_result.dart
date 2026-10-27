@@ -118,10 +118,7 @@ class SearchResult extends HookConsumerWidget {
                 (simpleUser) => GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 5,
-                    ),
+                    padding: const .symmetric(horizontal: 30, vertical: 5),
                     child: Row(
                       crossAxisAlignment: .center,
                       children: [

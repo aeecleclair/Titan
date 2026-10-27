@@ -68,9 +68,7 @@ class LoanMainPage extends HookConsumerWidget {
                         children: [
                           AlignLeftText(
                             '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}, ${LoanTextConstants.including} $lateLoanCount ${LoanTextConstants.lateLoan}',
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0,
-                            ),
+                            padding: const .symmetric(horizontal: 30.0),
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
                           const SizedBox(height: 30),
@@ -118,7 +116,7 @@ class LoanMainPage extends HookConsumerWidget {
                       const SizedBox(height: 30),
                       AlignLeftText(
                         '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        padding: const .symmetric(horizontal: 30.0),
                         color: Theme.of(context).colorScheme.tertiary,
                       ),
                       const SizedBox(height: 30),

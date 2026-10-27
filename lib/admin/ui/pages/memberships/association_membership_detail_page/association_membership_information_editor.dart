@@ -44,7 +44,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: const .symmetric(vertical: 10),
                 child: Column(
                   mainAxisAlignment: .spaceBetween,
                   crossAxisAlignment: .start,
@@ -62,7 +62,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                             fontWeight: .bold,
                           ),
                           suffixIcon: Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const .all(10),
                             child: const HeroIcon(HeroIcons.pencil),
                           ),
                           enabledBorder: const UnderlineInputBorder(

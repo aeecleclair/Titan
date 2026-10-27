@@ -37,10 +37,8 @@ class MembershipCreationDialogBox extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(MembershipCreationDialogBox._padding),
-            margin: const EdgeInsets.only(
-              top: MembershipCreationDialogBox._avatarRadius,
-            ),
+            padding: const .all(MembershipCreationDialogBox._padding),
+            margin: const .only(top: MembershipCreationDialogBox._avatarRadius),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Theme.of(context).colorScheme.surface,

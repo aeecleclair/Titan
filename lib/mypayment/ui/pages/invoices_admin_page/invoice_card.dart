@@ -30,7 +30,7 @@ class InvoiceCard extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const .symmetric(vertical: 5),
       child: GestureDetector(
         onTap: () => showCustomBottomModal(
           context: context,
@@ -159,7 +159,7 @@ class InvoiceCard extends HookConsumerWidget {
           ),
         ),
         child: CardLayout(
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          margin: const .symmetric(vertical: 5, horizontal: 20),
           shadowColor: Theme.of(context).shadowColor,
           child: Row(
             children: [

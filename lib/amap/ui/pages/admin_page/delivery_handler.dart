@@ -28,7 +28,7 @@ class DeliveryHandler extends HookConsumerWidget {
       children: [
         AlignLeftText(
           AMAPTextConstants.deliveries,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),

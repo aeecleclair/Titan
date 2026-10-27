@@ -9,8 +9,8 @@ class MenuCardUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const .symmetric(vertical: 10),
+      padding: const .symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: .circular(10),

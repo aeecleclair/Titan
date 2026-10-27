@@ -80,7 +80,7 @@ class AssociationEditorPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 20),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               alignment: .centerLeft,
               child: Text(
                 PhonebookTextConstants.edit,
@@ -95,7 +95,7 @@ class AssociationEditorPage extends HookConsumerWidget {
             AssociationInformationEditor(),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: Row(
                 children: [
                   const Text(PhonebookTextConstants.members),
@@ -241,7 +241,7 @@ class AssociationEditorPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
                   colors:

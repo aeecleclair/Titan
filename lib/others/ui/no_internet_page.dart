@@ -16,7 +16,7 @@ class NoInternetPage extends HookConsumerWidget {
     final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const .all(30),
         height: MediaQuery.of(context).size.height * 0.90,
         child: Center(
           child: Column(
@@ -44,7 +44,7 @@ class NoInternetPage extends HookConsumerWidget {
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(top: 12, bottom: 15),
+                  padding: const .only(top: 12, bottom: 15),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(

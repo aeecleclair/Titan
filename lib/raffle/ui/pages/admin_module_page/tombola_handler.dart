@@ -25,7 +25,7 @@ class TombolaHandler extends HookConsumerWidget {
           return Dialog(
             child: Container(
               height: 100 + groups.length * 35.0,
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const Text(
@@ -49,7 +49,7 @@ class TombolaHandler extends HookConsumerWidget {
                           callback();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          padding: const .symmetric(vertical: 8.0),
                           child: Center(
                             child: Text(
                               groups[index].name,
@@ -75,7 +75,7 @@ class TombolaHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           alignment: .centerLeft,
           child: const Text(
             RaffleTextConstants.raffle,
@@ -95,7 +95,7 @@ class TombolaHandler extends HookConsumerWidget {
               children: [
                 const SizedBox(width: 15),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const .symmetric(horizontal: 12.0),
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
@@ -120,7 +120,7 @@ class TombolaHandler extends HookConsumerWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      padding: const .symmetric(horizontal: 17.0),
                       child: GestureDetector(
                         onTap: () {
                           groupList.when(
@@ -144,7 +144,7 @@ class TombolaHandler extends HookConsumerWidget {
                           );
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          padding: const .symmetric(horizontal: 12.0),
                           child: const HeroIcon(
                             HeroIcons.plus,
                             color: Colors.white,

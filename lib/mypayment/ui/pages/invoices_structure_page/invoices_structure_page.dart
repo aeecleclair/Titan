@@ -42,7 +42,7 @@ class StructureInvoicesPage extends HookConsumerWidget {
           value: invoices,
           builder: (context, invoices) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const .symmetric(horizontal: 20),
               child: Column(
                 children: [
                   Row(

@@ -53,7 +53,7 @@ class ScanDialog extends HookConsumerWidget {
     });
 
     return CardLayout(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      margin: const .symmetric(horizontal: 20, vertical: 50),
       child: shouldSetTag.value
           ? Column(
               children: [
@@ -143,7 +143,7 @@ class ScanDialog extends HookConsumerWidget {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.all(20),
+                    margin: const .all(20),
                     height: 300,
                     child: ClipRRect(
                       borderRadius: .circular(20),
@@ -185,9 +185,7 @@ class ScanDialog extends HookConsumerWidget {
                           const SizedBox(height: 30),
                           if (data.qrCodeSecret != "")
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
+                              padding: const .symmetric(horizontal: 20),
                               child: Row(
                                 children: [
                                   GestureDetector(

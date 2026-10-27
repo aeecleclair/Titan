@@ -22,7 +22,7 @@ class BottomModalTemplate extends StatelessWidget {
       children: [
         Center(
           child: Container(
-            margin: const EdgeInsets.only(bottom: 12),
+            margin: const .only(bottom: 12),
             width: 120,
             height: 4,
             decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class BottomModalTemplate extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: .vertical(top: Radius.circular(30)),
             ),
-            padding: EdgeInsets.all(20),
+            padding: .all(20),
             child: Column(
               mainAxisSize: .min,
               crossAxisAlignment: .center,

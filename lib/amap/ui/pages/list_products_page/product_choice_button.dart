@@ -34,7 +34,7 @@ class ProductChoiceButton extends HookConsumerWidget {
 
     return Container(
       height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const .symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: .spaceEvenly,
         children: [
@@ -42,7 +42,7 @@ class ProductChoiceButton extends HookConsumerWidget {
             child: WaitingButton(
               waitingColor: AMAPColors(isDarkTheme).background,
               builder: (child) => Container(
-                margin: const EdgeInsets.only(right: 10),
+                margin: const .only(right: 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -127,7 +127,7 @@ class ProductChoiceButton extends HookConsumerWidget {
           ),
           GestureDetector(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const .symmetric(horizontal: 12),
               height: 70,
               decoration: BoxDecoration(
                 gradient: LinearGradient(

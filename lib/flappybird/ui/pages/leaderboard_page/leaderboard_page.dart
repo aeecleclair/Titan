@@ -25,7 +25,7 @@ class LeaderBoardPage extends HookConsumerWidget {
               width: double.infinity,
               height: double.infinity,
               color: FlappyBirdColors(isDarkTheme).sky,
-              padding: const EdgeInsets.only(top: 90, left: 30, right: 30),
+              padding: const .only(top: 90, left: 30, right: 30),
               child: leaderBoard.when(
                 data: (scoreList) => ListView.builder(
                   physics: const BouncingScrollPhysics(),
@@ -33,7 +33,7 @@ class LeaderBoardPage extends HookConsumerWidget {
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
+                        padding: const .only(bottom: 15),
                         child: Text(
                           "LeaderBoard",
                           textAlign: .center,
@@ -61,7 +61,7 @@ class LeaderBoardPage extends HookConsumerWidget {
               color: FlappyBirdColors(isDarkTheme).land,
               child: Container(
                 alignment: .center,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: bestUserScore.when(
                   data: (score) => LeaderBoardItem(score: score),
                   error: (e, s) =>

@@ -155,7 +155,7 @@ class ScanPage extends HookConsumerWidget {
                                     value: ongoingTransaction,
                                     builder: (context, transaction) {
                                       return Container(
-                                        padding: const EdgeInsets.symmetric(
+                                        padding: const .symmetric(
                                           vertical: 20,
                                           horizontal: 50,
                                         ),
@@ -199,7 +199,7 @@ class ScanPage extends HookConsumerWidget {
                                     },
                                     errorBuilder: (error, stack) {
                                       return Container(
-                                        padding: const EdgeInsets.symmetric(
+                                        padding: const .symmetric(
                                           vertical: 20,
                                           horizontal: 50,
                                         ),
@@ -228,7 +228,7 @@ class ScanPage extends HookConsumerWidget {
                                       );
                                     },
                                     loadingBuilder: (context) => Container(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: const .symmetric(
                                         vertical: 20,
                                         horizontal: 50,
                                       ),
@@ -288,7 +288,7 @@ class ScanPage extends HookConsumerWidget {
                         AsyncChild(
                           value: ongoingTransaction,
                           errorBuilder: (_, child) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            padding: const .symmetric(horizontal: 30),
                             child: GestureDetector(
                               child: Container(
                                 width: double.infinity,
@@ -320,7 +320,7 @@ class ScanPage extends HookConsumerWidget {
                             ),
                           ),
                           builder: (context, transaction) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            padding: const .symmetric(horizontal: 30),
                             child: Row(
                               children: [
                                 CancelButton(

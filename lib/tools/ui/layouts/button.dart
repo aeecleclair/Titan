@@ -40,7 +40,7 @@ class Button extends StatelessWidget {
       onTap: disabled == true ? null : onPressed,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const .symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: switch (type) {
             .main => Theme.of(context).colorScheme.secondaryContainer,

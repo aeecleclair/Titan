@@ -20,7 +20,7 @@ class InformationPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          padding: const EdgeInsets.only(bottom: 30, left: 20, right: 30),
+          padding: const .only(bottom: 30, left: 20, right: 30),
           child: AsyncChild(
             value: information,
             builder: (context, info) => Column(
@@ -36,7 +36,7 @@ class InformationPage extends HookConsumerWidget {
                     },
                     child: Container(
                       width: 250,
-                      padding: const EdgeInsets.all(10),
+                      padding: const .all(10),
                       alignment: .center,
                       decoration: BoxDecoration(
                         color: SeedLibraryColorConstants.greenGradient1,

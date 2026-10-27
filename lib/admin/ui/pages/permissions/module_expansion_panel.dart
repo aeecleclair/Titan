@@ -37,7 +37,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
           canTapOnHeader: true,
           isExpanded: isExpanded.value[index],
           headerBuilder: (context, isOpen) => Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const .symmetric(vertical: 10),
             child: Text(
               module,
               style: TextStyle(

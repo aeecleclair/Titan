@@ -19,13 +19,13 @@ class TransferStructurePage extends HookConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     return PaymentTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+        padding: const .symmetric(horizontal: 30.0, vertical: 10.0),
         child: Column(
           children: [
             StyledSearchBar(
               label: "Prochain responsable",
               color: MyPaymentColors(isDarkTheme).gradient3,
-              padding: const EdgeInsets.all(0),
+              padding: const .all(0),
               editingController: queryController,
               onChanged: (value) async {
                 if (value.isNotEmpty) {
@@ -35,9 +35,9 @@ class TransferStructurePage extends HookConsumerWidget {
                 }
               },
               suffixIcon: Padding(
-                padding: const EdgeInsets.all(7.0),
+                padding: const .all(7.0),
                 child: Container(
-                  padding: const EdgeInsets.all(7),
+                  padding: const .all(7),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [

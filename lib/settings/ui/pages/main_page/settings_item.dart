@@ -22,7 +22,7 @@ class SettingsItem extends StatelessWidget {
         mainAxisAlignment: .spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 20),
+            padding: const .only(right: 20),
             child: HeroIcon(
               icon,
               size: 30,
@@ -31,7 +31,7 @@ class SettingsItem extends StatelessWidget {
           ),
           Expanded(child: child),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const .all(10),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
               border: .all(color: Theme.of(context).colorScheme.onPrimary),

@@ -20,7 +20,7 @@ class AdminMainPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(40),
+        padding: const .all(40),
         child: GridView(
           controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

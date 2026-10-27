@@ -21,7 +21,7 @@ class PrizeCard extends HookConsumerWidget {
       },
       child: Container(
         width: 100,
-        margin: const EdgeInsets.only(left: 5, right: 5),
+        margin: const .only(left: 5, right: 5),
         decoration: BoxDecoration(
           image: const DecorationImage(
             image: AssetImage("assets/images/gift.png"),
@@ -65,11 +65,7 @@ class PrizeCard extends HookConsumerWidget {
                     children: [
                       const Spacer(),
                       Container(
-                        padding: const EdgeInsets.only(
-                          left: 8,
-                          right: 8,
-                          bottom: 8,
-                        ),
+                        padding: const .only(left: 8, right: 8, bottom: 8),
                         child: AutoSizeText(
                           prize.name,
                           maxLines: 2,

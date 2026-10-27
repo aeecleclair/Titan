@@ -21,7 +21,7 @@ class NoModulePage extends HookConsumerWidget {
     );
     return const Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: .symmetric(horizontal: 30),
         child: Column(
           children: [
             Spacer(flex: 2),

@@ -21,8 +21,8 @@ class WinningTicketUI extends HookConsumerWidget {
         Container(
           width: 120,
           height: 120,
-          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+          margin: const .symmetric(horizontal: 6, vertical: 10),
+          padding: const .symmetric(vertical: 12, horizontal: 17),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(

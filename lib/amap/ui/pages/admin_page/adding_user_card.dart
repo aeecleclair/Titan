@@ -24,7 +24,7 @@ class AddingUserCard extends HookConsumerWidget {
         onAdd();
       },
       child: Container(
-        padding: const EdgeInsets.all(12.0),
+        padding: const .all(12.0),
         child: Container(
           width: 140,
           height: 75,
@@ -33,7 +33,7 @@ class AddingUserCard extends HookConsumerWidget {
             borderRadius: .circular(25),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const .symmetric(horizontal: 15.0),
             child: Column(
               mainAxisAlignment: .center,
               crossAxisAlignment: .start,

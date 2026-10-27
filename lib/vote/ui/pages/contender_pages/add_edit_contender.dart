@@ -84,12 +84,7 @@ class AddEditContenderPage extends HookConsumerWidget {
             children: [
               const AlignLeftText(
                 VoteTextConstants.addPretendance,
-                padding: EdgeInsets.only(
-                  top: 40,
-                  left: 30,
-                  right: 30,
-                  bottom: 50,
-                ),
+                padding: .only(top: 40, left: 30, right: 30, bottom: 50),
                 color: Colors.grey,
               ),
               Center(
@@ -154,7 +149,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: TextEntry(
                   label: VoteTextConstants.name,
                   controller: name,
@@ -176,7 +171,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: TextEntry(
                   keyboardType: TextInputType.multiline,
                   controller: description,
@@ -197,7 +192,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: InputDecorator(
                   decoration: InputDecoration(
                     floatingLabelStyle: const TextStyle(
@@ -215,7 +210,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          padding: const .symmetric(horizontal: 20.0),
                           child: Column(
                             children: <Widget>[
                               TextEntry(
@@ -276,10 +271,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 },
                                 child: Container(
                                   width: double.infinity,
-                                  padding: const EdgeInsets.only(
-                                    top: 8,
-                                    bottom: 12,
-                                  ),
+                                  padding: const .only(top: 8, bottom: 12),
                                   alignment: .center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
@@ -318,7 +310,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 50),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: TextEntry(
                   keyboardType: TextInputType.multiline,
                   label: VoteTextConstants.program,
@@ -327,11 +319,11 @@ class AddEditContenderPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 50),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: WaitingButton(
                   builder: (child) => Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.only(top: 8, bottom: 12),
+                    padding: const .only(top: 8, bottom: 12),
                     alignment: .center,
                     decoration: BoxDecoration(
                       color: Colors.black,

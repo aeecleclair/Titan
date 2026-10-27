@@ -34,7 +34,7 @@ class TicketWidget extends HookConsumerWidget {
         TicketCardBackground(
           isWinningTicket: isWinningTicket,
           child: Container(
-            padding: EdgeInsets.symmetric(
+            padding: .symmetric(
               vertical: isWinningTicket ? 9 : 12,
               horizontal: isWinningTicket ? 14 : 17,
             ),
@@ -46,7 +46,7 @@ class TicketWidget extends HookConsumerWidget {
                     Container(
                       width: 50,
                       height: 50,
-                      margin: const EdgeInsets.only(right: 8),
+                      margin: const .only(right: 8),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [

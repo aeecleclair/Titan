@@ -43,7 +43,7 @@ class ContenderCard extends HookConsumerWidget {
               isAdmin)
           ? 180
           : 130,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+      padding: const .symmetric(horizontal: 20.0, vertical: 15),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,

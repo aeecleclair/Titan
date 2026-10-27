@@ -37,7 +37,7 @@ Widget statusTagWidget(Color color, String text) {
       color: color.withValues(alpha: 0.2),
       borderRadius: .circular(5),
     ),
-    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+    padding: const .symmetric(horizontal: 5, vertical: 2),
     child: Text(
       text,
       style: TextStyle(color: color, fontWeight: .bold, fontSize: 18),

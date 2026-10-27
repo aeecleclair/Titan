@@ -43,7 +43,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const .all(30.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -55,7 +55,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               if (!isEdit) ...[
                 StyledSearchBar(
-                  padding: EdgeInsets.zero,
+                  padding: .zero,
                   label: AdminTextConstants.user,
                   editingController: queryController,
                   onChanged: (value) async {

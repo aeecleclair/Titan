@@ -35,7 +35,7 @@ class AdminSessionCard extends HookConsumerWidget {
       child: Container(
         width: 155,
         height: 300,
-        margin: const EdgeInsets.all(8),
+        margin: const .all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
           borderRadius: .circular(18),
@@ -69,10 +69,7 @@ class AdminSessionCard extends HookConsumerWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 7,
-                ),
+                padding: const .symmetric(horizontal: 10, vertical: 7),
                 height: 95,
                 child: Column(
                   children: [

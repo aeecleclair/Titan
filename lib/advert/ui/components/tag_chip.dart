@@ -35,8 +35,8 @@ class TagChip extends ConsumerWidget {
           );
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      margin: const .symmetric(horizontal: 5),
+      padding: const .symmetric(horizontal: 8, vertical: 5),
       height: 30,
       decoration: BoxDecoration(
         gradient: LinearGradient(

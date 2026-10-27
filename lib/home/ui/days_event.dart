@@ -25,7 +25,7 @@ class DaysEvent extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final eventNotifier = ref.watch(eventProvider.notifier);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+      padding: const .symmetric(horizontal: 30.0, vertical: 10),
       child: Column(
         children: [
           AlignLeftText(day, color: Theme.of(context).colorScheme.tertiary),
@@ -50,7 +50,7 @@ class DaysEvent extends HookConsumerWidget {
                 : Theme.of(context).colorScheme.onPrimary;
             return CardLayout(
               id: event.id,
-              margin: const EdgeInsets.all(10),
+              margin: const .all(10),
               height: 135,
               width: double.infinity,
               colors: end.compareTo(now) < 0
@@ -67,10 +67,7 @@ class DaysEvent extends HookConsumerWidget {
                       Theme.of(context).colorScheme.primary,
                       Theme.of(context).colorScheme.secondaryFixed,
                     ],
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15.0,
-                vertical: 12,
-              ),
+              padding: const .symmetric(horizontal: 15.0, vertical: 12),
               child: Column(
                 crossAxisAlignment: .start,
                 children: [

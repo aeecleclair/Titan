@@ -58,7 +58,7 @@ class AdminPage extends HookConsumerWidget {
                 if (isRoomsAdmin) ...[
                   const SizedBox(height: 30),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: .symmetric(horizontal: 30.0),
                     child: Align(
                       alignment: .centerLeft,
                       child: Text(
@@ -132,7 +132,7 @@ class AdminPage extends HookConsumerWidget {
                 if (isManagersAdmin) ...[
                   const SizedBox(height: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: .symmetric(horizontal: 30.0),
                     child: Align(
                       alignment: .centerLeft,
                       child: Text(

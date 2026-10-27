@@ -25,8 +25,8 @@ class EditableAssociationCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(10),
+      margin: const .symmetric(vertical: 5),
+      padding: const .all(10),
       decoration: BoxDecoration(
         color: association.deactivated
             ? Theme.of(context).colorScheme.tertiary

@@ -47,7 +47,7 @@ class AssociationCreationPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Align(
                   alignment: .centerLeft,
                   child: Text(
@@ -67,10 +67,10 @@ class AssociationCreationPage extends HookConsumerWidget {
                 restrictToManaged: !isPhonebookAdmin,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
-                    Container(margin: const EdgeInsets.symmetric(vertical: 10)),
+                    Container(margin: const .symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
                       label: AdminTextConstants.name,

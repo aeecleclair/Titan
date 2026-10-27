@@ -13,7 +13,7 @@ class ModulesPage extends HookConsumerWidget {
     final modulesNotifier = ref.watch(modulesProvider.notifier);
     return SettingsTemplate(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const .symmetric(horizontal: 20),
         child: ReorderableListView(
           physics: const BouncingScrollPhysics(),
           proxyDecorator: (child, index, animation) {
@@ -26,8 +26,8 @@ class ModulesPage extends HookConsumerWidget {
           },
           children: modulesNotifier.allModules.map((module) {
             return Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              margin: const .all(10),
+              padding: const .symmetric(horizontal: 15, vertical: 5),
               key: Key(module.root.toString()),
               decoration: BoxDecoration(
                 boxShadow: [
@@ -42,7 +42,7 @@ class ModulesPage extends HookConsumerWidget {
                 borderRadius: .circular(15),
               ),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                padding: const .symmetric(vertical: 5),
                 child: Row(
                   children: [
                     module.getIcon(Theme.of(context).colorScheme.tertiary),

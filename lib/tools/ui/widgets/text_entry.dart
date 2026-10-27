@@ -61,14 +61,14 @@ class TextEntry extends StatelessWidget {
         suffix: suffixIcon == null && suffix.isEmpty
             ? null
             : Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const .only(left: 10),
                 child:
                     suffixIcon ?? Text(suffix, style: TextStyle(color: color_)),
               ),
         prefix: prefix.isEmpty
             ? null
             : Container(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const .only(right: 10),
                 child: Text(prefix, style: TextStyle(color: color_)),
               ),
         floatingLabelStyle: TextStyle(fontWeight: .bold),

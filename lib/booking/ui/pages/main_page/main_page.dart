@@ -97,7 +97,7 @@ class BookingMainPage extends HookConsumerWidget {
                 const Expanded(child: Calendar(isManagerPage: false)),
                 const SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const .symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: .centerLeft,
                     child: Text(

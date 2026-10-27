@@ -19,7 +19,7 @@ class DeleteButton extends StatelessWidget {
     return GestureDetector(
       onTap: !deactivated ? onDelete : null,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: !deactivated

@@ -129,10 +129,10 @@ class LeftPanel extends HookConsumerWidget {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 20),
+                      margin: const .only(left: 20),
                       child: isLoading
                           ? Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: const .all(12.0),
                               child: CircularProgressIndicator(
                                 color: Theme.of(
                                   context,

@@ -30,7 +30,7 @@ class TicketHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           alignment: .centerLeft,
           child: const Text(
             "Tickets",
@@ -60,13 +60,13 @@ class TicketHandler extends HookConsumerWidget {
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(
+                    margin: const .only(
                       left: 12.0,
                       right: 12.0,
                       bottom: 12,
                       top: 8,
                     ),
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const .all(12.0),
                     height: 125,
                     width: 100,
                     decoration: BoxDecoration(

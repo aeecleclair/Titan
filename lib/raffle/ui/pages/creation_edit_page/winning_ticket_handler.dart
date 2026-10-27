@@ -13,7 +13,7 @@ class WinningTicketHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           alignment: .centerLeft,
           child: const Text(
             "Tickets gagnants",

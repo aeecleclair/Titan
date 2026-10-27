@@ -41,19 +41,19 @@ class DeviceDialogBox extends ConsumerWidget {
               borderRadius: .all(Radius.circular(20.0)),
             ),
             elevation: 0.0,
-            insetPadding: const EdgeInsets.all(20.0),
+            insetPadding: const .all(20.0),
             backgroundColor: Colors.transparent,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  padding: const .only(
                     top: Consts.avatarRadius + Consts.padding,
                     bottom: Consts.padding,
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: const EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: const .only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
@@ -96,9 +96,7 @@ class DeviceDialogBox extends ConsumerWidget {
                                 width:
                                     MediaQuery.of(context).size.width -
                                     4 * Consts.padding,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
+                                padding: const .symmetric(vertical: 16),
                                 decoration: BoxDecoration(
                                   borderRadius: .circular(10),
                                   gradient: LinearGradient(

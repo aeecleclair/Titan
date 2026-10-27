@@ -46,7 +46,7 @@ class HomePage extends HookConsumerWidget {
             const SizedBox(height: 15),
             const AlignLeftText(
               HomeTextConstants.incomingEvents,
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              padding: .symmetric(horizontal: 30.0),
               fontSize: 25,
             ),
             const SizedBox(height: 10),

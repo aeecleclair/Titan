@@ -33,7 +33,7 @@ class ProductCard extends ConsumerWidget {
         AMAPColors(isDarkTheme).lightGradientPrimary,
         AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
+      padding: const .only(left: 17.0, top: 5, right: 17),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,
@@ -107,7 +107,7 @@ class ProductCard extends ConsumerWidget {
                   ],
                 )
               : Container(
-                  margin: const EdgeInsets.only(bottom: 5),
+                  margin: const .only(bottom: 5),
                   child: Text(
                     "${AMAPTextConstants.quantity} : ${product.quantity}",
                     style: TextStyle(

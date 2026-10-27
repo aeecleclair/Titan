@@ -17,7 +17,7 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: margin ?? const EdgeInsets.symmetric(horizontal: 30),
+      margin: margin ?? const .symmetric(horizontal: 30),
       height: 40,
       decoration: BoxDecoration(
         gradient: LinearGradient(

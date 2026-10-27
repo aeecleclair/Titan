@@ -40,7 +40,7 @@ class PrizeHandler extends HookConsumerWidget {
           return Dialog(
             child: Container(
               height: 100 + winningTickets.length * 35.0,
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   Text(
@@ -57,7 +57,7 @@ class PrizeHandler extends HookConsumerWidget {
                     itemCount: winningTickets.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const .symmetric(vertical: 8.0),
                         child: Center(
                           child: Text(
                             winningTickets[index].user.getName(),
@@ -82,7 +82,7 @@ class PrizeHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           alignment: .centerLeft,
           child: const Text(
             "Lots",
@@ -112,8 +112,8 @@ class PrizeHandler extends HookConsumerWidget {
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(left: 5.0, bottom: 10),
-                    padding: const EdgeInsets.all(12.0),
+                    margin: const .only(left: 5.0, bottom: 10),
+                    padding: const .all(12.0),
                     child: Container(
                       width: 100,
                       height: 125,

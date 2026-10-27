@@ -48,7 +48,7 @@ class SearchUser extends HookConsumerWidget {
             StyledSearchBar(
               label: AdminTextConstants.members,
               color: Theme.of(context).colorScheme.primaryContainer,
-              padding: const EdgeInsets.all(0),
+              padding: const .all(0),
               onChanged: (value) async {
                 if (value.isNotEmpty) {
                   await usersNotifier.filterUsers(
@@ -70,9 +70,9 @@ class SearchUser extends HookConsumerWidget {
                 }
               },
               suffixIcon: Padding(
-                padding: const EdgeInsets.all(7.0),
+                padding: const .all(7.0),
                 child: Container(
-                  padding: const EdgeInsets.all(7),
+                  padding: const .all(7),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [

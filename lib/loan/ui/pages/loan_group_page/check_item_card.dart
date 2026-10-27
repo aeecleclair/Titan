@@ -27,7 +27,7 @@ class CheckItemCard extends StatelessWidget {
                   ? Theme.of(context).shadowColor
                   : Theme.of(context).colorScheme.secondaryFixed)
               .withValues(alpha: 0.5),
-      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      padding: const .symmetric(horizontal: 17.0),
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,

@@ -24,7 +24,7 @@ class DeviceItem extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     final secondaryGreen = MyPaymentColors(isDarkTheme).secondaryGreen;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const .symmetric(vertical: 10, horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const .all(Radius.circular(15)),

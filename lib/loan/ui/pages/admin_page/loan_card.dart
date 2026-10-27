@@ -53,7 +53,7 @@ class LoanCard extends StatelessWidget {
         shadowColor: shouldReturn
             ? LoanColorConstants.redGradient2.withValues(alpha: 0.25)
             : Theme.of(context).shadowColor,
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const .symmetric(horizontal: 20.0),
         child: Column(
           mainAxisAlignment: .start,
           crossAxisAlignment: .start,

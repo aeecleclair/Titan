@@ -35,7 +35,7 @@ class SchoolsPage extends HookConsumerWidget {
           await schoolsNotifier.loadSchools();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               const SizedBox(height: 20),

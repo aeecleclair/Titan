@@ -132,7 +132,7 @@ class SellerRightCard extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const .symmetric(horizontal: 30),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -151,7 +151,7 @@ class SellerRightCard extends ConsumerWidget {
                 ),
                 child: Container(
                   color: Theme.of(context).colorScheme.surface,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const .symmetric(horizontal: 20),
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
@@ -172,7 +172,7 @@ class SellerRightCard extends ConsumerWidget {
                             (i == 4 && isStructureAdmin) ||
                             (i == 5 && isStructureManager))
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const .symmetric(vertical: 5),
                             child: Row(
                               children: [
                                 icons[i],
@@ -270,7 +270,7 @@ class SellerRightCard extends ConsumerWidget {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const .symmetric(vertical: 10),
                             child: AddEditButtonLayout(
                               colors: [
                                 MyPaymentColors(isDarkTheme).redGradient1,

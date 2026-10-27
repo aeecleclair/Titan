@@ -20,10 +20,10 @@ class SpeciesCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
-      margin: const EdgeInsets.all(10),
+      margin: const .all(10),
       shape: RoundedRectangleBorder(borderRadius: .circular(15)),
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const .all(10),
         child: Row(
           children: [
             SizedBox(width: 10),

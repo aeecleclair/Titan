@@ -28,7 +28,7 @@ class CardButton extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      padding: const EdgeInsets.all(7),
+      padding: const .all(7),
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         color: color ?? Theme.of(context).colorScheme.secondaryFixed,

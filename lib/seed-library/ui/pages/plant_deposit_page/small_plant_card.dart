@@ -26,10 +26,10 @@ class SmallPlantCard extends StatelessWidget {
       onTap: onClicked,
       child: Card(
         color: selected ? Colors.green[300] : null,
-        margin: const EdgeInsets.all(10),
+        margin: const .all(10),
         shape: RoundedRectangleBorder(borderRadius: .circular(15)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+          padding: const .symmetric(vertical: 10, horizontal: 30),
           child: Column(
             children: [
               Text(
