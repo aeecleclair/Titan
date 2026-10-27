@@ -31,8 +31,8 @@ class SpeciesCard extends HookConsumerWidget {
               width: 100,
               child: Column(
                 children: [
-                  Text(species.name, textAlign: TextAlign.center),
-                  Text(species.prefix, textAlign: TextAlign.center),
+                  Text(species.name, textAlign: .center),
+                  Text(species.prefix, textAlign: .center),
                 ],
               ),
             ),
@@ -41,7 +41,7 @@ class SpeciesCard extends HookConsumerWidget {
               width: 100,
               child: Column(
                 children: [
-                  Text(species.type.name, textAlign: TextAlign.center),
+                  Text(species.type.name, textAlign: .center),
                   Row(
                     mainAxisAlignment: .center,
                     children: [

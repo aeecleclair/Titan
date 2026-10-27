@@ -55,7 +55,7 @@ class MainCardTemplate extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        textAlign: TextAlign.left,
+                        textAlign: .left,
                         style: const TextStyle(
                           color: MyPaymentColors.onGradient,
                           fontSize: 18,

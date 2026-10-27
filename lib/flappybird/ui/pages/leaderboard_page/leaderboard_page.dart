@@ -36,7 +36,7 @@ class LeaderBoardPage extends HookConsumerWidget {
                         padding: const EdgeInsets.only(bottom: 15),
                         child: Text(
                           "LeaderBoard",
-                          textAlign: TextAlign.center,
+                          textAlign: .center,
                           style: GoogleFonts.silkscreen(
                             textStyle: TextStyle(
                               fontSize: 30,

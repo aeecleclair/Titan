@@ -85,7 +85,7 @@ class DetailOrderUI extends HookConsumerWidget {
                   width: 90,
                   child: Text(
                     "${product.quantity} (${((product.quantity * product.price) / 100).toStringAsFixed(2)}€)",
-                    textAlign: TextAlign.right,
+                    textAlign: .right,
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: .w700,

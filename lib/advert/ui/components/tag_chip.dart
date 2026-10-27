@@ -52,7 +52,7 @@ class TagChip extends ConsumerWidget {
         alignment: .center,
         child: Text(
           tagName,
-          textAlign: TextAlign.center,
+          textAlign: .center,
           maxLines: 1,
           style: TextStyle(
             color: bgColor.computeLuminance() < 0.75

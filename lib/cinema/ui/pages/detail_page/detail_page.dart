@@ -109,7 +109,7 @@ class DetailPage extends HookConsumerWidget {
                       child: AutoSizeText(
                         session.name,
                         maxLines: 2,
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                         style: const TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                     ),
@@ -155,7 +155,7 @@ class DetailPage extends HookConsumerWidget {
                         session.overview != null
                             ? session.overview!
                             : CinemaTextConstants.noOverview,
-                        textAlign: TextAlign.left,
+                        textAlign: .left,
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),

@@ -70,7 +70,7 @@ class RaffleWidget extends HookConsumerWidget {
                           child: AutoSizeText(
                             raffle.name,
                             maxLines: 2,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(
                               color: RaffleColorConstants.textDark,
                               fontSize: 30,
@@ -109,7 +109,7 @@ class RaffleWidget extends HookConsumerWidget {
                             ),
                             const Text(
                               RaffleTextConstants.tickets,
-                              textAlign: TextAlign.center,
+                              textAlign: .center,
                               style: TextStyle(
                                 color: RaffleColorConstants.textDark,
                                 fontSize: 20,
@@ -129,7 +129,7 @@ class RaffleWidget extends HookConsumerWidget {
                             ),
                             const Text(
                               RaffleTextConstants.gathered,
-                              textAlign: TextAlign.center,
+                              textAlign: .center,
                               style: TextStyle(
                                 color: RaffleColorConstants.textDark,
                                 fontSize: 20,

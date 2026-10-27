@@ -54,7 +54,7 @@ class ModulesPage extends HookConsumerWidget {
                         fontSize: 20,
                         fontWeight: .w500,
                       ),
-                      textAlign: TextAlign.left,
+                      textAlign: .left,
                     ),
                     const Spacer(),
                     Checkbox(

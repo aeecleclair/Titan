@@ -86,7 +86,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       child: AutoSizeText(
                         advert.title,
                         maxLines: 2,
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                         style: const TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                     ),
@@ -113,7 +113,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: TextWithHyperLink(
                         advert.content,
-                        textAlign: TextAlign.left,
+                        textAlign: .left,
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),
@@ -181,7 +181,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       Text(
                         DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),
                         style: const TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                     ],
                   ),

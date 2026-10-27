@@ -64,7 +64,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   margin: const EdgeInsets.only(top: 10),
                   child: Text(
                     "Voulez vous vraiment créer la tombola : ${group.name}",
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ),

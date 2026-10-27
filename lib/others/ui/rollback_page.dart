@@ -30,7 +30,7 @@ class RollbackPage extends HookConsumerWidget {
                 getAppFlavor() == "dev"
                     ? OthersTextConstants.tooRecentVersionDevFlavor
                     : OthersTextConstants.tooRecentVersion,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(fontSize: 20),
               ),
             ),

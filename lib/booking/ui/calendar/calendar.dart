@@ -188,7 +188,7 @@ class Calendar extends HookConsumerWidget {
                   ),
                 ),
                 headerStyle: CalendarHeaderStyle(
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                   textStyle: TextStyle(
                     fontSize: 20,
                     fontWeight: .w600,

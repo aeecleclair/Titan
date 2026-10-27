@@ -96,7 +96,7 @@ class StoreCard extends HookConsumerWidget {
           store.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
+          textAlign: .center,
           style: const TextStyle(
             color: MyPaymentColors.onGradient,
             fontSize: 50,

@@ -79,7 +79,7 @@ class AdminSessionCard extends HookConsumerWidget {
                     AutoSizeText(
                       session.name,
                       maxLines: 2,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 15, fontWeight: .bold),
                     ),

@@ -31,7 +31,7 @@ class MenuCardUi extends StatelessWidget {
           AutoSizeText(
             text,
             style: const TextStyle(fontSize: 20),
-            textAlign: TextAlign.center,
+            textAlign: .center,
             maxLines: 3,
           ),
         ],

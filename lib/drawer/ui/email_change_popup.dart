@@ -88,7 +88,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                               children: [
                                 Text(
                                   Consts.descriptionMigration,
-                                  textAlign: TextAlign.center,
+                                  textAlign: .center,
                                   style: const TextStyle(fontSize: 16.0),
                                 ),
                                 const SizedBox(height: 5.0),
@@ -226,13 +226,13 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 children: [
                                   const Text(
                                     "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
-                                    textAlign: TextAlign.center,
+                                    textAlign: .center,
                                     style: TextStyle(fontSize: 16.0),
                                   ),
                                   const SizedBox(height: 16.0),
                                   Text(
                                     emailController.text,
-                                    textAlign: TextAlign.center,
+                                    textAlign: .center,
                                     style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: .bold,

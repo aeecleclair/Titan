@@ -143,7 +143,7 @@ class SessionCard extends HookConsumerWidget {
                                   children: [
                                     Text(
                                       session.name,
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: .bold,
@@ -152,20 +152,20 @@ class SessionCard extends HookConsumerWidget {
                                     const SizedBox(height: 10),
                                     Text(
                                       formatDate(session.start),
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       formatDuration(session.duration),
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       session.overview ??
                                           CinemaTextConstants.noOverview,
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                   ],
@@ -237,7 +237,7 @@ class SessionCard extends HookConsumerWidget {
                 children: [
                   Text(
                     session.name,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   const SizedBox(height: 10),

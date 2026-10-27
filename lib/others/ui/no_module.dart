@@ -30,7 +30,7 @@ class NoModulePage extends HookConsumerWidget {
             Center(
               child: Text(
                 OthersTextConstants.noModule,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(fontSize: 20),
               ),
             ),

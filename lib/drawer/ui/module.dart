@@ -50,7 +50,7 @@ class ModuleUI extends HookConsumerWidget {
                     child: AutoSizeText(
                       module.name,
                       maxLines: 1,
-                      textAlign: TextAlign.start,
+                      textAlign: .start,
                       style: TextStyle(
                         color: module.root == pathForwarding.path
                             ? DrawerColorConstants.selectedText

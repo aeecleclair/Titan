@@ -74,7 +74,7 @@ class AdvertCard extends HookConsumerWidget {
                             advert.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: .bold,
@@ -84,7 +84,7 @@ class AdvertCard extends HookConsumerWidget {
                           AutoSizeText(
                             formatDate(advert.date),
                             maxLines: 1,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 10),
@@ -92,7 +92,7 @@ class AdvertCard extends HookConsumerWidget {
                             child: SingleChildScrollView(
                               child: TextWithHyperLink(
                                 advert.content,
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: const TextStyle(fontSize: 16),
                               ),
                             ),
@@ -173,7 +173,7 @@ class AdvertCard extends HookConsumerWidget {
                                     margin: const EdgeInsets.only(bottom: 5),
                                     child: AutoSizeText(
                                       advert.title.trim(),
-                                      textAlign: TextAlign.left,
+                                      textAlign: .left,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       minFontSize: 15,
@@ -189,7 +189,7 @@ class AdvertCard extends HookConsumerWidget {
                               TextWithHyperLink(
                                 advert.content.trim(),
                                 overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.justify,
+                                textAlign: .justify,
                                 maxLines: 3,
                                 minFontSize: 13,
                                 maxFontSize: 15,
@@ -236,7 +236,7 @@ class AdvertCard extends HookConsumerWidget {
                               children: [
                                 AutoSizeText(
                                   DateFormat('dd').format(advert.date),
-                                  textAlign: TextAlign.center,
+                                  textAlign: .center,
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
@@ -251,7 +251,7 @@ class AdvertCard extends HookConsumerWidget {
                                         DateFormat('MM').format(advert.date),
                                       ) -
                                       1],
-                                  textAlign: TextAlign.center,
+                                  textAlign: .center,
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
@@ -294,7 +294,7 @@ class AdvertCard extends HookConsumerWidget {
                             alignment: .center,
                             child: AutoSizeText(
                               advert.announcer.name,
-                              textAlign: TextAlign.center,
+                              textAlign: .center,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
                                 fontSize: 14,

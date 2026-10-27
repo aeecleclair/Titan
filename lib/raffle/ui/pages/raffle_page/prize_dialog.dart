@@ -80,7 +80,7 @@ class PrizeDialog extends HookConsumerWidget {
                   ? RaffleTextConstants.noDescription
                   : prize.description!,
               maxLines: 4,
-              textAlign: TextAlign.justify,
+              textAlign: .justify,
               style: const TextStyle(
                 color: RaffleColorConstants.writtenWhite,
                 fontSize: 20,

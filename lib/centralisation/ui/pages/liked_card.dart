@@ -71,7 +71,7 @@ class LikedCard extends StatelessWidget {
                       style: const TextStyle(fontSize: 16),
                       minFontSize: 10,
                       maxLines: 2,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                   ),
                 ],

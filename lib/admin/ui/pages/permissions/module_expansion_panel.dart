@@ -45,7 +45,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
                 fontSize: 22,
                 fontWeight: .w800,
               ),
-              textAlign: TextAlign.center,
+              textAlign: .center,
             ),
           ),
           body: isExpanded.value[index]

@@ -73,7 +73,7 @@ class RecommendationCard extends HookConsumerWidget {
                 children: [
                   Text(
                     recommendation.title,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   if (recommendation.code != null)
@@ -83,7 +83,7 @@ class RecommendationCard extends HookConsumerWidget {
                         Flexible(
                           child: Text(
                             recommendation.code!,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(
                               fontSize: 15,
                               fontWeight: .bold,
@@ -106,7 +106,7 @@ class RecommendationCard extends HookConsumerWidget {
                     ),
                   Text(
                     recommendation.summary,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(fontSize: 15, color: Colors.grey),
                   ),
                 ],

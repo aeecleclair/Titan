@@ -27,7 +27,7 @@ class NoInternetPage extends HookConsumerWidget {
               Center(
                 child: Text(
                   "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                   style: TextStyle(fontSize: 20),
                 ),
               ),

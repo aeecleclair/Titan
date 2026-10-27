@@ -71,7 +71,7 @@ class LinkCard extends HookConsumerWidget {
                   ),
                   minFontSize: 10,
                   maxLines: 2,
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
             ),

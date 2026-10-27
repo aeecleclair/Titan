@@ -80,7 +80,7 @@ class PlantDepositPage extends HookConsumerWidget {
                     Text(
                       SeedLibraryTextConstants.addPlant,
                       style: TextStyle(fontSize: 20, fontWeight: .bold),
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                     const SizedBox(height: 30),
                     const Text(

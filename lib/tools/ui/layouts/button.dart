@@ -59,7 +59,7 @@ class Button extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            textAlign: TextAlign.center,
+            textAlign: .center,
             style: TextStyle(
               color: disabled == true
                   ? Theme.of(context).colorScheme.tertiary

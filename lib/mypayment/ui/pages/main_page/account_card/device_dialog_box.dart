@@ -79,7 +79,7 @@ class DeviceDialogBox extends ConsumerWidget {
                       const SizedBox(height: 12.0),
                       Text(
                         descriptions,
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                         style: const TextStyle(fontSize: 16.0),
                       ),
                       const SizedBox(height: 30.0),

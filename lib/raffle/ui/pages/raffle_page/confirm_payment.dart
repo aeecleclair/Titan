@@ -187,7 +187,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   child: AutoSizeText(
                     raffle.name,
                     maxLines: 2,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 50,

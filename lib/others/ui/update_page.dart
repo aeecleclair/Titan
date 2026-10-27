@@ -21,7 +21,7 @@ class UpdatePage extends HookConsumerWidget {
             const Center(
               child: Text(
                 OthersTextConstants.tooOldVersion,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(fontSize: 20),
               ),
             ),

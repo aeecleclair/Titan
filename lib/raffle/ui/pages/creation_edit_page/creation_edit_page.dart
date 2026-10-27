@@ -329,7 +329,7 @@ class CreationPage extends HookConsumerWidget {
                               ),
                               const Text(
                                 "Tickets",
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: TextStyle(
                                   color: RaffleColorConstants.textDark,
                                   fontSize: 20,
@@ -357,7 +357,7 @@ class CreationPage extends HookConsumerWidget {
                               ),
                               const Text(
                                 "Récoltés",
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: TextStyle(
                                   color: RaffleColorConstants.textDark,
                                   fontSize: 20,

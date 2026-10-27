@@ -80,7 +80,7 @@ class DayCard extends HookConsumerWidget {
               height: 35,
               child: Text(
                 day.day.toString(),
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(
                   color: isToday
                       ? Theme.of(context).colorScheme.onPrimaryContainer
@@ -96,7 +96,7 @@ class DayCard extends HookConsumerWidget {
                 HomeTextConstants.translateDayShort[DateFormat(
                   'E',
                 ).format(day)]!,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(
                   color: isToday
                       ? Theme.of(context).colorScheme.onPrimaryContainer

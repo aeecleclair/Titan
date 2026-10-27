@@ -73,7 +73,7 @@ class PrizeCard extends HookConsumerWidget {
                         child: AutoSizeText(
                           prize.name,
                           maxLines: 2,
-                          textAlign: TextAlign.center,
+                          textAlign: .center,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,

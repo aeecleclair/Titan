@@ -109,7 +109,7 @@ class TicketWidget extends HookConsumerWidget {
                             ? "${RaffleTextConstants.winner} !"
                             : "${price.toStringAsFixed(2)} €",
                         maxLines: 1,
-                        textAlign: TextAlign.right,
+                        textAlign: .right,
                         style: TextStyle(
                           color: isWinningTicket ? Colors.black : Colors.white,
                           fontSize: 20,
@@ -137,7 +137,7 @@ class TicketWidget extends HookConsumerWidget {
                 AutoSizeText(
                   raffle.name,
                   maxLines: 2,
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                   style: TextStyle(
                     color: isWinningTicket ? Colors.black : Colors.white,
                     fontSize: 20,

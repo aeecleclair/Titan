@@ -48,7 +48,7 @@ class DetailLoanPage extends HookConsumerWidget {
                               AutoSizeText(
                                 loan.borrower.getName(),
                                 maxLines: 2,
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: .bold,

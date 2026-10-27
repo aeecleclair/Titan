@@ -64,7 +64,7 @@ class WinningTicketUI extends HookConsumerWidget {
                         ? "${ticket.user.firstname} ${ticket.user.name}"
                         : ticket.user.name,
                     maxLines: 2,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     minFontSize: 10,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),

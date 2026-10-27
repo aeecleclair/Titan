@@ -72,12 +72,12 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                     ? Text(
                         SeedLibraryTextConstants.editSpecies,
                         style: TextStyle(fontSize: 20, fontWeight: .bold),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       )
                     : Text(
                         SeedLibraryTextConstants.addSpecies,
                         style: TextStyle(fontSize: 20, fontWeight: .bold),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                 const SizedBox(height: 30),
                 TypesBar(),

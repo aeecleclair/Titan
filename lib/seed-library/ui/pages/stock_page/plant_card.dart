@@ -34,12 +34,12 @@ class PlantCard extends HookConsumerWidget {
                   children: [
                     AutoSizeText(
                       plantSpecies.name,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                       style: const TextStyle(fontWeight: .bold, fontSize: 16),
                     ),
                     AutoSizeText(
                       plant.nickname ?? plant.plantReference,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                       minFontSize: 10,
                       maxLines: 1,
                     ),
@@ -51,7 +51,7 @@ class PlantCard extends HookConsumerWidget {
                 width: 100,
                 child: Column(
                   children: [
-                    Text(plantSpecies.type.name, textAlign: TextAlign.center),
+                    Text(plantSpecies.type.name, textAlign: .center),
                     Row(
                       mainAxisAlignment: .center,
                       children: List.generate(plantSpecies.difficulty, (index) {
@@ -74,12 +74,12 @@ class PlantCard extends HookConsumerWidget {
                   children: [
                     Text(
                       "${SeedLibraryTextConstants.type} ${plant.propagationMethod.name}",
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                     plant.propagationMethod == PropagationMethod.graine
                         ? Text(
                             "(${plant.nbSeedsEnvelope.toString()} ${plant.nbSeedsEnvelope > 1 ? SeedLibraryTextConstants.seeds : SeedLibraryTextConstants.seed})",
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                           )
                         : const SizedBox(),
                   ],

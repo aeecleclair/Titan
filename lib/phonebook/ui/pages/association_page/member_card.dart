@@ -127,7 +127,7 @@ class MemberCard extends HookConsumerWidget {
               ),
               Flexible(
                 child: Text(
-                  textAlign: TextAlign.right,
+                  textAlign: .right,
                   assoMembership == null
                       ? PhonebookTextConstants.noMemberRole
                       : assoMembership.apparentName,

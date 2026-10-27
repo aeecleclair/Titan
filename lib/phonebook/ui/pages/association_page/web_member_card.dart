@@ -166,7 +166,7 @@ class WebMemberCard extends HookConsumerWidget {
                       mainAxisAlignment: .center,
                       children: [
                         Text(
-                          textAlign: TextAlign.right,
+                          textAlign: .right,
                           assoMembership == null
                               ? PhonebookTextConstants.noMemberRole
                               : assoMembership.apparentName,
@@ -264,7 +264,7 @@ class WebMemberCard extends HookConsumerWidget {
                   Column(
                     children: [
                       Text(
-                        textAlign: TextAlign.right,
+                        textAlign: .right,
                         assoMembership == null
                             ? PhonebookTextConstants.noMemberRole
                             : assoMembership.apparentName,
