@@ -113,7 +113,7 @@ class EventUi extends ConsumerWidget {
               Container(
                 constraints: const BoxConstraints(maxHeight: 38),
                 child: Scrollbar(
-                  radius: const Radius.circular(8),
+                  radius: const .circular(8),
                   child: SingleChildScrollView(
                     child: Text(
                       formatRecurrenceRule(
