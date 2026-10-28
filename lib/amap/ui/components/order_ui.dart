@@ -43,7 +43,7 @@ class OrderUI extends HookConsumerWidget {
         text: order.deliveryName,
         style: TextStyle(fontSize: 18, fontWeight: .bold),
       ),
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
       maxLines: isDetail ? 3 : 2,
     );
     final maxTextWidth = isDetail ? 180.0 : 150.0;

@@ -55,7 +55,7 @@ class DeliveryUi extends HookConsumerWidget {
 
     final tp = TextPainter(
       text: TextSpan(text: delivery.name, style: style),
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
       maxLines: 3,
     );
     final maxTextWidth = 200.0;
