@@ -17,7 +17,7 @@ class PurchasePage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {},
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           child: AsyncChild(
             value: purchase,
             builder: (context, data) {

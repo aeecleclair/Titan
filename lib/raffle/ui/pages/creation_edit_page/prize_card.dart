@@ -23,18 +23,18 @@ class PrizeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
-      margin: const EdgeInsets.only(bottom: 10),
+      padding: const .all(12.0),
+      margin: const .only(bottom: 10),
       child: Container(
         width: 130,
         height: 125,
         decoration: BoxDecoration(
           gradient: const RadialGradient(
             colors: [Color(0xff0193a5), Color(0xff004a59)],
-            center: Alignment.topLeft,
+            center: .topLeft,
             radius: 1.5,
           ),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: .circular(30),
           boxShadow: [
             BoxShadow(
               color: RaffleColorConstants.textDark.withValues(alpha: 0.2),
@@ -45,9 +45,9 @@ class PrizeCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
+          padding: const .only(left: 17.0, top: 5, right: 17),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               const SizedBox(height: 10),
               AutoSizeText(
@@ -56,7 +56,7 @@ class PrizeCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: RaffleColorConstants.textDark,
                 ),
               ),
@@ -69,31 +69,31 @@ class PrizeCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.white,
                 ),
               ),
               const Spacer(),
               status == RaffleStatusType.creation
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: .spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: onEdit,
                           child: Container(
                             width: 40,
                             height: 40,
-                            padding: const EdgeInsets.all(7),
+                            padding: const .all(7),
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
                                   RaffleColorConstants.gradient2,
                                   RaffleColorConstants.textDark,
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                                begin: .topLeft,
+                                end: .bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: .circular(15),
                               boxShadow: [
                                 BoxShadow(
                                   color: RaffleColorConstants.textDark
@@ -103,27 +103,24 @@ class PrizeCard extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const HeroIcon(
-                              HeroIcons.pencil,
-                              color: Colors.white,
-                            ),
+                            child: const HeroIcon(.pencil, color: Colors.white),
                           ),
                         ),
                         WaitingButton(
                           builder: (child) => Container(
                             width: 40,
                             height: 40,
-                            padding: const EdgeInsets.all(7),
+                            padding: const .all(7),
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
                                   RaffleColorConstants.redGradient1,
                                   RaffleColorConstants.redGradient2,
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                                begin: .topLeft,
+                                end: .bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: .circular(15),
                               boxShadow: [
                                 BoxShadow(
                                   color: RaffleColorConstants.redGradient2
@@ -136,10 +133,7 @@ class PrizeCard extends StatelessWidget {
                             child: child,
                           ),
                           onTap: onDelete,
-                          child: const HeroIcon(
-                            HeroIcons.trash,
-                            color: Colors.white,
-                          ),
+                          child: const HeroIcon(.trash, color: Colors.white),
                         ),
                       ],
                     )
@@ -150,17 +144,17 @@ class PrizeCard extends StatelessWidget {
                               builder: (child) => Container(
                                 width: 40,
                                 height: 40,
-                                padding: const EdgeInsets.all(7),
+                                padding: const .all(7),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
                                       RaffleColorConstants.gradient2,
                                       RaffleColorConstants.textDark,
                                     ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    begin: .topLeft,
+                                    end: .bottomRight,
                                   ),
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: .circular(15),
                                   boxShadow: [
                                     BoxShadow(
                                       color: RaffleColorConstants.textDark
@@ -175,16 +169,13 @@ class PrizeCard extends StatelessWidget {
                               onTap: onDraw,
                               child: const Row(
                                 children: [
-                                  HeroIcon(
-                                    HeroIcons.envelopeOpen,
-                                    color: Colors.white,
-                                  ),
+                                  HeroIcon(.envelopeOpen, color: Colors.white),
                                   SizedBox(width: 15),
                                   Text(
                                     "Tirer",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                 ],
@@ -193,19 +184,19 @@ class PrizeCard extends StatelessWidget {
                           )
                         : Container(
                             height: 40,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               vertical: 7,
                               horizontal: 12,
                             ),
                             child: const Row(
                               children: [
-                                HeroIcon(HeroIcons.check, color: Colors.white),
+                                HeroIcon(.check, color: Colors.white),
                                 SizedBox(width: 15),
                                 Text(
                                   "Tiré",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               ],
@@ -219,7 +210,7 @@ class PrizeCard extends StatelessWidget {
                               "En Attente",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),

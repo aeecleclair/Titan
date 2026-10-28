@@ -45,15 +45,11 @@ class StoreAdminPage extends HookConsumerWidget {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              alignment: Alignment.centerLeft,
+              padding: const .symmetric(horizontal: 30, vertical: 20),
+              alignment: .centerLeft,
               child: Text(
                 "Les vendeurs de ${store.name}",
-                style: TextStyle(
-                  color: color,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: color, fontSize: 20, fontWeight: .bold),
               ),
             ),
             if (!isSearching.value) ...[
@@ -62,9 +58,9 @@ class StoreAdminPage extends HookConsumerWidget {
                   isSearching.value = true;
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const .symmetric(horizontal: 30),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: .center,
                     children: [
                       Center(
                         child: Text(
@@ -75,7 +71,7 @@ class StoreAdminPage extends HookConsumerWidget {
                       const Spacer(),
                       CardButton(
                         size: 35,
-                        child: HeroIcon(HeroIcons.plus, color: color, size: 20),
+                        child: HeroIcon(.plus, color: color, size: 20),
                       ),
                     ],
                   ),
@@ -116,7 +112,7 @@ class StoreAdminPage extends HookConsumerWidget {
             ],
             if (isSearching.value) ...[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Row(
                   children: [
                     Expanded(
@@ -144,7 +140,7 @@ class StoreAdminPage extends HookConsumerWidget {
                         queryController.clear();
                         usersNotifier.clear();
                       },
-                      child: HeroIcon(HeroIcons.xMark, size: 30, color: color),
+                      child: HeroIcon(.xMark, size: 30, color: color),
                     ),
                   ],
                 ),

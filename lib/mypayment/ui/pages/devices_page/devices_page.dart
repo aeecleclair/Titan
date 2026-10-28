@@ -100,7 +100,7 @@ class DevicesPage extends HookConsumerWidget {
                     displayAddDevice.value;
 
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: .stretch,
                   children: [
                     if (shouldDisplayAddDevice && !kIsWeb)
                       AddDeviceButton(
@@ -208,7 +208,7 @@ class DevicesPage extends HookConsumerWidget {
                           showRovokedDevices.value = !showRovokedDevices.value;
                         },
                         child: Container(
-                          margin: const EdgeInsets.only(
+                          margin: const .only(
                             bottom: 10,
                             top: 20,
                             left: 30,
@@ -223,10 +223,10 @@ class DevicesPage extends HookConsumerWidget {
                                 MyPaymentColors(isDarkTheme).gradient1,
                                 MyPaymentColors(isDarkTheme).gradient3,
                               ],
-                              center: Alignment.topLeft,
+                              center: .topLeft,
                               radius: 1.5,
                             ),
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: .circular(15),
                             boxShadow: [
                               BoxShadow(
                                 color: MyPaymentColors(
@@ -249,7 +249,7 @@ class DevicesPage extends HookConsumerWidget {
                               style: TextStyle(
                                 color: MyPaymentColors.onGradient,
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -257,12 +257,12 @@ class DevicesPage extends HookConsumerWidget {
                       ),
                       if (showRovokedDevices.value) ...[
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const .all(16.0),
                           child: Text(
                             'Appareils révoqués',
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),

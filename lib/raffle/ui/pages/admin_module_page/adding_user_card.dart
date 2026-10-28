@@ -20,19 +20,19 @@ class AddingUserCard extends HookConsumerWidget {
         onAdd();
       },
       child: Container(
-        padding: const EdgeInsets.all(12.0),
+        padding: const .all(12.0),
         child: Container(
           width: 140,
           height: 75,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: .circular(25),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const .symmetric(horizontal: 15.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .start,
               children: [
                 AutoSizeText(
                   user.nickname ?? user.firstname,
@@ -40,7 +40,7 @@ class AddingUserCard extends HookConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.gradient2,
                   ),
                 ),
@@ -53,7 +53,7 @@ class AddingUserCard extends HookConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.textDark,
                   ),
                 ),

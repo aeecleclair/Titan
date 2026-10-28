@@ -53,17 +53,17 @@ class LoanCard extends StatelessWidget {
         shadowColor: shouldReturn
             ? LoanColorConstants.redGradient2.withValues(alpha: 0.25)
             : Theme.of(context).shadowColor,
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const .symmetric(horizontal: 20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: .start,
+          crossAxisAlignment: .start,
           children: [
             if (!isAdmin && !isHistory)
               Column(
                 children: [
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Container(width: 25),
                       AutoSizeText(
@@ -71,7 +71,7 @@ class LoanCard extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: shouldReturn
                               ? LoanColorConstants.contrast
                               : Theme.of(context).colorScheme.onSurface,
@@ -81,7 +81,7 @@ class LoanCard extends StatelessWidget {
                           ? GestureDetector(
                               onTap: onInfo,
                               child: HeroIcon(
-                                HeroIcons.informationCircle,
+                                .informationCircle,
                                 color: shouldReturn
                                     ? LoanColorConstants.contrast
                                     : Theme.of(context).colorScheme.onSurface,
@@ -100,7 +100,7 @@ class LoanCard extends StatelessWidget {
               maxLines: 1,
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: shouldReturn
                     ? LoanColorConstants.contrast
                     : Theme.of(context).colorScheme.onSurface,
@@ -112,7 +112,7 @@ class LoanCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 13,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: shouldReturn
                     ? LoanColorConstants.contrast.withValues(alpha: 0.8)
                     : Theme.of(context).colorScheme.tertiary,
@@ -124,7 +124,7 @@ class LoanCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: shouldReturn
                     ? LoanColorConstants.contrast
                     : Theme.of(context).colorScheme.onSurface,
@@ -132,7 +132,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   loan.returned
@@ -142,7 +142,7 @@ class LoanCard extends StatelessWidget {
                       : LoanTextConstants.onGoing,
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: shouldReturn
                         ? LoanColorConstants.urgentRed
                         : Theme.of(context).colorScheme.tertiary,
@@ -156,7 +156,7 @@ class LoanCard extends StatelessWidget {
                       : processDate(loan.end),
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: shouldReturn
                         ? LoanColorConstants.contrast.withValues(alpha: 0.8)
                         : Theme.of(context).colorScheme.tertiary,
@@ -167,7 +167,7 @@ class LoanCard extends StatelessWidget {
             const Spacer(),
             if (isAdmin)
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: onEdit,
@@ -176,7 +176,7 @@ class LoanCard extends StatelessWidget {
                           ? LoanColorConstants.contrast.withValues(alpha: 0.7)
                           : Theme.of(context).colorScheme.secondaryFixed,
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: shouldReturn
                             ? LoanColorConstants.urgentRed
                             : Theme.of(context).colorScheme.onSurface,
@@ -195,7 +195,7 @@ class LoanCard extends StatelessWidget {
                     ),
                     onTap: onCalendar,
                     child: HeroIcon(
-                      HeroIcons.calendarDays,
+                      .calendarDays,
                       color: shouldReturn
                           ? LoanColorConstants.urgentRed
                           : Theme.of(context).colorScheme.onSurface,
@@ -210,7 +210,7 @@ class LoanCard extends StatelessWidget {
                     ),
                     onTap: onReturn,
                     child: HeroIcon(
-                      HeroIcons.check,
+                      .check,
                       color: shouldReturn
                           ? LoanColorConstants.contrast
                           : Theme.of(context).colorScheme.onSecondary,

@@ -25,8 +25,8 @@ class TicketUI extends HookConsumerWidget {
         Container(
           width: 130,
           height: 125,
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+          margin: const .symmetric(horizontal: 12, vertical: 12),
+          padding: const .symmetric(vertical: 12, horizontal: 17),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -36,10 +36,10 @@ class TicketUI extends HookConsumerWidget {
               ),
             ],
             color: RaffleColorConstants.ticketBack,
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
+            borderRadius: const .all(.circular(30)),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: .spaceAround,
             children: [
               Column(
                 children: [
@@ -48,7 +48,7 @@ class TicketUI extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   SizedBox(height: showButton ? 5 : 10),
@@ -57,7 +57,7 @@ class TicketUI extends HookConsumerWidget {
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ],
@@ -65,24 +65,24 @@ class TicketUI extends HookConsumerWidget {
               if (showButton) const Spacer(),
               if (showButton)
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: onEdit,
                       child: Container(
                         width: 40,
                         height: 40,
-                        padding: const EdgeInsets.all(7),
+                        padding: const .all(7),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
                               Colors.grey.shade100,
                               Colors.grey.shade200,
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: .circular(15),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.shade300.withValues(
@@ -94,7 +94,7 @@ class TicketUI extends HookConsumerWidget {
                           ],
                         ),
                         child: const HeroIcon(
-                          HeroIcons.pencil,
+                          .pencil,
                           color: RaffleColorConstants.textDark,
                         ),
                       ),
@@ -103,17 +103,17 @@ class TicketUI extends HookConsumerWidget {
                       builder: (child) => Container(
                         width: 40,
                         height: 40,
-                        padding: const EdgeInsets.all(7),
+                        padding: const .all(7),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
                               RaffleColorConstants.redGradient1,
                               RaffleColorConstants.redGradient2,
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: .circular(15),
                           boxShadow: [
                             BoxShadow(
                               color: RaffleColorConstants.redGradient2
@@ -126,10 +126,7 @@ class TicketUI extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: onDelete,
-                      child: const HeroIcon(
-                        HeroIcons.trash,
-                        color: Colors.white,
-                      ),
+                      child: const HeroIcon(.trash, color: Colors.white),
                     ),
                   ],
                 ),

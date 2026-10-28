@@ -23,11 +23,11 @@ class MemberCard extends StatelessWidget {
       id: member.id,
       width: 150,
       height: isAdmin ? 145 : 110,
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      margin: const .all(10),
+      padding: const .symmetric(horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           const SizedBox(height: 10),
           AutoSizeText(
@@ -36,7 +36,7 @@ class MemberCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.black,
             ),
           ),
@@ -49,7 +49,7 @@ class MemberCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.grey.shade400,
             ),
           ),
@@ -62,31 +62,28 @@ class MemberCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.black,
             ),
           ),
           if (isAdmin) const Spacer(),
           if (isAdmin)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 GestureDetector(
                   onTap: onEdit,
                   child: CardButton(
                     color: Colors.grey.shade200,
                     shadowColor: Colors.grey.withValues(alpha: 0.2),
-                    child: const HeroIcon(
-                      HeroIcons.pencil,
-                      color: Colors.black,
-                    ),
+                    child: const HeroIcon(.pencil, color: Colors.black),
                   ),
                 ),
                 GestureDetector(
                   onTap: onDelete,
                   child: const CardButton(
                     color: Colors.black,
-                    child: HeroIcon(HeroIcons.trash, color: Colors.white),
+                    child: HeroIcon(.trash, color: Colors.white),
                   ),
                 ),
               ],

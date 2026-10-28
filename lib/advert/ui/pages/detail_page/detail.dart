@@ -62,8 +62,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    begin: .topCenter,
+                    end: .bottomCenter,
                     colors: [
                       Colors.transparent,
                       Theme.of(
@@ -81,22 +81,19 @@ class AdvertDetailPage extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      padding: const .symmetric(horizontal: 30.0),
+                      alignment: .center,
                       child: AutoSizeText(
                         advert.title,
                         maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        textAlign: .center,
+                        style: const TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      padding: const .symmetric(horizontal: 30.0),
+                      alignment: .center,
                       child: Text(
                         formatDate(advert.date),
                         style: const TextStyle(fontSize: 18),
@@ -113,10 +110,10 @@ class AdvertDetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       child: TextWithHyperLink(
                         advert.content,
-                        textAlign: TextAlign.left,
+                        textAlign: .left,
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),
@@ -136,12 +133,12 @@ class AdvertDetailPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: QR.back,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const .all(8),
                     decoration: BoxDecoration(
                       color: Theme.of(
                         context,
                       ).colorScheme.surface.withValues(alpha: 0.75),
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: .circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).shadowColor,
@@ -159,15 +156,12 @@ class AdvertDetailPage extends HookConsumerWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 12,
-                  ),
+                  padding: const .symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
                     ).colorScheme.surface.withValues(alpha: 0.75),
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: .circular(18),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -179,12 +173,12 @@ class AdvertDetailPage extends HookConsumerWidget {
                   ),
                   child: Row(
                     children: [
-                      const HeroIcon(HeroIcons.calendar, size: 20),
+                      const HeroIcon(.calendar, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),
                         style: const TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                     ],
                   ),

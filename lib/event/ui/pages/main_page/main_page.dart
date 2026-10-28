@@ -36,11 +36,11 @@ class EventMainPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: .centerLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
                         eventList.isEmpty
@@ -48,7 +48,7 @@ class EventMainPage extends HookConsumerWidget {
                             : EventTextConstants.myEvents,
                         style: const TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Colors.grey,
                         ),
                       ),
@@ -69,18 +69,13 @@ class EventMainPage extends HookConsumerWidget {
                   QR.to(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                    top: 20,
-                    left: 40,
-                    right: 40,
-                  ),
+                  margin: const .only(bottom: 10, top: 20, left: 40, right: 40),
                   width: double.infinity,
                   height: 100,
                   color: Colors.white,
                   child: Center(
                     child: HeroIcon(
-                      HeroIcons.plus,
+                      .plus,
                       size: 40,
                       color: Colors.grey.shade500,
                     ),

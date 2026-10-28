@@ -19,14 +19,14 @@ class DetailLoanPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Theme.of(context).colorScheme.surface,
                       boxShadow: [
                         BoxShadow(
@@ -40,18 +40,18 @@ class DetailLoanPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 100),
                         Container(
-                          padding: const EdgeInsets.all(30.0),
-                          alignment: Alignment.centerLeft,
+                          padding: const .all(30.0),
+                          alignment: .centerLeft,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               AutoSizeText(
                                 loan.borrower.getName(),
                                 maxLines: 2,
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -59,7 +59,7 @@ class DetailLoanPage extends HookConsumerWidget {
                                 capitalize(loan.loaner.name),
                                 style: const TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 30),
@@ -90,7 +90,7 @@ class DetailLoanPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(child: LoanCard(loan: loan, isDetail: true)),
             ),
           ],

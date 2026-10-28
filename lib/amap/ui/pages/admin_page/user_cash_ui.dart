@@ -65,13 +65,13 @@ class UserCashUi extends HookConsumerWidget {
             ..setEntry(3, 2, 0.001)
             ..rotateX(angle);
           return Transform(
-            alignment: Alignment.center,
+            alignment: .center,
             transform: transform,
             child: isFrontImage(angle.abs())
                 ? UserCashUiLayout(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: .start,
+                      crossAxisAlignment: .start,
                       children: [
                         const SizedBox(height: 8),
                         AutoSizeText(
@@ -80,7 +80,7 @@ class UserCashUi extends HookConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: AMAPColors(isDarkTheme).primaryGreen,
                           ),
                         ),
@@ -93,13 +93,13 @@ class UserCashUi extends HookConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: AMAPColors(isDarkTheme).secondaryGreen,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             AutoSizeText(
                               '${(cash.balance / 100).toStringAsFixed(2)} €',
@@ -108,12 +108,12 @@ class UserCashUi extends HookConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: AMAPColors(isDarkTheme).primaryGreen,
                               ),
                             ),
                             HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               color: AMAPColors(isDarkTheme).primaryGreen,
                               size: 20,
                             ),
@@ -125,7 +125,7 @@ class UserCashUi extends HookConsumerWidget {
                   )
                 : Transform(
                     transform: Matrix4.identity()..rotateX(pi),
-                    alignment: Alignment.center,
+                    alignment: .center,
                     child: UserCashUiLayout(
                       child: Form(
                         key: key,

@@ -17,7 +17,7 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: margin ?? const EdgeInsets.symmetric(horizontal: 30),
+      margin: margin ?? const .symmetric(horizontal: 30),
       height: 40,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -30,16 +30,16 @@ class MyButton extends StatelessWidget {
                   Theme.of(context).colorScheme.tertiary,
                   Theme.of(context).colorScheme.tertiary,
                 ],
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
+          begin: .bottomRight,
+          end: .topLeft,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        borderRadius: const .all(.circular(15)),
       ),
       child: Center(
         child: AutoSizeText(
           text,
           style: TextStyle(
-            fontWeight: FontWeight.w700,
+            fontWeight: .w700,
             color: enabled
                 ? Theme.of(context).colorScheme.onPrimaryContainer
                 : Theme.of(context).colorScheme.onSurface,

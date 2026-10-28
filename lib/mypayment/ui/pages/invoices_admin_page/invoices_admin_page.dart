@@ -50,7 +50,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
           refreshInvoices();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const .symmetric(horizontal: 20),
           child: Async2Children(
             values: Tuple2(invoices, structures),
             builder: (context, invoices, structures) {
@@ -59,7 +59,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
                   Row(
                     children: [
                       IconButton(
-                        icon: HeroIcon(HeroIcons.arrowLeft),
+                        icon: HeroIcon(.arrowLeft),
                         onPressed: page.value <= 1
                             ? null
                             : () {
@@ -87,7 +87,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
                         value: pageSize.value,
                       ),
                       IconButton(
-                        icon: HeroIcon(HeroIcons.arrowRight),
+                        icon: HeroIcon(.arrowRight),
                         onPressed: invoices.length < pageSize.value
                             ? null
                             : () {
@@ -113,7 +113,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
                                 "Sélectionnez une structure",
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               SizedBox(

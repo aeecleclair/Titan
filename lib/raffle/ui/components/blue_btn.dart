@@ -10,7 +10,7 @@ class BlueBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+      padding: const .symmetric(horizontal: 3, vertical: 3),
       height: 60,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
@@ -18,8 +18,8 @@ class BlueBtn extends StatelessWidget {
             RaffleColorConstants.gradient1,
             RaffleColorConstants.gradient2,
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
         ),
         boxShadow: [
           BoxShadow(
@@ -28,14 +28,14 @@ class BlueBtn extends StatelessWidget {
             blurRadius: 5,
           ),
         ],
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        borderRadius: const .all(.circular(15)),
       ),
       child: Container(
-        alignment: Alignment.center,
+        alignment: .center,
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(13)),
+          borderRadius: .all(.circular(13)),
           color: Colors.white,
         ),
         child: child,

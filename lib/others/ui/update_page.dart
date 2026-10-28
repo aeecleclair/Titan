@@ -12,23 +12,23 @@ class UpdatePage extends HookConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const .symmetric(horizontal: 30),
         child: Column(
           children: [
             const Spacer(flex: 2),
-            const HeroIcon(HeroIcons.bellAlert, size: 100),
+            const HeroIcon(.bellAlert, size: 100),
             const SizedBox(height: 50),
             const Center(
               child: Text(
                 OthersTextConstants.tooOldVersion,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(fontSize: 20),
               ),
             ),
             const Spacer(flex: 3),
             Text(
               "${OthersTextConstants.version} $titanVersion",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 15, fontWeight: .w500),
             ),
             const SizedBox(height: 20),
           ],

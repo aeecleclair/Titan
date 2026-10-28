@@ -25,12 +25,12 @@ class DeliveryUi extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+        margin: const .symmetric(vertical: 10.0),
+        padding: const .symmetric(horizontal: 10.0, vertical: 8),
         height: 70,
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: .circular(20),
           gradient: LinearGradient(
             colors: [
               (selected && showSelected)
@@ -54,13 +54,13 @@ class DeliveryUi extends HookConsumerWidget {
         ),
         child: Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: .start,
+            crossAxisAlignment: .start,
             children: [
               const SizedBox(width: 10),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: .center,
+                crossAxisAlignment: .start,
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(
@@ -72,7 +72,7 @@ class DeliveryUi extends HookConsumerWidget {
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: (selected && showSelected)
                             ? Theme.of(context).colorScheme.onSecondary
                             : AMAPColors(isDarkTheme).textOnPrimary,
@@ -83,7 +83,7 @@ class DeliveryUi extends HookConsumerWidget {
                     '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: (selected && showSelected)
                           ? Theme.of(context).colorScheme.onSecondary
                           : AMAPColors(isDarkTheme).textOnPrimary,
@@ -96,7 +96,7 @@ class DeliveryUi extends HookConsumerWidget {
                 "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: (selected && showSelected)
                       ? Theme.of(context).colorScheme.onSecondary
                       : AMAPColors(isDarkTheme).textOnSecondary,

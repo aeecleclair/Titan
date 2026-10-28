@@ -31,22 +31,22 @@ class MemberEditableCard extends HookConsumerWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const .symmetric(vertical: 5, horizontal: 10),
+      margin: const .symmetric(vertical: 5),
       decoration: BoxDecoration(
-        border: Border.all(),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        border: .all(),
+        borderRadius: const .all(.circular(20)),
       ),
       child: Row(
         children: [
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 AutoSizeText(
                   (associationMembership.user.nickname ??
                       "${associationMembership.user.firstname} ${associationMembership.user.name}"),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: .bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

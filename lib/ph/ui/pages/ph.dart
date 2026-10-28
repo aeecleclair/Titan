@@ -11,7 +11,7 @@ class PhTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         children: [
           const TopBar(title: "PH", root: PhRouter.root),
           Expanded(child: child),

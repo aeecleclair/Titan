@@ -57,9 +57,9 @@ class ListEvent extends HookConsumerWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const .symmetric(horizontal: 30.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 AlignLeftText(
                   "$title${filteredEvents.length > 1 ? "s" : ""} (${filteredEvents.length})",
@@ -67,7 +67,7 @@ class ListEvent extends HookConsumerWidget {
                 ),
                 if (canToggle)
                   HeroIcon(
-                    toggle.value ? HeroIcons.chevronUp : HeroIcons.chevronDown,
+                    toggle.value ? .chevronUp : .chevronDown,
                     color: Colors.grey,
                     size: 30,
                   ),
@@ -77,7 +77,7 @@ class ListEvent extends HookConsumerWidget {
         ),
         if (toggle.value)
           Container(
-            margin: const EdgeInsets.only(top: 10),
+            margin: const .only(top: 10),
             child: HorizontalListView.builder(
               height: 235,
               items: filteredEvents,

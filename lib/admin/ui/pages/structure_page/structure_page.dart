@@ -38,18 +38,18 @@ class StructurePage extends HookConsumerWidget {
           await structuresNotifier.getStructures();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const .symmetric(horizontal: 20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               const SizedBox(height: 20),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.structures,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -70,10 +70,7 @@ class StructurePage extends HookConsumerWidget {
                             bankAccountHolder.id == ""
                                 ? AdminTextConstants.noBankAccountHolder
                                 : "${AdminTextConstants.currentBankAccountHolder}: ${bankAccountHolder.name}",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyle(fontSize: 16, fontWeight: .bold),
                           ),
                           const SizedBox(height: 10),
                           GestureDetector(
@@ -92,7 +89,7 @@ class StructurePage extends HookConsumerWidget {
                               children: [
                                 const Spacer(),
                                 HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.secondaryContainer,

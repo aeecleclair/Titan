@@ -59,10 +59,10 @@ class MemberEditableCard extends HookConsumerWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.all(5),
-      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      padding: const .all(5),
+      margin: const .symmetric(horizontal: 30, vertical: 10),
       decoration: BoxDecoration(
-        border: Border.all(),
+        border: .all(),
         color: getColorFromTagList(
           context,
           ref,
@@ -74,7 +74,7 @@ class MemberEditableCard extends HookConsumerWidget {
               )
               .rolesTags,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: const .all(.circular(20)),
       ),
       child: Row(
         children: [
@@ -107,11 +107,11 @@ class MemberEditableCard extends HookConsumerWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 AutoSizeText(
                   "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: .bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

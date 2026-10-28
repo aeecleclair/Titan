@@ -24,10 +24,10 @@ class SearchResult extends HookConsumerWidget {
                 (user) => GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    padding: const .symmetric(vertical: 4.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         color: Theme.of(context).colorScheme.surface,
                         boxShadow: [
                           BoxShadow(
@@ -39,9 +39,9 @@ class SearchResult extends HookConsumerWidget {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const .symmetric(vertical: 14),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Container(width: 20),
                             Expanded(

@@ -39,26 +39,26 @@ class SellerRightDialog extends ConsumerWidget {
           onTap: () {},
           child: Dialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: .all(.circular(20.0)),
             ),
             elevation: 0.0,
-            insetPadding: const EdgeInsets.all(20.0),
+            insetPadding: const .all(20.0),
             backgroundColor: Colors.transparent,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  padding: const .only(
                     top: Consts.avatarRadius + Consts.padding,
                     bottom: Consts.padding,
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: .only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -68,20 +68,20 @@ class SellerRightDialog extends ConsumerWidget {
                     ],
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min, // To make the card compact
+                    mainAxisSize: .min, // To make the card compact
                     children: <Widget>[
                       Text(
                         title,
                         style: const TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                         ),
                       ),
                       const SizedBox(height: 12.0),
                       if (child != null) child!,
                       const SizedBox(height: 30.0),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           WaitingButton(
                             onTap: () async {
@@ -91,9 +91,9 @@ class SellerRightDialog extends ConsumerWidget {
                               width:
                                   MediaQuery.of(context).size.width -
                                   4 * Consts.padding,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const .symmetric(vertical: 16),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.secondaryFixed,
@@ -110,7 +110,7 @@ class SellerRightDialog extends ConsumerWidget {
                             child: const Center(
                               child: Text(
                                 "Ajouter",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: .bold),
                               ),
                             ),
                           ),
@@ -132,8 +132,8 @@ class SellerRightDialog extends ConsumerWidget {
                           MyPaymentColors(isDarkTheme).backgroundGradient1,
                           MyPaymentColors(isDarkTheme).backgroundGradient2,
                         ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -145,7 +145,7 @@ class SellerRightDialog extends ConsumerWidget {
                     ),
                     child: const Center(
                       child: HeroIcon(
-                        HeroIcons.exclamationCircle,
+                        .exclamationCircle,
                         size: 60,
                         color: MyPaymentColors.onGradient,
                       ),

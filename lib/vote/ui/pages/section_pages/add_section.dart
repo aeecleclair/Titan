@@ -33,7 +33,7 @@ class AddSectionPage extends HookConsumerWidget {
 
     return VoteTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const .symmetric(horizontal: 30),
         child: Column(
           children: [
             const SizedBox(height: 50),
@@ -89,7 +89,7 @@ class AddSectionPage extends HookConsumerWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),

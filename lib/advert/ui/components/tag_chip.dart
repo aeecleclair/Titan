@@ -35,24 +35,24 @@ class TagChip extends ConsumerWidget {
           );
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      margin: const .symmetric(horizontal: 5),
+      padding: const .symmetric(horizontal: 8, vertical: 5),
       height: 30,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomLeft,
+          begin: .topLeft,
+          end: .bottomLeft,
           colors: [bgColor, secondaryBgColor],
           stops: const [0.7, 1.0],
         ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: borderColor),
+        borderRadius: .circular(20),
+        border: .all(color: borderColor),
       ),
       child: Align(
-        alignment: Alignment.center,
+        alignment: .center,
         child: Text(
           tagName,
-          textAlign: TextAlign.center,
+          textAlign: .center,
           maxLines: 1,
           style: TextStyle(
             color: bgColor.computeLuminance() < 0.75

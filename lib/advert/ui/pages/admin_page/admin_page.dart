@@ -80,7 +80,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     );
                   },
                   child: CardLayout(
-                    margin: const EdgeInsets.only(
+                    margin: const .only(
                       bottom: 10,
                       top: 20,
                       left: 30,
@@ -95,7 +95,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     shadowColor: Theme.of(context).shadowColor,
                     child: Center(
                       child: HeroIcon(
-                        HeroIcons.plus,
+                        .plus,
                         size: 40,
                         color: Theme.of(context).colorScheme.tertiary,
                       ),

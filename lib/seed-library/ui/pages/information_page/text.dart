@@ -20,7 +20,7 @@ class InformationPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          padding: const EdgeInsets.only(bottom: 30, left: 20, right: 30),
+          padding: const .only(bottom: 30, left: 20, right: 30),
           child: AsyncChild(
             value: information,
             builder: (context, info) => Column(
@@ -36,18 +36,18 @@ class InformationPage extends HookConsumerWidget {
                     },
                     child: Container(
                       width: 250,
-                      padding: const EdgeInsets.all(10),
-                      alignment: Alignment.center,
+                      padding: const .all(10),
+                      alignment: .center,
                       decoration: BoxDecoration(
                         color: SeedLibraryColorConstants.greenGradient1,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: const Text(
                         SeedLibraryTextConstants.editInformation,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),
@@ -56,7 +56,7 @@ class InformationPage extends HookConsumerWidget {
                   SeedLibraryTextConstants.information,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     foreground: Paint()
                       ..shader =
                           const RadialGradient(
@@ -64,7 +64,7 @@ class InformationPage extends HookConsumerWidget {
                               SeedLibraryColorConstants.greenGradient1,
                               SeedLibraryColorConstants.textDark,
                             ],
-                            center: Alignment.topLeft,
+                            center: .topLeft,
                             radius: 10,
                           ).createShader(
                             const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
@@ -75,7 +75,7 @@ class InformationPage extends HookConsumerWidget {
                   info.description,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: SeedLibraryColorConstants.textDark,
                   ),
                 ),
@@ -83,7 +83,7 @@ class InformationPage extends HookConsumerWidget {
                   SeedLibraryTextConstants.contact,
                   style: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: SeedLibraryColorConstants.textDark,
                   ),
                 ),
@@ -91,7 +91,7 @@ class InformationPage extends HookConsumerWidget {
                   info.contact,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: SeedLibraryColorConstants.textDark,
                   ),
                 ),

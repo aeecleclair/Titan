@@ -107,7 +107,7 @@ class AddEditEventPage extends HookConsumerWidget {
                 isEdit
                     ? EventTextConstants.editEvent
                     : EventTextConstants.addEvent,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 color: Colors.grey,
               ),
               const SizedBox(height: 30),
@@ -126,7 +126,7 @@ class AddEditEventPage extends HookConsumerWidget {
                       calendarEventTypeToString(value),
                       style: TextStyle(
                         color: selected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   );
@@ -136,7 +136,7 @@ class AddEditEventPage extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const .symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         TextEntry(
@@ -193,8 +193,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                                     HitTestBehavior.opaque,
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      .spaceBetween,
                                                   children: [
                                                     Text(
                                                       e,
@@ -301,7 +300,7 @@ class AddEditEventPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: .spaceEvenly,
                     children: [
                       ItemChip(
                         onTap: () {
@@ -312,7 +311,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           EventTextConstants.room,
                           style: TextStyle(
                             color: isRoom.value ? Colors.white : Colors.black,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -325,7 +324,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           EventTextConstants.other,
                           style: TextStyle(
                             color: isRoom.value ? Colors.black : Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -357,7 +356,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                           color: selected
                                               ? Colors.white
                                               : Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                         ),
                                       ),
                                     );
@@ -366,7 +365,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           ),
                         )
                       : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const .symmetric(horizontal: 30),
                           child: TextEntry(
                             controller: location,
                             label: EventTextConstants.location,
@@ -374,7 +373,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                   const SizedBox(height: 30),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const .symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         TextEntry(
@@ -523,7 +522,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),

@@ -34,23 +34,23 @@ class ProductChoiceButton extends HookConsumerWidget {
 
     return Container(
       height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const .symmetric(horizontal: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           Expanded(
             child: WaitingButton(
               waitingColor: AMAPColors(isDarkTheme).background,
               builder: (child) => Container(
-                margin: const EdgeInsets.only(right: 10),
+                margin: const .only(right: 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
                       AMAPColors(isDarkTheme).greenGradientPrimary,
                       AMAPColors(isDarkTheme).greenGradientSecondary,
                     ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                    begin: .topLeft,
+                    end: .bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -61,9 +61,9 @@ class ProductChoiceButton extends HookConsumerWidget {
                       blurRadius: 5,
                     ),
                   ],
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  borderRadius: const .all(.circular(15)),
                 ),
-                alignment: Alignment.center,
+                alignment: .center,
                 child: child,
               ),
               onTap: () async {
@@ -119,7 +119,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 "${AMAPTextConstants.confirm} (${(order.amount / 100).toStringAsFixed(2)}€)",
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).background,
                 ),
               ),
@@ -127,7 +127,7 @@ class ProductChoiceButton extends HookConsumerWidget {
           ),
           GestureDetector(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const .symmetric(horizontal: 12),
               height: 70,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -135,8 +135,8 @@ class ProductChoiceButton extends HookConsumerWidget {
                     AMAPColors(isDarkTheme).redGradientPrimary,
                     AMAPColors(isDarkTheme).redGradientSecondary,
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -147,11 +147,11 @@ class ProductChoiceButton extends HookConsumerWidget {
                     blurRadius: 5,
                   ),
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                borderRadius: const .all(.circular(15)),
               ),
-              alignment: Alignment.center,
+              alignment: .center,
               child: HeroIcon(
-                HeroIcons.xMark,
+                .xMark,
                 size: 35,
                 color: AMAPColors(isDarkTheme).background,
               ),

@@ -61,7 +61,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
         return Dialog(
           backgroundColor: Colors.transparent,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const .symmetric(horizontal: 10, vertical: 10),
             width: 300,
             height: 450,
             decoration: BoxDecoration(
@@ -72,27 +72,24 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(.circular(20)),
               gradient: RadialGradient(
                 colors: const [
                   RaffleColorConstants.gradient1,
                   RaffleColorConstants.gradient2,
                 ],
                 transform: GradientRotation(360 * animation.value * pi / 180),
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
+                  margin: const .symmetric(horizontal: 20, vertical: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Container(
                         width: 100,
@@ -106,9 +103,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               offset: const Offset(2, 3),
                             ),
                           ],
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(25),
-                          ),
+                          borderRadius: const .all(.circular(25)),
                         ),
                         child: Center(
                           child: Builder(
@@ -118,9 +113,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   data: (data) {
                                     if (data.isNotEmpty) {
                                       return ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                          20.0,
-                                        ),
+                                        borderRadius: .circular(20.0),
                                         child: data.first,
                                       );
                                     } else {
@@ -143,23 +136,17 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                               );
                                             });
                                       });
-                                      return const HeroIcon(
-                                        HeroIcons.cubeTransparent,
-                                      );
+                                      return const HeroIcon(.cubeTransparent);
                                     }
                                   },
                                   loading: () =>
                                       const CircularProgressIndicator(),
                                   error:
                                       (Object error, StackTrace? stackTrace) =>
-                                          const HeroIcon(
-                                            HeroIcons.cubeTransparent,
-                                          ),
+                                          const HeroIcon(.cubeTransparent),
                                 );
                               } else {
-                                return const HeroIcon(
-                                  HeroIcons.cubeTransparent,
-                                );
+                                return const HeroIcon(.cubeTransparent);
                               }
                             },
                           ),
@@ -170,7 +157,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 40,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ],
@@ -182,38 +169,34 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 38,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
                 const SizedBox(height: 30),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const .symmetric(horizontal: 10),
                   child: AutoSizeText(
                     raffle.name,
                     maxLines: 2,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 50,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ),
                 const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20,
-                    bottom: 12,
-                  ),
+                  padding: const .only(left: 20.0, right: 20, bottom: 12),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       const Spacer(),
                       WaitingButton(
                         waitingColor: RaffleColorConstants.textDark,
                         builder: (child) => Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: const .symmetric(
                             vertical: 10,
                             horizontal: 12,
                           ),
@@ -233,9 +216,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 offset: const Offset(2, 3),
                               ),
                             ],
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+                            borderRadius: const .all(.circular(15)),
                           ),
                           child: child,
                         ),
@@ -268,7 +249,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           }
                         },
                         child: const HeroIcon(
-                          HeroIcons.check,
+                          .check,
                           color: RaffleColorConstants.textDark,
                           size: 40,
                         ),
@@ -279,14 +260,14 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           navigationPop();
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: const .symmetric(
                             vertical: 10,
                             horizontal: 12,
                           ),
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                               colors: [
                                 RaffleColorConstants.redGradient1,
                                 RaffleColorConstants.redGradient2,
@@ -300,12 +281,10 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 offset: const Offset(2, 3),
                               ),
                             ],
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+                            borderRadius: const .all(.circular(15)),
                           ),
                           child: const HeroIcon(
-                            HeroIcons.xMark,
+                            .xMark,
                             color: Colors.white,
                             size: 40,
                           ),

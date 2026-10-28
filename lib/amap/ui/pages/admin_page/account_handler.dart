@@ -79,11 +79,11 @@ class AccountHandler extends HookConsumerWidget {
                 shadowColor: AMAPColors(
                   isDarkTheme,
                 ).textOnPrimary.withValues(alpha: 0.2),
-                padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                padding: const .symmetric(horizontal: 17.0),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const .symmetric(horizontal: 12.0),
                   child: HeroIcon(
-                    searchingAmapUser ? HeroIcons.plus : HeroIcons.xMark,
+                    searchingAmapUser ? .plus : .xMark,
                     color: AMAPColors(isDarkTheme).primaryGreen,
                     size: 50,
                   ),

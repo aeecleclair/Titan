@@ -36,9 +36,9 @@ class FundPage extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
 
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(40),
-        topRight: Radius.circular(40),
+      borderRadius: const .only(
+        topLeft: .circular(40),
+        topRight: .circular(40),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -47,8 +47,8 @@ class FundPage extends ConsumerWidget {
               MyPaymentColors(isDarkTheme).gradient1,
               MyPaymentColors(isDarkTheme).gradient2,
             ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
           ),
         ),
         child: Column(
@@ -59,7 +59,7 @@ class FundPage extends ConsumerWidget {
               style: TextStyle(
                 color: MyPaymentColors.onGradient,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 5),
@@ -70,7 +70,7 @@ class FundPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     ...fundAmount.characters.map((e) {
                       return DigitFadeInAnimation(
@@ -81,7 +81,7 @@ class FundPage extends ConsumerWidget {
                                 ? MyPaymentColors.onGradient
                                 : MyPaymentColors.errorText,
                             fontSize: 50,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       );
@@ -94,7 +94,7 @@ class FundPage extends ConsumerWidget {
                               ? MyPaymentColors.onGradient
                               : MyPaymentColors.errorText,
                           fontSize: 50,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                   ],

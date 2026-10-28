@@ -10,10 +10,10 @@ class MenuCardUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const .all(10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withValues(alpha: 0.2),
@@ -23,15 +23,15 @@ class MenuCardUi extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: .center,
+        crossAxisAlignment: .center,
         children: [
           HeroIcon(icon, color: Colors.grey.shade700, size: 40),
           const SizedBox(width: 10),
           AutoSizeText(
             text,
             style: const TextStyle(fontSize: 20),
-            textAlign: TextAlign.center,
+            textAlign: .center,
             maxLines: 3,
           ),
         ],

@@ -95,7 +95,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                 ],
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: .center,
                                 children: [
                                   Column(
                                     children: [
@@ -104,7 +104,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                         me.nickname ?? me.firstname,
                                         style: const TextStyle(
                                           fontSize: 25,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: .bold,
                                         ),
                                       ),
                                     ],
@@ -126,8 +126,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                 );
               },
-              errorBuilder: (e, s) =>
-                  const HeroIcon(HeroIcons.userCircle, size: 140),
+              errorBuilder: (e, s) => const HeroIcon(.userCircle, size: 140),
             ),
             const SizedBox(height: 100),
             HorizontalListView.builder(
@@ -139,7 +138,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   capitalize(item.name),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSecondary,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -147,7 +146,7 @@ class SettingsMainPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const .symmetric(horizontal: 30.0),
               child: Column(
                 children: [
                   const AlignLeftText(
@@ -156,7 +155,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
-                    icon: HeroIcons.pencil,
+                    icon: .pencil,
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.editAccount);
                     },
@@ -170,7 +169,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
-                    icon: HeroIcons.calendarDays,
+                    icon: .calendarDays,
                     onTap: () {
                       Clipboard.setData(
                         ClipboardData(text: "${Repository.host}calendar/ical"),
@@ -196,7 +195,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
-                    icon: HeroIcons.lockClosed,
+                    icon: .lockClosed,
                     onTap: () {
                       openLink(
                         "${getTitanHost()}calypsso/change-password/?email=${me.email}",
@@ -218,7 +217,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     SettingsItem(
-                      icon: HeroIcons.clipboardDocumentList,
+                      icon: .clipboardDocumentList,
                       onTap: () {
                         QR.to(SettingsRouter.root + SettingsRouter.logs);
                       },
@@ -238,7 +237,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
-                    icon: HeroIcons.queueList,
+                    icon: .queueList,
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.modules);
                     },
@@ -252,7 +251,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
-                    icon: HeroIcons.bellAlert,
+                    icon: .bellAlert,
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.notifications);
                     },
@@ -271,7 +270,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
-                    icon: HeroIcons.circleStack,
+                    icon: .circleStack,
                     onTap: () async {
                       showDialog(
                         context: context,
@@ -311,7 +310,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     "${SettingsTextConstants.version} $titanVersion",
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
@@ -322,7 +321,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     minFontSize: 10,
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: .w500,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),

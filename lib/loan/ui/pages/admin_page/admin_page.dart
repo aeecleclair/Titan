@@ -65,7 +65,7 @@ class AdminPage extends HookConsumerWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: const .only(top: 10.0),
           child: Column(
             children: [
               const SizedBox(height: 30),

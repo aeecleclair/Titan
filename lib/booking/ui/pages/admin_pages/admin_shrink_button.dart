@@ -15,11 +15,11 @@ class AdminShrinkButton extends StatelessWidget {
     return WaitingButton(
       builder: (child) => Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(top: 8, bottom: 12),
-        alignment: Alignment.center,
+        padding: const .only(top: 8, bottom: 12),
+        alignment: .center,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -37,7 +37,7 @@ class AdminShrinkButton extends StatelessWidget {
         style: TextStyle(
           color: Theme.of(context).colorScheme.onSecondary,
           fontSize: 25,
-          fontWeight: FontWeight.bold,
+          fontWeight: .bold,
         ),
       ),
     );

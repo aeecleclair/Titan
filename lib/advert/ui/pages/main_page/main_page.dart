@@ -55,7 +55,7 @@ class AdvertMainPage extends HookConsumerWidget {
                   SizedBox(
                     width: 300,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: .spaceAround,
                       children: [
                         if (isAdvertAdmin)
                           AdminButton(
@@ -85,7 +85,7 @@ class AdvertMainPage extends HookConsumerWidget {
                   const SizedBox(height: 20),
                   ...filteredSortedAdvertData.map(
                     (advert) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: const .symmetric(horizontal: 30),
                       child: AdvertCard(
                         onTap: () {
                           advertNotifier.setAdvert(advert);

@@ -25,14 +25,14 @@ class TombolaHandler extends HookConsumerWidget {
           return Dialog(
             child: Container(
               height: 100 + groups.length * 35.0,
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const Text(
                     "Pour quel groupe ?",
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: RaffleColorConstants.textDark,
                     ),
                   ),
@@ -49,13 +49,13 @@ class TombolaHandler extends HookConsumerWidget {
                           callback();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          padding: const .symmetric(vertical: 8.0),
                           child: Center(
                             child: Text(
                               groups[index].name,
                               style: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: RaffleColorConstants.textDark,
                               ),
                             ),
@@ -75,13 +75,13 @@ class TombolaHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          padding: const .symmetric(horizontal: 30),
+          alignment: .centerLeft,
           child: const Text(
             RaffleTextConstants.raffle,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),
@@ -95,7 +95,7 @@ class TombolaHandler extends HookConsumerWidget {
               children: [
                 const SizedBox(width: 15),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const .symmetric(horizontal: 12.0),
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
@@ -104,10 +104,10 @@ class TombolaHandler extends HookConsumerWidget {
                           RaffleColorConstants.gradient1,
                           RaffleColorConstants.gradient2,
                         ],
-                        center: Alignment.topLeft,
+                        center: .topLeft,
                         radius: 1.8,
                       ),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: .circular(30),
                       boxShadow: [
                         BoxShadow(
                           color: RaffleColorConstants.textDark.withValues(
@@ -120,7 +120,7 @@ class TombolaHandler extends HookConsumerWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      padding: const .symmetric(horizontal: 17.0),
                       child: GestureDetector(
                         onTap: () {
                           groupList.when(
@@ -144,9 +144,9 @@ class TombolaHandler extends HookConsumerWidget {
                           );
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          padding: const .symmetric(horizontal: 12.0),
                           child: const HeroIcon(
-                            HeroIcons.plus,
+                            .plus,
                             color: Colors.white,
                             size: 50,
                           ),

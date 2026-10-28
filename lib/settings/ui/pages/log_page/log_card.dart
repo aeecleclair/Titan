@@ -26,13 +26,13 @@ class LogCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+      margin: const .symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 18, horizontal: 20),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: .circular(20),
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
           colors: colors,
         ),
         boxShadow: [
@@ -45,18 +45,18 @@ class LogCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           // it's ok to leave text & icon explicitly white here
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 log.time.toString(),
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
               GestureDetector(
@@ -68,7 +68,7 @@ class LogCard extends StatelessWidget {
                     SettingsTextConstants.copied,
                   );
                 },
-                child: const HeroIcon(HeroIcons.clipboard, color: Colors.white),
+                child: const HeroIcon(.clipboard, color: Colors.white),
               ),
             ],
           ),

@@ -35,7 +35,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
         return Dialog(
           backgroundColor: Colors.transparent,
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const .all(20),
             width: 250,
             height: 350,
             decoration: BoxDecoration(
@@ -46,39 +46,36 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(.circular(20)),
               gradient: RadialGradient(
                 colors: const [
                   RaffleColorConstants.gradient1,
                   RaffleColorConstants.gradient2,
                 ],
                 transform: GradientRotation(360 * animation.value * pi / 180),
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 10),
+                  margin: const .only(top: 10),
                   child: Text(
                     "Voulez vous vraiment créer la tombola : ${group.name}",
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     const Spacer(),
                     WaitingButton(
                       waitingColor: Colors.black,
                       builder: (child) => Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 12,
-                        ),
+                        padding: const .symmetric(vertical: 10, horizontal: 12),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -95,9 +92,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               offset: const Offset(2, 3),
                             ),
                           ],
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
-                          ),
+                          borderRadius: const .all(.circular(15)),
                         ),
                         child: child,
                       ),
@@ -116,7 +111,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         });
                       },
                       child: const HeroIcon(
-                        HeroIcons.check,
+                        .check,
                         color: RaffleColorConstants.textDark,
                         size: 40,
                       ),
@@ -127,14 +122,11 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         navigationPop();
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 12,
-                        ),
+                        padding: const .symmetric(vertical: 10, horizontal: 12),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                             colors: [
                               RaffleColorConstants.redGradient1,
                               RaffleColorConstants.redGradient2,
@@ -148,12 +140,10 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               offset: const Offset(2, 3),
                             ),
                           ],
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
-                          ),
+                          borderRadius: const .all(.circular(15)),
                         ),
                         child: const HeroIcon(
-                          HeroIcons.xMark,
+                          .xMark,
                           color: Colors.white,
                           size: 40,
                         ),

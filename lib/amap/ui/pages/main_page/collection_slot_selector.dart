@@ -28,11 +28,11 @@ class CollectionSlotSelector extends HookConsumerWidget {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(isFirst ? 22 : 0),
-              bottomLeft: Radius.circular(isFirst ? 22 : 0),
-              topRight: Radius.circular(!isFirst ? 22 : 0),
-              bottomRight: Radius.circular(!isFirst ? 22 : 0),
+            borderRadius: .only(
+              topLeft: .circular(isFirst ? 22 : 0),
+              bottomLeft: .circular(isFirst ? 22 : 0),
+              topRight: .circular(!isFirst ? 22 : 0),
+              bottomRight: .circular(!isFirst ? 22 : 0),
             ),
             color: isSelected
                 ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.7)
@@ -43,7 +43,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
               capitalize(uiCollectionSlotToString(collectionSlot)),
               style: TextStyle(
                 fontSize: 25,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: isSelected
                     ? AMAPColors(isDarkTheme).greenGradientSecondary
                     : Theme.of(context).colorScheme.onSecondary,

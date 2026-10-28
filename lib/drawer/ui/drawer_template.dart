@@ -76,7 +76,7 @@ class DrawerTemplate extends HookConsumerWidget {
                   children: [
                     const CustomDrawer(),
                     Transform(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       transform: Matrix4.identity()
                         ..translateByDouble(translateVal, 0, 0, 1)
                         ..scaleByDouble(scaleVal, scaleVal, scaleVal, 1),
@@ -87,7 +87,7 @@ class DrawerTemplate extends HookConsumerWidget {
                           }
                         },
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(cornerVal),
+                          borderRadius: .circular(cornerVal),
                           child: Stack(
                             children: [
                               Container(

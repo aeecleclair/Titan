@@ -81,14 +81,14 @@ class CreationPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 30),
             const Padding(
-              padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+              padding: .only(top: 10, left: 30, right: 30),
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   RaffleTextConstants.editRaffle,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: Color.fromARGB(255, 149, 149, 149),
                   ),
                 ),
@@ -130,7 +130,7 @@ class CreationPage extends HookConsumerWidget {
                             ),
                           )
                         : const HeroIcon(
-                            HeroIcons.userCircle,
+                            .userCircle,
                             size: 160,
                             color: Colors.grey,
                           ),
@@ -148,7 +148,7 @@ class CreationPage extends HookConsumerWidget {
                         child: Container(
                           height: 40,
                           width: 40,
-                          padding: const EdgeInsets.all(7),
+                          padding: const .all(7),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: const LinearGradient(
@@ -156,8 +156,8 @@ class CreationPage extends HookConsumerWidget {
                                 RaffleColorConstants.gradient1,
                                 RaffleColorConstants.gradient2,
                               ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -169,10 +169,7 @@ class CreationPage extends HookConsumerWidget {
                               ),
                             ],
                           ),
-                          child: const HeroIcon(
-                            HeroIcons.photo,
-                            color: Colors.white,
-                          ),
+                          child: const HeroIcon(.photo, color: Colors.white),
                         ),
                       ),
                     ),
@@ -181,7 +178,7 @@ class CreationPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const .symmetric(horizontal: 20.0),
               child: Center(
                 child: Form(
                   key: formKey,
@@ -197,7 +194,7 @@ class CreationPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 20),
             Container(
-              margin: const EdgeInsets.only(left: 30, right: 30, top: 15),
+              margin: const .only(left: 30, right: 30, top: 15),
               child: WaitingButton(
                 builder: (child) => BlueBtn(child: child),
                 onTap: () async {
@@ -233,23 +230,20 @@ class CreationPage extends HookConsumerWidget {
             const SizedBox(height: 30),
             const PrizeHandler(),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              alignment: Alignment.centerLeft,
+              padding: const .symmetric(horizontal: 30),
+              alignment: .centerLeft,
               child: const Text(
                 RaffleTextConstants.editRaffle,
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: RaffleColorConstants.textDark,
                 ),
               ),
             ),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 12,
-                    ),
+                    padding: const .symmetric(horizontal: 30, vertical: 12),
                     child: WaitingButton(
                       builder: (child) => BlueBtn(child: child),
                       onTap: () async {
@@ -313,7 +307,7 @@ class CreationPage extends HookConsumerWidget {
                     ),
                   )
                 : Container(
-                    margin: const EdgeInsets.only(bottom: 30),
+                    margin: const .only(bottom: 30),
                     child: Row(
                       children: [
                         const Spacer(),
@@ -329,7 +323,7 @@ class CreationPage extends HookConsumerWidget {
                               ),
                               const Text(
                                 "Tickets",
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: TextStyle(
                                   color: RaffleColorConstants.textDark,
                                   fontSize: 20,
@@ -357,7 +351,7 @@ class CreationPage extends HookConsumerWidget {
                               ),
                               const Text(
                                 "Récoltés",
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: TextStyle(
                                   color: RaffleColorConstants.textDark,
                                   fontSize: 20,

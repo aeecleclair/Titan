@@ -25,11 +25,11 @@ class AddStoreCard extends ConsumerWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: const .symmetric(vertical: 10, horizontal: 20),
+        padding: const .symmetric(vertical: 10, horizontal: 20),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: .circular(15),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -41,7 +41,7 @@ class AddStoreCard extends ConsumerWidget {
         ),
         child: Center(
           child: HeroIcon(
-            HeroIcons.plus,
+            .plus,
             size: 40,
             color: MyPaymentColors(isDarkTheme).backgroundGradient2,
           ),

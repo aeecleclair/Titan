@@ -54,7 +54,7 @@ class SummaryCard extends ConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     return Container(
       height: 75,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const .symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       child: Row(
         children: [
@@ -62,7 +62,7 @@ class SummaryCard extends ConsumerWidget {
             radius: 27,
             backgroundColor: MyPaymentColors(isDarkTheme).gradient1,
             child: HeroIcon(
-              HeroIcons.listBullet,
+              .listBullet,
               color: MyPaymentColors.onGradient,
               size: 25,
             ),
@@ -70,8 +70,8 @@ class SummaryCard extends ConsumerWidget {
           const SizedBox(width: 15),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .start,
               children: [
                 Row(
                   children: [
@@ -91,7 +91,7 @@ class SummaryCard extends ConsumerWidget {
                   style: TextStyle(
                     color: MyPaymentColors(isDarkTheme).secondaryGreen,
                     fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ],
@@ -103,7 +103,7 @@ class SummaryCard extends ConsumerWidget {
             style: TextStyle(
               color: MyPaymentColors(isDarkTheme).secondaryGreen,
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               decorationColor: MyPaymentColors(
                 isDarkTheme,
               ).secondaryGreen.withValues(alpha: 0.8),

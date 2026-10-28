@@ -61,11 +61,7 @@ class SectionContenderItems extends HookConsumerWidget {
                   width: 120,
                   height: 180,
                   child: Center(
-                    child: HeroIcon(
-                      HeroIcons.plus,
-                      size: 40.0,
-                      color: Colors.black,
-                    ),
+                    child: HeroIcon(.plus, size: 40.0, color: Colors.black),
                   ),
                 ),
               )

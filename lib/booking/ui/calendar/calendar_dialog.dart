@@ -34,20 +34,20 @@ class CalendarDialog extends StatelessWidget {
         (isNotEnded && booking.decision == Decision.pending) || isManager;
 
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(30)),
       backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           ListView(
             shrinkWrap: true,
-            padding: const EdgeInsets.all(20),
+            padding: const .all(20),
             children: [
               Text(
                 '${booking.room.name} - ${booking.reason}',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -60,7 +60,7 @@ class CalendarDialog extends StatelessWidget {
                   false,
                 ),
                 style: TextStyle(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: .w400,
                   color: Theme.of(context).colorScheme.tertiary,
                   fontSize: 15,
                 ),
@@ -68,10 +68,7 @@ class CalendarDialog extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 "${BookingTextConstants.bookedfor} ${booking.entity} ${BookingTextConstants.by} ${booking.applicant.getName()}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
+                style: const TextStyle(fontWeight: .w400, fontSize: 15),
               ),
               if (isManager) ...[
                 const SizedBox(height: 10),
@@ -84,57 +81,51 @@ class CalendarDialog extends StatelessWidget {
                   Text(
                     booking.note!,
                     style: TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontWeight: .w400,
                       color: Theme.of(context).colorScheme.tertiary,
                       fontSize: 15,
                     ),
                   ),
                 if (booking.note != null) const SizedBox(height: 20),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     CalendarDialogButton(
                       uri: 'mailto:${booking.applicant.email}',
-                      icon: HeroIcons.atSymbol,
+                      icon: .atSymbol,
                     ),
                     const SizedBox(width: 20),
                     Flexible(
                       child: Text(
                         booking.applicant.email.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(fontWeight: .w400, fontSize: 15),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     CalendarDialogButton(
                       uri: (booking.applicant.phone != null)
                           ? 'sms:${booking.applicant.phone}'
                           : null,
-                      icon: HeroIcons.chatBubbleBottomCenterText,
+                      icon: .chatBubbleBottomCenterText,
                     ),
                     const SizedBox(width: 20),
                     Flexible(
                       child: Text(
                         booking.applicant.phone ??
                             BookingTextConstants.noPhoneRegistered,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(fontWeight: .w400, fontSize: 15),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     if (showButton)
                       GestureDetector(
@@ -143,7 +134,7 @@ class CalendarDialog extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primary,
                           shadowColor: Theme.of(context).shadowColor,
                           child: HeroIcon(
-                            HeroIcons.pencil,
+                            .pencil,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
@@ -155,7 +146,7 @@ class CalendarDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                         shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
-                          HeroIcons.documentDuplicate,
+                          .documentDuplicate,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
@@ -167,7 +158,7 @@ class CalendarDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                         shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
-                          HeroIcons.check,
+                          .check,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
@@ -179,7 +170,7 @@ class CalendarDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.secondary,
                         shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
-                          HeroIcons.xMark,
+                          .xMark,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
@@ -197,7 +188,7 @@ class CalendarDialog extends StatelessWidget {
               child: Container(
                 height: 40,
                 width: 40,
-                padding: const EdgeInsets.all(7),
+                padding: const .all(7),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surface,
                   boxShadow: [
@@ -207,9 +198,9 @@ class CalendarDialog extends StatelessWidget {
                       spreadRadius: 1,
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: .circular(15),
                 ),
-                child: const HeroIcon(HeroIcons.xMark, size: 20),
+                child: const HeroIcon(.xMark, size: 20),
               ),
             ),
           ),

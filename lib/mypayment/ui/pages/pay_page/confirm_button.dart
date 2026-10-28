@@ -63,9 +63,9 @@ class ConfirmButton extends ConsumerWidget {
             // So the whole modal has hard-coded colors
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: .circular(40),
             ),
-            margin: const EdgeInsets.all(30.0),
+            margin: const .all(30.0),
             child: Column(
               children: [
                 const SizedBox(height: 30),
@@ -73,14 +73,14 @@ class ConfirmButton extends ConsumerWidget {
                   children: [
                     const SizedBox(width: 20),
                     InfoCard(
-                      icons: HeroIcons.currencyEuro,
+                      icon: .currencyEuro,
                       title: "Montant",
                       value:
                           '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} ʍ',
                     ),
                     const SizedBox(width: 10),
                     InfoCard(
-                      icons: HeroIcons.clock,
+                      icon: .clock,
                       title: "Valide jusqu'à",
                       value: processDateOnlyHour(
                         DateTime.now().add(const Duration(minutes: 5)),
@@ -90,10 +90,10 @@ class ConfirmButton extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Padding(padding: EdgeInsets.all(10.0), child: QrCode()),
+                const Padding(padding: .all(10.0), child: QrCode()),
                 const SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const .symmetric(horizontal: 20),
                   child: GestureDetector(
                     child: AddEditButtonLayout(
                       color: Colors.grey.shade200.withValues(alpha: 0.5),
@@ -101,7 +101,7 @@ class ConfirmButton extends ConsumerWidget {
                         'Fermer',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 20,
                         ),
                       ),
@@ -183,10 +183,10 @@ class ConfirmButton extends ConsumerWidget {
               offset: const Offset(1, 2),
             ),
           ],
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: .circular(25),
         ),
         child: HeroIcon(
-          HeroIcons.qrCode,
+          .qrCode,
           color: MyPaymentColors(
             isDarkTheme,
           ).gradient1.withValues(alpha: enabled ? 1 : .5),

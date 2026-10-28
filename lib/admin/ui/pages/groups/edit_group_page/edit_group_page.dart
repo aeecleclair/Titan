@@ -45,7 +45,7 @@ class EditGroupPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: AutoLoaderChild(
             group: simpleGroupsGroups,
             notifier: simpleGroupsGroupsNotifier,
@@ -70,28 +70,28 @@ class EditGroupPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerLeft,
+                          margin: const .symmetric(vertical: 10),
+                          alignment: .centerLeft,
                           child: TextEntry(
                             controller: name,
                             color: Theme.of(
                               context,
                             ).colorScheme.primaryContainer,
                             label: AdminTextConstants.name,
-                            suffixIcon: const HeroIcon(HeroIcons.pencil),
+                            suffixIcon: const HeroIcon(.pencil),
                             enabledColor: Colors.transparent,
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerLeft,
+                          margin: const .symmetric(vertical: 10),
+                          alignment: .centerLeft,
                           child: TextEntry(
                             controller: description,
                             color: Theme.of(
                               context,
                             ).colorScheme.primaryContainer,
                             label: AdminTextConstants.description,
-                            suffixIcon: const HeroIcon(HeroIcons.pencil),
+                            suffixIcon: const HeroIcon(.pencil),
                             enabledColor: Colors.transparent,
                           ),
                         ),
@@ -129,7 +129,7 @@ class EditGroupPage extends HookConsumerWidget {
                             AdminTextConstants.edit,
                             style: TextStyle(
                               fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: .w600,
                               color: Theme.of(
                                 context,
                               ).colorScheme.onPrimaryContainer,

@@ -41,7 +41,7 @@ class ItemBar extends HookConsumerWidget {
               child: Center(
                 child: Text(
                   LoanTextConstants.noItems,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 18, fontWeight: .w500),
                 ),
               ),
             );
@@ -56,10 +56,7 @@ class ItemBar extends HookConsumerWidget {
                   child: Center(
                     child: Text(
                       LoanTextConstants.noItems,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: .w500),
                     ),
                   ),
                 );
@@ -76,17 +73,17 @@ class ItemBar extends HookConsumerWidget {
                       SizedBox(
                         width: 120,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(5),
+                              padding: const .all(5),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(
-                                  HeroIcons.minus,
+                                  .minus,
                                   color: currentValue == 0
                                       ? Theme.of(context).colorScheme.tertiary
                                       : Theme.of(
@@ -128,14 +125,12 @@ class ItemBar extends HookConsumerWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                              ),
+                              padding: const .symmetric(horizontal: 6),
                               child: Text(
                                 currentValue.toString(),
                                 style: TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                   color: currentValue == 0
                                       ? Theme.of(context).colorScheme.tertiary
                                       : Theme.of(context).colorScheme.onPrimary,
@@ -143,14 +138,14 @@ class ItemBar extends HookConsumerWidget {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.all(5),
+                              padding: const .all(5),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color:
                                       currentValue ==
                                           e.totalQuantity - e.loanedQuantity

@@ -67,7 +67,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     TextEntry(
@@ -114,10 +114,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                             width: 285,
                                             height: 160,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
+                                              borderRadius: const .all(
+                                                .circular(5),
+                                              ),
                                               image: DecorationImage(
                                                 image: poster.value != null
                                                     ? Image.memory(
@@ -133,17 +132,16 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                 width: 50,
                                                 height: 50,
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                        Radius.circular(5),
-                                                      ),
+                                                  borderRadius: const .all(
+                                                    .circular(5),
+                                                  ),
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .primary
                                                       .withValues(alpha: 0.4),
                                                 ),
                                                 child: HeroIcon(
-                                                  HeroIcons.photo,
+                                                  .photo,
                                                   size: 40,
                                                   color: Theme.of(context)
                                                       .colorScheme
@@ -156,7 +154,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                         ],
                                       )
                                     : HeroIcon(
-                                        HeroIcons.photo,
+                                        .photo,
                                         size: 160,
                                         color: Theme.of(
                                           context,
@@ -189,7 +187,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 builder: (formFieldState) => Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    borderRadius: const .all(.circular(20)),
                     boxShadow: formFieldState.hasError
                         ? [
                             BoxShadow(
@@ -211,7 +209,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     TextEntry(
@@ -300,7 +298,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                       builder: (child) => AddEditButtonLayout(child: child),

@@ -34,24 +34,24 @@ class AddEditPackTicketPage extends HookConsumerWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const .symmetric(horizontal: 30),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
           key: formKey,
           child: Container(
-            alignment: Alignment.center,
+            alignment: .center,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   const SizedBox(height: 20),
                   const Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       RaffleTextConstants.addTypeTicketSimple,
                       style: TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: .w800,
                         fontSize: 25,
                         color: RaffleColorConstants.gradient1,
                       ),
@@ -59,12 +59,12 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 35),
                   const Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       "Nombre de ticket",
                       style: TextStyle(
                         color: RaffleColorConstants.gradient2,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         fontSize: 20,
                       ),
                     ),
@@ -84,12 +84,12 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 50),
                   const Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       "Prix",
                       style: TextStyle(
                         color: RaffleColorConstants.gradient2,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         fontSize: 20,
                       ),
                     ),

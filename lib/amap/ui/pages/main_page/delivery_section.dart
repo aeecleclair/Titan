@@ -33,7 +33,7 @@ class DeliverySection extends HookConsumerWidget {
       children: [
         AlignLeftText(
           AMAPTextConstants.deliveries,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           color: showSelected
               ? Theme.of(context).colorScheme.onSecondary
               : AMAPColors(isDarkTheme).textOnPrimary,
@@ -52,7 +52,7 @@ class DeliverySection extends HookConsumerWidget {
                   const SizedBox(height: 10),
                   for (var i = 0; i < availableDeliveries.length; i++)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: const .symmetric(horizontal: 30),
                       child: DeliveryUi(
                         delivery: availableDeliveries[i],
                         onTap: () {

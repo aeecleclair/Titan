@@ -50,7 +50,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     TextEntry(
@@ -86,7 +86,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     const Spacer(),
@@ -160,7 +160,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                       builder: (child) => AddEditButtonLayout(child: child),

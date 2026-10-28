@@ -27,17 +27,17 @@ class ItemCard extends StatelessWidget {
       id: item.id,
       width: 140,
       height: (showButtons) ? 150 : 95,
-      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      padding: const .symmetric(horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           const SizedBox(height: 15),
           AutoSizeText(
             item.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: .bold),
           ),
           const SizedBox(height: 5),
           Text(
@@ -46,7 +46,7 @@ class ItemCard extends StatelessWidget {
                 : LoanTextConstants.unavailable,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: availableQuantity > 0
                   ? Theme.of(context).colorScheme.tertiary
                   : Theme.of(context).colorScheme.error,
@@ -57,18 +57,18 @@ class ItemCard extends StatelessWidget {
             '${item.caution.toStringAsFixed(2)} €',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: .bold),
           ),
           const Spacer(),
           if (showButtons)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 GestureDetector(
                   onTap: onEdit,
                   child: CardButton(
                     color: Theme.of(context).colorScheme.secondaryFixed,
-                    child: const HeroIcon(HeroIcons.pencil),
+                    child: const HeroIcon(.pencil),
                   ),
                 ),
                 WaitingButton(
@@ -78,7 +78,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   onTap: onDelete,
                   child: HeroIcon(
-                    HeroIcons.trash,
+                    .trash,
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),

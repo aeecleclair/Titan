@@ -35,9 +35,9 @@ class ReFundPage extends ConsumerWidget {
     }
 
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(40),
-        topRight: Radius.circular(40),
+      borderRadius: const .only(
+        topLeft: .circular(40),
+        topRight: .circular(40),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -46,8 +46,8 @@ class ReFundPage extends ConsumerWidget {
               MyPaymentColors(isDarkTheme).gradient1,
               MyPaymentColors(isDarkTheme).gradient2,
             ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
           ),
         ),
         child: Column(
@@ -58,7 +58,7 @@ class ReFundPage extends ConsumerWidget {
               style: const TextStyle(
                 color: MyPaymentColors.onGradient,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 5),
@@ -72,7 +72,7 @@ class ReFundPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     ...refundAmount.characters.map((e) {
                       return DigitFadeInAnimation(
@@ -83,7 +83,7 @@ class ReFundPage extends ConsumerWidget {
                                 ? MyPaymentColors.onGradient
                                 : MyPaymentColors.errorText,
                             fontSize: 50,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       );
@@ -96,7 +96,7 @@ class ReFundPage extends ConsumerWidget {
                               ? MyPaymentColors.onGradient
                               : MyPaymentColors.errorText,
                           fontSize: 50,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                   ],
@@ -136,7 +136,7 @@ class ReFundPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: .symmetric(horizontal: 20),
                   child: WaitingButton(
                     onTap: () async {
                       final value = await transactionNotifier.refundTransaction(
@@ -180,7 +180,7 @@ class ReFundPage extends ConsumerWidget {
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),

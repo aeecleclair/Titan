@@ -12,7 +12,7 @@ class TombolaCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: const .all(12.0),
       child: Container(
         width: 150,
         height: 100,
@@ -22,10 +22,10 @@ class TombolaCard extends HookConsumerWidget {
               RaffleColorConstants.gradient1,
               RaffleColorConstants.gradient2,
             ],
-            center: Alignment.topLeft,
+            center: .topLeft,
             radius: 1.5,
           ),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: .circular(30),
           boxShadow: [
             BoxShadow(
               color: RaffleColorConstants.textDark.withValues(alpha: 0.2),
@@ -36,10 +36,10 @@ class TombolaCard extends HookConsumerWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),
+          padding: const .symmetric(horizontal: 17.0, vertical: 5),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: .start,
+            crossAxisAlignment: .start,
             children: [
               const SizedBox(height: 8),
               AutoSizeText(
@@ -48,7 +48,7 @@ class TombolaCard extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.white,
                 ),
               ),
@@ -59,7 +59,7 @@ class TombolaCard extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: RaffleColorConstants.textDark,
                 ),
               ),
@@ -71,7 +71,7 @@ class TombolaCard extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Colors.white,
                 ),
               ),

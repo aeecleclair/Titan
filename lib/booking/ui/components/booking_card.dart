@@ -100,19 +100,19 @@ class BookingCard extends ConsumerWidget {
       width: 250,
       colors: cardColor,
       shadowColor: cardBoxShadow,
-      padding: const EdgeInsets.all(15.0),
+      padding: const .all(15.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 booking.room.name,
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: bigTextColor,
                 ),
               ),
@@ -120,7 +120,7 @@ class BookingCard extends ConsumerWidget {
                 GestureDetector(
                   onTap: onInfo,
                   child: HeroIcon(
-                    HeroIcons.informationCircle,
+                    .informationCircle,
                     color: informationCircleColor,
                     size: 25,
                   ),
@@ -131,7 +131,7 @@ class BookingCard extends ConsumerWidget {
           Container(
             constraints: const BoxConstraints(maxHeight: 38),
             child: Scrollbar(
-              radius: const Radius.circular(8),
+              radius: const .circular(8),
               child: SingleChildScrollView(
                 child: Text(
                   formatRecurrenceRule(
@@ -142,7 +142,7 @@ class BookingCard extends ConsumerWidget {
                   ),
                   style: TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: smallTextColor,
                   ),
                 ),
@@ -156,13 +156,13 @@ class BookingCard extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: bigTextColor,
             ),
           ),
           const SizedBox(height: 4),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 booking.decision == Decision.pending
@@ -172,7 +172,7 @@ class BookingCard extends ConsumerWidget {
                     : BookingTextConstants.declined,
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: smallTextColor,
                 ),
               ),
@@ -180,7 +180,7 @@ class BookingCard extends ConsumerWidget {
                 '${BookingTextConstants.keysRequested}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: smallTextColor,
                 ),
               ),
@@ -189,7 +189,7 @@ class BookingCard extends ConsumerWidget {
           const Spacer(),
           if (!isDetail)
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 if (showButton)
                   GestureDetector(
@@ -197,10 +197,7 @@ class BookingCard extends ConsumerWidget {
                     child: CardButton(
                       color: primaryIconBackgroundColor,
                       shadowColor: Theme.of(context).shadowColor,
-                      child: HeroIcon(
-                        HeroIcons.pencil,
-                        color: primaryIconColor,
-                      ),
+                      child: HeroIcon(.pencil, color: primaryIconColor),
                     ),
                   ),
                 if (showButton) const Spacer(),
@@ -210,7 +207,7 @@ class BookingCard extends ConsumerWidget {
                     color: primaryIconBackgroundColor,
                     shadowColor: Theme.of(context).shadowColor,
                     child: HeroIcon(
-                      HeroIcons.documentDuplicate,
+                      .documentDuplicate,
                       color: primaryIconColor,
                     ),
                   ),
@@ -228,7 +225,7 @@ class BookingCard extends ConsumerWidget {
                           : Colors.transparent,
                       shadowColor: Theme.of(context).shadowColor,
                       child: HeroIcon(
-                        HeroIcons.check,
+                        .check,
                         color: secondaryIconBackgroundColor,
                       ),
                     ),
@@ -248,7 +245,7 @@ class BookingCard extends ConsumerWidget {
                         alpha: 0.2,
                       ),
                       child: HeroIcon(
-                        HeroIcons.xMark,
+                        .xMark,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
@@ -265,7 +262,7 @@ class BookingCard extends ConsumerWidget {
                       child: child,
                     ),
                     child: HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),

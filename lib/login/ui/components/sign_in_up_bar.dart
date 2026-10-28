@@ -22,29 +22,25 @@ class SignInUpBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 10),
       child: Container(
         height: 50,
         width: double.infinity,
-        alignment: Alignment.center,
+        alignment: .center,
         child: WaitingButton(
           onTap: onPressed,
           builder: (child) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  color: color,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: .w800, color: color),
               ),
               child,
             ],
           ),
           child: Container(
-            margin: const EdgeInsets.only(left: 20),
+            margin: const .only(left: 20),
             child: isLoading ? Loader(color: color) : icon,
           ),
         ),

@@ -46,7 +46,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
               ),
             ),
           ),
@@ -58,7 +58,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 20,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: .w800,
                       ),
                     ),
                     ...accountTypes.map((accountType) {
@@ -85,10 +85,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                     Divider(color: Theme.of(context).colorScheme.tertiary),
                     Text(
                       AdminTextConstants.groups,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                      ),
+                      style: TextStyle(fontSize: 20, fontWeight: .w900),
                     ),
                     ...groups.map((group) {
                       final permission = GroupPermission(

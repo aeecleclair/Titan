@@ -19,14 +19,14 @@ class DeleteButton extends StatelessWidget {
     return GestureDetector(
       onTap: !deactivated ? onDelete : null,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: !deactivated
                 ? [ColorConstants.gradient1, ColorConstants.gradient2]
                 : [ColorConstants.deactivated1, ColorConstants.deactivated2],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
           ),
           boxShadow: [
             BoxShadow(
@@ -37,10 +37,10 @@ class DeleteButton extends StatelessWidget {
               offset: const Offset(2, 3),
             ),
           ],
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
         ),
         child: HeroIcon(
-          deletion ? HeroIcons.trash : HeroIcons.noSymbol,
+          deletion ? .trash : .noSymbol,
           size: 30,
           color: Colors.white,
         ),

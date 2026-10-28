@@ -16,7 +16,7 @@ class LeaderBoardItem extends ConsumerWidget {
     final style = GoogleFonts.silkscreen(
       textStyle: TextStyle(
         fontSize: 20,
-        fontWeight: FontWeight.w700,
+        fontWeight: .w700,
         color: score.position == 1
             ? Colors.yellow.shade700
             : score.position == 2
@@ -28,9 +28,9 @@ class LeaderBoardItem extends ConsumerWidget {
     );
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Expanded(
             child: Row(

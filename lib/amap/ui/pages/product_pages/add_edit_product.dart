@@ -55,7 +55,7 @@ class AddEditProduct extends HookConsumerWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const .symmetric(horizontal: 30),
             child: Column(
               children: [
                 const SizedBox(height: 10),
@@ -236,7 +236,7 @@ class AddEditProduct extends HookConsumerWidget {
                             : AMAPTextConstants.add,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: AMAPColors(isDarkTheme).background,
                         ),
                       ),

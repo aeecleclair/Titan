@@ -57,39 +57,36 @@ class RecommendationCard extends HookConsumerWidget {
       mapKey: recommendation,
       loader: (ref) =>
           recommendationLogoNotifier.getRecommendationLogo(recommendation.id!),
-      loadingBuilder: (context) => const HeroIcon(HeroIcons.photo),
+      loadingBuilder: (context) => const HeroIcon(.photo),
       dataBuilder: (context, data) => RecommendationCardLayout(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: .circular(20.0),
               child: Image(width: 50, image: data.first.image),
             ),
             const SizedBox(width: 20),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: .spaceEvenly,
                 children: [
                   Text(
                     recommendation.title,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textAlign: .center,
+                    style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   if (recommendation.code != null)
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Flexible(
                           child: Text(
                             recommendation.code!,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),
@@ -109,7 +106,7 @@ class RecommendationCard extends HookConsumerWidget {
                     ),
                   Text(
                     recommendation.summary,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     style: const TextStyle(fontSize: 15, color: Colors.grey),
                   ),
                 ],
@@ -129,10 +126,7 @@ class RecommendationCard extends HookConsumerWidget {
                               RecommendationRouter.information,
                         );
                       },
-                      icon: const HeroIcon(
-                        HeroIcons.informationCircle,
-                        size: 40,
-                      ),
+                      icon: const HeroIcon(.informationCircle, size: 40),
                     ),
                   )
                 : SizedBox(
@@ -148,7 +142,7 @@ class RecommendationCard extends HookConsumerWidget {
                                   );
                                 },
                                 child: const CardButton(
-                                  child: HeroIcon(HeroIcons.pencil, size: 25),
+                                  child: HeroIcon(.pencil, size: 25),
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -190,8 +184,8 @@ class RecommendationCard extends HookConsumerWidget {
                                 child: const CardButton(
                                   color: Colors.black,
                                   child: HeroIcon(
+                                    .trash,
                                     color: Colors.white,
-                                    HeroIcons.trash,
                                     size: 25,
                                   ),
                                 ),

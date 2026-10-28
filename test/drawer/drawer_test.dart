@@ -10,14 +10,14 @@ void main() {
       () {
         final module = Module(
           name: 'Calendar',
-          icon: const Left(HeroIcons.calendar),
+          icon: const Left(.calendar),
           selected: true,
           root: '',
         );
 
         final copiedModule = module.copy(
           name: 'Settings',
-          icon: const Left(HeroIcons.cog),
+          icon: const Left(.cog),
           selected: false,
           root: '/test',
         );

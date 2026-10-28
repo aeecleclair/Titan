@@ -83,7 +83,7 @@ class RightPanel extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 50),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       const SizedBox(width: 20),
                       if (screenShot.title.isNotEmpty)
@@ -91,7 +91,7 @@ class RightPanel extends HookConsumerWidget {
                           screenShot.title,
                           style: TextStyle(
                             fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(
                               context,
                             ).colorScheme.onPrimaryContainer,
@@ -102,7 +102,7 @@ class RightPanel extends HookConsumerWidget {
                           " - ",
                           style: TextStyle(
                             fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(
                               context,
                             ).colorScheme.onPrimaryContainer,
@@ -114,7 +114,7 @@ class RightPanel extends HookConsumerWidget {
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(
                               context,
                             ).colorScheme.onPrimaryContainer,
@@ -125,10 +125,7 @@ class RightPanel extends HookConsumerWidget {
                   ),
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 15,
-                      ),
+                      margin: const .symmetric(vertical: 20, horizontal: 15),
                       child: LayoutBuilder(
                         builder: (context, constraints) => MouseRegion(
                           onHover: (event) {
@@ -156,7 +153,7 @@ class RightPanel extends HookConsumerWidget {
                               ..rotateY(-0.0005 * offset.value.dx),
                             alignment: FractionalOffset.center,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: .circular(20),
                               child: BackdropFilter(
                                 filter: ImageFilter.blur(
                                   sigmaX: 10,
@@ -169,8 +166,8 @@ class RightPanel extends HookConsumerWidget {
                                         .colorScheme
                                         .secondaryFixed
                                         .withValues(alpha: 0.2),
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
+                                    borderRadius: .circular(20),
+                                    border: .all(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .primary
@@ -179,7 +176,7 @@ class RightPanel extends HookConsumerWidget {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const .all(10),
                                     child: Image.asset(
                                       screenShot.path,
                                       fit: BoxFit.contain,
@@ -235,7 +232,7 @@ class RightPanel extends HookConsumerWidget {
               const SizedBox(height: 30),
               const Text(
                 "Développé par ECLAIR",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: .bold),
               ),
               const SizedBox(height: 50),
             ],

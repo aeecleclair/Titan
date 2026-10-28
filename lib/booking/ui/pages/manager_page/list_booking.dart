@@ -65,26 +65,24 @@ class ListBooking extends HookConsumerWidget {
               }
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const .symmetric(horizontal: 30.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                   ),
                   if (canToggle)
                     HeroIcon(
-                      toggle.value
-                          ? HeroIcons.chevronUp
-                          : HeroIcons.chevronDown,
+                      toggle.value ? .chevronUp : .chevronDown,
                       color: Theme.of(context).colorScheme.tertiary,
                       size: 30,
                     ),
@@ -94,7 +92,7 @@ class ListBooking extends HookConsumerWidget {
           ),
           if (toggle.value)
             Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const .only(top: 10),
               child: HorizontalListView.builder(
                 height: 210,
                 horizontalSpace: 10,

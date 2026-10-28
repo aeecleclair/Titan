@@ -62,7 +62,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
           parent: BouncingScrollPhysics(),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const .all(15.0),
           child: Form(
             key: key,
             child: Column(
@@ -71,25 +71,19 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                 isEdit
                     ? Text(
                         SeedLibraryTextConstants.editSpecies,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
+                        textAlign: .center,
                       )
                     : Text(
                         SeedLibraryTextConstants.addSpecies,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
+                        textAlign: .center,
                       ),
                 const SizedBox(height: 30),
                 TypesBar(),
                 Column(
                   children: [
-                    Container(margin: const EdgeInsets.symmetric(vertical: 10)),
+                    Container(margin: const .symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
                       label: SeedLibraryTextConstants.name,
@@ -333,7 +327,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                             : SeedLibraryTextConstants.add,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),

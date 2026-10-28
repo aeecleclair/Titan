@@ -31,19 +31,19 @@ class TOSDialogBox extends ConsumerWidget {
     final background = Theme.of(context).colorScheme.surface;
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(TOSDialogBox._padding),
+        borderRadius: .circular(TOSDialogBox._padding),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: Stack(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(TOSDialogBox._padding),
-            margin: const EdgeInsets.only(top: TOSDialogBox._avatarRadius),
+            padding: const .all(TOSDialogBox._padding),
+            margin: const .only(top: TOSDialogBox._avatarRadius),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: background,
-              borderRadius: BorderRadius.circular(TOSDialogBox._padding),
+              borderRadius: .circular(TOSDialogBox._padding),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
@@ -53,13 +53,13 @@ class TOSDialogBox extends ConsumerWidget {
               ],
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: <Widget>[
                 Text(
                   title,
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: .w800,
                     color: titleColor,
                   ),
                 ),
@@ -68,15 +68,15 @@ class TOSDialogBox extends ConsumerWidget {
                   data: descriptions,
                   selectable: true,
                   styleSheet: MarkdownStyleSheet(
-                    h2Padding: const EdgeInsets.only(top: 20.0),
+                    h2Padding: const .only(top: 20.0),
                     textAlign: WrapAlignment.spaceAround,
                   ),
                 ),
                 const SizedBox(height: 22),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: .bottomCenter,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: .spaceAround,
                     children: [
                       TextButton(
                         onPressed: () {
@@ -88,7 +88,7 @@ class TOSDialogBox extends ConsumerWidget {
                           "Refuser",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: noColor,
                           ),
                         ),
@@ -105,7 +105,7 @@ class TOSDialogBox extends ConsumerWidget {
                           "Accepter",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: yesColor,
                           ),
                         ),

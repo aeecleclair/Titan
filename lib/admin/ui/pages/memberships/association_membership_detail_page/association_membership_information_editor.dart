@@ -44,10 +44,10 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: const .symmetric(vertical: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: .spaceBetween,
+                  crossAxisAlignment: .start,
                   children: [
                     SizedBox(
                       child: TextFormField(
@@ -59,11 +59,11 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                           labelText: AdminTextConstants.name,
                           labelStyle: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                           suffixIcon: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const HeroIcon(HeroIcons.pencil),
+                            padding: const .all(10),
+                            child: const HeroIcon(.pencil),
                           ),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.transparent),
@@ -88,10 +88,10 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                 ),
               ),
               const Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.group,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: .bold),
                 ),
               ),
               DropdownButtonFormField<String>(
@@ -153,7 +153,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   AdminTextConstants.edit,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),

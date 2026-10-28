@@ -27,12 +27,12 @@ class StockPage extends HookConsumerWidget {
           await plantListNotifier.loadPlants();
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const .all(8.0),
           child: Column(
             children: [
               const Text(
                 SeedLibraryTextConstants.stocks,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: .bold),
               ),
               const ResearchBar(),
               const FiltersBar(),
@@ -40,10 +40,7 @@ class StockPage extends HookConsumerWidget {
               plantFilteredList.isEmpty
                   ? const Text(
                       SeedLibraryTextConstants.noStockPlants,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(fontSize: 16, fontWeight: .w600),
                     )
                   : SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),

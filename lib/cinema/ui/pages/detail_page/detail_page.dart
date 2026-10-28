@@ -72,7 +72,7 @@ class DetailPage extends HookConsumerWidget {
             dataBuilder: (context, data) =>
                 Image(image: data.first.image, fit: BoxFit.fill),
             errorBuilder: (error, stack) =>
-                const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
+                const Center(child: HeroIcon(.exclamationCircle)),
           ),
         ),
         SingleChildScrollView(
@@ -85,8 +85,8 @@ class DetailPage extends HookConsumerWidget {
                 height: 250,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    begin: .topCenter,
+                    end: .bottomCenter,
                     colors: [
                       Colors.transparent,
                       Theme.of(
@@ -104,22 +104,19 @@ class DetailPage extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      padding: const .symmetric(horizontal: 30.0),
+                      alignment: .center,
                       child: AutoSizeText(
                         session.name,
                         maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        textAlign: .center,
+                        style: const TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      padding: const .symmetric(horizontal: 30.0),
+                      alignment: .center,
                       child: Text(
                         formatDate(session.start),
                         style: const TextStyle(fontSize: 18),
@@ -131,34 +128,31 @@ class DetailPage extends HookConsumerWidget {
                       items: genres,
                       horizontalSpace: 20,
                       itemBuilder: (context, genre, index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
+                        margin: const .symmetric(horizontal: 10),
+                        padding: const .symmetric(horizontal: 15, vertical: 10),
                         decoration: BoxDecoration(
                           color: Theme.of(
                             context,
                           ).colorScheme.secondaryContainer,
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: .circular(18),
                         ),
                         child: Text(
                           genre,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSecondary,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 15),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const .symmetric(horizontal: 30.0),
                       child: Text(
                         session.overview != null
                             ? session.overview!
                             : CinemaTextConstants.noOverview,
-                        textAlign: TextAlign.left,
+                        textAlign: .left,
                         style: const TextStyle(fontSize: 15),
                       ),
                     ),
@@ -178,10 +172,10 @@ class DetailPage extends HookConsumerWidget {
                 GestureDetector(
                   onTap: QR.back,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const .all(8),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: .circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).shadowColor,
@@ -199,13 +193,10 @@ class DetailPage extends HookConsumerWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 12,
-                  ),
+                  padding: const .symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: .circular(18),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -217,7 +208,7 @@ class DetailPage extends HookConsumerWidget {
                   ),
                   child: Row(
                     children: [
-                      const HeroIcon(HeroIcons.clock, size: 20),
+                      const HeroIcon(.clock, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDuration(session.duration),
@@ -240,8 +231,8 @@ class DetailPage extends HookConsumerWidget {
               height: 140,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  begin: .topCenter,
+                  end: .bottomCenter,
                   colors: [
                     Colors.transparent,
                     Theme.of(
@@ -258,7 +249,7 @@ class DetailPage extends HookConsumerWidget {
                   final sideMargin =
                       (MediaQuery.of(context).size.width - 300) / 2;
                   return Container(
-                    margin: EdgeInsets.only(
+                    margin: .only(
                       bottom: 35,
                       top: 55,
                       left: sideMargin,
@@ -266,7 +257,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: .circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).shadowColor,
@@ -305,14 +296,14 @@ class DetailPage extends HookConsumerWidget {
                         }
                       },
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: .spaceEvenly,
                         children: [
                           Transform.rotate(
                             origin: const Offset(0, -20),
                             // Bounce
                             angle: sin(curvedAnimation.value * pi * 2) * 0.2,
                             child: HeroIcon(
-                              selected ? HeroIcons.bellSlash : HeroIcons.bell,
+                              selected ? .bellSlash : .bell,
                               size: 30,
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),

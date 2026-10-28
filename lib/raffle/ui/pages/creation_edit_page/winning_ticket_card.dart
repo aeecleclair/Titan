@@ -21,8 +21,8 @@ class WinningTicketUI extends HookConsumerWidget {
         Container(
           width: 120,
           height: 120,
-          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+          margin: const .symmetric(horizontal: 6, vertical: 10),
+          padding: const .symmetric(vertical: 12, horizontal: 17),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -32,10 +32,10 @@ class WinningTicketUI extends HookConsumerWidget {
               ),
             ],
             color: RaffleColorConstants.ticketBack,
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
+            borderRadius: const .all(.circular(30)),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               AutoSizeText(
                 ticket.prize == null ? "Lot" : ticket.prize!.name,
@@ -44,7 +44,7 @@ class WinningTicketUI extends HookConsumerWidget {
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
               Column(
@@ -55,7 +55,7 @@ class WinningTicketUI extends HookConsumerWidget {
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -64,12 +64,12 @@ class WinningTicketUI extends HookConsumerWidget {
                         ? "${ticket.user.firstname} ${ticket.user.name}"
                         : ticket.user.name,
                     maxLines: 2,
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                     minFontSize: 10,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(height: 4),

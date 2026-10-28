@@ -46,7 +46,7 @@ class MemberCard extends HookConsumerWidget {
         QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+        padding: const .symmetric(horizontal: 30, vertical: 5),
         child: CardLayout(
           color: getColorFromTagList(
             context,
@@ -59,12 +59,12 @@ class MemberCard extends HookConsumerWidget {
                 )
                 .rolesTags,
           ),
-          margin: EdgeInsets.zero,
+          margin: .zero,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: .start,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -99,19 +99,19 @@ class MemberCard extends HookConsumerWidget {
                   if ((member.member.nickname != null) &&
                       (member.member.nickname != "")) ...[
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         Text(
                           member.member.nickname!,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 16,
                           ),
                         ),
                         Text(
                           "(${member.member.name} ${member.member.firstname})",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 16,
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
@@ -121,23 +121,17 @@ class MemberCard extends HookConsumerWidget {
                   ] else
                     Text(
                       "${member.member.name} ${member.member.firstname}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: const TextStyle(fontWeight: .bold, fontSize: 16),
                     ),
                 ],
               ),
               Flexible(
                 child: Text(
-                  textAlign: TextAlign.right,
+                  textAlign: .right,
                   assoMembership == null
                       ? PhonebookTextConstants.noMemberRole
                       : assoMembership.apparentName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontWeight: .bold, fontSize: 16),
                 ),
               ),
             ],

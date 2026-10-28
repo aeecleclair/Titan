@@ -29,7 +29,7 @@ class SchoolUi extends HookConsumerWidget {
             style: TextStyle(
               color: Theme.of(context).colorScheme.onSurface,
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
         ),
@@ -42,7 +42,7 @@ class SchoolUi extends HookConsumerWidget {
                 gradient1: Theme.of(context).colorScheme.secondaryContainer,
                 gradient2: Theme.of(context).colorScheme.secondary,
                 child: HeroIcon(
-                  HeroIcons.eye,
+                  .eye,
                   color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
@@ -58,7 +58,7 @@ class SchoolUi extends HookConsumerWidget {
                   child: child,
                 ),
                 child: HeroIcon(
-                  HeroIcons.xMark,
+                  .xMark,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),

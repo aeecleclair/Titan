@@ -31,7 +31,7 @@ class LoanersBar extends HookConsumerWidget {
               color: selected
                   ? Theme.of(context).colorScheme.onSecondary
                   : Theme.of(context).colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
         );

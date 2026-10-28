@@ -42,13 +42,13 @@ class StructureInvoicesPage extends HookConsumerWidget {
           value: invoices,
           builder: (context, invoices) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const .symmetric(horizontal: 20),
               child: Column(
                 children: [
                   Row(
                     children: [
                       IconButton(
-                        icon: HeroIcon(HeroIcons.arrowLeft),
+                        icon: HeroIcon(.arrowLeft),
                         onPressed: page.value <= 1
                             ? null
                             : () {
@@ -76,7 +76,7 @@ class StructureInvoicesPage extends HookConsumerWidget {
                         value: pageSize.value,
                       ),
                       IconButton(
-                        icon: HeroIcon(HeroIcons.arrowRight),
+                        icon: HeroIcon(.arrowRight),
                         onPressed: invoices.length < pageSize.value
                             ? null
                             : () {

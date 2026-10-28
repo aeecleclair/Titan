@@ -80,13 +80,13 @@ class AssociationEditorPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 20),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              alignment: Alignment.centerLeft,
+              padding: const .symmetric(horizontal: 30),
+              alignment: .centerLeft,
               child: Text(
                 PhonebookTextConstants.edit,
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: Theme.of(context).colorScheme.primaryContainer,
                 ),
               ),
@@ -95,7 +95,7 @@ class AssociationEditorPage extends HookConsumerWidget {
             AssociationInformationEditor(),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: Row(
                 children: [
                   const Text(PhonebookTextConstants.members),
@@ -112,7 +112,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                                 !association.deactivated
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Theme.of(context).colorScheme.tertiary,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: child,
                     ),
@@ -152,7 +152,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                           }
                         : () async {},
                     child: HeroIcon(
-                      HeroIcons.plus,
+                      .plus,
                       size: 30,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
@@ -241,7 +241,7 @@ class AssociationEditorPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
                   colors:
@@ -334,7 +334,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                   "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),

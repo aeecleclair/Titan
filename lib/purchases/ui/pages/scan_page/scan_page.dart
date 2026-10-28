@@ -67,7 +67,7 @@ class ScanPage extends HookConsumerWidget {
                             eachSeller.name,
                             style: TextStyle(
                               color: selected ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         );

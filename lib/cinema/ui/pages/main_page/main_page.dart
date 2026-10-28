@@ -57,17 +57,17 @@ class CinemaMainPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: .centerLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
                         CinemaTextConstants.incomingSession,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -95,7 +95,7 @@ class CinemaMainPage extends HookConsumerWidget {
                           CinemaTextConstants.noSession,
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),

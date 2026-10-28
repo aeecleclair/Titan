@@ -9,17 +9,17 @@ class AssoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+      padding: const .symmetric(vertical: 10.0, horizontal: 30.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Text(
             asso.name,
-            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
+            style: const TextStyle(fontSize: 23, fontWeight: .w900),
           ),
           const SizedBox(height: 10),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: asso.linkList
                 .map((link) => LinkCard(link: link))
                 .toList(),

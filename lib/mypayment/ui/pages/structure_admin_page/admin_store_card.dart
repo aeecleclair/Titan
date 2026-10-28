@@ -29,11 +29,11 @@ class AdminStoreCard extends ConsumerWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      margin: const .symmetric(vertical: 10, horizontal: 20),
+      padding: const .symmetric(vertical: 10, horizontal: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: .circular(15),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor,
@@ -46,14 +46,14 @@ class AdminStoreCard extends ConsumerWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: .start,
             children: [
               Text(
                 store.name,
                 style: TextStyle(
                   fontSize: 20,
                   color: MyPaymentColors(isDarkTheme).backgroundGradient2,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                 ),
               ),
               const Spacer(),
@@ -72,7 +72,7 @@ class AdminStoreCard extends ConsumerWidget {
                     MyPaymentColors(isDarkTheme).backgroundGradient2,
                   ],
                   child: HeroIcon(
-                    HeroIcons.pencilSquare,
+                    .pencilSquare,
                     color: MyPaymentColors.onGradient,
                   ),
                 ),
@@ -115,7 +115,7 @@ class AdminStoreCard extends ConsumerWidget {
                   child: child,
                 ),
                 child: const HeroIcon(
-                  HeroIcons.trash,
+                  .trash,
                   color: MyPaymentColors.onGradient,
                 ),
               ),

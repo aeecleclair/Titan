@@ -19,11 +19,11 @@ class BottomBar extends HookConsumerWidget {
         SizedBox(
           height: 30,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: .center,
             children: [
               const SizedBox(width: 25),
               HeroIcon(
-                isDarkTheme ? HeroIcons.moon : HeroIcons.sun,
+                isDarkTheme ? .moon : .sun,
                 color: DrawerColorConstants.lightText,
                 size: 27,
               ),
@@ -51,7 +51,7 @@ class BottomBar extends HookConsumerWidget {
         SizedBox(
           height: 30,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
@@ -59,11 +59,11 @@ class BottomBar extends HookConsumerWidget {
                   displayQuitNotifier.setDisplay(true);
                 },
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     const SizedBox(width: 25),
                     HeroIcon(
-                      HeroIcons.arrowRightOnRectangle,
+                      .arrowRightOnRectangle,
                       color: DrawerColorConstants.lightText,
                       size: 27,
                     ),

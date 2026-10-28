@@ -33,7 +33,7 @@ class MonthBar extends HookConsumerWidget {
     });
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: .spaceBetween,
       children: [
         Row(
           children: [
@@ -57,7 +57,7 @@ class MonthBar extends HookConsumerWidget {
                 getMonth((currentMonth.value - 1) % 12),
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
@@ -69,7 +69,7 @@ class MonthBar extends HookConsumerWidget {
           style: TextStyle(
             fontSize: 20,
             color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
           ),
         ),
         Row(
@@ -96,7 +96,7 @@ class MonthBar extends HookConsumerWidget {
                 getMonth((currentMonth.value + 1) % 12),
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),

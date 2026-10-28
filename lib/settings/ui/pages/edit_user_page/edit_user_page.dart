@@ -62,7 +62,7 @@ class EditUserPage extends HookConsumerWidget {
           await asyncUserNotifier.loadMe();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Form(
             key: key,
             child: Column(
@@ -130,7 +130,7 @@ class EditUserPage extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const PictureButton(icon: HeroIcons.photo),
+                              child: const PictureButton(icon: .photo),
                             ),
                           ),
                           Positioned(
@@ -161,9 +161,7 @@ class EditUserPage extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const PictureButton(
-                                icon: HeroIcons.camera,
-                              ),
+                              child: const PictureButton(icon: .camera),
                             ),
                           ),
                           Positioned(
@@ -188,9 +186,7 @@ class EditUserPage extends HookConsumerWidget {
                                   }
                                 }
                               },
-                              child: const PictureButton(
-                                icon: HeroIcons.sparkles,
-                              ),
+                              child: const PictureButton(icon: .sparkles),
                             ),
                           ),
                         ],
@@ -201,22 +197,16 @@ class EditUserPage extends HookConsumerWidget {
                 const SizedBox(height: 50),
                 if (user.promo != null)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const .only(bottom: 20),
                     child: Text(
                       '${SettingsTextConstants.promo} ${user.promo}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: const TextStyle(fontSize: 20, fontWeight: .w500),
                     ),
                   ),
                 AutoSizeText(
                   '${SettingsTextConstants.email} : ${user.email}',
                   maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: const TextStyle(fontSize: 18, fontWeight: .w500),
                 ),
                 const SizedBox(height: 50),
                 UserFieldModifier(
@@ -239,7 +229,7 @@ class EditUserPage extends HookConsumerWidget {
                         SettingsTextConstants.birthday,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: .w400,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -262,16 +252,16 @@ class EditUserPage extends HookConsumerWidget {
                         lastDate: DateTime.now(),
                       ),
                       child: Container(
-                        margin: const EdgeInsets.only(left: 30),
-                        padding: const EdgeInsets.all(12),
+                        margin: const .only(left: 30),
+                        padding: const .all(12),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
                               Theme.of(context).colorScheme.primaryContainer,
                               Theme.of(context).colorScheme.primaryFixed,
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                            begin: .topLeft,
+                            end: .bottomRight,
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -283,10 +273,10 @@ class EditUserPage extends HookConsumerWidget {
                               offset: const Offset(0, 3),
                             ),
                           ],
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: .circular(10),
                         ),
                         child: HeroIcon(
-                          HeroIcons.calendar,
+                          .calendar,
                           size: 25,
                           color: Theme.of(
                             context,
@@ -305,7 +295,7 @@ class EditUserPage extends HookConsumerWidget {
                         SettingsTextConstants.floor,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: .w400,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -319,7 +309,7 @@ class EditUserPage extends HookConsumerWidget {
                         //   SettingsTextConstants.floor,
                         //   style: TextStyle(
                         //     fontSize: 15,
-                        //     fontWeight: FontWeight.w400,
+                        //     fontWeight: .w400,
                         //     color: Colors.grey.shade500,
                         //   ),
                         // ),
@@ -333,9 +323,7 @@ class EditUserPage extends HookConsumerWidget {
                           ).colorScheme.secondaryContainer,
                         ),
                         decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
+                          contentPadding: const .symmetric(vertical: 10),
                           isDense: true,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -351,7 +339,7 @@ class EditUserPage extends HookConsumerWidget {
                                 context,
                               ).colorScheme.primaryContainer,
                               height: 0.5,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         ),
@@ -407,7 +395,7 @@ class EditUserPage extends HookConsumerWidget {
                       SettingsTextConstants.save,
                       style: TextStyle(
                         fontSize: 25,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: .w400,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),

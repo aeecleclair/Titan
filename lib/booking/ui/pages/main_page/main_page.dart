@@ -75,7 +75,7 @@ class BookingMainPage extends HookConsumerWidget {
                 SizedBox(
                   width: 300,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: .spaceAround,
                     children: [
                       if (isManager)
                         AdminButton(
@@ -97,14 +97,14 @@ class BookingMainPage extends HookConsumerWidget {
                 const Expanded(child: Calendar(isManagerPage: false)),
                 const SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const .symmetric(horizontal: 30.0),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       BookingTextConstants.myBookings,
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Theme.of(context).colorScheme.secondaryFixed,
                       ),
                     ),
@@ -128,7 +128,7 @@ class BookingMainPage extends HookConsumerWidget {
                           height: 200,
                           child: Center(
                             child: HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               size: 40.0,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),

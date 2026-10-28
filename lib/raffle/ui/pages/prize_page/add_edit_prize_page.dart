@@ -37,13 +37,13 @@ class AddEditPrizePage extends HookConsumerWidget {
 
     return RaffleTemplate(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
+        margin: const .symmetric(horizontal: 30),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
             key: formKey,
             child: Container(
-              alignment: Alignment.center,
+              alignment: .center,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -137,7 +137,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                             : RaffleTextConstants.addPrize,
                         style: const TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: RaffleColorConstants.gradient2,
                         ),
                       ),

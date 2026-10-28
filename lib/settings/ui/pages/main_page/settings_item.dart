@@ -19,10 +19,10 @@ class SettingsItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 20),
+            padding: const .only(right: 20),
             child: HeroIcon(
               icon,
               size: 30,
@@ -31,12 +31,10 @@ class SettingsItem extends StatelessWidget {
           ),
           Expanded(child: child),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const .all(10),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
-              border: Border.all(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+              border: .all(color: Theme.of(context).colorScheme.onPrimary),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
@@ -45,10 +43,10 @@ class SettingsItem extends StatelessWidget {
                   offset: const Offset(2, 3),
                 ),
               ],
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: .circular(10),
             ),
             child: HeroIcon(
-              HeroIcons.chevronRight,
+              .chevronRight,
               size: 25,
               color: Theme.of(context).colorScheme.onPrimary,
             ),

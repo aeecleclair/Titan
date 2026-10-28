@@ -78,7 +78,7 @@ class AdminPage extends HookConsumerWidget {
           });
         },
         child: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: const .only(top: 10.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -86,7 +86,7 @@ class AdminPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               const AlignLeftText(
                 VoteTextConstants.voters,
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                padding: .symmetric(horizontal: 30.0),
                 color: Color.fromARGB(255, 149, 149, 149),
               ),
               const SizedBox(height: 30),
@@ -94,38 +94,38 @@ class AdminPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               const AlignLeftText(
                 VoteTextConstants.pretendance,
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                padding: .symmetric(horizontal: 30.0),
                 color: Colors.grey,
               ),
               const SizedBox(height: 10),
               const SectionContenderItems(),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: .centerLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       const Text(
                         VoteTextConstants.vote,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Colors.grey,
                         ),
                       ),
                       if (showVotes && status == Status.counting)
                         Expanded(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: .spaceEvenly,
                             children: [
                               GestureDetector(
                                 onTap: () {
                                   showVotesNotifier.toggle(false);
                                 },
                                 child: const HeroIcon(
-                                  HeroIcons.eyeSlash,
+                                  .eyeSlash,
                                   size: 25.0,
                                   color: Colors.black,
                                 ),
@@ -152,7 +152,7 @@ class AdminPage extends HookConsumerWidget {
                                   VoteTextConstants.publish,
                                   style: TextStyle(
                                     fontSize: 13,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -201,7 +201,7 @@ class AdminPage extends HookConsumerWidget {
                             VoteTextConstants.clear,
                             style: TextStyle(
                               fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: Colors.white,
                             ),
                           ),
@@ -227,11 +227,11 @@ class AdminPage extends HookConsumerWidget {
                               },
                               behavior: HitTestBehavior.opaque,
                               child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: .center,
                                 children: [
                                   SizedBox(height: 40),
                                   HeroIcon(
-                                    HeroIcons.eye,
+                                    .eye,
                                     size: 80.0,
                                     color: Colors.black,
                                   ),
@@ -240,7 +240,7 @@ class AdminPage extends HookConsumerWidget {
                                     VoteTextConstants.showVotes,
                                     style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -250,13 +250,13 @@ class AdminPage extends HookConsumerWidget {
                     if (status == Status.published) const VoteBars(),
                     if (status == Status.closed)
                       Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: const .symmetric(
                           horizontal: 30.0,
                           vertical: 50,
                         ),
                         child: WaitingButton(
                           builder: (child) => CardLayout(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
+                            padding: const .only(top: 10, bottom: 12),
                             width: double.infinity,
                             colors: [Colors.grey.shade900, Colors.black],
                             child: child,
@@ -283,7 +283,7 @@ class AdminPage extends HookConsumerWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: .w700,
                               ),
                             ),
                           ),
@@ -291,13 +291,13 @@ class AdminPage extends HookConsumerWidget {
                       ),
                     if (status == Status.open)
                       Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: const .symmetric(
                           horizontal: 30.0,
                           vertical: 50,
                         ),
                         child: WaitingButton(
                           builder: (child) => CardLayout(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
+                            padding: const .only(top: 10, bottom: 12),
                             width: double.infinity,
                             colors: const [
                               ColorConstants.gradient1,
@@ -327,7 +327,7 @@ class AdminPage extends HookConsumerWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: .w700,
                               ),
                             ),
                           ),
@@ -336,7 +336,7 @@ class AdminPage extends HookConsumerWidget {
                     if (status == Status.waiting)
                       Expanded(
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
+                          padding: const .symmetric(
                             horizontal: 30.0,
                             vertical: 50,
                           ),
@@ -345,11 +345,8 @@ class AdminPage extends HookConsumerWidget {
                               WaitingButton(
                                 waitingColor: Colors.black,
                                 builder: (child) => CardLayout(
-                                  padding: const EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 12,
-                                  ),
-                                  margin: const EdgeInsets.all(0),
+                                  padding: const .only(top: 10, bottom: 12),
+                                  margin: const .all(0),
                                   color: Colors.white,
                                   borderColor: Colors.black,
                                   child: child,
@@ -380,7 +377,7 @@ class AdminPage extends HookConsumerWidget {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: .w700,
                                     ),
                                   ),
                                 ),
@@ -389,17 +386,16 @@ class AdminPage extends HookConsumerWidget {
                               SizedBox(
                                 width: double.infinity,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: .spaceBetween,
                                   children: [
                                     Expanded(
                                       child: WaitingButton(
                                         builder: (child) => CardLayout(
-                                          padding: const EdgeInsets.only(
+                                          padding: const .only(
                                             top: 10,
                                             bottom: 12,
                                           ),
-                                          margin: const EdgeInsets.all(0),
+                                          margin: const .all(0),
                                           colors: const [
                                             VoteColorConstants.redGradient1,
                                             VoteColorConstants.redGradient2,
@@ -446,20 +442,19 @@ class AdminPage extends HookConsumerWidget {
                                         },
                                         child: const Center(
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: .center,
                                             children: [
                                               Text(
                                                 VoteTextConstants.all,
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontWeight: .w700,
                                                 ),
                                               ),
                                               SizedBox(width: 10),
                                               HeroIcon(
-                                                HeroIcons.trash,
+                                                .trash,
                                                 color: Colors.white,
                                                 size: 20,
                                               ),
@@ -472,11 +467,11 @@ class AdminPage extends HookConsumerWidget {
                                     Expanded(
                                       child: WaitingButton(
                                         builder: (child) => CardLayout(
-                                          padding: const EdgeInsets.only(
+                                          padding: const .only(
                                             top: 10,
                                             bottom: 12,
                                           ),
-                                          margin: const EdgeInsets.all(0),
+                                          margin: const .all(0),
                                           colors: const [
                                             VoteColorConstants.redGradient1,
                                             VoteColorConstants.redGradient2,
@@ -525,20 +520,19 @@ class AdminPage extends HookConsumerWidget {
                                         },
                                         child: const Center(
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: .center,
                                             children: [
                                               Text(
                                                 VoteTextConstants.pipo,
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
+                                                  fontWeight: .w700,
                                                 ),
                                               ),
                                               SizedBox(width: 10),
                                               HeroIcon(
-                                                HeroIcons.trash,
+                                                .trash,
                                                 color: Colors.white,
                                                 size: 20,
                                               ),

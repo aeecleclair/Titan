@@ -40,15 +40,15 @@ class Button extends StatelessWidget {
       onTap: disabled == true ? null : onPressed,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const .symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: switch (type) {
             .main => Theme.of(context).colorScheme.secondaryContainer,
             .danger => Theme.of(context).colorScheme.primaryContainer,
             .secondary => Theme.of(context).colorScheme.secondaryFixed,
           },
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
+          borderRadius: .circular(8),
+          border: .all(
             color: switch (type) {
               .main => Theme.of(context).colorScheme.tertiary,
               .danger => Theme.of(context).colorScheme.primaryFixed,
@@ -59,7 +59,7 @@ class Button extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            textAlign: TextAlign.center,
+            textAlign: .center,
             style: TextStyle(
               color: disabled == true
                   ? Theme.of(context).colorScheme.tertiary
@@ -73,7 +73,7 @@ class Button extends StatelessWidget {
                       ).colorScheme.secondaryContainer,
                     },
               fontSize: fontSize ?? 18,
-              fontWeight: FontWeight.w900,
+              fontWeight: .w900,
             ),
           ),
         ),

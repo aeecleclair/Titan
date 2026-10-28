@@ -48,12 +48,12 @@ class AddEditDeliveryPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30),
+          margin: const .symmetric(horizontal: 30),
           child: Form(
             key: formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Container(
-              alignment: Alignment.center,
+              alignment: .center,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -71,7 +71,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                     ),
 
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30),
+                      margin: const .symmetric(vertical: 30),
                       child: DateEntry(
                         onTap: () => getOnlyDayDate(context, dateController),
                         label: AMAPTextConstants.commandDate,
@@ -99,12 +99,12 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       Column(
                                         children: [
                                           Align(
-                                            alignment: Alignment.centerLeft,
+                                            alignment: .centerLeft,
                                             child: Text(
                                               key,
                                               style: const TextStyle(
                                                 fontSize: 20,
-                                                fontWeight: FontWeight.w800,
+                                                fontWeight: .w800,
                                               ),
                                             ),
                                           ),
@@ -216,7 +216,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                   : AMAPTextConstants.addDelivery,
                               style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: .w700,
                                 color: AMAPColors(isDarkTheme).background,
                               ),
                             ),

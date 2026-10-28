@@ -29,14 +29,14 @@ class DetailBookingPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Theme.of(context).colorScheme.surface,
                       boxShadow: [
                         BoxShadow(
@@ -50,16 +50,16 @@ class DetailBookingPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 60),
                         Container(
-                          padding: const EdgeInsets.all(30.0),
-                          alignment: Alignment.centerLeft,
+                          padding: const .all(30.0),
+                          alignment: .centerLeft,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               Text(
                                 decisionToString(booking.decision),
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               if (booking.note != null)
@@ -69,7 +69,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                   booking.note!,
                                   style: const TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                             ],
@@ -83,7 +83,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 booking.applicant.getName(),
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 15),
@@ -118,7 +118,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                       "${BookingTextConstants.bookedfor} ${booking.entity}",
                                       style: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                     ),
                                   ],
@@ -152,7 +152,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                     },
                                     child: ContactButton(
                                       child: HeroIcon(
-                                        HeroIcons.phone,
+                                        .phone,
                                         color: Theme.of(
                                           context,
                                         ).colorScheme.onSurface,
@@ -179,7 +179,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                     },
                                     child: ContactButton(
                                       child: HeroIcon(
-                                        HeroIcons.chatBubbleBottomCenterText,
+                                        .chatBubbleBottomCenterText,
                                         color: Theme.of(
                                           context,
                                         ).colorScheme.onSurface,
@@ -199,7 +199,7 @@ class DetailBookingPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(
                 child: BookingCard(booking: booking, isDetail: true),
               ),

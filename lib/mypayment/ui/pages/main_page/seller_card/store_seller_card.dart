@@ -26,7 +26,7 @@ class StoreSellerCard extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const .symmetric(horizontal: 20),
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
@@ -37,7 +37,7 @@ class StoreSellerCard extends ConsumerWidget {
                   : MyPaymentColors(isDarkTheme).backgroundGradient1,
               child: (isSelected)
                   ? HeroIcon(
-                      HeroIcons.check,
+                      .check,
                       color: MyPaymentColors.onGradient,
                       size: 25,
                     )
@@ -51,7 +51,7 @@ class StoreSellerCard extends ConsumerWidget {
                 style: TextStyle(
                   color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: isSelected ? .bold : .normal,
                 ),
               ),
             ),

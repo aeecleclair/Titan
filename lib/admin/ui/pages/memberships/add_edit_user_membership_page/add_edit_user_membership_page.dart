@@ -43,7 +43,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const .all(30.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -55,7 +55,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               if (!isEdit) ...[
                 StyledSearchBar(
-                  padding: EdgeInsets.zero,
+                  padding: .zero,
                   label: AdminTextConstants.user,
                   editingController: queryController,
                   onChanged: (value) async {
@@ -72,10 +72,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               ] else
                 Text(
                   membership.user.getName(),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: const TextStyle(fontSize: 18, fontWeight: .w600),
                 ),
               const SizedBox(height: 10),
               DateEntry(
@@ -112,7 +109,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   !isEdit ? AdminTextConstants.add : AdminTextConstants.edit,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),

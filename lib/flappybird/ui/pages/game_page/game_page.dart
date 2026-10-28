@@ -64,7 +64,7 @@ class GamePage extends HookConsumerWidget {
               ),
               actions: [
                 Container(
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: const .only(bottom: 10),
                   child: MaterialButton(
                     color: FlappyBirdColors(isDarkTheme).text,
                     onPressed: () {
@@ -79,7 +79,7 @@ class GamePage extends HookConsumerWidget {
                   ),
                 ),
               ],
-              actionsAlignment: MainAxisAlignment.center,
+              actionsAlignment: .center,
             ),
           );
         },

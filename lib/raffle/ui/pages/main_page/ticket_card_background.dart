@@ -34,12 +34,12 @@ class TicketCardBackground extends HookConsumerWidget {
                 ),
               ],
               color: Colors.white,
-              border: Border.all(color: Colors.white, width: 3),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              border: .all(color: Colors.white, width: 3),
+              borderRadius: const .all(.circular(20)),
             ),
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            margin: const .symmetric(horizontal: 5, vertical: 5),
             child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(.circular(20)),
               child: Stack(
                 children: [
                   CustomPaint(
@@ -57,7 +57,7 @@ class TicketCardBackground extends HookConsumerWidget {
         : Container(
             width: 160,
             height: 200,
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            margin: const .symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -71,10 +71,10 @@ class TicketCardBackground extends HookConsumerWidget {
                   RaffleColorConstants.gradient1,
                   RaffleColorConstants.gradient2,
                 ],
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: const .all(.circular(20)),
             ),
             child: child,
           );

@@ -20,9 +20,9 @@ class CardLayout extends StatelessWidget {
     this.color,
     this.shadowColor,
     this.borderColor,
-    this.padding = const EdgeInsets.all(12.0),
-    this.margin = const EdgeInsets.symmetric(horizontal: 15.0),
-    this.borderRadius = const BorderRadius.all(Radius.circular(30)),
+    this.padding = const .all(12.0),
+    this.margin = const .symmetric(horizontal: 15.0),
+    this.borderRadius = const .all(.circular(30)),
   });
 
   @override
@@ -39,19 +39,15 @@ class CardLayout extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: .circular(30),
           gradient: useColors
-              ? RadialGradient(
-                  colors: colors!,
-                  center: Alignment.topLeft,
-                  radius: 1.3,
-                )
+              ? RadialGradient(colors: colors!, center: .topLeft, radius: 1.3)
               : null,
           color: useColors
               ? null
               : color ?? Theme.of(context).colorScheme.primary,
           border: borderColor != null
-              ? Border.all(color: borderColor!, width: 2)
+              ? .all(color: borderColor!, width: 2)
               : null,
           boxShadow: [
             BoxShadow(

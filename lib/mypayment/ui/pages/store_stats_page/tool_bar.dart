@@ -64,23 +64,20 @@ class ToolBar extends ConsumerWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const .symmetric(horizontal: 20.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: .spaceEvenly,
             children: [
               Row(
                 children: [
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
                         ).gradient1.withAlpha(50),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: Text(
                         DateFormat(
@@ -89,7 +86,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.start),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -109,15 +106,12 @@ class ToolBar extends ConsumerWidget {
                   SizedBox(width: 5),
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
                         ).gradient1.withAlpha(50),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: Text(
                         DateFormat(
@@ -126,7 +120,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.start),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -154,7 +148,7 @@ class ToolBar extends ConsumerWidget {
               ),
               SizedBox(width: 5),
               HeroIcon(
-                HeroIcons.arrowRight,
+                .arrowRight,
                 color: MyPaymentColors(isDarkTheme).secondaryGreen,
                 size: 20,
               ),
@@ -163,15 +157,12 @@ class ToolBar extends ConsumerWidget {
                 children: [
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
                         ).gradient1.withAlpha(50),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: Text(
                         DateFormat(
@@ -180,7 +171,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.end),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -200,15 +191,12 @@ class ToolBar extends ConsumerWidget {
                   SizedBox(width: 5),
                   GestureDetector(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 5,
-                      ),
+                      padding: const .symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: MyPaymentColors(
                           isDarkTheme,
                         ).gradient1.withAlpha(50),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                       ),
                       child: Text(
                         DateFormat(
@@ -217,7 +205,7 @@ class ToolBar extends ConsumerWidget {
                         ).format(selectedInterval.end),
                         style: TextStyle(
                           color: MyPaymentColors(isDarkTheme).secondaryGreen,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 14,
                         ),
                       ),
@@ -268,13 +256,13 @@ class ToolBar extends ConsumerWidget {
                     name: fileName,
                     bytes: csvBytes,
                     ext: "csv",
-                    mimeType: MimeType.csv,
+                    mimeType: .csv,
                   )
                 : await FileSaver.instance.saveAs(
                     name: fileName,
                     bytes: csvBytes,
                     ext: "csv",
-                    mimeType: MimeType.csv,
+                    mimeType: .csv,
                   );
 
             if (!context.mounted) return;

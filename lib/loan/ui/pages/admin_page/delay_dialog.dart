@@ -15,7 +15,7 @@ class IntegerExampleState extends State<DelayDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: .circular(20)),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: contentBox(context),
@@ -26,12 +26,12 @@ class IntegerExampleState extends State<DelayDialog> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.only(top: 45),
+          padding: const .all(20),
+          margin: const .only(top: 45),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: .circular(20),
             boxShadow: [
               BoxShadow(
                 color: Theme.of(context).shadowColor,
@@ -41,11 +41,11 @@ class IntegerExampleState extends State<DelayDialog> {
             ],
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: <Widget>[
               const Text(
                 LoanTextConstants.delay,
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
+                style: TextStyle(fontSize: 25, fontWeight: .w800),
               ),
               const SizedBox(height: 15),
               NumberPicker(
@@ -58,9 +58,9 @@ class IntegerExampleState extends State<DelayDialog> {
               ),
               const SizedBox(height: 22),
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: .bottomCenter,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: .spaceAround,
                   children: [
                     TextButton(
                       onPressed: () {
@@ -70,7 +70,7 @@ class IntegerExampleState extends State<DelayDialog> {
                         LoanTextConstants.cancel,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
@@ -84,7 +84,7 @@ class IntegerExampleState extends State<DelayDialog> {
                         LoanTextConstants.confirm,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),

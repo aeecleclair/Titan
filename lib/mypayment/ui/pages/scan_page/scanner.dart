@@ -175,18 +175,18 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     var scanArea = MediaQuery.of(context).size.width * 0.8;
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(40),
-        topRight: Radius.circular(40),
+      borderRadius: const .only(
+        topLeft: .circular(40),
+        topRight: .circular(40),
       ),
       child: Container(
         color: Colors.black,
         child: scannedValue != null
             ? Stack(
-                alignment: Alignment.center,
+                alignment: .center,
                 children: [
                   ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    borderRadius: const .all(.circular(25)),
                     child: QrImageView(
                       data: scannedValue!,
                       version: QrVersions.auto,
@@ -195,7 +195,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     ),
                   ),
                   CustomPaint(
-                    size: Size.infinite,
+                    size: .infinite,
                     painter: ScannerOverlayPainter(
                       scanArea: MediaQuery.of(context).size.width * 0.8,
                       borderColor: ongoingTransaction.when(
@@ -211,7 +211,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                 controller: controller,
                 overlayBuilder: (context, constraints) {
                   return CustomPaint(
-                    size: Size.infinite,
+                    size: .infinite,
                     painter: ScannerOverlayPainter(
                       scanArea: scanArea,
                       borderColor: ongoingTransaction.when(

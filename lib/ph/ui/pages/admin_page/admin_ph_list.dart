@@ -20,7 +20,7 @@ class AdminPhList extends HookConsumerWidget {
     final phListNotifier = ref.watch(phListProvider.notifier);
     final selectedYear = ref.watch(selectedYearListProvider);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const .all(8.0),
       child: AsyncChild(
         value: phList,
         builder: (context, phList) {

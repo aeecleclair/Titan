@@ -44,19 +44,19 @@ class EditInformationPage extends HookConsumerWidget {
               parent: BouncingScrollPhysics(),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const .all(15.0),
               child: Form(
                 key: key,
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         SeedLibraryTextConstants.editInformation,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: ColorConstants.gradient1,
                         ),
                       ),
@@ -127,7 +127,7 @@ class EditInformationPage extends HookConsumerWidget {
                         SeedLibraryTextConstants.update,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Colors.white,
                         ),
                       ),

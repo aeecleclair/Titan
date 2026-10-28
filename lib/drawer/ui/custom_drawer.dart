@@ -16,8 +16,8 @@ class CustomDrawer extends HookConsumerWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
           colors: [
             DrawerColorConstants.lightBlue,
             DrawerColorConstants.darkBlue,
@@ -28,14 +28,14 @@ class CustomDrawer extends HookConsumerWidget {
         child: Stack(
           children: [
             const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [DrawerTopBar(), BottomBar()],
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: .start,
                   children: [
                     Expanded(
                       child: SizedBox(

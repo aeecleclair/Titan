@@ -10,7 +10,7 @@ class CustomButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const .symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -21,17 +21,17 @@ class CustomButton extends HookConsumerWidget {
           ),
         ],
         color: RaffleColorConstants.gradient2,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: const .all(.circular(10)),
       ),
       child: Row(
         children: [
-          const HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+          const HeroIcon(.userGroup, color: Colors.white, size: 20),
           const SizedBox(width: 10),
           Text(
             text,
             style: const TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Colors.white,
             ),
           ),

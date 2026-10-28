@@ -143,18 +143,15 @@ class ListContenderCard extends HookConsumerWidget {
                           ),
                         ),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 8,
-                      ),
+                      padding: const .symmetric(horizontal: 15, vertical: 8),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
                             ColorConstants.background2.withValues(alpha: 0.8),
                             Colors.black.withValues(alpha: 0.8),
                           ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                          begin: .topLeft,
+                          end: .bottomRight,
                         ),
                         boxShadow: [
                           BoxShadow(
@@ -165,16 +162,14 @@ class ListContenderCard extends HookConsumerWidget {
                             blurRadius: 5,
                           ),
                         ],
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(25),
-                        ),
+                        borderRadius: const .all(.circular(25)),
                       ),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: .spaceEvenly,
                         children: [
                           HeroIcon(
-                            HeroIcons.chevronDoubleDown,
+                            .chevronDoubleDown,
                             size: 15,
                             color: Colors.grey.shade100,
                           ),

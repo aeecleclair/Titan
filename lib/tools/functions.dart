@@ -49,11 +49,11 @@ void displayToast(
           Theme.of(context).colorScheme.primaryContainer,
           Theme.of(context).colorScheme.primaryFixed,
         ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: .topLeft,
+        end: .bottomRight,
       );
       color = Theme.of(context).colorScheme.onPrimaryContainer;
-      icon = HeroIcons.check;
+      icon = .check;
       duration = duration ?? 1500;
       break;
     case TypeMsg.error:
@@ -62,11 +62,11 @@ void displayToast(
           Theme.of(context).colorScheme.secondaryContainer,
           Theme.of(context).colorScheme.secondary,
         ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: .topLeft,
+        end: .bottomRight,
       );
       color = Theme.of(context).colorScheme.onSecondary;
-      icon = HeroIcons.exclamationTriangle;
+      icon = .exclamationTriangle;
       duration = duration ?? 3000;
       break;
   }
@@ -81,21 +81,21 @@ void displayToast(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+        margin: const .only(top: 30, left: 20, right: 20),
         content: Container(
-          alignment: Alignment.topCenter,
+          alignment: .topCenter,
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            borderRadius: const .all(.circular(15)),
             gradient: linearGradient,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const .symmetric(horizontal: 20, vertical: 10),
           height: 50 + text.length / 2,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Container(
                 width: 40,
-                alignment: Alignment.center,
+                alignment: .center,
                 child: HeroIcon(icon, color: color),
               ),
               const SizedBox(width: 10),
@@ -107,7 +107,7 @@ void displayToast(
                     style: TextStyle(
                       color: color,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                     maxLines: 8,
                   ),

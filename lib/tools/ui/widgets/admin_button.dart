@@ -23,19 +23,15 @@ class AdminButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const .symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           gradient: useColors
-              ? RadialGradient(
-                  colors: colors!,
-                  center: Alignment.topLeft,
-                  radius: 2,
-                )
+              ? RadialGradient(colors: colors!, center: .topLeft, radius: 2)
               : null,
           color: useColors
               ? null
               : color ?? Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: .circular(10),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -47,7 +43,7 @@ class AdminButton extends StatelessWidget {
         child: Row(
           children: [
             HeroIcon(
-              HeroIcons.userGroup,
+              .userGroup,
               color: textColor ?? Theme.of(context).colorScheme.onSecondary,
             ),
             const SizedBox(width: 10),
@@ -55,7 +51,7 @@ class AdminButton extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: textColor ?? Theme.of(context).colorScheme.onSecondary,
               ),
             ),

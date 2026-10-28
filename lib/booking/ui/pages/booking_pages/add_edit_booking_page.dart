@@ -103,7 +103,7 @@ class AddEditBookingPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: AlignLeftText(
                   isEdit
                       ? BookingTextConstants.editBooking
@@ -141,7 +141,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                           color: selected
                               ? Theme.of(context).colorScheme.onSecondary
                               : Theme.of(context).colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     );
@@ -150,7 +150,7 @@ class AddEditBookingPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
                     TextEntry(
@@ -215,8 +215,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                         },
                                         behavior: HitTestBehavior.opaque,
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: .spaceBetween,
                                           children: [
                                             Text(
                                               weekDayToString(e),
@@ -483,7 +482,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),

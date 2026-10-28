@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/advert/class/announcer.dart';
@@ -29,7 +28,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
 
     return AdvertTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const .symmetric(horizontal: 30.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
@@ -40,12 +39,12 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         AdvertTextConstants.modifyAnnouncingGroup,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: Theme.of(context).colorScheme.primaryContainer,
                         ),
                       ),
@@ -98,7 +97,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                             },
                                             child: AnnouncerCard(
                                               e: e,
-                                              icon: HeroIcons.plus,
+                                              icon: .plus,
                                             ),
                                           ),
                                         )
@@ -151,7 +150,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                             },
                                             child: AnnouncerCard(
                                               e: e,
-                                              icon: HeroIcons.minus,
+                                              icon: .minus,
                                             ),
                                           ),
                                         )

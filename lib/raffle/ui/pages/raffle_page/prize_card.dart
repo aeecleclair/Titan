@@ -21,7 +21,7 @@ class PrizeCard extends HookConsumerWidget {
       },
       child: Container(
         width: 100,
-        margin: const EdgeInsets.only(left: 5, right: 5),
+        margin: const .only(left: 5, right: 5),
         decoration: BoxDecoration(
           image: const DecorationImage(
             image: AssetImage("assets/images/gift.png"),
@@ -35,10 +35,10 @@ class PrizeCard extends HookConsumerWidget {
               offset: const Offset(1, 2),
             ),
           ],
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          borderRadius: const .all(.circular(20)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: .end,
           children: [
             Center(
               child: FittedBox(
@@ -53,31 +53,27 @@ class PrizeCard extends HookConsumerWidget {
                         Colors.black.withValues(alpha: 0.7),
                       ],
                       stops: const [0, 0.3],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: .topCenter,
+                      end: .bottomCenter,
                     ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
+                    borderRadius: const .only(
+                      bottomLeft: .circular(20),
+                      bottomRight: .circular(20),
                     ),
                   ),
                   child: Column(
                     children: [
                       const Spacer(),
                       Container(
-                        padding: const EdgeInsets.only(
-                          left: 8,
-                          right: 8,
-                          bottom: 8,
-                        ),
+                        padding: const .only(left: 8, right: 8, bottom: 8),
                         child: AutoSizeText(
                           prize.name,
                           maxLines: 2,
-                          textAlign: TextAlign.center,
+                          textAlign: .center,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),

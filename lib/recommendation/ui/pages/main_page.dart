@@ -46,7 +46,7 @@ class RecommendationMainPage extends HookConsumerWidget {
                     );
                   },
                   child: const RecommendationCardLayout(
-                    child: Center(child: HeroIcon(HeroIcons.plus, size: 50)),
+                    child: Center(child: HeroIcon(.plus, size: 50)),
                   ),
                 ),
               ...(data..sort((a, b) => b.creation!.compareTo(a.creation!))).map(

@@ -43,13 +43,13 @@ class ContenderCard extends HookConsumerWidget {
               isAdmin)
           ? 180
           : 130,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+      padding: const .symmetric(horizontal: 20.0, vertical: 15),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               ContenderLogo(contender),
               const SizedBox(width: 10),
@@ -62,7 +62,7 @@ class ContenderCard extends HookConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Colors.black,
                       ),
                     ),
@@ -70,7 +70,7 @@ class ContenderCard extends HookConsumerWidget {
                       capitalize(contender.listType.toString().split('.').last),
                       style: const TextStyle(
                         fontSize: 13,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Colors.black,
                       ),
                     ),
@@ -87,7 +87,7 @@ class ContenderCard extends HookConsumerWidget {
                         QR.to(VoteRouter.root + VoteRouter.detail);
                       },
                       child: const HeroIcon(
-                        HeroIcons.informationCircle,
+                        .informationCircle,
                         color: Colors.black,
                         size: 25,
                       ),
@@ -101,7 +101,7 @@ class ContenderCard extends HookConsumerWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: Colors.grey.shade400,
               ),
             ),
@@ -111,24 +111,21 @@ class ContenderCard extends HookConsumerWidget {
               status == Status.waiting &&
               isAdmin)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 GestureDetector(
                   onTap: onEdit,
                   child: CardButton(
                     color: Colors.grey.shade200,
                     shadowColor: Colors.grey.withValues(alpha: 0.2),
-                    child: const HeroIcon(
-                      HeroIcons.pencil,
-                      color: Colors.black,
-                    ),
+                    child: const HeroIcon(.pencil, color: Colors.black),
                   ),
                 ),
                 WaitingButton(
                   builder: (child) =>
                       CardButton(color: Colors.black, child: child),
                   onTap: onDelete,
-                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                  child: const HeroIcon(.trash, color: Colors.white),
                 ),
               ],
             ),

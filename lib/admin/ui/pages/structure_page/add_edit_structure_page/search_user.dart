@@ -22,7 +22,7 @@ class SearchUser extends HookConsumerWidget {
         StyledSearchBar(
           label: AdminTextConstants.manager,
           color: Theme.of(context).colorScheme.primaryContainer,
-          padding: const EdgeInsets.all(0),
+          padding: const .all(0),
           editingController: useTextEditingController(
             text: structureManager.id == SimpleUser.empty().id
                 ? ""
@@ -36,17 +36,17 @@ class SearchUser extends HookConsumerWidget {
             }
           },
           suffixIcon: Padding(
-            padding: const EdgeInsets.all(7.0),
+            padding: const .all(7.0),
             child: Container(
-              padding: const EdgeInsets.all(7),
+              padding: const .all(7),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primaryContainer,
                     Theme.of(context).colorScheme.primaryFixed,
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -57,10 +57,10 @@ class SearchUser extends HookConsumerWidget {
                     blurRadius: 5,
                   ),
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: const .all(.circular(10)),
               ),
               child: HeroIcon(
-                HeroIcons.plus,
+                .plus,
                 size: 20,
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),

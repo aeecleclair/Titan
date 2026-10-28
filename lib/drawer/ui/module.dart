@@ -26,10 +26,10 @@ class ModuleUI extends HookConsumerWidget {
       behavior: HitTestBehavior.translucent,
       key: ValueKey(module.root),
       child: Container(
-        margin: const EdgeInsets.only(top: 8, bottom: 8),
+        margin: const .only(top: 8, bottom: 8),
         width: 220,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             Row(
               children: [
@@ -46,11 +46,11 @@ class ModuleUI extends HookConsumerWidget {
                   height: 50,
                   width: 130,
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: AutoSizeText(
                       module.name,
                       maxLines: 1,
-                      textAlign: TextAlign.start,
+                      textAlign: .start,
                       style: TextStyle(
                         color: module.root == pathForwarding.path
                             ? DrawerColorConstants.selectedText

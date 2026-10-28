@@ -19,7 +19,7 @@ class CheckBoxEntry extends StatelessWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Text(
             title,

@@ -23,12 +23,12 @@ class NotificationPage extends HookConsumerWidget {
           await topicsNotifier.getTopics();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               AlignLeftText(
                 SettingsTextConstants.updateNotification,
-                padding: const EdgeInsets.symmetric(vertical: 30),
+                padding: const .symmetric(vertical: 30),
                 color: Theme.of(context).colorScheme.tertiary,
               ),
               AsyncChild(
@@ -37,15 +37,15 @@ class NotificationPage extends HookConsumerWidget {
                   children: Topic.values
                       .map(
                         (e) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const .symmetric(vertical: 12),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
                                 topicToFrenchString(e),
                                 style: TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: .w700,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.secondaryContainer,
@@ -71,7 +71,7 @@ class NotificationPage extends HookConsumerWidget {
                                       : Theme.of(
                                           context,
                                         ).colorScheme.secondaryFixed,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: .circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
@@ -98,7 +98,7 @@ class NotificationPage extends HookConsumerWidget {
                                 spinStrokeWidth: 2,
                                 thumbDecoration: (value, _) => BoxDecoration(
                                   color: Theme.of(context).colorScheme.surface,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: .circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(

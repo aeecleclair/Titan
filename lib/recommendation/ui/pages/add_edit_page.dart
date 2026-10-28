@@ -65,7 +65,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
       child: Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -93,7 +93,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
+                                borderRadius: .circular(50.0),
                                 image: DecorationImage(
                                   image: logoBytes.value != null
                                       ? Image.memory(logoBytes.value!).image
@@ -102,7 +102,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               ),
                             )
                           : const HeroIcon(
-                              HeroIcons.photo,
+                              .photo,
                               size: 100,
                               color: Colors.grey,
                             ),
@@ -140,7 +140,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   onTap: () async {

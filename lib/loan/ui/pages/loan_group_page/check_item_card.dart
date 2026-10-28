@@ -27,10 +27,10 @@ class CheckItemCard extends StatelessWidget {
                   ? Theme.of(context).shadowColor
                   : Theme.of(context).colorScheme.secondaryFixed)
               .withValues(alpha: 0.5),
-      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+      padding: const .symmetric(horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           const SizedBox(height: 15),
           AutoSizeText(
@@ -38,7 +38,7 @@ class CheckItemCard extends StatelessWidget {
             maxLines: 1,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
@@ -49,7 +49,7 @@ class CheckItemCard extends StatelessWidget {
                 : LoanTextConstants.unavailable,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: item.loanedQuantity < item.totalQuantity
                   ? Theme.of(context).colorScheme.tertiary
                   : Theme.of(context).colorScheme.onError,
@@ -61,7 +61,7 @@ class CheckItemCard extends StatelessWidget {
             maxLines: 1,
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
@@ -71,7 +71,7 @@ class CheckItemCard extends StatelessWidget {
             maxLines: 1,
             style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),

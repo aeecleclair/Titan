@@ -14,13 +14,13 @@ class ListModule extends HookConsumerWidget {
     return Scrollbar(
       controller: scrollController,
       interactive: true,
-      radius: const Radius.circular(8),
+      radius: const .circular(8),
       thumbVisibility: true,
       child: SingleChildScrollView(
         controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: modules.map((module) => ModuleUI(module: module)).toList(),
         ),
       ),

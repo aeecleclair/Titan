@@ -16,13 +16,13 @@ class LikedCard extends StatelessWidget {
         openLink(module.url);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+        padding: const .symmetric(horizontal: 8.0, vertical: 12),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const .all(10),
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                borderRadius: const .all(.circular(20)),
                 color: Theme.of(context).colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
@@ -34,10 +34,10 @@ class LikedCard extends StatelessWidget {
                 ],
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: [
                   Container(
-                    margin: const EdgeInsets.all(4.0),
+                    margin: const .all(4.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -47,7 +47,7 @@ class LikedCard extends StatelessWidget {
                           spreadRadius: 2,
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: .circular(15),
                     ),
                     child: module.icon.endsWith('.svg')
                         ? SvgPicture.network(
@@ -62,16 +62,16 @@ class LikedCard extends StatelessWidget {
                           ),
                   ),
                   Container(
-                    alignment: Alignment.center,
+                    alignment: .center,
                     width: 60,
                     height: 30,
-                    padding: const EdgeInsets.only(bottom: 7),
+                    padding: const .only(bottom: 7),
                     child: AutoSizeText(
                       module.name,
                       style: const TextStyle(fontSize: 16),
                       minFontSize: 10,
                       maxLines: 2,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                   ),
                 ],

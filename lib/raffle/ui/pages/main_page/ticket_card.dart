@@ -34,19 +34,19 @@ class TicketWidget extends HookConsumerWidget {
         TicketCardBackground(
           isWinningTicket: isWinningTicket,
           child: Container(
-            padding: EdgeInsets.symmetric(
+            padding: .symmetric(
               vertical: isWinningTicket ? 9 : 12,
               horizontal: isWinningTicket ? 14 : 17,
             ),
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     Container(
                       width: 50,
                       height: 50,
-                      margin: const EdgeInsets.only(right: 8),
+                      margin: const .only(right: 8),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -56,9 +56,7 @@ class TicketWidget extends HookConsumerWidget {
                             offset: const Offset(2, 3),
                           ),
                         ],
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
+                        borderRadius: const .all(.circular(15)),
                       ),
                       child: Center(
                         child: Builder(
@@ -88,18 +86,16 @@ class TicketWidget extends HookConsumerWidget {
                                             );
                                           });
                                     });
-                                    return const HeroIcon(
-                                      HeroIcons.cubeTransparent,
-                                    );
+                                    return const HeroIcon(.cubeTransparent);
                                   }
                                 },
                                 loading: () =>
                                     const CircularProgressIndicator(),
                                 error: (Object error, StackTrace? stackTrace) =>
-                                    const HeroIcon(HeroIcons.cubeTransparent),
+                                    const HeroIcon(.cubeTransparent),
                               );
                             } else {
-                              return const HeroIcon(HeroIcons.cubeTransparent);
+                              return const HeroIcon(.cubeTransparent);
                             }
                           },
                         ),
@@ -111,11 +107,11 @@ class TicketWidget extends HookConsumerWidget {
                             ? "${RaffleTextConstants.winner} !"
                             : "${price.toStringAsFixed(2)} €",
                         maxLines: 1,
-                        textAlign: TextAlign.right,
+                        textAlign: .right,
                         style: TextStyle(
                           color: isWinningTicket ? Colors.black : Colors.white,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),
@@ -132,18 +128,18 @@ class TicketWidget extends HookConsumerWidget {
                         ? Colors.black.withValues(alpha: 0.8)
                         : Colors.white.withValues(alpha: 0.8),
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
                 const SizedBox(height: 10),
                 AutoSizeText(
                   raffle.name,
                   maxLines: 2,
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                   style: TextStyle(
                     color: isWinningTicket ? Colors.black : Colors.white,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ],

@@ -41,9 +41,9 @@ class OrderUI extends HookConsumerWidget {
     final tp = TextPainter(
       text: TextSpan(
         text: order.deliveryName,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18, fontWeight: .bold),
       ),
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
       maxLines: isDetail ? 3 : 2,
     );
     final maxTextWidth = isDetail ? 180.0 : 150.0;
@@ -58,17 +58,17 @@ class OrderUI extends HookConsumerWidget {
         AMAPColors(isDarkTheme).lightGradientPrimary,
         AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 12),
+      padding: const .symmetric(horizontal: 17.0, vertical: 12),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: .start,
+                crossAxisAlignment: .start,
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: maxTextWidth),
@@ -76,7 +76,7 @@ class OrderUI extends HookConsumerWidget {
                       order.deliveryName,
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: AMAPColors(isDarkTheme).secondaryGreen,
                       ),
                       maxLines: isDetail ? 3 : 2,
@@ -86,7 +86,7 @@ class OrderUI extends HookConsumerWidget {
                     '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: AMAPColors(isDarkTheme).secondaryGreen,
                     ),
                   ),
@@ -100,7 +100,7 @@ class OrderUI extends HookConsumerWidget {
                     onTap?.call();
                   },
                   child: HeroIcon(
-                    HeroIcons.informationCircle,
+                    .informationCircle,
                     color: AMAPColors(isDarkTheme).secondaryGreen,
                     size: 30,
                   ),
@@ -114,7 +114,7 @@ class OrderUI extends HookConsumerWidget {
                 "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -123,7 +123,7 @@ class OrderUI extends HookConsumerWidget {
                 "${(order.amount / 100).toStringAsFixed(2)}€",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -134,7 +134,7 @@ class OrderUI extends HookConsumerWidget {
             uiCollectionSlotToString(order.collectionSlot),
             style: TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.w700,
+              fontWeight: .w700,
               color: AMAPColors(isDarkTheme).secondaryGreen,
             ),
           ),
@@ -154,7 +154,7 @@ class OrderUI extends HookConsumerWidget {
                             AMAPColors(isDarkTheme).greenGradientSecondary,
                           ],
                           child: HeroIcon(
-                            HeroIcons.pencil,
+                            .pencil,
                             color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
@@ -198,7 +198,7 @@ class OrderUI extends HookConsumerWidget {
                           child: child,
                         ),
                         child: HeroIcon(
-                          HeroIcons.trash,
+                          .trash,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
@@ -208,7 +208,7 @@ class OrderUI extends HookConsumerWidget {
                     AMAPTextConstants.locked,
                     style: TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).secondaryGreen,
                     ),
                   ),

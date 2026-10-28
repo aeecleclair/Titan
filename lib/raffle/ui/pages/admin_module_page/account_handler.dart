@@ -32,8 +32,8 @@ class AccountHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          padding: const .symmetric(horizontal: 30),
+          alignment: .centerLeft,
           child: TextField(
             onChanged: (value) {
               tokenExpireWrapper(ref, () async {
@@ -59,7 +59,7 @@ class AccountHandler extends HookConsumerWidget {
               labelText: RaffleTextConstants.accounts,
               labelStyle: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: RaffleColorConstants.textDark,
               ),
               suffixIcon: Icon(
@@ -85,7 +85,7 @@ class AccountHandler extends HookConsumerWidget {
               children: [
                 const SizedBox(width: 15),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const .symmetric(horizontal: 12.0),
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
@@ -94,10 +94,10 @@ class AccountHandler extends HookConsumerWidget {
                           RaffleColorConstants.gradient1,
                           RaffleColorConstants.gradient2,
                         ],
-                        center: Alignment.topLeft,
+                        center: .topLeft,
                         radius: 1.8,
                       ),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: .circular(30),
                       boxShadow: [
                         BoxShadow(
                           color: RaffleColorConstants.textDark.withValues(
@@ -110,7 +110,7 @@ class AccountHandler extends HookConsumerWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                      padding: const .symmetric(horizontal: 17.0),
                       child: !searchingAmapUser
                           ? Row(
                               children: [
@@ -124,11 +124,9 @@ class AccountHandler extends HookConsumerWidget {
                                     editingController.clear();
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0,
-                                    ),
+                                    padding: const .symmetric(horizontal: 12.0),
                                     child: const HeroIcon(
-                                      HeroIcons.xMark,
+                                      .xMark,
                                       color: Colors.white,
                                       size: 50,
                                     ),
@@ -155,11 +153,9 @@ class AccountHandler extends HookConsumerWidget {
                                 focusNotifier.setFocus(true);
                               },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0,
-                                ),
+                                padding: const .symmetric(horizontal: 12.0),
                                 child: const HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color: Colors.white,
                                   size: 50,
                                 ),

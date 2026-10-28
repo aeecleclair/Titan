@@ -54,24 +54,18 @@ class SellerRightCard extends ConsumerWidget {
 
     final isDarkTheme = ref.watch(themeProvider);
 
-    final icons =
-        [
-              HeroIcons.viewfinderCircle,
-              HeroIcons.wallet,
-              HeroIcons.xMark,
-              HeroIcons.userGroup,
-            ]
-            .map(
-              (e) => CardButton(
-                size: 35,
-                colors: [
-                  MyPaymentColors(isDarkTheme).backgroundGradient1,
-                  MyPaymentColors(isDarkTheme).backgroundGradient2,
-                ],
-                child: HeroIcon(e, color: MyPaymentColors.onGradient, size: 20),
-              ),
-            )
-            .toList();
+    final icons = <HeroIcons>[.viewfinderCircle, .wallet, .xMark, .userGroup]
+        .map(
+          (icon) => CardButton(
+            size: 35,
+            colors: [
+              MyPaymentColors(isDarkTheme).backgroundGradient1,
+              MyPaymentColors(isDarkTheme).backgroundGradient2,
+            ],
+            child: HeroIcon(icon, color: MyPaymentColors.onGradient, size: 20),
+          ),
+        )
+        .toList();
 
     icons.add(
       CardButton(
@@ -80,7 +74,7 @@ class SellerRightCard extends ConsumerWidget {
           MyPaymentColors(isDarkTheme).secondaryGradient1,
           MyPaymentColors(isDarkTheme).secondaryGradient2,
         ],
-        child: HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+        child: HeroIcon(.userGroup, color: Colors.white, size: 20),
       ),
     );
     icons.add(
@@ -91,7 +85,7 @@ class SellerRightCard extends ConsumerWidget {
           MyPaymentColors(isDarkTheme).secondaryGradient2,
         ],
         child: HeroIcon(
-          HeroIcons.userGroup,
+          .userGroup,
           color: MyPaymentColors.onGradient,
           size: 20,
         ),
@@ -132,7 +126,7 @@ class SellerRightCard extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const .symmetric(horizontal: 30),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -145,13 +139,13 @@ class SellerRightCard extends ConsumerWidget {
                 MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
+                borderRadius: const .only(
+                  topLeft: .circular(40),
+                  topRight: .circular(40),
                 ),
                 child: Container(
                   color: Theme.of(context).colorScheme.surface,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const .symmetric(horizontal: 20),
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
@@ -162,7 +156,7 @@ class SellerRightCard extends ConsumerWidget {
                           style: TextStyle(
                             color: MyPaymentColors(isDarkTheme).gradient3,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -172,7 +166,7 @@ class SellerRightCard extends ConsumerWidget {
                             (i == 4 && isStructureAdmin) ||
                             (i == 5 && isStructureManager))
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const .symmetric(vertical: 5),
                             child: Row(
                               children: [
                                 icons[i],
@@ -270,17 +264,17 @@ class SellerRightCard extends ConsumerWidget {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const .symmetric(vertical: 10),
                             child: AddEditButtonLayout(
                               colors: [
                                 MyPaymentColors(isDarkTheme).redGradient1,
                                 MyPaymentColors(isDarkTheme).redGradient2,
                               ],
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: .center,
                                 children: [
                                   HeroIcon(
-                                    HeroIcons.trash,
+                                    .trash,
                                     color: MyPaymentColors.onGradient,
                                     size: 20,
                                   ),
@@ -306,7 +300,7 @@ class SellerRightCard extends ConsumerWidget {
           );
         },
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
           children: [
             Center(
               child: Text(

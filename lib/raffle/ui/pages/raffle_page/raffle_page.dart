@@ -38,10 +38,10 @@ class RaffleInfoPage extends HookConsumerWidget {
           await prizeListNotifier.loadPrizeList();
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 30, top: 20),
+              margin: const .only(left: 30, top: 20),
               child: ShaderMask(
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (bounds) => const RadialGradient(
@@ -51,26 +51,23 @@ class RaffleInfoPage extends HookConsumerWidget {
                   ],
                   radius: 6.0,
                   tileMode: TileMode.mirror,
-                  center: Alignment.topLeft,
+                  center: .topLeft,
                 ).createShader(bounds),
                 child: Text(
                   raffle.name,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 30, fontWeight: .bold),
                 ),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 30, top: 20),
+              margin: const .only(left: 30, top: 20),
               child: AsyncChild(
                 value: balance,
                 builder: (context, s) => Text(
                   "${RaffleTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
                   style: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.gradient2,
                   ),
                 ),
@@ -82,15 +79,15 @@ class RaffleInfoPage extends HookConsumerWidget {
               builder: (context, packTickets) => packTickets.isEmpty
                   ? Container(
                       height: 190,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      alignment: .centerLeft,
+                      padding: const .symmetric(horizontal: 30),
                       child: const Text(RaffleTextConstants.noTicketBuyable),
                     )
                   : HorizontalListView.builder(
                       height: 160,
                       items: packTickets,
                       itemBuilder: (context, packTicket, index) => Container(
-                        margin: const EdgeInsets.all(10),
+                        margin: const .all(10),
                         child: BuyPackTicket(
                           packTicket: packTicket,
                           raffle: raffle,
@@ -99,7 +96,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                     ),
               orElseBuilder: (context, child) => Container(
                 height: 190,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: child,
               ),
             ),
@@ -112,19 +109,16 @@ class RaffleInfoPage extends HookConsumerWidget {
                 return prizes.isEmpty
                     ? Container(
                         height: 120,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 30,
-                        ),
+                        padding: const .symmetric(vertical: 10, horizontal: 30),
                         child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             Text(
                               RaffleTextConstants.actualPrize,
                               style: TextStyle(
                                 fontSize: 25,
                                 color: RaffleColorConstants.gradient2,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -138,7 +132,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                             prizes.isEmpty
                                 ? RaffleTextConstants.noPrize
                                 : RaffleTextConstants.actualPrize,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               vertical: 10,
                               horizontal: 30,
                             ),
@@ -149,7 +143,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                             height: 120,
                             items: prizes,
                             itemBuilder: (context, item, index) => Container(
-                              margin: const EdgeInsets.symmetric(
+                              margin: const .symmetric(
                                 horizontal: 5,
                                 vertical: 10,
                               ),
@@ -161,19 +155,16 @@ class RaffleInfoPage extends HookConsumerWidget {
               },
               orElseBuilder: (context, child) => Container(
                 height: 120,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 30,
-                ),
+                padding: const .symmetric(vertical: 10, horizontal: 30),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     const Text(
                       RaffleTextConstants.actualPrize,
                       style: TextStyle(
                         fontSize: 25,
                         color: RaffleColorConstants.gradient2,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -184,28 +175,18 @@ class RaffleInfoPage extends HookConsumerWidget {
             ),
             if (raffle.description != null)
               Container(
-                padding: const EdgeInsets.only(
-                  top: 20,
-                  bottom: 10,
-                  left: 30,
-                  right: 30,
-                ),
+                padding: const .only(top: 20, bottom: 10, left: 30, right: 30),
                 child: const Text(
                   RaffleTextConstants.description,
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                     color: RaffleColorConstants.gradient2,
                   ),
                 ),
               ),
             Container(
-              padding: const EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-                left: 30,
-                right: 30,
-              ),
+              padding: const .only(top: 20, bottom: 10, left: 30, right: 30),
               child: Text(
                 raffle.description ?? "",
                 style: const TextStyle(fontSize: 15),

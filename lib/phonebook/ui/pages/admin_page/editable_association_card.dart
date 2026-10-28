@@ -25,13 +25,13 @@ class EditableAssociationCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(10),
+      margin: const .symmetric(vertical: 5),
+      padding: const .all(10),
       decoration: BoxDecoration(
         color: association.deactivated
             ? Theme.of(context).colorScheme.tertiary
             : Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: .circular(15),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor,
@@ -41,19 +41,19 @@ class EditableAssociationCard extends HookConsumerWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               association.name,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: .bold),
             ),
           ),
           Expanded(
             child: Text(
               associationGroupement.name,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: .bold),
             ),
           ),
           Row(

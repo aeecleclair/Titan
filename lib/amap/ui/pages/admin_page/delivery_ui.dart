@@ -49,13 +49,13 @@ class DeliveryUi extends HookConsumerWidget {
 
     final style = TextStyle(
       fontSize: 18,
-      fontWeight: FontWeight.bold,
+      fontWeight: .bold,
       color: AMAPColors(isDarkTheme).textOnPrimary,
     );
 
     final tp = TextPainter(
       text: TextSpan(text: delivery.name, style: style),
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
       maxLines: 3,
     );
     final maxTextWidth = 200.0;
@@ -67,25 +67,25 @@ class DeliveryUi extends HookConsumerWidget {
       height: 155 + 26.0 * (lines),
       width: 280,
       shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.2),
-      padding: const EdgeInsets.all(10),
+      padding: const .all(10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .spaceBetween,
+        crossAxisAlignment: .start,
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const .symmetric(horizontal: 15.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: .spaceBetween,
+                crossAxisAlignment: .start,
                 children: [
                   const SizedBox(),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: .spaceBetween,
+                        crossAxisAlignment: .start,
                         children: [
                           ConstrainedBox(
                             constraints: BoxConstraints(maxWidth: maxTextWidth),
@@ -93,7 +93,7 @@ class DeliveryUi extends HookConsumerWidget {
                               delivery.name,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: AMAPColors(isDarkTheme).textOnPrimary,
                               ),
                               maxLines: 3,
@@ -103,7 +103,7 @@ class DeliveryUi extends HookConsumerWidget {
                             ' ${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
                             style: TextStyle(
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: AMAPColors(isDarkTheme).textOnPrimary,
                             ),
                           ),
@@ -122,7 +122,7 @@ class DeliveryUi extends HookConsumerWidget {
                           );
                         },
                         child: HeroIcon(
-                          HeroIcons.arrowTopRightOnSquare,
+                          .arrowTopRightOnSquare,
                           color: AMAPColors(isDarkTheme).textOnPrimary,
                         ),
                       ),
@@ -141,7 +141,7 @@ class DeliveryUi extends HookConsumerWidget {
                             : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: AMAPColors(isDarkTheme).textOnPrimary,
                         ),
                       );
@@ -151,7 +151,7 @@ class DeliveryUi extends HookConsumerWidget {
                     "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).textOnSecondary,
                     ),
                   ),
@@ -160,12 +160,12 @@ class DeliveryUi extends HookConsumerWidget {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 15, bottom: 5),
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+            margin: const .only(top: 15, bottom: 5),
+            padding: const .symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: (delivery.status == DeliveryStatus.creation)
-                  ? MainAxisAlignment.spaceBetween
-                  : MainAxisAlignment.center,
+                  ? .spaceBetween
+                  : .center,
               children: [
                 if (delivery.status == DeliveryStatus.creation)
                   GestureDetector(
@@ -200,7 +200,7 @@ class DeliveryUi extends HookConsumerWidget {
                         AMAPColors(isDarkTheme).greenGradientPrimary,
                       ],
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),
@@ -245,7 +245,7 @@ class DeliveryUi extends HookConsumerWidget {
                       child: child,
                     ),
                     child: HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onSecondary,
                       size: 22,
                     ),
@@ -339,12 +339,9 @@ class DeliveryUi extends HookConsumerWidget {
                     );
                   },
                   builder: (child) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 15,
-                    ),
+                    padding: const .symmetric(vertical: 8, horizontal: 15),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: .circular(15),
                       gradient: LinearGradient(
                         colors: !(delivery.status == DeliveryStatus.creation)
                             ? [
@@ -355,8 +352,8 @@ class DeliveryUi extends HookConsumerWidget {
                                 AMAPColors(isDarkTheme).greenGradientPrimary,
                                 AMAPColors(isDarkTheme).greenGradientSecondary,
                               ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -377,7 +374,7 @@ class DeliveryUi extends HookConsumerWidget {
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(bottom: 2),
+                        padding: const .only(bottom: 2),
                         child: Text(
                           delivery.status == DeliveryStatus.creation
                               ? AMAPTextConstants.openDelivery
@@ -395,12 +392,12 @@ class DeliveryUi extends HookConsumerWidget {
                       const SizedBox(width: 10),
                       HeroIcon(
                         delivery.status == DeliveryStatus.creation
-                            ? HeroIcons.lockOpen
+                            ? .lockOpen
                             : delivery.status == DeliveryStatus.available
-                            ? HeroIcons.lockClosed
+                            ? .lockClosed
                             : delivery.status == DeliveryStatus.locked
-                            ? HeroIcons.truck
-                            : HeroIcons.archiveBoxArrowDown,
+                            ? .truck
+                            : .archiveBoxArrowDown,
                         color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),

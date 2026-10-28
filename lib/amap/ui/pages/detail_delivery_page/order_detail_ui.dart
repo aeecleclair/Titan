@@ -47,10 +47,10 @@ class DetailOrderUI extends HookConsumerWidget {
         AMAPColors(isDarkTheme).lightGradientPrimary,
         AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
+      padding: const .symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .start,
         children: [
           SizedBox(
             width: 216,
@@ -59,7 +59,7 @@ class DetailOrderUI extends HookConsumerWidget {
               maxLines: 1,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: AMAPColors(isDarkTheme).secondaryGreen,
               ),
             ),
@@ -76,7 +76,7 @@ class DetailOrderUI extends HookConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).primaryGreen,
                     ),
                   ),
@@ -85,10 +85,10 @@ class DetailOrderUI extends HookConsumerWidget {
                   width: 90,
                   child: Text(
                     "${product.quantity} (${((product.quantity * product.price) / 100).toStringAsFixed(2)}€)",
-                    textAlign: TextAlign.right,
+                    textAlign: .right,
                     style: TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: AMAPColors(isDarkTheme).primaryGreen,
                     ),
                   ),
@@ -100,9 +100,9 @@ class DetailOrderUI extends HookConsumerWidget {
             height: 3,
             decoration: BoxDecoration(
               color: AMAPColors(isDarkTheme).primaryGreen,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: const .all(.circular(10)),
             ),
-            margin: const EdgeInsets.symmetric(vertical: 7),
+            margin: const .symmetric(vertical: 7),
           ),
           Row(
             children: [
@@ -110,7 +110,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -119,7 +119,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 "${(order.amount / 100).toStringAsFixed(2)}€",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
@@ -132,7 +132,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 "${AMAPTextConstants.amount} : ${(userCash.balance / 100).toStringAsFixed(2)}€",
                 style: TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: .w700,
                   color: AMAPColors(isDarkTheme).secondaryGreen,
                 ),
               ),
@@ -191,7 +191,7 @@ class DetailOrderUI extends HookConsumerWidget {
                   child: child,
                 ),
                 child: HeroIcon(
-                  HeroIcons.trash,
+                  .trash,
                   color: Theme.of(context).colorScheme.onSecondary,
                   size: 20,
                 ),

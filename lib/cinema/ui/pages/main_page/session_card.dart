@@ -94,16 +94,16 @@ class SessionCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(10),
-        padding: EdgeInsets.all(isWebFormat ? 50 : 0),
+        margin: const .all(10),
+        padding: .all(isWebFormat ? 50 : 0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             SizedBox(height: height),
             Container(
               height: maxHeight * scale,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: .circular(30),
                 boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).shadowColor,
@@ -122,13 +122,13 @@ class SessionCard extends HookConsumerWidget {
                   return isWebFormat
                       ? Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: .circular(30),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: .circular(30),
                                 child: AspectRatio(
                                   aspectRatio: 2 / 3,
                                   child: Image(
@@ -143,29 +143,29 @@ class SessionCard extends HookConsumerWidget {
                                   children: [
                                     Text(
                                       session.name,
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(
                                         fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       formatDate(session.start),
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       formatDuration(session.duration),
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       session.overview ??
                                           CinemaTextConstants.noOverview,
-                                      textAlign: TextAlign.center,
+                                      textAlign: .center,
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                   ],
@@ -179,7 +179,7 @@ class SessionCard extends HookConsumerWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: .circular(30),
                                 image: DecorationImage(
                                   image: data.first.image,
                                   fit: BoxFit.cover,
@@ -187,7 +187,7 @@ class SessionCard extends HookConsumerWidget {
                                 border:
                                     (selected &&
                                         session.start.isAfter(DateTime.now()))
-                                    ? Border.all(
+                                    ? .all(
                                         color: Theme.of(
                                           context,
                                         ).colorScheme.onPrimary,
@@ -208,14 +208,14 @@ class SessionCard extends HookConsumerWidget {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.secondary,
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(30),
-                                      bottomLeft: Radius.circular(30),
+                                    borderRadius: const .only(
+                                      topRight: .circular(30),
+                                      bottomLeft: .circular(30),
                                     ),
                                   ),
                                   child: Center(
                                     child: HeroIcon(
-                                      HeroIcons.bell,
+                                      .bell,
                                       size: 30,
                                       color: Theme.of(
                                         context,
@@ -228,7 +228,7 @@ class SessionCard extends HookConsumerWidget {
                         );
                 },
                 errorBuilder: (error, stack) =>
-                    const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
+                    const Center(child: HeroIcon(.exclamationCircle)),
               ),
             ),
             const SizedBox(height: 15),
@@ -237,17 +237,14 @@ class SessionCard extends HookConsumerWidget {
                 children: [
                   Text(
                     session.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textAlign: .center,
+                    style: const TextStyle(fontSize: 20, fontWeight: .bold),
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
-                      const HeroIcon(HeroIcons.calendar, size: 20),
+                      const HeroIcon(.calendar, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDate(session.start),
@@ -257,9 +254,9 @@ class SessionCard extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
-                      const HeroIcon(HeroIcons.clock, size: 20),
+                      const HeroIcon(.clock, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDuration(session.duration),
