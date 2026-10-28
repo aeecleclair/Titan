@@ -74,7 +74,7 @@ class MemberEditableCard extends HookConsumerWidget {
               )
               .rolesTags,
         ),
-        borderRadius: const .all(Radius.circular(20)),
+        borderRadius: const .all(.circular(20)),
       ),
       child: Row(
         children: [

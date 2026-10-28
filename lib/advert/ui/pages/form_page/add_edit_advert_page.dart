@@ -115,7 +115,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                             height: 160,
                                             decoration: BoxDecoration(
                                               borderRadius: const .all(
-                                                Radius.circular(5),
+                                                .circular(5),
                                               ),
                                               image: DecorationImage(
                                                 image: poster.value != null
@@ -133,7 +133,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                 height: 50,
                                                 decoration: BoxDecoration(
                                                   borderRadius: const .all(
-                                                    Radius.circular(5),
+                                                    .circular(5),
                                                   ),
                                                   color: Theme.of(context)
                                                       .colorScheme
@@ -187,7 +187,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 builder: (formFieldState) => Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
-                    borderRadius: const .all(Radius.circular(20)),
+                    borderRadius: const .all(.circular(20)),
                     boxShadow: formFieldState.hasError
                         ? [
                             BoxShadow(

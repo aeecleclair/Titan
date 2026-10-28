@@ -100,7 +100,7 @@ class DetailOrderUI extends HookConsumerWidget {
             height: 3,
             decoration: BoxDecoration(
               color: AMAPColors(isDarkTheme).primaryGreen,
-              borderRadius: const .all(Radius.circular(10)),
+              borderRadius: const .all(.circular(10)),
             ),
             margin: const .symmetric(vertical: 7),
           ),

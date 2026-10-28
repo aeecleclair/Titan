@@ -16,7 +16,7 @@ class CardButton extends StatelessWidget {
     this.shadowColor,
     this.borderColor,
     this.size = 40,
-    this.borderRadius = const .all(Radius.circular(15)),
+    this.borderRadius = const .all(.circular(15)),
   });
 
   @override

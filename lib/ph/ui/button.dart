@@ -33,7 +33,7 @@ class MyButton extends StatelessWidget {
           begin: .bottomRight,
           end: .topLeft,
         ),
-        borderRadius: const .all(Radius.circular(15)),
+        borderRadius: const .all(.circular(15)),
       ),
       child: Center(
         child: AutoSizeText(

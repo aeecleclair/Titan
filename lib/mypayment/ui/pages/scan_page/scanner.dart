@@ -176,8 +176,8 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     return ClipRRect(
       borderRadius: const .only(
-        topLeft: Radius.circular(40),
-        topRight: Radius.circular(40),
+        topLeft: .circular(40),
+        topRight: .circular(40),
       ),
       child: Container(
         color: Colors.black,
@@ -186,7 +186,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                 alignment: .center,
                 children: [
                   ClipRRect(
-                    borderRadius: const .all(Radius.circular(25)),
+                    borderRadius: const .all(.circular(25)),
                     child: QrImageView(
                       data: scannedValue!,
                       version: QrVersions.auto,

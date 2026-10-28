@@ -46,7 +46,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              borderRadius: const .all(Radius.circular(20)),
+              borderRadius: const .all(.circular(20)),
               gradient: RadialGradient(
                 colors: const [
                   RaffleColorConstants.gradient1,
@@ -92,7 +92,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               offset: const Offset(2, 3),
                             ),
                           ],
-                          borderRadius: const .all(Radius.circular(15)),
+                          borderRadius: const .all(.circular(15)),
                         ),
                         child: child,
                       ),
@@ -140,7 +140,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               offset: const Offset(2, 3),
                             ),
                           ],
-                          borderRadius: const .all(Radius.circular(15)),
+                          borderRadius: const .all(.circular(15)),
                         ),
                         child: const HeroIcon(
                           .xMark,

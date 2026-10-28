@@ -92,8 +92,8 @@ class MainCardTemplate extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: .only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+                bottomLeft: .circular(30),
+                bottomRight: .circular(30),
               ),
             ),
             child: Row(

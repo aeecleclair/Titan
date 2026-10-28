@@ -25,7 +25,7 @@ class PrizeDialog extends HookConsumerWidget {
               blurStyle: BlurStyle.outer,
             ),
           ],
-          borderRadius: .all(Radius.circular(20)),
+          borderRadius: .all(.circular(20)),
           gradient: RadialGradient(
             colors: [
               RaffleColorConstants.gradient1,

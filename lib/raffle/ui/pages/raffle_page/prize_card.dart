@@ -35,7 +35,7 @@ class PrizeCard extends HookConsumerWidget {
               offset: const Offset(1, 2),
             ),
           ],
-          borderRadius: const .all(Radius.circular(20)),
+          borderRadius: const .all(.circular(20)),
         ),
         child: Column(
           mainAxisAlignment: .end,
@@ -57,8 +57,8 @@ class PrizeCard extends HookConsumerWidget {
                       end: .bottomCenter,
                     ),
                     borderRadius: const .only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
+                      bottomLeft: .circular(20),
+                      bottomRight: .circular(20),
                     ),
                   ),
                   child: Column(

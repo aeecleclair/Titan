@@ -168,8 +168,8 @@ class AmapMainPage extends HookConsumerWidget {
                         radius: 1.5,
                       ),
                       borderRadius: const .only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
+                        topLeft: .circular(50),
+                        topRight: .circular(50),
                       ),
                       boxShadow: [
                         BoxShadow(

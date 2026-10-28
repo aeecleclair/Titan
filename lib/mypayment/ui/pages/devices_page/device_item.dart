@@ -27,7 +27,7 @@ class DeviceItem extends ConsumerWidget {
       padding: const .symmetric(vertical: 10, horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: const .all(Radius.circular(15)),
+          borderRadius: const .all(.circular(15)),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -38,7 +38,7 @@ class DeviceItem extends ConsumerWidget {
           ],
         ),
         child: ClipRRect(
-          borderRadius: const .all(Radius.circular(15)),
+          borderRadius: const .all(.circular(15)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: Container(

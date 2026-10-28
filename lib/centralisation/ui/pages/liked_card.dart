@@ -22,7 +22,7 @@ class LikedCard extends StatelessWidget {
             Container(
               padding: const .all(10),
               decoration: BoxDecoration(
-                borderRadius: const .all(Radius.circular(20)),
+                borderRadius: const .all(.circular(20)),
                 color: Theme.of(context).colorScheme.primary,
                 boxShadow: [
                   BoxShadow(

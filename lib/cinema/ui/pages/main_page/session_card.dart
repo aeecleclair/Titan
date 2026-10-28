@@ -209,8 +209,8 @@ class SessionCard extends HookConsumerWidget {
                                       context,
                                     ).colorScheme.secondary,
                                     borderRadius: const .only(
-                                      topRight: Radius.circular(30),
-                                      bottomLeft: Radius.circular(30),
+                                      topRight: .circular(30),
+                                      bottomLeft: .circular(30),
                                     ),
                                   ),
                                   child: Center(

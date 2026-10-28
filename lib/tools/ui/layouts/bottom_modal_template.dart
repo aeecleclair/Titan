@@ -43,7 +43,7 @@ class BottomModalTemplate extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: .vertical(top: Radius.circular(30)),
+              borderRadius: .vertical(top: .circular(30)),
             ),
             padding: .all(20),
             child: Column(

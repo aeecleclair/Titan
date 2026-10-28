@@ -18,7 +18,7 @@ class AddDeviceButton extends ConsumerWidget {
     return Padding(
       padding: const .symmetric(vertical: 10, horizontal: 30),
       child: ClipRRect(
-        borderRadius: const .all(Radius.circular(25)),
+        borderRadius: const .all(.circular(25)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(

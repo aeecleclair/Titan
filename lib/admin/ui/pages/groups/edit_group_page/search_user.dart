@@ -91,7 +91,7 @@ class SearchUser extends HookConsumerWidget {
                         blurRadius: 5,
                       ),
                     ],
-                    borderRadius: const .all(Radius.circular(10)),
+                    borderRadius: const .all(.circular(10)),
                   ),
                   child: HeroIcon(
                     !add.value ? .plus : .xMark,

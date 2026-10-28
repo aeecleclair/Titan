@@ -36,7 +36,7 @@ class TicketUI extends HookConsumerWidget {
               ),
             ],
             color: RaffleColorConstants.ticketBack,
-            borderRadius: const .all(Radius.circular(30)),
+            borderRadius: const .all(.circular(30)),
           ),
           child: Column(
             mainAxisAlignment: .spaceAround,

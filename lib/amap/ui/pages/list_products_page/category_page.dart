@@ -88,7 +88,7 @@ class CategoryPage extends HookConsumerWidget {
                         physics: const BouncingScrollPhysics(),
                         controller: scrollController,
                         child: ClipRRect(
-                          borderRadius: const .all(Radius.circular(25)),
+                          borderRadius: const .all(.circular(25)),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
                               sigmaX: 10.0,
@@ -145,7 +145,7 @@ class CategoryPage extends HookConsumerWidget {
                                       blurRadius: 5,
                                     ),
                                   ],
-                                  borderRadius: const .all(Radius.circular(25)),
+                                  borderRadius: const .all(.circular(25)),
                                 ),
                                 alignment: .center,
                                 child: Row(
@@ -176,7 +176,7 @@ class CategoryPage extends HookConsumerWidget {
                   );
                 } else {
                   return ClipRRect(
-                    borderRadius: const .all(Radius.circular(25)),
+                    borderRadius: const .all(.circular(25)),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(

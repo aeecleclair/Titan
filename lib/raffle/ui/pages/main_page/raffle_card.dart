@@ -45,7 +45,7 @@ class RaffleWidget extends HookConsumerWidget {
             margin: const .symmetric(vertical: 15),
             padding: const .symmetric(vertical: 20, horizontal: 20),
             decoration: BoxDecoration(
-              borderRadius: const .all(Radius.circular(25)),
+              borderRadius: const .all(.circular(25)),
               color: Colors.white,
               boxShadow: [
                 BoxShadow(

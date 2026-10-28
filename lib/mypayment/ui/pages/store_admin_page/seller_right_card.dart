@@ -140,8 +140,8 @@ class SellerRightCard extends ConsumerWidget {
             builder: (context) {
               return ClipRRect(
                 borderRadius: const .only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
+                  topLeft: .circular(40),
+                  topRight: .circular(40),
                 ),
                 child: Container(
                   color: Theme.of(context).colorScheme.surface,

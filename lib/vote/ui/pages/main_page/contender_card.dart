@@ -97,8 +97,8 @@ class ContenderCard extends HookConsumerWidget {
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: const .only(
-                            topLeft: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
+                            topLeft: .circular(20),
+                            bottomLeft: .circular(20),
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -153,8 +153,8 @@ class ContenderCard extends HookConsumerWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: const .only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
+                topLeft: .circular(20),
+                bottomLeft: .circular(20),
               ),
               boxShadow: [
                 BoxShadow(

@@ -72,7 +72,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   blurStyle: BlurStyle.outer,
                 ),
               ],
-              borderRadius: const .all(Radius.circular(20)),
+              borderRadius: const .all(.circular(20)),
               gradient: RadialGradient(
                 colors: const [
                   RaffleColorConstants.gradient1,
@@ -103,7 +103,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                               offset: const Offset(2, 3),
                             ),
                           ],
-                          borderRadius: const .all(Radius.circular(25)),
+                          borderRadius: const .all(.circular(25)),
                         ),
                         child: Center(
                           child: Builder(
@@ -216,7 +216,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 offset: const Offset(2, 3),
                               ),
                             ],
-                            borderRadius: const .all(Radius.circular(15)),
+                            borderRadius: const .all(.circular(15)),
                           ),
                           child: child,
                         ),
@@ -281,7 +281,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 offset: const Offset(2, 3),
                               ),
                             ],
-                            borderRadius: const .all(Radius.circular(15)),
+                            borderRadius: const .all(.circular(15)),
                           ),
                           child: const HeroIcon(
                             .xMark,

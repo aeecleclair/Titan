@@ -29,10 +29,10 @@ class CollectionSlotSelector extends HookConsumerWidget {
           height: 70,
           decoration: BoxDecoration(
             borderRadius: .only(
-              topLeft: Radius.circular(isFirst ? 22 : 0),
-              bottomLeft: Radius.circular(isFirst ? 22 : 0),
-              topRight: Radius.circular(!isFirst ? 22 : 0),
-              bottomRight: Radius.circular(!isFirst ? 22 : 0),
+              topLeft: .circular(isFirst ? 22 : 0),
+              bottomLeft: .circular(isFirst ? 22 : 0),
+              topRight: .circular(!isFirst ? 22 : 0),
+              bottomRight: .circular(!isFirst ? 22 : 0),
             ),
             color: isSelected
                 ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.7)

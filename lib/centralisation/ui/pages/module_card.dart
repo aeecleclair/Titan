@@ -18,7 +18,7 @@ class ModuleCard extends HookConsumerWidget {
     return Container(
       margin: const .symmetric(vertical: 7),
       decoration: BoxDecoration(
-        borderRadius: const .all(Radius.circular(20)),
+        borderRadius: const .all(.circular(20)),
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(

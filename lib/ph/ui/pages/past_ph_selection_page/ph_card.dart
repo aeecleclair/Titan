@@ -85,7 +85,7 @@ class PhCard extends HookConsumerWidget {
                   }
                 },
                 child: CardButton(
-                  borderRadius: const .all(Radius.circular(10000)),
+                  borderRadius: const .all(.circular(10000)),
                   size: 60,
                   color: Theme.of(context).shadowColor,
                   child: HeroIcon(

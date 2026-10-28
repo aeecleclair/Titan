@@ -135,8 +135,8 @@ class AdvertCard extends HookConsumerWidget {
                             height: imageHeight,
                             decoration: const BoxDecoration(
                               borderRadius: .only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: .circular(20),
+                                topRight: .circular(20),
                               ),
                             ),
                             child: HeroIcon(.photo, size: width),
@@ -146,8 +146,8 @@ class AdvertCard extends HookConsumerWidget {
                             height: imageHeight,
                             decoration: BoxDecoration(
                               borderRadius: const .only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: .circular(20),
+                                topRight: .circular(20),
                               ),
                               image: DecorationImage(
                                 image: value.first.image,
@@ -206,7 +206,7 @@ class AdvertCard extends HookConsumerWidget {
                       left: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const .all(Radius.circular(8)),
+                          borderRadius: const .all(.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -217,7 +217,7 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: const .all(Radius.circular(8)),
+                          borderRadius: const .all(.circular(8)),
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 50,
@@ -268,7 +268,7 @@ class AdvertCard extends HookConsumerWidget {
                       right: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const .all(Radius.circular(8)),
+                          borderRadius: const .all(.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -279,7 +279,7 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: const .all(Radius.circular(8)),
+                          borderRadius: const .all(.circular(8)),
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 30,

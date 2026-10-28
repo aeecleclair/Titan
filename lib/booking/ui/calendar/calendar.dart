@@ -161,7 +161,7 @@ class Calendar extends HookConsumerWidget {
                     color: Theme.of(context).colorScheme.onPrimary,
                     width: 2,
                   ),
-                  borderRadius: const .all(Radius.circular(5)),
+                  borderRadius: const .all(.circular(5)),
                   shape: BoxShape.rectangle,
                 ),
                 todayHighlightColor: Theme.of(context).colorScheme.secondary,

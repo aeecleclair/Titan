@@ -22,7 +22,7 @@ class CardLayout extends StatelessWidget {
     this.borderColor,
     this.padding = const .all(12.0),
     this.margin = const .symmetric(horizontal: 15.0),
-    this.borderRadius = const .all(Radius.circular(30)),
+    this.borderRadius = const .all(.circular(30)),
   });
 
   @override

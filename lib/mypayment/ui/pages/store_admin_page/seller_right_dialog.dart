@@ -39,7 +39,7 @@ class SellerRightDialog extends ConsumerWidget {
           onTap: () {},
           child: Dialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: .all(Radius.circular(20.0)),
+              borderRadius: .all(.circular(20.0)),
             ),
             elevation: 0.0,
             insetPadding: const .all(20.0),

@@ -58,7 +58,7 @@ class BuyPackTicket extends HookConsumerWidget {
             center: .topLeft,
             radius: 1.5,
           ),
-          borderRadius: const .all(Radius.circular(20)),
+          borderRadius: const .all(.circular(20)),
         ),
         child: Column(
           mainAxisAlignment: .spaceBetween,
@@ -80,7 +80,7 @@ class BuyPackTicket extends HookConsumerWidget {
                           offset: const Offset(1, 2),
                         ),
                       ],
-                      borderRadius: const .all(Radius.circular(15)),
+                      borderRadius: const .all(.circular(15)),
                     ),
                     child: Builder(
                       builder: (context) {
@@ -161,7 +161,7 @@ class BuyPackTicket extends HookConsumerWidget {
                   begin: .topLeft,
                   end: .bottomRight,
                 ),
-                borderRadius: const .all(Radius.circular(15)),
+                borderRadius: const .all(.circular(15)),
               ),
               child: FittedBox(
                 fit: BoxFit.fitWidth,
