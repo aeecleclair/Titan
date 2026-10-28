@@ -256,13 +256,13 @@ class ToolBar extends ConsumerWidget {
                     name: fileName,
                     bytes: csvBytes,
                     ext: "csv",
-                    mimeType: MimeType.csv,
+                    mimeType: .csv,
                   )
                 : await FileSaver.instance.saveAs(
                     name: fileName,
                     bytes: csvBytes,
                     ext: "csv",
-                    mimeType: MimeType.csv,
+                    mimeType: .csv,
                   );
 
             if (!context.mounted) return;

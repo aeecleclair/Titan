@@ -68,13 +68,13 @@ class PhCard extends HookConsumerWidget {
                           name: ph.name,
                           bytes: pdfBytes,
                           ext: "pdf",
-                          mimeType: MimeType.pdf,
+                          mimeType: .pdf,
                         )
                       : await FileSaver.instance.saveAs(
                           name: ph.name,
                           bytes: pdfBytes,
                           ext: "pdf",
-                          mimeType: MimeType.pdf,
+                          mimeType: .pdf,
                         );
 
                   if (path != null) {
