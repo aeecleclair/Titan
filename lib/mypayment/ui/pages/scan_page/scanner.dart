@@ -195,7 +195,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     ),
                   ),
                   CustomPaint(
-                    size: Size.infinite,
+                    size: .infinite,
                     painter: ScannerOverlayPainter(
                       scanArea: MediaQuery.of(context).size.width * 0.8,
                       borderColor: ongoingTransaction.when(
@@ -211,7 +211,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                 controller: controller,
                 overlayBuilder: (context, constraints) {
                   return CustomPaint(
-                    size: Size.infinite,
+                    size: .infinite,
                     painter: ScannerOverlayPainter(
                       scanArea: scanArea,
                       borderColor: ongoingTransaction.when(
