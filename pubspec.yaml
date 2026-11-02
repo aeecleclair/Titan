@@ -112,6 +112,7 @@ flutter:
     - assets/images/logo_flappybird.svg
     - assets/images/helloasso.svg
 
+  default-flavor: alpha
   licenses:
     - LICENSE.md
   uses-material-design: true
