@@ -41,7 +41,7 @@ class Loan {
       ),
       returned = json['returned'],
       returnedDate = json['returned_date'] != null
-          ? DateTime.parse(json['returned_date'])
+          ? .parse(json['returned_date'])
           : null;
 
   Map<String, dynamic> toJson() {

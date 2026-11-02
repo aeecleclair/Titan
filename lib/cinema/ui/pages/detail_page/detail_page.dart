@@ -222,7 +222,7 @@ class DetailPage extends HookConsumerWidget {
             ),
           ],
         ),
-        if (session.start.isAfter(DateTime.now()))
+        if (session.start.isAfter(.now()))
           Positioned(
             bottom: 0,
             left: 0,

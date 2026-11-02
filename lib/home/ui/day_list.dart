@@ -26,7 +26,7 @@ class DayList extends HookConsumerWidget {
     final sortedEventList = ref.watch(sortedEventListProvider);
     final days = ref.watch(daysProvider);
 
-    DateTime now = normalizedDate(DateTime.now());
+    DateTime now = normalizedDate(.now());
 
     Map<String, double> widgetPositions = {};
     if (sortedEventList.keys.isNotEmpty) {

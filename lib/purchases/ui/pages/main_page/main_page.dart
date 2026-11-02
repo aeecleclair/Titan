@@ -71,8 +71,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                     else
                       ...tickets
                           .where(
-                            (ticket) =>
-                                ticket.expirationDate.isAfter(DateTime.now()),
+                            (ticket) => ticket.expirationDate.isAfter(.now()),
                           )
                           .map(
                             (ticket) => TicketCard(

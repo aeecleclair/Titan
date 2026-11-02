@@ -434,7 +434,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                         RecurrenceType.weekly;
                                     recurrence.recurrenceRange =
                                         RecurrenceRange.endDate;
-                                    recurrence.endDate = DateTime.parse(
+                                    recurrence.endDate = .parse(
                                       processDateBack(recurrenceEndDate.text),
                                     );
                                     recurrence.weekDays = WeekDays.values

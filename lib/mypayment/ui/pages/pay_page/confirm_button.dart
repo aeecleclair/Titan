@@ -83,7 +83,7 @@ class ConfirmButton extends ConsumerWidget {
                       icon: .clock,
                       title: "Valide jusqu'à",
                       value: processDateOnlyHour(
-                        DateTime.now().add(const Duration(minutes: 5)),
+                        .now().add(const Duration(minutes: 5)),
                       ),
                     ),
                     const SizedBox(width: 20),

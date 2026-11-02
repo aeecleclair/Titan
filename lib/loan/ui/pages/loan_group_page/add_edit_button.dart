@@ -81,10 +81,10 @@ class AddEditButton extends HookConsumerWidget {
                       itemsQuantity: selected,
                       borrower: borrower,
                       caution: caution.text,
-                      end: DateTime.parse(processDateBack(end)),
+                      end: .parse(processDateBack(end)),
                       id: isEdit ? loan.id : "",
                       notes: note.text,
-                      start: DateTime.parse(processDateBack(start)),
+                      start: .parse(processDateBack(start)),
                       returned: false,
                     );
                     final value = isEdit

@@ -358,7 +358,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                               recurrence.recurrenceType = RecurrenceType.weekly;
                               recurrence.recurrenceRange =
                                   RecurrenceRange.endDate;
-                              recurrence.endDate = DateTime.parse(
+                              recurrence.endDate = .parse(
                                 processDateBack(recurrenceEndDate.text),
                               );
                               recurrence.weekDays = selectedDays;

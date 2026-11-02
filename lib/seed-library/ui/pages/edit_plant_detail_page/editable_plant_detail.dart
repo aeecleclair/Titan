@@ -130,7 +130,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                   plantNotifier.updatePlant(
                     plant.copyWith(plantingDate: .now()),
                   );
-                  plantationDate.text = processDate(DateTime.now());
+                  plantationDate.text = processDate(.now());
                   myPlantsNotifier.updatePlantInList(
                     plant.copyWith(plantingDate: .now()).toPlantSimple(),
                   );
@@ -181,7 +181,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                                   )
                                   .toPlantSimple(),
                             );
-                            plantationDate.text = processDate(DateTime.now());
+                            plantationDate.text = processDate(.now());
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,

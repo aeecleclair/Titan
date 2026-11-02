@@ -37,8 +37,8 @@ class ListEvent extends HookConsumerWidget {
       confirmedEventListProvider.notifier,
     );
     final filteredEvents = isHistory
-        ? events.where((e) => e.end.isBefore(DateTime.now())).toList()
-        : events.where((e) => e.end.isAfter(DateTime.now())).toList();
+        ? events.where((e) => e.end.isBefore(.now())).toList()
+        : events.where((e) => e.end.isAfter(.now())).toList();
     filteredEvents.sort(
       (a, b) => (isHistory ? -1 : 1) * a.start.compareTo(b.start),
     );

@@ -185,8 +185,7 @@ class SessionCard extends HookConsumerWidget {
                                   fit: BoxFit.cover,
                                 ),
                                 border:
-                                    (selected &&
-                                        session.start.isAfter(DateTime.now()))
+                                    (selected && session.start.isAfter(.now()))
                                     ? .all(
                                         color: Theme.of(
                                           context,
@@ -196,8 +195,7 @@ class SessionCard extends HookConsumerWidget {
                                     : null,
                               ),
                             ),
-                            if (selected &&
-                                session.start.isAfter(DateTime.now()))
+                            if (selected && session.start.isAfter(.now()))
                               Positioned(
                                 top: 0,
                                 right: 0,

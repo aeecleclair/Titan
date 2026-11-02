@@ -13,7 +13,7 @@ class EndNotifier extends StateNotifier<String> {
 
   void setEndFromSelected(String start, List<Item> selected) {
     state = processDate(
-      DateTime.parse(processDateBack(start)).add(
+      .parse(processDateBack(start)).add(
         Duration(
           days: selected
               .map((item) => item.suggestedLendingDuration)

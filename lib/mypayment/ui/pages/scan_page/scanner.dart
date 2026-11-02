@@ -72,7 +72,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
             const Duration(seconds: 5)) {
       return;
     }
-    lastTimeScannedNotifier.updateLastTimeScanned(DateTime.now());
+    lastTimeScannedNotifier.updateLastTimeScanned(.now());
     final bypass = ref.watch(bypassProvider);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);

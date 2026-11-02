@@ -87,7 +87,7 @@ class OnGoingLoan extends HookConsumerWidget {
               firstChild: GestureDetector(
                 onTap: () async {
                   await loanNotifier.setLoan(Loan.empty());
-                  startNotifier.setStart(processDate(DateTime.now()));
+                  startNotifier.setStart(processDate(.now()));
                   endNotifier.setEnd("");
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,

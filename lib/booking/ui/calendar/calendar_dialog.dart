@@ -28,8 +28,8 @@ class CalendarDialog extends StatelessWidget {
         ? SfCalendar.parseRRule(
             booking.recurrenceRule,
             booking.start,
-          ).endDate!.isAfter(DateTime.now())
-        : booking.end.isAfter(DateTime.now());
+          ).endDate!.isAfter(.now())
+        : booking.end.isAfter(.now());
     final showButton =
         (isNotEnded && booking.decision == Decision.pending) || isManager;
 
