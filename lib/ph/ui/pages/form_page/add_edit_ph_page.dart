@@ -70,8 +70,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                               getOnlyDayDate(
                                 context,
                                 dateController,
-                                firstDate: DateTime.utc(1890),
-                                lastDate: DateTime.utc(2100),
+                                firstDate: .utc(1890),
+                                lastDate: .utc(2100),
                               );
                             },
                           ),
@@ -101,7 +101,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             final phList = ref.watch(phListProvider);
                             Ph newPh = Ph(
                               id: isEdit ? ph.id : '',
-                              date: DateTime.parse(
+                              date: .parse(
                                 processDateBack(dateController.text),
                               ),
                               name: name.text,

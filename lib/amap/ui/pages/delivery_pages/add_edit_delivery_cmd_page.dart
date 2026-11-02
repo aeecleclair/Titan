@@ -150,9 +150,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                             selected[products.indexOf(element)],
                                       )
                                       .toList(),
-                                  deliveryDate: DateTime.parse(
-                                    processDateBack(date),
-                                  ),
+                                  deliveryDate: .parse(processDateBack(date)),
                                   status: DeliveryStatus.creation,
                                 );
                                 await tokenExpireWrapper(ref, () async {

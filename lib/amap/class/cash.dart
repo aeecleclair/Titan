@@ -33,7 +33,7 @@ class Cash {
   }
 
   static Cash empty() =>
-      Cash(user: SimpleUser.empty(), balance: 0, lastOrderDate: DateTime.now());
+      Cash(user: SimpleUser.empty(), balance: 0, lastOrderDate: .now());
 
   @override
   String toString() {

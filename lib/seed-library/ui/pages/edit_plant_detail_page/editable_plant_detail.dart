@@ -128,13 +128,11 @@ class EditablePlantDetail extends HookConsumerWidget {
               WaitingButton(
                 onTap: () {
                   plantNotifier.updatePlant(
-                    plant.copyWith(plantingDate: DateTime.now()),
+                    plant.copyWith(plantingDate: .now()),
                   );
                   plantationDate.text = processDate(DateTime.now());
                   myPlantsNotifier.updatePlantInList(
-                    plant
-                        .copyWith(plantingDate: DateTime.now())
-                        .toPlantSimple(),
+                    plant.copyWith(plantingDate: .now()).toPlantSimple(),
                   );
                   return Future.value();
                 },
@@ -167,7 +165,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                           final result = await plantNotifier.updatePlant(
                             plant.copyWith(
                               state: function.State.consumed,
-                              plantingDate: DateTime.now(),
+                              plantingDate: .now(),
                             ),
                           );
                           if (result) {
@@ -179,7 +177,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                               plant
                                   .copyWith(
                                     state: function.State.consumed,
-                                    plantingDate: DateTime.now(),
+                                    plantingDate: .now(),
                                   )
                                   .toPlantSimple(),
                             );
@@ -221,8 +219,8 @@ class EditablePlantDetail extends HookConsumerWidget {
                   context,
                   plantationDate,
                   firstDate: plant.borrowingDate,
-                  lastDate: DateTime.now(),
-                  initialDate: DateTime.now(),
+                  lastDate: .now(),
+                  initialDate: .now(),
                 );
                 plantNotifier.updatePlant(
                   plant.copyWith(

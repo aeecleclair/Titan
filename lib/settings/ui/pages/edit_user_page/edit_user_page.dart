@@ -249,7 +249,7 @@ class EditUserPage extends HookConsumerWidget {
                         dateController,
                         initialDate: user.birthday,
                         firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
+                        lastDate: .now(),
                       ),
                       child: Container(
                         margin: const .only(left: 30),

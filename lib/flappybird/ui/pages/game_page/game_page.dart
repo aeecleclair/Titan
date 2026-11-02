@@ -111,7 +111,7 @@ class GamePage extends HookConsumerWidget {
             Score(
               user: newBird.user,
               value: newBird.score,
-              date: DateTime.now(),
+              date: .now(),
               position: 0,
             ),
           );

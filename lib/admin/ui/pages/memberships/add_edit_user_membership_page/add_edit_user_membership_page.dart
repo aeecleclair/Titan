@@ -143,12 +143,8 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                       final value = await associationMembershipMembersNotifier
                           .updateMember(
                             membership.copyWith(
-                              startDate: DateTime.parse(
-                                processDateBack(start.text),
-                              ),
-                              endDate: DateTime.parse(
-                                processDateBack(end.text),
-                              ),
+                              startDate: .parse(processDateBack(start.text)),
+                              endDate: .parse(processDateBack(end.text)),
                             ),
                           );
                       if (value) {
@@ -170,8 +166,8 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         associationMembershipId:
                             membership.associationMembershipId,
                         userId: membership.user.id,
-                        startDate: DateTime.parse(processDateBack(start.text)),
-                        endDate: DateTime.parse(processDateBack(end.text)),
+                        startDate: .parse(processDateBack(start.text)),
+                        endDate: .parse(processDateBack(end.text)),
                       );
                       final value = await associationMembershipMembersNotifier
                           .addMember(membershipAdd, membership.user);
