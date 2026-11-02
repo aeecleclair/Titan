@@ -50,7 +50,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                     RaffleColorConstants.gradient2,
                   ],
                   radius: 6.0,
-                  tileMode: TileMode.mirror,
+                  tileMode: .mirror,
                   center: .topLeft,
                 ).createShader(bounds),
                 child: Text(
