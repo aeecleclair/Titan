@@ -69,7 +69,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                 BoxShadow(
                   color: RaffleColorConstants.gradient2,
                   blurRadius: 15,
-                  blurStyle: BlurStyle.outer,
+                  blurStyle: .outer,
                 ),
               ],
               borderRadius: const .all(.circular(20)),
