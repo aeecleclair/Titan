@@ -112,4 +112,6 @@ flutter:
     - assets/images/logo_flappybird.svg
     - assets/images/helloasso.svg
 
+  licenses:
+    - LICENSE.md
   uses-material-design: true
