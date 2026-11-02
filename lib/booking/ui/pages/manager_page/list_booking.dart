@@ -122,7 +122,7 @@ class ListBooking extends HookConsumerWidget {
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               Booking newBooking = e.copyWith(
-                                decision: Decision.approved,
+                                decision: .approved,
                               );
                               bookingListNotifier
                                   .toggleConfirmed(
@@ -159,13 +159,10 @@ class ListBooking extends HookConsumerWidget {
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               Booking newBooking = e.copyWith(
-                                decision: Decision.declined,
+                                decision: .declined,
                               );
                               bookingListNotifier
-                                  .toggleConfirmed(
-                                    newBooking,
-                                    Decision.declined,
-                                  )
+                                  .toggleConfirmed(newBooking, .declined)
                                   .then((value) {
                                     if (value) {
                                       ref

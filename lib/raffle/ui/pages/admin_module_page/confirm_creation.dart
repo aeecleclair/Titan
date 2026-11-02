@@ -6,7 +6,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/raffle/class/raffle.dart';
-import 'package:titan/raffle/class/raffle_status_type.dart';
 import 'package:titan/raffle/providers/raffle_list_provider.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -103,7 +102,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                               name: "Tombola : ${group.name}",
                               group: group,
                               id: '',
-                              raffleStatusType: RaffleStatusType.creation,
+                              raffleStatusType: .creation,
                             ),
                           );
                           await raffleListNotifier.loadRaffleList();

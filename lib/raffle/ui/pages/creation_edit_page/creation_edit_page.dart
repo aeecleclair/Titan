@@ -267,7 +267,7 @@ class CreationPage extends HookConsumerWidget {
                                     await raffleListNotifier.openRaffle(
                                       raffle.copyWith(
                                         description: raffle.description,
-                                        raffleStatusType: RaffleStatusType.open,
+                                        raffleStatusType: .open,
                                       ),
                                     );
                                     QR.back();
@@ -276,7 +276,7 @@ class CreationPage extends HookConsumerWidget {
                                     await raffleListNotifier.lockRaffle(
                                       raffle.copyWith(
                                         description: raffle.description,
-                                        raffleStatusType: RaffleStatusType.lock,
+                                        raffleStatusType: .lock,
                                       ),
                                     );
                                     prizeList.whenData((prizes) {

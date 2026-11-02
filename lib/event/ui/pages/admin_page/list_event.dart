@@ -9,7 +9,6 @@ import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/router.dart';
 import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -108,7 +107,7 @@ class ListEvent extends HookConsumerWidget {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
                                 .toggleConfirmed(
-                                  e.copyWith(decision: Decision.approved),
+                                  e.copyWith(decision: .approved),
                                 )
                                 .then((value) {
                                   if (value) {
@@ -132,7 +131,7 @@ class ListEvent extends HookConsumerWidget {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
                                 .toggleConfirmed(
-                                  e.copyWith(decision: Decision.declined),
+                                  e.copyWith(decision: .declined),
                                 )
                                 .then((value) {
                                   if (value) {

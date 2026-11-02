@@ -72,9 +72,9 @@ class PlantComplete extends PlantSimple {
 
   factory PlantComplete.empty() {
     return PlantComplete(
-      state: State.pending,
+      state: .pending,
       speciesId: '',
-      propagationMethod: PropagationMethod.graine,
+      propagationMethod: .graine,
       id: '',
       plantReference: '',
       nbSeedsEnvelope: 0,

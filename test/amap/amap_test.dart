@@ -211,7 +211,7 @@ void main() {
       expect(newOrder.products, [newProduct]);
       expect(newOrder.productsDetail, ['id']);
       expect(newOrder.productsQuantity, [1]);
-      newOrder = order.copyWith(collectionSlot: CollectionSlot.midDay);
+      newOrder = order.copyWith(collectionSlot: .midDay);
       expect(newOrder.collectionSlot, CollectionSlot.midDay);
       newOrder = order.copyWith(
         user: SimpleUser.empty().copyWith(name: 'Name'),
@@ -239,7 +239,7 @@ void main() {
             quantity: 0,
           ),
         ],
-        collectionSlot: CollectionSlot.midDay,
+        collectionSlot: .midDay,
         user: SimpleUser.empty().copyWith(name: 'Name'),
         orderingDate: .parse('2021-01-01'),
         deliveryDate: .parse('2021-01-01'),

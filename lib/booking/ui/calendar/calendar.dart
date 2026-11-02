@@ -75,10 +75,10 @@ class Calendar extends HookConsumerWidget {
                     onYes: () async {
                       await tokenExpireWrapper(ref, () async {
                         Booking newBooking = booking.copyWith(
-                          decision: Decision.approved,
+                          decision: .approved,
                         );
                         bookingListNotifier
-                            .toggleConfirmed(newBooking, Decision.approved)
+                            .toggleConfirmed(newBooking, .approved)
                             .then((value) {
                               if (value) {
                                 ref
@@ -108,10 +108,10 @@ class Calendar extends HookConsumerWidget {
                     onYes: () async {
                       await tokenExpireWrapper(ref, () async {
                         Booking newBooking = booking.copyWith(
-                          decision: Decision.declined,
+                          decision: .declined,
                         );
                         bookingListNotifier
-                            .toggleConfirmed(newBooking, Decision.declined)
+                            .toggleConfirmed(newBooking, .declined)
                             .then((value) {
                               if (value) {
                                 ref

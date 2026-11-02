@@ -113,7 +113,7 @@ class Booking {
       note: "",
       room: Room.empty(),
       key: false,
-      decision: Decision.pending,
+      decision: .pending,
       recurrenceRule: '',
       entity: '',
       applicant: Applicant.empty(),

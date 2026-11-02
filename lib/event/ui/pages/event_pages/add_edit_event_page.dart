@@ -476,7 +476,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrenceRule: recurrenceRule,
                                     applicantId: user.id,
                                     applicant: user.toApplicant(),
-                                    decision: Decision.pending,
+                                    decision: .pending,
                                   );
                                   final value = isEdit
                                       ? await eventListNotifier.updateEvent(

@@ -117,7 +117,7 @@ class Order {
       products: [],
       amount: 0,
       lastAmount: 0,
-      collectionSlot: CollectionSlot.midDay,
+      collectionSlot: .midDay,
       expanded: false,
       user: SimpleUser.empty(),
     );
