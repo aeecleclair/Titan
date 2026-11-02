@@ -233,7 +233,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               id: isEdit ? advert.id : '',
                               announcer: selectedAnnouncers[0],
                               content: content.text,
-                              date: isEdit ? advert.date : DateTime.now(),
+                              date: isEdit ? advert.date : .now(),
                               tags: textTagsController.text.split(', '),
                               title: title.text,
                             );

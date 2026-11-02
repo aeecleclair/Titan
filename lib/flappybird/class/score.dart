@@ -45,7 +45,7 @@ class Score {
   Score.empty() {
     user = SimpleUser.empty();
     value = 0;
-    date = DateTime.now();
+    date = .now();
     position = 0;
   }
 

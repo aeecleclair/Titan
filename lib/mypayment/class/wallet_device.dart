@@ -43,7 +43,7 @@ class WalletDevice {
     : id = '',
       name = '',
       walletId = '',
-      creation = DateTime.now(),
+      creation = .now(),
       status = WalletDeviceStatus.active;
 
   WalletDevice copyWith({

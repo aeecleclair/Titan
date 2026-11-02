@@ -70,7 +70,7 @@ class History {
       type = HistoryType.transfer,
       otherWalletName = '',
       total = 0,
-      creation = DateTime.now(),
+      creation = .now(),
       status = TransactionStatus.confirmed,
       refund = null;
 

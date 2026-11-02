@@ -115,8 +115,8 @@ class Event {
     id = '';
     name = '';
     organizer = '';
-    start = DateTime.now();
-    end = DateTime.now();
+    start = .now();
+    end = .now();
     allDay = false;
     location = '';
     type = CalendarEventType.happyHour;

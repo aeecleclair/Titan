@@ -71,7 +71,7 @@ class Purchase {
     product = Product.empty();
     validated = false;
     seller = Seller.empty();
-    purchasedOn = DateTime.now();
+    purchasedOn = .now();
   }
 
   @override

@@ -76,7 +76,7 @@ class Ticket {
     user = UserTicket.empty();
     scanLeft = 0;
     tags = [];
-    expirationDate = DateTime.now();
+    expirationDate = .now();
     name = "";
     qrCodeSecret = "";
   }

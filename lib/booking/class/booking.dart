@@ -107,9 +107,9 @@ class Booking {
     return Booking(
       id: "",
       reason: "",
-      start: DateTime.now(),
-      end: DateTime.now(),
-      creation: DateTime.now(),
+      start: .now(),
+      end: .now(),
+      creation: .now(),
       note: "",
       room: Room.empty(),
       key: false,

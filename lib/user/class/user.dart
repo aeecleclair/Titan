@@ -88,7 +88,7 @@ class User {
     promo = null;
     floor = capitalize(Floors.values.first.toString().split('.').last);
     phone = null;
-    createdOn = DateTime.now();
+    createdOn = .now();
     groups = [];
   }
 

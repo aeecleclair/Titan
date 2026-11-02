@@ -123,10 +123,10 @@ void main() {
         ),
         returned: true,
         caution: '',
-        end: DateTime.now(),
+        end: .now(),
         loaner: Loaner.empty(),
         notes: '',
-        start: DateTime.now(),
+        start: .now(),
       );
       expect(loan.id, '1');
       expect(loan.itemsQuantity[0].itemSimple.id, '1');

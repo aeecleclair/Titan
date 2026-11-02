@@ -397,7 +397,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 end: DateTime.parse(
                                   processDateBackWithHour(endString),
                                 ),
-                                creation: DateTime.now(),
+                                creation: .now(),
                                 note: note.text.isEmpty ? null : note.text,
                                 room: room.value,
                                 key: keyRequired.value,
