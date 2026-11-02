@@ -57,7 +57,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       maxLines: 1,
                       label: PhTextConstants.phName,
                       controller: name,
-                      textInputAction: TextInputAction.done,
+                      textInputAction: .done,
                     ),
                     const SizedBox(height: 20),
                     Center(

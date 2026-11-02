@@ -36,7 +36,7 @@ class TextEntry extends StatelessWidget {
     this.noValueError = TextConstants.noValue,
     this.suffixIcon,
     this.isNegative = false,
-    this.textInputAction = TextInputAction.next,
+    this.textInputAction = .next,
   });
 
   @override
@@ -50,8 +50,8 @@ class TextEntry extends StatelessWidget {
       cursorColor: color ?? Theme.of(context).colorScheme.primaryContainer,
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
-          ? TextInputAction.newline
-          : TextInputAction.next,
+          ? .newline
+          : .next,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
