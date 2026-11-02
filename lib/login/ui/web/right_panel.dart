@@ -231,7 +231,7 @@ class RightPanel extends HookConsumerWidget {
                 ],
               ),
               const Spacer(),
-              Image.asset('assets/images/eclair.png', width: 120, height: 120),
+              Image.asset('assets/web/eclair.webp', width: 120, height: 120),
               const SizedBox(height: 30),
               const Text(
                 "Développé par ECLAIR",
