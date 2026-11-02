@@ -51,7 +51,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
           margin: const .symmetric(horizontal: 30),
           child: Form(
             key: formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: .onUserInteraction,
             child: Container(
               alignment: .center,
               child: SingleChildScrollView(

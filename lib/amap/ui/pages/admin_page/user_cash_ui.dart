@@ -129,7 +129,7 @@ class UserCashUi extends HookConsumerWidget {
                     child: UserCashUiLayout(
                       child: Form(
                         key: key,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: .onUserInteraction,
                         child: Row(
                           children: [
                             SizedBox(

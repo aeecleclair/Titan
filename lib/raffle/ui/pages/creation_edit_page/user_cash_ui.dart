@@ -185,8 +185,7 @@ class UserCashUi extends HookConsumerWidget {
                           padding: const .symmetric(horizontal: 17.0),
                           child: Form(
                             key: key,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                            autovalidateMode: .onUserInteraction,
                             child: Row(
                               children: [
                                 SizedBox(
