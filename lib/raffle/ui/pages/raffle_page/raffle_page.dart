@@ -43,7 +43,7 @@ class RaffleInfoPage extends HookConsumerWidget {
             Container(
               margin: const .only(left: 30, top: 20),
               child: ShaderMask(
-                blendMode: BlendMode.srcIn,
+                blendMode: .srcIn,
                 shaderCallback: (bounds) => const RadialGradient(
                   colors: [
                     RaffleColorConstants.gradient1,

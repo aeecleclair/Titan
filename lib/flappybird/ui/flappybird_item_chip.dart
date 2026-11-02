@@ -37,7 +37,7 @@ class FlappyBirdItemChip extends HookConsumerWidget {
                   height: 20,
                   colorFilter: .mode(
                     Theme.of(context).colorScheme.onSecondary,
-                    BlendMode.srcIn,
+                    .srcIn,
                   ),
                 ),
               ),

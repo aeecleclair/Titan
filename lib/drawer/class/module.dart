@@ -49,7 +49,7 @@ class Module {
         svgPath,
         width: size,
         height: size,
-        colorFilter: .mode(color, BlendMode.srcIn),
+        colorFilter: .mode(color, .srcIn),
       ),
     );
   }
