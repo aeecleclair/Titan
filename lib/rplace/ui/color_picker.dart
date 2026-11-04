@@ -1,0 +1,113 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:titan/rplace/class/pixel.dart';
+import 'package:titan/rplace/providers/pixelinfo_providers.dart';
+import 'package:titan/rplace/providers/pixels_providers.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/rplace/providers/userinfo_providers.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:titan/rplace/tools/constants.dart';
+
+
+final listeCouleurs = RPlaceColorConstants.all;
+
+class ColBouton extends HookConsumerWidget {
+  final int x;
+  final int y;
+  final String color;
+
+  const ColBouton({
+    super.key,
+    required this.x,
+    required this.y,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pixelListNotifier = ref.read(pixelListProvider.notifier);
+    final userinfoNotifier = ref.watch(userinfoProvider.notifier);
+
+    return Container(
+      width: 40,
+      height: 40,
+      margin: const EdgeInsets.only(left: 5, right: 5),
+      decoration: const BoxDecoration(borderRadius: null),
+      child: FilledButton(
+        style: TextButton.styleFrom(
+          backgroundColor: Color(int.parse(color, radix: 16)),
+        ),
+        onPressed: () async {
+          final success = await pixelListNotifier.createPixel(
+            Pixel(x: x, y: y, color: color),
+          );
+          if (context.mounted) {
+            Navigator.pop(context);
+          }
+          if (success) {
+            userinfoNotifier.setLastPlaced(DateTime.now());
+            unawaited(userinfoNotifier.getLastPlacedDate());
+          }
+        },
+        child: null,
+      ),
+    );
+  }
+}
+
+class ColorPicker extends HookConsumerWidget {
+  final int x;
+  final int y;
+
+  const ColorPicker({super.key, required this.x, required this.y});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pixelInfoValue = ref.watch(pixelInfoProvider);
+
+    timeago.setLocaleMessages('fr', timeago.FrMessages());
+
+    return SizedBox(
+      height: 110,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          AsyncChild(
+            value: pixelInfoValue,
+            builder: (context, pixelInfoValue) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    children: [
+                      AutoSizeText(
+                        pixelInfoValue.user.nickname ??
+                            ("${pixelInfoValue.user.firstname} ${pixelInfoValue.user.name}"),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  Text(timeago.format(pixelInfoValue.date, locale: 'fr')),
+                ],
+              );
+            },
+          ),
+          Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: listeCouleurs
+                    .map((colo) => ColBouton(x: x, y: y, color: colo))
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

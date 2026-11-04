@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/logs/logger.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 abstract class Repository {
   static String host = ""; // see lib/main.dart

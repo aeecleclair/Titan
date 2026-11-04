@@ -1,0 +1,12 @@
+import 'package:titan/rplace/class/pixel_info.dart';
+import 'package:titan/tools/repository/repository.dart';
+
+class PixelInfoRepository extends Repository {
+  @override
+  // ignore: overridden_fields
+  final ext = "rplace/";
+
+  Future<PixelInfo> getPixelInfo(int x, int y) async {
+    return PixelInfo.fromJson(await getOne("pixel_info/$x/$y"));
+  }
+}
