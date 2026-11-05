@@ -61,7 +61,7 @@ class Delivery {
 
   static Delivery empty() => Delivery(
     name: '',
-    deliveryDate: DateTime.now(),
+    deliveryDate: .now(),
     products: [],
     expanded: false,
     status: DeliveryStatus.creation,

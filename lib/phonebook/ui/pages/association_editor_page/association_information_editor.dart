@@ -60,14 +60,14 @@ class AssociationInformationEditor extends HookConsumerWidget {
                       restrictToManaged: !isPhonebookAdmin,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: const .symmetric(horizontal: 30),
                       child: Column(
                         children: [
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const .symmetric(vertical: 10),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: .spaceBetween,
+                              crossAxisAlignment: .start,
                               children: [
                                 SizedBox(
                                   child: TextFormField(
@@ -80,11 +80,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           PhonebookTextConstants.namePure,
                                       labelStyle: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                       suffixIcon: Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: const HeroIcon(HeroIcons.pencil),
+                                        padding: const .all(10),
+                                        child: const HeroIcon(.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -112,10 +112,10 @@ class AssociationInformationEditor extends HookConsumerWidget {
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const .symmetric(vertical: 10),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: .spaceBetween,
+                              crossAxisAlignment: .start,
                               children: [
                                 SizedBox(
                                   child: TextFormField(
@@ -128,11 +128,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           PhonebookTextConstants.description,
                                       labelStyle: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: .bold,
                                       ),
                                       suffixIcon: Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: const HeroIcon(HeroIcons.pencil),
+                                        padding: const .all(10),
+                                        child: const HeroIcon(.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -197,7 +197,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               PhonebookTextConstants.edit,
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: .w600,
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onPrimaryContainer,
@@ -211,39 +211,36 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     if (association.deactivated)
                       Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        margin: const .symmetric(vertical: 10),
                         child: Text(
                           PhonebookTextConstants.deactivatedAssociationWarning,
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             color: Theme.of(context).colorScheme.error,
                           ),
                         ),
                       ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      margin: const .symmetric(vertical: 10),
                       child: Text(
                         association.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontSize: 18, fontWeight: .bold),
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      margin: const .symmetric(vertical: 10),
                       child: SizedBox(
                         child: Text(
                           association.description,
                           style: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                       ),
@@ -253,14 +250,14 @@ class AssociationInformationEditor extends HookConsumerWidget {
               ),
         if (isAdmin && !association.deactivated)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const .symmetric(horizontal: 30),
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  margin: const .symmetric(vertical: 10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: .spaceBetween,
+                    crossAxisAlignment: .start,
                     children: [
                       SizedBox(
                         child: ExpansionTile(
@@ -269,7 +266,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                             data: (data) {
                               return data.map((group) {
                                 return Container(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: const .symmetric(
                                     vertical: 10,
                                     horizontal: 20,
                                   ),
@@ -287,17 +284,15 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     ],
                                   ),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: .spaceBetween,
+                                    crossAxisAlignment: .start,
                                     children: [
                                       SizedBox(
                                         child: Text(
                                           group.name,
                                           style: const TextStyle(
                                             fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: .bold,
                                           ),
                                         ),
                                       ),
@@ -367,7 +362,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     PhonebookTextConstants.updateGroups,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: .w600,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),

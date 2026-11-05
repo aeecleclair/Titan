@@ -50,14 +50,14 @@ class PhAddEditPhPage extends HookConsumerWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     TextEntry(
                       maxLines: 1,
                       label: PhTextConstants.phName,
                       controller: name,
-                      textInputAction: TextInputAction.done,
+                      textInputAction: .done,
                     ),
                     const SizedBox(height: 20),
                     Center(
@@ -70,8 +70,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                               getOnlyDayDate(
                                 context,
                                 dateController,
-                                firstDate: DateTime.utc(1890),
-                                lastDate: DateTime.utc(2100),
+                                firstDate: .utc(1890),
+                                lastDate: .utc(2100),
                               );
                             },
                           ),
@@ -86,7 +86,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: Column(
                   children: [
                     const Spacer(),
@@ -101,7 +101,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             final phList = ref.watch(phListProvider);
                             Ph newPh = Ph(
                               id: isEdit ? ph.id : '',
-                              date: DateTime.parse(
+                              date: .parse(
                                 processDateBack(dateController.text),
                               ),
                               name: name.text,
@@ -160,7 +160,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                       builder: (child) => AddEditButtonLayout(child: child),

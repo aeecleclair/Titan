@@ -123,10 +123,10 @@ void main() {
         ),
         returned: true,
         caution: '',
-        end: DateTime.now(),
+        end: .now(),
         loaner: Loaner.empty(),
         notes: '',
-        start: DateTime.now(),
+        start: .now(),
       );
       expect(loan.id, '1');
       expect(loan.itemsQuantity[0].itemSimple.id, '1');
@@ -192,7 +192,7 @@ void main() {
           nickname: '',
         ),
         returned: true,
-        returnedDate: DateTime.parse('2020-01-01'),
+        returnedDate: .parse('2020-01-01'),
         caution: '',
         end: DateTime.parse('2020-01-01'),
         loaner: Loaner.empty(),
@@ -261,7 +261,7 @@ void main() {
           nickname: '',
         ),
         returned: true,
-        returnedDate: DateTime.parse('2020-01-01'),
+        returnedDate: .parse('2020-01-01'),
         caution: '',
         end: DateTime.parse('2020-01-01'),
         loaner: Loaner.empty(),

@@ -15,31 +15,31 @@ class PrizeDialog extends HookConsumerWidget {
       child: Container(
         width: 350,
         height: 300,
-        margin: const EdgeInsets.only(left: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        margin: const .only(left: 10),
+        padding: const .symmetric(horizontal: 30, vertical: 20),
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: RaffleColorConstants.gradient2,
               blurRadius: 15,
-              blurStyle: BlurStyle.outer,
+              blurStyle: .outer,
             ),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: .all(.circular(20)),
           gradient: RadialGradient(
             colors: [
               RaffleColorConstants.gradient1,
               RaffleColorConstants.gradient2,
             ],
-            center: Alignment.topLeft,
+            center: .topLeft,
             radius: 1.5,
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             Container(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const .only(bottom: 20),
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
@@ -55,7 +55,7 @@ class PrizeDialog extends HookConsumerWidget {
                   style: const TextStyle(
                     color: RaffleColorConstants.writtenWhite,
                     fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -69,7 +69,7 @@ class PrizeDialog extends HookConsumerWidget {
                   style: const TextStyle(
                     color: RaffleColorConstants.writtenWhite,
                     fontSize: 50,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -80,11 +80,11 @@ class PrizeDialog extends HookConsumerWidget {
                   ? RaffleTextConstants.noDescription
                   : prize.description!,
               maxLines: 4,
-              textAlign: TextAlign.justify,
+              textAlign: .justify,
               style: const TextStyle(
                 color: RaffleColorConstants.writtenWhite,
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const SizedBox(height: 20),

@@ -85,7 +85,7 @@ class UserListPage extends HookConsumerWidget {
                         tag,
                         style: TextStyle(
                           color: selected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     );
@@ -96,7 +96,7 @@ class UserListPage extends HookConsumerWidget {
             const SizedBox(height: 10),
             if (selectedTag.value != null)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 child: AsyncChild(
                   value: scannedUsersList,
                   builder: (context, users) {
@@ -106,13 +106,13 @@ class UserListPage extends HookConsumerWidget {
                     return SizedBox(
                       width: double.infinity,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           Text("Nombre de tickets scannés : ${users.length}"),
                           Divider(),
                           ...users.map(
                             (user) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              padding: const .symmetric(vertical: 5),
                               child: Text(user.getName()),
                             ),
                           ),

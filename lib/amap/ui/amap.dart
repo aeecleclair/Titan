@@ -23,7 +23,7 @@ class AmapTemplate extends StatelessWidget {
                       QR.to(AmapRouter.root + AmapRouter.presentation);
                     },
                     icon: HeroIcon(
-                      HeroIcons.informationCircle,
+                      .informationCircle,
                       color: Theme.of(context).colorScheme.onPrimary,
                       size: 40,
                     ),

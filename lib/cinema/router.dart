@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/cinema/providers/is_cinema_admin.dart';
 import 'package:titan/cinema/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -25,7 +24,7 @@ class CinemaRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     name: "Cinéma",
-    icon: const Left(HeroIcons.ticket),
+    icon: const Left(.ticket),
     root: CinemaRouter.root,
     selected: false,
   );

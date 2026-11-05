@@ -47,7 +47,7 @@ class EmailChangeDialog extends HookConsumerWidget {
         child: GestureDetector(
           onTap: () {},
           child: Container(
-            margin: EdgeInsets.only(
+            margin: .only(
               left: Consts.padding,
               right: Consts.padding,
               top: MediaQuery.of(context).size.height * 0.20,
@@ -56,17 +56,17 @@ class EmailChangeDialog extends HookConsumerWidget {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  padding: const .only(
                     top: Consts.avatarRadius + Consts.padding,
                     bottom: Consts.padding,
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: const EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: const .only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: const [
                       BoxShadow(
                         color: Colors.black26,
@@ -76,14 +76,11 @@ class EmailChangeDialog extends HookConsumerWidget {
                     ],
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min, // To make the card compact
+                    mainAxisSize: .min, // To make the card compact
                     children: [
                       const Text(
                         Consts.titleMigration,
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: TextStyle(fontSize: 24.0, fontWeight: .w700),
                       ),
                       const SizedBox(height: 20.0),
                       displayForm.value
@@ -91,7 +88,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                               children: [
                                 Text(
                                   Consts.descriptionMigration,
-                                  textAlign: TextAlign.center,
+                                  textAlign: .center,
                                   style: const TextStyle(fontSize: 16.0),
                                 ),
                                 const SizedBox(height: 5.0),
@@ -121,27 +118,22 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 ),
                                 const SizedBox(height: 30.0),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: .spaceBetween,
                                   children: [
                                     GestureDetector(
                                       onTap: emailPopupStateNotifier.close,
                                       child: Container(
                                         width: 100,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 16,
-                                        ),
+                                        padding: const .symmetric(vertical: 16),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
+                                          borderRadius: .circular(10),
                                           gradient: const LinearGradient(
                                             colors: [
                                               Colors.black87,
                                               Colors.black,
                                             ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
+                                            begin: .topLeft,
+                                            end: .bottomRight,
                                           ),
                                           boxShadow: [
                                             BoxShadow(
@@ -158,7 +150,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                             "Annuler",
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: .bold,
                                             ),
                                           ),
                                         ),
@@ -198,13 +190,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       waitingColor: Colors.black,
                                       builder: (child) => Container(
                                         width: 100,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 16,
-                                        ),
+                                        padding: const .symmetric(vertical: 16),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
+                                          borderRadius: .circular(10),
                                           color: Colors.grey.shade300,
                                           boxShadow: [
                                             BoxShadow(
@@ -221,9 +209,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       child: const Center(
                                         child: Text(
                                           "Confirmer",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style: TextStyle(fontWeight: .bold),
                                         ),
                                       ),
                                     ),
@@ -236,16 +222,16 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 children: [
                                   const Text(
                                     "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
-                                    textAlign: TextAlign.center,
+                                    textAlign: .center,
                                     style: TextStyle(fontSize: 16.0),
                                   ),
                                   const SizedBox(height: 16.0),
                                   Text(
                                     emailController.text,
-                                    textAlign: TextAlign.center,
+                                    textAlign: .center,
                                     style: const TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                   const SizedBox(height: 30.0),
@@ -253,11 +239,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                                     onTap: emailPopupStateNotifier.close,
                                     child: Container(
                                       width: 100,
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 16,
-                                      ),
+                                      padding: const .symmetric(vertical: 16),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: .circular(10),
                                         color: Colors.grey.shade300,
                                         boxShadow: [
                                           BoxShadow(
@@ -272,9 +256,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                       child: const Center(
                                         child: Text(
                                           "Fermer",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style: TextStyle(fontWeight: .bold),
                                         ),
                                       ),
                                     ),
@@ -299,8 +281,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 Consts.greenGradient1,
                                 Consts.greenGradient2,
                               ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -330,8 +312,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 Consts.redGradient1,
                                 Consts.redGradient2,
                               ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                              begin: .topLeft,
+                              end: .bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -345,7 +327,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                           ),
                           child: const Center(
                             child: HeroIcon(
-                              HeroIcons.exclamationCircle,
+                              .exclamationCircle,
                               size: 60,
                               color: Colors.white,
                             ),

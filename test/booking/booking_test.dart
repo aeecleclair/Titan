@@ -86,7 +86,7 @@ void main() {
       expect(newBooking.room.id, "1");
       newBooking = booking.copyWith(key: true);
       expect(newBooking.key, true);
-      newBooking = booking.copyWith(decision: Decision.approved);
+      newBooking = booking.copyWith(decision: .approved);
       expect(newBooking.decision, Decision.approved);
       newBooking = booking.copyWith(recurrenceRule: "");
       expect(newBooking.recurrenceRule, "");
@@ -109,7 +109,7 @@ void main() {
         note: "note",
         room: Room.empty().copyWith(id: "1"),
         key: true,
-        decision: Decision.approved,
+        decision: .approved,
         recurrenceRule: "",
         entity: "entity",
         applicant: Applicant.empty().copyWith(id: "1"),

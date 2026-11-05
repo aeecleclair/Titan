@@ -24,9 +24,9 @@ class CancelButton extends ConsumerWidget {
         builder: (child) => Container(
           width: double.infinity,
           height: 50,
-          alignment: Alignment.center,
+          alignment: .center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: .circular(10),
             color: Theme.of(context).colorScheme.tertiary,
           ),
           child: child,
@@ -48,7 +48,7 @@ class CancelButton extends ConsumerWidget {
                           (1 - disablingAnimationController.value),
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         gradient: RadialGradient(
                           colors: [
                             MyPaymentColors(
@@ -58,7 +58,7 @@ class CancelButton extends ConsumerWidget {
                               isDarkTheme,
                             ).redGradient2.withValues(alpha: 0.8),
                           ],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
@@ -83,12 +83,12 @@ class CancelButton extends ConsumerWidget {
                 return Container(
                   width: double.infinity,
                   height: 50,
-                  alignment: Alignment.center,
+                  alignment: .center,
                   child: Text(
                     'Annuler (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
                     style: TextStyle(
                       color: MyPaymentColors.onGradient,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 20,
                     ),
                   ),

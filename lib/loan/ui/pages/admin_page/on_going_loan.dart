@@ -87,7 +87,7 @@ class OnGoingLoan extends HookConsumerWidget {
               firstChild: GestureDetector(
                 onTap: () async {
                   await loanNotifier.setLoan(Loan.empty());
-                  startNotifier.setStart(processDate(DateTime.now()));
+                  startNotifier.setStart(processDate(.now()));
                   endNotifier.setEnd("");
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
@@ -97,7 +97,7 @@ class OnGoingLoan extends HookConsumerWidget {
                 child: const CardLayout(
                   width: 100,
                   height: 170,
-                  child: Center(child: HeroIcon(HeroIcons.plus, size: 40.0)),
+                  child: Center(child: HeroIcon(.plus, size: 40.0)),
                 ),
               ),
               items: data,

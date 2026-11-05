@@ -61,7 +61,7 @@ class Advert {
       id: "",
       title: "",
       content: "",
-      date: DateTime.now(),
+      date: .now(),
       announcer: Announcer.empty(),
       tags: [],
     );

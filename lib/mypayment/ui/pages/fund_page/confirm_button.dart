@@ -128,7 +128,7 @@ class ConfirmFundButton extends ConsumerWidget {
       builder: (Widget child) => Container(
         height: 75,
         width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 30),
+        margin: const .symmetric(horizontal: 30),
         decoration: BoxDecoration(
           color: (minValidFundAmount && maxValidFundAmount)
               ? Theme.of(context).colorScheme.surface
@@ -142,18 +142,18 @@ class ConfirmFundButton extends ConsumerWidget {
               offset: const Offset(1, 2),
             ),
           ],
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: .circular(25),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: const .symmetric(horizontal: 15),
           child: child,
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 15),
+            padding: const .symmetric(vertical: 15),
             child: SvgPicture.asset(
               'assets/images/helloasso.svg',
               width: 50,
@@ -167,7 +167,7 @@ class ConfirmFundButton extends ConsumerWidget {
                   ? helloAssoBlue
                   : helloAssoBlue.withValues(alpha: 0.5),
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
         ],

@@ -57,7 +57,7 @@ class CategoryPage extends HookConsumerWidget {
         270 -
         50 * (sortedDeliveryProductsList[category]!.length + 1);
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const .all(10),
       child: Column(
         children: [
           SizedBox(height: height),
@@ -70,11 +70,7 @@ class CategoryPage extends HookConsumerWidget {
                     height: 50,
                     child: AlignLeftText(
                       capitalize(category),
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        top: 20,
-                        right: 20,
-                      ),
+                      padding: const .only(left: 20, top: 20, right: 20),
                       color: AMAPColors(isDarkTheme).textOnPrimary,
                       fontSize: 25,
                     ),
@@ -92,9 +88,7 @@ class CategoryPage extends HookConsumerWidget {
                         physics: const BouncingScrollPhysics(),
                         controller: scrollController,
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(25),
-                          ),
+                          borderRadius: const .all(.circular(25)),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
                               sigmaX: 10.0,
@@ -139,8 +133,8 @@ class CategoryPage extends HookConsumerWidget {
                                         isDarkTheme,
                                       ).secondaryFixedGreen,
                                     ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    begin: .topLeft,
+                                    end: .bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -151,17 +145,14 @@ class CategoryPage extends HookConsumerWidget {
                                       blurRadius: 5,
                                     ),
                                   ],
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(25),
-                                  ),
+                                  borderRadius: const .all(.circular(25)),
                                 ),
-                                alignment: Alignment.center,
+                                alignment: .center,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: .spaceEvenly,
                                   children: [
                                     HeroIcon(
-                                      HeroIcons.chevronDoubleDown,
+                                      .chevronDoubleDown,
                                       size: 15,
                                       color: AMAPColors(isDarkTheme).background,
                                     ),
@@ -185,7 +176,7 @@ class CategoryPage extends HookConsumerWidget {
                   );
                 } else {
                   return ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    borderRadius: const .all(.circular(25)),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(

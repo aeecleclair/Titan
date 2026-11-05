@@ -30,25 +30,19 @@ class MembershipCreationDialogBox extends StatelessWidget {
     groupIdController.text = groups.first.id;
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          MembershipCreationDialogBox._padding,
-        ),
+        borderRadius: .circular(MembershipCreationDialogBox._padding),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: Stack(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(MembershipCreationDialogBox._padding),
-            margin: const EdgeInsets.only(
-              top: MembershipCreationDialogBox._avatarRadius,
-            ),
+            padding: const .all(MembershipCreationDialogBox._padding),
+            margin: const .only(top: MembershipCreationDialogBox._avatarRadius),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(
-                MembershipCreationDialogBox._padding,
-              ),
+              borderRadius: .circular(MembershipCreationDialogBox._padding),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
@@ -58,13 +52,13 @@ class MembershipCreationDialogBox extends StatelessWidget {
               ],
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: <Widget>[
                 Text(
                   AdminTextConstants.createAssociationMembership,
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: .w800,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -95,9 +89,9 @@ class MembershipCreationDialogBox extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: .bottomCenter,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: .spaceAround,
                     children: [
                       TextButton(
                         onPressed: () async {
@@ -108,7 +102,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                           "Créer",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
@@ -124,7 +118,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                           "Annuler",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: .w600,
                             color: Theme.of(context).colorScheme.error,
                           ),
                         ),

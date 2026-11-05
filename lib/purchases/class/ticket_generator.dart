@@ -54,7 +54,7 @@ class TicketGenerator {
     id = "";
     name = "";
     maxUse = 0;
-    expiration = DateTime.now();
+    expiration = .now();
     scanCount = null;
   }
 

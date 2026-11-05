@@ -14,7 +14,7 @@ class UserUi extends HookConsumerWidget {
     return SizedBox(
       height: 55,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Expanded(
             child: Text(
@@ -26,15 +26,15 @@ class UserUi extends HookConsumerWidget {
           GestureDetector(
             onTap: onDelete,
             child: Container(
-              padding: const EdgeInsets.all(7),
+              padding: const .all(7),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.secondaryContainer,
                     Theme.of(context).colorScheme.secondary,
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -45,10 +45,10 @@ class UserUi extends HookConsumerWidget {
                     blurRadius: 5,
                   ),
                 ],
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: const .all(.circular(10)),
               ),
               child: HeroIcon(
-                HeroIcons.trash,
+                .trash,
                 size: 20,
                 color: Theme.of(context).colorScheme.onSecondary,
               ),

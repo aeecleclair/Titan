@@ -28,7 +28,7 @@ class AddSchoolPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const .symmetric(horizontal: 30.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
@@ -73,7 +73,7 @@ class AddSchoolPage extends HookConsumerWidget {
                     AdminTextConstants.add,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: .w600,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),

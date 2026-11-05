@@ -51,7 +51,7 @@ void main() {
       newEvent = event.copyWith(applicant: Applicant.empty().copyWith(id: "1"));
       expect(newEvent.applicant, isA<Applicant>());
       expect(newEvent.applicant.id, "1");
-      newEvent = event.copyWith(decision: Decision.approved);
+      newEvent = event.copyWith(decision: .approved);
     });
 
     test('Should print an event', () {
@@ -68,7 +68,7 @@ void main() {
         recurrenceRule: "",
         applicantId: "1",
         applicant: Applicant.empty().copyWith(id: "1"),
-        decision: Decision.approved,
+        decision: .approved,
       );
       expect(
         event.toString(),

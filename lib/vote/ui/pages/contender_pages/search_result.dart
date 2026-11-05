@@ -28,9 +28,9 @@ class SearchResult extends HookConsumerWidget {
                     (e) => GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const .all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Container(width: 20),
                             Expanded(
@@ -39,8 +39,8 @@ class SearchResult extends HookConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: (borrower.value.id == e.id)
-                                      ? FontWeight.bold
-                                      : FontWeight.w400,
+                                      ? .bold
+                                      : .w400,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),

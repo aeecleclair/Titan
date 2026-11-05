@@ -28,7 +28,7 @@ class VotersBar extends HookConsumerWidget {
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: .start,
             children: [
               const SizedBox(width: 15),
               ...data.map(

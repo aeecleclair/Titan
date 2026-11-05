@@ -7,11 +7,11 @@ class ItemCardUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const .symmetric(vertical: 10),
+      padding: const .symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor,
@@ -20,10 +20,7 @@ class ItemCardUi extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: children,
-      ),
+      child: Row(mainAxisAlignment: .center, children: children),
     );
   }
 }

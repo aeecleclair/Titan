@@ -20,7 +20,7 @@ class InvoiceAdminCard extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const .symmetric(horizontal: 20),
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
@@ -28,7 +28,7 @@ class InvoiceAdminCard extends ConsumerWidget {
               radius: 27,
               backgroundColor: MyPaymentColors(isDarkTheme).backgroundGradient1,
               child: HeroIcon(
-                HeroIcons.documentCurrencyEuro,
+                .documentCurrencyEuro,
                 color: MyPaymentColors.onGradient,
               ),
             ),
@@ -45,7 +45,7 @@ class InvoiceAdminCard extends ConsumerWidget {
             ),
             SizedBox(width: 10),
             HeroIcon(
-              HeroIcons.arrowRight,
+              .arrowRight,
               color: MyPaymentColors(isDarkTheme).secondaryGreen,
               size: 25,
             ),

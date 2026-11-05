@@ -6,8 +6,7 @@ class MessageBorder extends ShapeBorder {
   const MessageBorder({this.usePadding = true});
 
   @override
-  EdgeInsetsGeometry get dimensions =>
-      EdgeInsets.only(bottom: usePadding ? 20 : 0);
+  EdgeInsetsGeometry get dimensions => .only(bottom: usePadding ? 20 : 0);
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) =>

@@ -65,7 +65,7 @@ class Session {
     return Session(
       id: "",
       name: "",
-      start: DateTime.now(),
+      start: .now(),
       duration: 0,
       overview: "",
       genre: "",

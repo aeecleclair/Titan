@@ -58,14 +58,14 @@ class AdminPage extends HookConsumerWidget {
                 if (isRoomsAdmin) ...[
                   const SizedBox(height: 30),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: .symmetric(horizontal: 30.0),
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         BookingTextConstants.room,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -77,7 +77,7 @@ class AdminPage extends HookConsumerWidget {
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: .start,
                         children: [
                           const SizedBox(width: 15),
                           ItemChip(
@@ -91,7 +91,7 @@ class AdminPage extends HookConsumerWidget {
                               );
                             },
                             child: HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
@@ -112,7 +112,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSurface,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),
@@ -132,14 +132,14 @@ class AdminPage extends HookConsumerWidget {
                 if (isManagersAdmin) ...[
                   const SizedBox(height: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: .symmetric(horizontal: 30.0),
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         BookingTextConstants.manager,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
@@ -151,7 +151,7 @@ class AdminPage extends HookConsumerWidget {
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: .start,
                         children: [
                           const SizedBox(width: 15),
                           ItemChip(
@@ -165,7 +165,7 @@ class AdminPage extends HookConsumerWidget {
                               );
                             },
                             child: HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
@@ -186,7 +186,7 @@ class AdminPage extends HookConsumerWidget {
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSurface,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),

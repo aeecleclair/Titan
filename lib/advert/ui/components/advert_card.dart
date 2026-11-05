@@ -37,20 +37,18 @@ class AdvertCard extends HookConsumerWidget {
         }
       },
       child: Container(
-        margin: const EdgeInsets.all(10),
-        padding: EdgeInsets.all(isWebFormat ? 50 : 0),
+        margin: const .all(10),
+        padding: .all(isWebFormat ? 50 : 0),
         child: isWebFormat
             ? Container(
                 height: maxHeight,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                ),
+                decoration: BoxDecoration(borderRadius: .circular(30)),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: .circular(30),
                       child: AspectRatio(
                         aspectRatio: 2 / 3,
                         child: AutoLoaderChild(
@@ -60,7 +58,7 @@ class AdvertCard extends HookConsumerWidget {
                           loader: (advertId) =>
                               posterNotifier.getAdvertPoster(advertId),
                           loadingBuilder: (context) =>
-                              HeroIcon(HeroIcons.photo, size: width),
+                              HeroIcon(.photo, size: width),
                           dataBuilder: (context, value) => Image(
                             image: value.first.image,
                             fit: BoxFit.cover, // use this
@@ -76,17 +74,17 @@ class AdvertCard extends HookConsumerWidget {
                             advert.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                           const SizedBox(height: 10),
                           AutoSizeText(
                             formatDate(advert.date),
                             maxLines: 1,
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 10),
@@ -94,7 +92,7 @@ class AdvertCard extends HookConsumerWidget {
                             child: SingleChildScrollView(
                               child: TextWithHyperLink(
                                 advert.content,
-                                textAlign: TextAlign.center,
+                                textAlign: .center,
                                 style: const TextStyle(fontSize: 16),
                               ),
                             ),
@@ -107,7 +105,7 @@ class AdvertCard extends HookConsumerWidget {
                 ),
               )
             : Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: const .symmetric(vertical: 10),
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
@@ -120,7 +118,7 @@ class AdvertCard extends HookConsumerWidget {
                       spreadRadius: 3,
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: .circular(20),
                 ),
                 child: Stack(
                   children: [
@@ -136,20 +134,20 @@ class AdvertCard extends HookConsumerWidget {
                             width: width,
                             height: imageHeight,
                             decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                              borderRadius: .only(
+                                topLeft: .circular(20),
+                                topRight: .circular(20),
                               ),
                             ),
-                            child: HeroIcon(HeroIcons.photo, size: width),
+                            child: HeroIcon(.photo, size: width),
                           ),
                           dataBuilder: (context, value) => Container(
                             width: width,
                             height: imageHeight,
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                              borderRadius: const .only(
+                                topLeft: .circular(20),
+                                topRight: .circular(20),
                               ),
                               image: DecorationImage(
                                 image: value.first.image,
@@ -159,11 +157,7 @@ class AdvertCard extends HookConsumerWidget {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                            left: 10,
-                            right: 10,
-                          ),
+                          padding: const .only(top: 20, left: 10, right: 10),
                           width: width,
                           height: height - imageHeight,
                           child: Column(
@@ -172,10 +166,10 @@ class AdvertCard extends HookConsumerWidget {
                                 children: [
                                   Container(
                                     width: width,
-                                    margin: const EdgeInsets.only(bottom: 5),
+                                    margin: const .only(bottom: 5),
                                     child: AutoSizeText(
                                       advert.title.trim(),
-                                      textAlign: TextAlign.left,
+                                      textAlign: .left,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       minFontSize: 15,
@@ -191,7 +185,7 @@ class AdvertCard extends HookConsumerWidget {
                               TextWithHyperLink(
                                 advert.content.trim(),
                                 overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.justify,
+                                textAlign: .justify,
                                 maxLines: 3,
                                 minFontSize: 13,
                                 maxFontSize: 15,
@@ -212,9 +206,7 @@ class AdvertCard extends HookConsumerWidget {
                       left: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -225,30 +217,28 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(.circular(8)),
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 50,
                             width: 50,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               horizontal: 5,
                               vertical: 5,
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: .center,
+                              mainAxisAlignment: .center,
                               children: [
                                 AutoSizeText(
                                   DateFormat('dd').format(advert.date),
-                                  textAlign: TextAlign.center,
+                                  textAlign: .center,
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onSurface,
                                     fontSize: 22,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     height: 1.0,
                                   ),
                                 ),
@@ -257,13 +247,13 @@ class AdvertCard extends HookConsumerWidget {
                                         DateFormat('MM').format(advert.date),
                                       ) -
                                       1],
-                                  textAlign: TextAlign.center,
+                                  textAlign: .center,
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onSurface,
                                     fontSize: 11,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     height: 1.0,
                                   ),
                                 ),
@@ -278,9 +268,7 @@ class AdvertCard extends HookConsumerWidget {
                       right: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -291,24 +279,22 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: const .all(.circular(8)),
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             height: 30,
-                            padding: const EdgeInsets.symmetric(
+                            padding: const .symmetric(
                               vertical: 5,
                               horizontal: 10,
                             ),
-                            alignment: Alignment.center,
+                            alignment: .center,
                             child: AutoSizeText(
                               advert.announcer.name,
-                              textAlign: TextAlign.center,
+                              textAlign: .center,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
                                 fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),

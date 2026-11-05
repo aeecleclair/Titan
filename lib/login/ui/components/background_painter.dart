@@ -133,8 +133,8 @@ class BackgroundPainter extends CustomPainter {
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
     final Gradient gradient = LinearGradient(
       colors: colors,
-      begin: Alignment.topLeft,
-      end: Alignment.topRight,
+      begin: .topLeft,
+      end: .topRight,
     );
 
     final isDarkTheme = ref.watch(themeProvider);

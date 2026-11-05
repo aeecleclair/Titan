@@ -54,11 +54,11 @@ class DrawerTopBar extends HookConsumerWidget {
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Container(height: 20),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Row(
               children: [
@@ -114,7 +114,7 @@ class DrawerTopBar extends HookConsumerWidget {
                                       child: Container(
                                         height: 18,
                                         width: 18,
-                                        padding: const EdgeInsets.all(3),
+                                        padding: const .all(3),
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           gradient: const LinearGradient(
@@ -122,8 +122,8 @@ class DrawerTopBar extends HookConsumerWidget {
                                               ColorConstants.gradient1,
                                               ColorConstants.gradient2,
                                             ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
+                                            begin: .topLeft,
+                                            end: .bottomRight,
                                           ),
                                           boxShadow: [
                                             BoxShadow(
@@ -136,7 +136,7 @@ class DrawerTopBar extends HookConsumerWidget {
                                           ],
                                         ),
                                         child: const HeroIcon(
-                                          HeroIcons.bolt,
+                                          .bolt,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -149,7 +149,7 @@ class DrawerTopBar extends HookConsumerWidget {
                         ),
                       ),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: .spaceEvenly,
                         children: [
                           SizedBox(
                             width: 200,
@@ -158,7 +158,7 @@ class DrawerTopBar extends HookConsumerWidget {
                               style: TextStyle(
                                 color: Colors.grey.shade100,
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                               ),
                             ),
                           ),
@@ -184,9 +184,9 @@ class DrawerTopBar extends HookConsumerWidget {
             ),
             if (!isConnected)
               Container(
-                margin: const EdgeInsets.only(right: 20),
+                margin: const .only(right: 20),
                 child: const HeroIcon(
-                  HeroIcons.signalSlash,
+                  .signalSlash,
                   color: Colors.white,
                   size: 40,
                 ),
@@ -198,7 +198,7 @@ class DrawerTopBar extends HookConsumerWidget {
             return Opacity(
               opacity: dropDownAnimation.value,
               child: Padding(
-                padding: const EdgeInsets.only(left: 25, top: 15),
+                padding: const .only(left: 25, top: 15),
                 child: Column(
                   children: [
                     Transform.translate(
@@ -209,7 +209,7 @@ class DrawerTopBar extends HookConsumerWidget {
                         child: Row(
                           children: [
                             HeroIcon(
-                              HeroIcons.cog,
+                              .cog,
                               color:
                                   pathForwarding.path.startsWith(
                                     SettingsRouter.root,
@@ -245,7 +245,7 @@ class DrawerTopBar extends HookConsumerWidget {
                           child: Row(
                             children: [
                               HeroIcon(
-                                HeroIcons.userGroup,
+                                .userGroup,
                                 color:
                                     pathForwarding.path.startsWith(
                                       AdminRouter.root,
@@ -284,15 +284,15 @@ class DrawerTopBar extends HookConsumerWidget {
             onTap: emailPopupStateNotifier.open,
             child: Container(
               width: 170,
-              margin: const EdgeInsets.only(left: 15),
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              margin: const .only(left: 15),
+              padding: const .symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [ColorConstants.gradient1, ColorConstants.gradient2],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: .circular(20),
               ),
               child: Row(
                 children: [
@@ -301,7 +301,7 @@ class DrawerTopBar extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                   const SizedBox(width: 10),

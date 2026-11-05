@@ -27,10 +27,10 @@ class PersonalPlantCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onClicked,
       child: Card(
-        margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        margin: const .all(10),
+        shape: RoundedRectangleBorder(borderRadius: .circular(15)),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const .all(10),
           child: Row(
             children: [
               SizedBox(
@@ -39,11 +39,8 @@ class PersonalPlantCard extends HookConsumerWidget {
                   children: [
                     AutoSizeText(
                       plantSpecies.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: .bold, fontSize: 16),
+                      textAlign: .center,
                     ),
                     AutoSizeText(
                       plant.nickname ?? plant.plantReference,

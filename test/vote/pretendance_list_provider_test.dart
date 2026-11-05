@@ -22,17 +22,17 @@ void main() {
         Contender.empty().copyWith(
           id: '1',
           name: 'Contender 1',
-          listType: ListType.fake,
+          listType: .fake,
         ),
         Contender.empty().copyWith(
           id: '2',
           name: 'Contender 2',
-          listType: ListType.serious,
+          listType: .serious,
         ),
         Contender.empty().copyWith(
           id: '3',
           name: 'Contender 3',
-          listType: ListType.blank,
+          listType: .blank,
         ),
       ];
       when(
@@ -54,23 +54,23 @@ void main() {
         Contender.empty().copyWith(
           id: '1',
           name: 'Contender 1',
-          listType: ListType.fake,
+          listType: .fake,
         ),
         Contender.empty().copyWith(
           id: '2',
           name: 'Contender 2',
-          listType: ListType.serious,
+          listType: .serious,
         ),
         Contender.empty().copyWith(
           id: '3',
           name: 'Contender 3',
-          listType: ListType.blank,
+          listType: .blank,
         ),
       ];
       final newContender = Contender.empty().copyWith(
         id: '4',
         name: 'Contender 4',
-        listType: ListType.serious,
+        listType: .serious,
       );
       when(
         () => contenderListNotifier.contenderRepository.createContender(
@@ -95,23 +95,23 @@ void main() {
         Contender.empty().copyWith(
           id: '1',
           name: 'Contender 1',
-          listType: ListType.serious,
+          listType: .serious,
         ),
         Contender.empty().copyWith(
           id: '2',
           name: 'Contender 2',
-          listType: ListType.fake,
+          listType: .fake,
         ),
         Contender.empty().copyWith(
           id: '3',
           name: 'Contender 3',
-          listType: ListType.blank,
+          listType: .blank,
         ),
       ];
       final updatedContender = Contender.empty().copyWith(
         id: '2',
         name: 'Contender 2 updated',
-        listType: ListType.fake,
+        listType: .fake,
       );
       when(
         () => contenderListNotifier.contenderRepository.updateContender(
@@ -142,23 +142,23 @@ void main() {
         Contender.empty().copyWith(
           id: '1',
           name: 'Contender 1',
-          listType: ListType.serious,
+          listType: .serious,
         ),
         Contender.empty().copyWith(
           id: '2',
           name: 'Contender 2',
-          listType: ListType.fake,
+          listType: .fake,
         ),
         Contender.empty().copyWith(
           id: '3',
           name: 'Contender 3',
-          listType: ListType.blank,
+          listType: .blank,
         ),
       ];
       final deletedContender = Contender.empty().copyWith(
         id: '2',
         name: 'Contender 2',
-        listType: ListType.fake,
+        listType: .fake,
       );
       when(
         () => contenderListNotifier.contenderRepository.deleteContender(
@@ -185,17 +185,17 @@ void main() {
         Contender.empty().copyWith(
           id: '1',
           name: 'Contender 1',
-          listType: ListType.serious,
+          listType: .serious,
         ),
         Contender.empty().copyWith(
           id: '2',
           name: 'Contender 2',
-          listType: ListType.fake,
+          listType: .fake,
         ),
         Contender.empty().copyWith(
           id: '3',
           name: 'Contender 3',
-          listType: ListType.blank,
+          listType: .blank,
         ),
       ];
       contenderListNotifier.state = AsyncValue.data(contenders);
@@ -216,17 +216,17 @@ void main() {
         Contender.empty().copyWith(
           id: '1',
           name: 'Contender 1',
-          listType: ListType.serious,
+          listType: .serious,
         ),
         Contender.empty().copyWith(
           id: '2',
           name: 'Contender 2',
-          listType: ListType.fake,
+          listType: .fake,
         ),
         Contender.empty().copyWith(
           id: '3',
           name: 'Contender 3',
-          listType: ListType.blank,
+          listType: .blank,
         ),
       ];
 

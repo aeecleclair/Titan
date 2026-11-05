@@ -17,15 +17,11 @@ class AddEditButtonLayout extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 50,
-      alignment: Alignment.center,
+      alignment: .center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
         gradient: useColors
-            ? RadialGradient(
-                colors: colors!,
-                center: Alignment.topLeft,
-                radius: 1.3,
-              )
+            ? RadialGradient(colors: colors!, center: .topLeft, radius: 1.3)
             : null,
         color: useColors
             ? null

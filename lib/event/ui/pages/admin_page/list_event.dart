@@ -9,7 +9,6 @@ import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/router.dart';
 import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -37,8 +36,8 @@ class ListEvent extends HookConsumerWidget {
       confirmedEventListProvider.notifier,
     );
     final filteredEvents = isHistory
-        ? events.where((e) => e.end.isBefore(DateTime.now())).toList()
-        : events.where((e) => e.end.isAfter(DateTime.now())).toList();
+        ? events.where((e) => e.end.isBefore(.now())).toList()
+        : events.where((e) => e.end.isAfter(.now())).toList();
     filteredEvents.sort(
       (a, b) => (isHistory ? -1 : 1) * a.start.compareTo(b.start),
     );
@@ -57,9 +56,9 @@ class ListEvent extends HookConsumerWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const .symmetric(horizontal: 30.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 AlignLeftText(
                   "$title${filteredEvents.length > 1 ? "s" : ""} (${filteredEvents.length})",
@@ -67,7 +66,7 @@ class ListEvent extends HookConsumerWidget {
                 ),
                 if (canToggle)
                   HeroIcon(
-                    toggle.value ? HeroIcons.chevronUp : HeroIcons.chevronDown,
+                    toggle.value ? .chevronUp : .chevronDown,
                     color: Colors.grey,
                     size: 30,
                   ),
@@ -77,7 +76,7 @@ class ListEvent extends HookConsumerWidget {
         ),
         if (toggle.value)
           Container(
-            margin: const EdgeInsets.only(top: 10),
+            margin: const .only(top: 10),
             child: HorizontalListView.builder(
               height: 235,
               items: filteredEvents,
@@ -108,7 +107,7 @@ class ListEvent extends HookConsumerWidget {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
                                 .toggleConfirmed(
-                                  e.copyWith(decision: Decision.approved),
+                                  e.copyWith(decision: .approved),
                                 )
                                 .then((value) {
                                   if (value) {
@@ -132,7 +131,7 @@ class ListEvent extends HookConsumerWidget {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
                                 .toggleConfirmed(
-                                  e.copyWith(decision: Decision.declined),
+                                  e.copyWith(decision: .declined),
                                 )
                                 .then((value) {
                                   if (value) {

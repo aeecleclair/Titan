@@ -52,7 +52,7 @@ class ScannerOverlayPainter extends CustomPainter {
       ..lineTo(left, top + borderRadius)
       ..arcToPoint(
         Offset(left + borderRadius, top),
-        radius: Radius.circular(borderRadius),
+        radius: .circular(borderRadius),
       )
       ..lineTo(left + borderLength, top);
     canvas.drawPath(topLeftCorner, borderPaint);
@@ -62,7 +62,7 @@ class ScannerOverlayPainter extends CustomPainter {
       ..lineTo(right, top + borderRadius)
       ..arcToPoint(
         Offset(right - borderRadius, top),
-        radius: Radius.circular(borderRadius),
+        radius: .circular(borderRadius),
         clockwise: false,
       )
       ..lineTo(right - borderLength, top);
@@ -73,7 +73,7 @@ class ScannerOverlayPainter extends CustomPainter {
       ..lineTo(left, bottom - borderRadius)
       ..arcToPoint(
         Offset(left + borderRadius, bottom),
-        radius: Radius.circular(borderRadius),
+        radius: .circular(borderRadius),
         clockwise: false,
       )
       ..lineTo(left + borderLength, bottom);
@@ -84,7 +84,7 @@ class ScannerOverlayPainter extends CustomPainter {
       ..lineTo(right, bottom - borderRadius)
       ..arcToPoint(
         Offset(right - borderRadius, bottom),
-        radius: Radius.circular(borderRadius),
+        radius: .circular(borderRadius),
       )
       ..lineTo(right - borderLength, bottom);
     canvas.drawPath(bottomRightCorner, borderPaint);

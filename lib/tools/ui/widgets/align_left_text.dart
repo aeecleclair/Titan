@@ -10,16 +10,16 @@ class AlignLeftText extends StatelessWidget {
     this.title, {
     super.key,
     this.fontSize = 18,
-    this.fontWeight = FontWeight.bold,
+    this.fontWeight = .bold,
     this.color,
-    this.padding = const EdgeInsets.all(0),
+    this.padding = const .all(0),
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: padding,
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       child: Text(
         title,
         style: TextStyle(

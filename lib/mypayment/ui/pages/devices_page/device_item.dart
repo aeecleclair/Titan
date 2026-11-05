@@ -24,10 +24,10 @@ class DeviceItem extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     final secondaryGreen = MyPaymentColors(isDarkTheme).secondaryGreen;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const .symmetric(vertical: 10, horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const .all(.circular(15)),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -38,7 +38,7 @@ class DeviceItem extends ConsumerWidget {
           ],
         ),
         child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const .all(.circular(15)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: Container(
@@ -51,14 +51,14 @@ class DeviceItem extends ConsumerWidget {
                   children: [
                     const SizedBox(width: 20),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
                           device.name,
                           style: TextStyle(
                             color: secondaryGreen,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                         if (isActual)
@@ -67,7 +67,7 @@ class DeviceItem extends ConsumerWidget {
                             style: TextStyle(
                               color: secondaryGreen,
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                       ],
@@ -80,7 +80,7 @@ class DeviceItem extends ConsumerWidget {
                       GestureDetector(
                         onTap: onRevoke,
                         child: HeroIcon(
-                          HeroIcons.trash,
+                          .trash,
                           size: 25,
                           color: secondaryGreen,
                         ),

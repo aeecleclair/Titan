@@ -21,12 +21,12 @@ class MainCardTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+      margin: const .fromLTRB(30, 10, 30, 0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: .circular(30),
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
           colors: colors,
         ),
         boxShadow: [
@@ -39,13 +39,13 @@ class MainCardTemplate extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const .symmetric(horizontal: 20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   SizedBox(
                     height: 15,
@@ -55,7 +55,7 @@ class MainCardTemplate extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        textAlign: TextAlign.left,
+                        textAlign: .left,
                         style: const TextStyle(
                           color: MyPaymentColors.onGradient,
                           fontSize: 18,
@@ -68,7 +68,7 @@ class MainCardTemplate extends StatelessWidget {
                             toggle!();
                           },
                           child: const HeroIcon(
-                            HeroIcons.arrowsRightLeft,
+                            .arrowsRightLeft,
                             color: MyPaymentColors.onGradient,
                             size: 30,
                           ),
@@ -79,7 +79,7 @@ class MainCardTemplate extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: double.infinity,
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: child,
                     ),
                   ),
@@ -91,13 +91,13 @@ class MainCardTemplate extends StatelessWidget {
             height: 80,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+              borderRadius: .only(
+                bottomLeft: .circular(30),
+                bottomRight: .circular(30),
               ),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: .spaceEvenly,
               children: actionButtons,
             ),
           ),

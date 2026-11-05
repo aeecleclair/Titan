@@ -54,7 +54,7 @@ class SearchResult extends HookConsumerWidget {
               return SellerRightDialog(
                 title: "Droit du vendeur",
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
                   children: [
                     RightCheckBox(title: "Peut encaisser", index: 0),
                     RightCheckBox(title: "Peut voir l'historique", index: 1),
@@ -118,20 +118,17 @@ class SearchResult extends HookConsumerWidget {
                 (simpleUser) => GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 5,
-                    ),
+                    padding: const .symmetric(horizontal: 30, vertical: 5),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: .center,
                       children: [
                         Text(
                           simpleUser.getName(),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: simpleUser.id == newAdmin.id
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                                ? .bold
+                                : .normal,
                           ),
                         ),
                         const Spacer(),
@@ -144,7 +141,7 @@ class SearchResult extends HookConsumerWidget {
                             width: 35,
                             height: 35,
                             child: Center(
-                              child: const HeroIcon(HeroIcons.plus, size: 18),
+                              child: const HeroIcon(.plus, size: 18),
                             ),
                           ),
                         ),

@@ -26,14 +26,14 @@ class MainCardButton extends StatelessWidget {
           builder: (child) => Container(
             height: 40,
             width: 40,
-            padding: const EdgeInsets.all(7),
+            padding: const .all(7),
             decoration: BoxDecoration(
               gradient: RadialGradient(
                 colors: colors,
-                center: Alignment.topLeft,
+                center: .topLeft,
                 radius: 1.5,
               ),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: .circular(15),
               boxShadow: [
                 BoxShadow(
                   color: colors.last.withValues(alpha: 0.2),
@@ -53,7 +53,7 @@ class MainCardButton extends StatelessWidget {
           style: TextStyle(
             color: colors.first,
             fontSize: 12,
-            fontWeight: FontWeight.bold,
+            fontWeight: .bold,
           ),
         ),
       ],

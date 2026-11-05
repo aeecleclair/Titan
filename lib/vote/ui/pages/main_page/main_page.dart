@@ -58,7 +58,7 @@ class VoteMainPage extends HookConsumerWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 100,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const .symmetric(horizontal: 30.0),
             child: Column(
               children: [
                 if (isAdmin)
@@ -66,7 +66,7 @@ class VoteMainPage extends HookConsumerWidget {
                     children: [
                       const Spacer(),
                       Container(
-                        margin: const EdgeInsets.only(right: 20),
+                        margin: const .only(right: 20),
                         child: AdminButton(
                           onTap: () {
                             QR.to(VoteRouter.root + VoteRouter.admin);
@@ -130,7 +130,7 @@ class VoteMainPage extends HookConsumerWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height - 100,
           child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
+            padding: const .only(left: 30.0),
             child: Column(
               children: [
                 SizedBox(height: isAdmin ? 10 : 15),
@@ -149,7 +149,7 @@ class VoteMainPage extends HookConsumerWidget {
                                 ? 150
                                 : 155),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: .start,
                           children: [
                             ListSideItem(
                               sectionList: sectionList,
@@ -161,15 +161,12 @@ class VoteMainPage extends HookConsumerWidget {
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: .spaceBetween,
                                       children: [
                                         SectionTitle(sectionList: sectionList),
                                         if (isAdmin)
                                           Container(
-                                            margin: const EdgeInsets.only(
-                                              right: 20,
-                                            ),
+                                            margin: const .only(right: 20),
                                             child: AdminButton(
                                               onTap: () {
                                                 QR.to(

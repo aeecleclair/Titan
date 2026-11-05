@@ -10,16 +10,16 @@ class TextEditing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      margin: const .symmetric(vertical: 20),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: .spaceBetween,
+        crossAxisAlignment: .start,
         children: [
           AlignLeftText(
-            padding: const EdgeInsets.only(bottom: 3),
+            padding: const .only(bottom: 3),
             label,
             fontSize: 14,
-            fontWeight: FontWeight.w400,
+            fontWeight: .w400,
             color: Theme.of(context).colorScheme.secondaryFixed,
           ),
           TextEntry(

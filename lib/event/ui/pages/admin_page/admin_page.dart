@@ -96,7 +96,7 @@ class AdminPage extends HookConsumerWidget {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),

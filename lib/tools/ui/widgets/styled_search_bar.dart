@@ -30,8 +30,8 @@ class StyledSearchBar extends HookConsumerWidget {
         this.editingController ?? useTextEditingController();
     final color_ = color ?? Theme.of(context).colorScheme.tertiary;
     return Container(
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
-      alignment: Alignment.centerLeft,
+      padding: padding ?? const .symmetric(horizontal: 30),
+      alignment: .centerLeft,
       child: TextField(
         focusNode: focusNode,
         onChanged: (_) {
@@ -43,11 +43,7 @@ class StyledSearchBar extends HookConsumerWidget {
         cursorColor: color_,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: color_,
-          ),
+          labelStyle: TextStyle(fontSize: 18, fontWeight: .bold, color: color_),
           suffixIcon: onSuffixIconTap == null
               ? suffixIcon ?? Icon(Icons.search, color: color_, size: 30)
               : GestureDetector(

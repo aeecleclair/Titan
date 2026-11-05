@@ -31,25 +31,23 @@ class Calendar extends HookConsumerWidget {
           context: context,
           builder: (BuildContext context) {
             return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: .circular(30)),
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
                   Container(
                     height:
                         220 + (appointmentDetails.notes!.length / 30 - 5) * 15,
-                    padding: const EdgeInsets.all(20),
+                    padding: const .all(20),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         AutoSizeText(
                           appointmentDetails.subject,
                           maxLines: 2,
                           style: const TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -60,7 +58,7 @@ class Calendar extends HookConsumerWidget {
                             appointmentDetails.isAllDay,
                           ),
                           style: TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: .w400,
                             color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 15,
                           ),
@@ -69,7 +67,7 @@ class Calendar extends HookConsumerWidget {
                         Text(
                           appointmentDetails.notes ?? "",
                           style: const TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: .w400,
                             fontSize: 15,
                           ),
                         ),
@@ -84,7 +82,7 @@ class Calendar extends HookConsumerWidget {
                       child: CardButton(
                         color: Theme.of(context).colorScheme.surface,
                         shadowColor: Theme.of(context).shadowColor,
-                        child: const HeroIcon(HeroIcons.xMark, size: 20),
+                        child: const HeroIcon(.xMark, size: 20),
                       ),
                     ),
                   ),
@@ -106,7 +104,7 @@ class Calendar extends HookConsumerWidget {
             value: items,
             builder: (context, res) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
+                margin: const .symmetric(horizontal: 5),
                 child: Stack(
                   children: [
                     SfCalendar(
@@ -116,13 +114,11 @@ class Calendar extends HookConsumerWidget {
                       view: CalendarView.week,
                       selectionDecoration: BoxDecoration(
                         color: Colors.transparent,
-                        border: Border.all(
+                        border: .all(
                           color: Theme.of(context).colorScheme.onPrimary,
                           width: 2,
                         ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(5),
-                        ),
+                        borderRadius: const .all(.circular(5)),
                         shape: BoxShape.rectangle,
                       ),
                       todayHighlightColor: Theme.of(
@@ -130,7 +126,7 @@ class Calendar extends HookConsumerWidget {
                       ).colorScheme.secondary,
                       todayTextStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                       firstDayOfWeek: 1,
                       timeZone: 'Europe/Paris',
@@ -141,19 +137,19 @@ class Calendar extends HookConsumerWidget {
                         dayTextStyle: TextStyle(
                           color: Theme.of(context).colorScheme.tertiary,
                           fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                         ),
                         dateTextStyle: TextStyle(
                           color: Theme.of(context).colorScheme.tertiary,
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                         ),
                       ),
                       headerStyle: CalendarHeaderStyle(
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                         textStyle: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
@@ -166,7 +162,7 @@ class Calendar extends HookConsumerWidget {
                           width: 50,
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: .circular(10),
                             boxShadow: [
                               BoxShadow(
                                 color: Theme.of(context).shadowColor,
@@ -180,7 +176,7 @@ class Calendar extends HookConsumerWidget {
                               calendarController.forward!();
                             },
                             icon: HeroIcon(
-                              HeroIcons.arrowRight,
+                              .arrowRight,
                               size: 25,
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),
@@ -195,7 +191,7 @@ class Calendar extends HookConsumerWidget {
                           width: 50,
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: .circular(10),
                             boxShadow: [
                               BoxShadow(
                                 color: Theme.of(context).shadowColor,
@@ -209,7 +205,7 @@ class Calendar extends HookConsumerWidget {
                               calendarController.backward!();
                             },
                             icon: HeroIcon(
-                              HeroIcons.arrowLeft,
+                              .arrowLeft,
                               size: 25,
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),

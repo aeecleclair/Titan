@@ -23,10 +23,7 @@ class InformationRecommendationPage extends HookConsumerWidget {
             ),
             RecommendationCardLayout(
               backgroundColor: Colors.grey.withValues(alpha: 0.2),
-              child: Text(
-                recommendation.description,
-                textAlign: TextAlign.justify,
-              ),
+              child: Text(recommendation.description, textAlign: .justify),
             ),
           ],
         ),

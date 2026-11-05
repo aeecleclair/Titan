@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/centralisation/tools/functions.dart';
 import 'package:titan/seed-library/class/species.dart';
@@ -42,7 +41,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
 
     return SeedLibraryTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const .all(10),
         child: GridView(
           controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -64,7 +63,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
                 },
                 child: const MenuCardUi(
                   text: SeedLibraryTextConstants.speciesSimple,
-                  icon: HeroIcons.wallet,
+                  icon: .wallet,
                 ),
               ),
             GestureDetector(
@@ -74,7 +73,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: SeedLibraryTextConstants.myPlants,
-                icon: HeroIcons.magnifyingGlass,
+                icon: .magnifyingGlass,
               ),
             ),
             GestureDetector(
@@ -84,7 +83,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: SeedLibraryTextConstants.stock,
-                icon: HeroIcons.inboxStack,
+                icon: .inboxStack,
               ),
             ),
             GestureDetector(
@@ -94,7 +93,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: SeedLibraryTextConstants.seedDeposit,
-                icon: HeroIcons.inboxArrowDown,
+                icon: .inboxArrowDown,
               ),
             ),
             GestureDetector(
@@ -103,7 +102,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: SeedLibraryTextConstants.helpSheets,
-                icon: HeroIcons.documentMagnifyingGlass,
+                icon: .documentMagnifyingGlass,
               ),
             ),
             GestureDetector(
@@ -112,7 +111,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: SeedLibraryTextConstants.forum,
-                icon: HeroIcons.fire,
+                icon: .fire,
               ),
             ),
           ],

@@ -13,9 +13,9 @@ class LinkCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 7),
+      margin: const .symmetric(vertical: 7),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        borderRadius: const .all(.circular(20)),
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
@@ -30,13 +30,13 @@ class LinkCard extends HookConsumerWidget {
       child: TextButton(
         style: ButtonStyle(
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            RoundedRectangleBorder(borderRadius: .circular(20.0)),
           ),
         ),
         child: Row(
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3),
+              margin: const .only(left: 10.0, right: 10.0, bottom: 3),
               width: 45,
               height: 45,
               decoration: BoxDecoration(
@@ -48,7 +48,7 @@ class LinkCard extends HookConsumerWidget {
                     spreadRadius: 2,
                   ),
                 ],
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: .circular(15),
               ),
               child: link.icon.endsWith('.svg')
                   ? SvgPicture.network(
@@ -61,8 +61,8 @@ class LinkCard extends HookConsumerWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(bottom: 7),
+                alignment: .center,
+                padding: const .only(bottom: 7),
                 child: AutoSizeText(
                   link.name,
                   style: TextStyle(
@@ -71,7 +71,7 @@ class LinkCard extends HookConsumerWidget {
                   ),
                   minFontSize: 10,
                   maxLines: 2,
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
             ),

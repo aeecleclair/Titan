@@ -10,14 +10,11 @@ class AnnouncerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const .symmetric(vertical: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
-          Text(
-            e.name,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
+          Text(e.name, style: const TextStyle(fontSize: 18, fontWeight: .w500)),
           HeroIcon(
             icon,
             size: 25,

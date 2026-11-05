@@ -35,7 +35,7 @@ class YearBar extends HookConsumerWidget {
               color: selected.contains(e)
                   ? Theme.of(context).colorScheme.onSecondary
                   : Theme.of(context).colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
         ),

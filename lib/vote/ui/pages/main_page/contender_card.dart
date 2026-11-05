@@ -68,16 +68,16 @@ class ContenderCard extends HookConsumerWidget {
                   Expanded(
                     child: (votesPercent) < 0.3
                         ? Container(
-                            padding: const EdgeInsets.all(10.0),
-                            margin: const EdgeInsets.only(bottom: 15),
+                            padding: const .all(10.0),
+                            margin: const .only(bottom: 15),
                             child: Align(
-                              alignment: Alignment.bottomRight,
+                              alignment: .bottomRight,
                               child: Text(
                                 '${(votesPercent * 100).toStringAsFixed(1)}%',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),
@@ -88,17 +88,17 @@ class ContenderCard extends HookConsumerWidget {
                     children: [
                       const Spacer(),
                       Container(
-                        padding: const EdgeInsets.all(10.0),
-                        margin: const EdgeInsets.only(bottom: 15),
+                        padding: const .all(10.0),
+                        margin: const .only(bottom: 15),
                         height: 70,
                         width:
                             (MediaQuery.of(context).size.width - 92) *
                             votesPercent,
                         decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
+                          borderRadius: const .only(
+                            topLeft: .circular(20),
+                            bottomLeft: .circular(20),
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -113,13 +113,13 @@ class ContenderCard extends HookConsumerWidget {
                         ),
                         child: (votesPercent >= 0.3)
                             ? Align(
-                                alignment: Alignment.bottomRight,
+                                alignment: .bottomRight,
                                 child: Text(
                                   '${(votesPercent * 100).toStringAsFixed(1)}%',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               )
@@ -147,14 +147,14 @@ class ContenderCard extends HookConsumerWidget {
                 ),
               ),
           child: Container(
-            padding: const EdgeInsets.all(10.0),
-            margin: const EdgeInsets.only(bottom: 15, left: 10),
+            padding: const .all(10.0),
+            margin: const .only(bottom: 15, left: 10),
             height: (s == Status.open && enableVote) ? 160 : 120,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
+              borderRadius: const .only(
+                topLeft: .circular(20),
+                bottomLeft: .circular(20),
               ),
               boxShadow: [
                 BoxShadow(
@@ -166,17 +166,17 @@ class ContenderCard extends HookConsumerWidget {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const .symmetric(horizontal: 15.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: .start,
+                crossAxisAlignment: .start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       contender.listType != ListType.blank
                           ? ContenderLogo(contender)
-                          : const HeroIcon(HeroIcons.cubeTransparent, size: 40),
+                          : const HeroIcon(.cubeTransparent, size: 40),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Column(
@@ -187,7 +187,7 @@ class ContenderCard extends HookConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: Colors.black,
                               ),
                             ),
@@ -197,7 +197,7 @@ class ContenderCard extends HookConsumerWidget {
                               ),
                               style: const TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 color: Colors.black,
                               ),
                             ),
@@ -213,7 +213,7 @@ class ContenderCard extends HookConsumerWidget {
                                 QR.to(VoteRouter.root + VoteRouter.detail);
                               },
                               child: const HeroIcon(
-                                HeroIcons.informationCircle,
+                                .informationCircle,
                                 color: Colors.black,
                                 size: 25,
                               ),
@@ -228,7 +228,7 @@ class ContenderCard extends HookConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Colors.grey.shade400,
                       ),
                     ),
@@ -236,7 +236,7 @@ class ContenderCard extends HookConsumerWidget {
                   const Spacer(),
                   if (s == Status.open && enableVote)
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         selectedContender.id != contender.id
                             ? GestureDetector(
@@ -253,7 +253,7 @@ class ContenderCard extends HookConsumerWidget {
                                 child: const CardButton(
                                   color: Colors.black,
                                   child: HeroIcon(
-                                    HeroIcons.envelopeOpen,
+                                    .envelopeOpen,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -262,7 +262,7 @@ class ContenderCard extends HookConsumerWidget {
                                 VoteTextConstants.selected,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                   color: Colors.black,
                                 ),
                               ),

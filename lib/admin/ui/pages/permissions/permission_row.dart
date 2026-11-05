@@ -18,18 +18,15 @@ class PermissionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const .symmetric(vertical: 10, horizontal: 20),
       child: Row(
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
+          Text(label, style: const TextStyle(fontSize: 20, fontWeight: .w500)),
           const Spacer(),
           GestureDetector(
             onTap: isAuthorized ? onUnauthorize : onAuthorize,
             child: HeroIcon(
-              isAuthorized ? HeroIcons.check : HeroIcons.xMark,
+              isAuthorized ? .check : .xMark,
               size: 40,
               // It's ok to have this green-red hard-coded
               color: isAuthorized ? Colors.green : Colors.red,

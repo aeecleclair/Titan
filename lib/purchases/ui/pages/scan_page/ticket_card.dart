@@ -32,7 +32,7 @@ class TicketCard extends HookConsumerWidget {
     final productIdNotifier = ref.read(productIdProvider.notifier);
     final tagListNotifier = ref.read(tagListProvider.notifier);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const .symmetric(horizontal: 10, vertical: 5),
       child: GestureDetector(
         onTap: onClicked,
         child: CardLayout(
@@ -40,23 +40,17 @@ class TicketCard extends HookConsumerWidget {
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const .symmetric(horizontal: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     Text(
                       "${ticket.name} - Scans : ${ticket.scanCount}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 16, fontWeight: .bold),
                     ),
                     Text(
                       "${ticket.maxUse} scan${ticket.maxUse > 1 ? 's' : ""} maximun - Valide jusqu'au ${processDate(ticket.expiration)}",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 12, fontWeight: .bold),
                     ),
                   ],
                 ),
@@ -71,7 +65,7 @@ class TicketCard extends HookConsumerWidget {
                     QR.to(PurchasesRouter.root + PurchasesRouter.userList);
                   });
                 },
-                child: const HeroIcon(HeroIcons.listBullet),
+                child: const HeroIcon(.listBullet),
               ),
             ],
           ),

@@ -36,7 +36,7 @@ class TextEntry extends StatelessWidget {
     this.noValueError = TextConstants.noValue,
     this.suffixIcon,
     this.isNegative = false,
-    this.textInputAction = TextInputAction.next,
+    this.textInputAction = .next,
   });
 
   @override
@@ -50,8 +50,8 @@ class TextEntry extends StatelessWidget {
       cursorColor: color ?? Theme.of(context).colorScheme.primaryContainer,
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
-          ? TextInputAction.newline
-          : TextInputAction.next,
+          ? .newline
+          : .next,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
@@ -61,17 +61,17 @@ class TextEntry extends StatelessWidget {
         suffix: suffixIcon == null && suffix.isEmpty
             ? null
             : Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const .only(left: 10),
                 child:
                     suffixIcon ?? Text(suffix, style: TextStyle(color: color_)),
               ),
         prefix: prefix.isEmpty
             ? null
             : Container(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const .only(right: 10),
                 child: Text(prefix, style: TextStyle(color: color_)),
               ),
-        floatingLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        floatingLabelStyle: TextStyle(fontWeight: .bold),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: enabledColor ?? Theme.of(context).colorScheme.onPrimary,

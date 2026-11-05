@@ -61,6 +61,6 @@ class Transaction {
       transactionType = TransactionType.direct,
       sellerUserId = '',
       total = 0,
-      creation = DateTime.now(),
+      creation = .now(),
       status = TransactionStatus.confirmed;
 }

@@ -112,20 +112,16 @@ class SearchFilters extends HookConsumerWidget {
                         .loadAssociationMembershipMembers(
                           associationMembership.id,
                           minimalStartDate: startMinimal.text.isNotEmpty
-                              ? DateTime.parse(
-                                  processDateBack(startMinimal.text),
-                                )
+                              ? .parse(processDateBack(startMinimal.text))
                               : null,
                           minimalEndDate: endMinimal.text.isNotEmpty
-                              ? DateTime.parse(processDateBack(endMinimal.text))
+                              ? .parse(processDateBack(endMinimal.text))
                               : null,
                           maximalStartDate: startMaximal.text.isNotEmpty
-                              ? DateTime.parse(
-                                  processDateBack(startMaximal.text),
-                                )
+                              ? .parse(processDateBack(startMaximal.text))
                               : null,
                           maximalEndDate: endMaximal.text.isNotEmpty
-                              ? DateTime.parse(processDateBack(endMaximal.text))
+                              ? .parse(processDateBack(endMaximal.text))
                               : null,
                         );
                   });
@@ -141,10 +137,10 @@ class SearchFilters extends HookConsumerWidget {
                   AdminTextConstants.validateFilters,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
             ),
@@ -175,10 +171,10 @@ class SearchFilters extends HookConsumerWidget {
                   AdminTextConstants.clearFilters,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
             ),

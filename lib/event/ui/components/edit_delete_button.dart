@@ -14,11 +14,11 @@ class EditDeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const .symmetric(vertical: 10),
       decoration: BoxDecoration(
         color: backGroundColor,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: borderColor),
+        borderRadius: .circular(20),
+        border: .all(color: borderColor),
       ),
       child: child,
     );

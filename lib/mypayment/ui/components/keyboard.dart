@@ -20,7 +20,7 @@ class NumericKeyboard extends StatelessWidget {
   /// Callback when an item is pressed
   final Function(String) onKeyboardTap;
 
-  /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
+  /// Main axis alignment [default = .spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
   const NumericKeyboard({
@@ -30,18 +30,18 @@ class NumericKeyboard extends StatelessWidget {
     this.rightButtonFn,
     this.leftIcon,
     this.leftButtonFn,
-    this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
+    this.mainAxisAlignment = .spaceEvenly,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 32, right: 32, top: 20),
-      alignment: Alignment.center,
+      padding: const .only(left: 32, right: 32, top: 20),
+      alignment: .center,
       child: Column(
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton('1'),
               _calcButton('2'),
@@ -50,7 +50,7 @@ class NumericKeyboard extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton('4'),
               _calcButton('5'),
@@ -59,7 +59,7 @@ class NumericKeyboard extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton('7'),
               _calcButton('8'),
@@ -68,21 +68,17 @@ class NumericKeyboard extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton(','),
               _calcButton('0'),
               GestureDetector(
                 onTap: rightButtonFn,
                 child: Container(
-                  alignment: Alignment.center,
+                  alignment: .center,
                   width: 50,
                   height: 50,
-                  child: HeroIcon(
-                    HeroIcons.backspace,
-                    color: textColor,
-                    size: 35,
-                  ),
+                  child: HeroIcon(.backspace, color: textColor, size: 35),
                 ),
               ),
             ],
@@ -94,12 +90,12 @@ class NumericKeyboard extends StatelessWidget {
 
   Widget _calcButton(String value) {
     return InkWell(
-      borderRadius: BorderRadius.circular(45),
+      borderRadius: .circular(45),
       onTap: () {
         onKeyboardTap(value);
       },
       child: Container(
-        alignment: Alignment.center,
+        alignment: .center,
         width: 50,
         height: 50,
         child: Text(value, style: TextStyle(fontSize: 26, color: textColor)),

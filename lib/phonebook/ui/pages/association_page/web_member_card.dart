@@ -42,7 +42,7 @@ class WebMemberCard extends HookConsumerWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      padding: const .symmetric(horizontal: 30, vertical: 5),
       child: GestureDetector(
         onTap: () {
           memberNotifier.setCompleteMember(member);
@@ -60,12 +60,12 @@ class WebMemberCard extends HookConsumerWidget {
                 )
                 .rolesTags,
           ),
-          margin: EdgeInsets.zero,
+          margin: .zero,
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth > 700) {
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: .spaceAround,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -98,17 +98,17 @@ class WebMemberCard extends HookConsumerWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: .spaceAround,
+                        crossAxisAlignment: .start,
                         children: [
                           if (member.member.nickname != null) ...[
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: .start,
                               children: [
                                 SelectableText(
                                   member.member.nickname!,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -116,7 +116,7 @@ class WebMemberCard extends HookConsumerWidget {
                                 SelectableText(
                                   "(${member.member.name} ${member.member.firstname})",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                     fontSize: 20,
                                     color: Theme.of(
                                       context,
@@ -129,7 +129,7 @@ class WebMemberCard extends HookConsumerWidget {
                             SelectableText(
                               "${member.member.name} ${member.member.firstname}",
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontSize: 20,
                               ),
                             ),
@@ -137,7 +137,7 @@ class WebMemberCard extends HookConsumerWidget {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: .start,
                               children: [
                                 CardField(
                                   label: PhonebookTextConstants.promotion,
@@ -163,15 +163,15 @@ class WebMemberCard extends HookConsumerWidget {
                       ),
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
-                          textAlign: TextAlign.right,
+                          textAlign: .right,
                           assoMembership == null
                               ? PhonebookTextConstants.noMemberRole
                               : assoMembership.apparentName,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 20,
                           ),
                         ),
@@ -181,20 +181,20 @@ class WebMemberCard extends HookConsumerWidget {
                 );
               }
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: .spaceAround,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: .spaceAround,
+                    crossAxisAlignment: .center,
                     children: [
                       if (member.member.nickname != null) ...[
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: .center,
                           children: [
                             SelectableText(
                               member.member.nickname!,
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontSize: 20,
                               ),
                             ),
@@ -202,7 +202,7 @@ class WebMemberCard extends HookConsumerWidget {
                             SelectableText(
                               "(${member.member.name} ${member.member.firstname})",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: .bold,
                                 fontSize: 20,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),
@@ -213,7 +213,7 @@ class WebMemberCard extends HookConsumerWidget {
                         SelectableText(
                           "${member.member.name} ${member.member.firstname}",
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: .bold,
                             fontSize: 20,
                           ),
                         ),
@@ -264,14 +264,11 @@ class WebMemberCard extends HookConsumerWidget {
                   Column(
                     children: [
                       Text(
-                        textAlign: TextAlign.right,
+                        textAlign: .right,
                         assoMembership == null
                             ? PhonebookTextConstants.noMemberRole
                             : assoMembership.apparentName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                        style: const TextStyle(fontWeight: .bold, fontSize: 20),
                       ),
                     ],
                   ),

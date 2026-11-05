@@ -46,17 +46,17 @@ class GroupsPage extends HookConsumerWidget {
           await loanListNotifier.loadLoanerList();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.groups,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -85,7 +85,7 @@ class GroupsPage extends HookConsumerWidget {
                               children: [
                                 const Spacer(),
                                 HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.secondaryContainer,
@@ -111,7 +111,7 @@ class GroupsPage extends HookConsumerWidget {
                                     clipBehavior: Clip.none,
                                     children: [
                                       HeroIcon(
-                                        HeroIcons.buildingLibrary,
+                                        .buildingLibrary,
                                         color: Theme.of(
                                           context,
                                         ).colorScheme.secondaryContainer,
@@ -121,7 +121,7 @@ class GroupsPage extends HookConsumerWidget {
                                         right: -2,
                                         top: -2,
                                         child: HeroIcon(
-                                          HeroIcons.plus,
+                                          .plus,
                                           size: 15,
                                           color: Theme.of(
                                             context,

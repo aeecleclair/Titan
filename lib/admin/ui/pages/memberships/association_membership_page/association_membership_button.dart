@@ -14,12 +14,12 @@ class AssociationMembershipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const .all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [gradient1, gradient2],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: .topLeft,
+          end: .bottomRight,
         ),
         boxShadow: [
           BoxShadow(
@@ -29,7 +29,7 @@ class AssociationMembershipButton extends StatelessWidget {
             offset: const Offset(2, 3),
           ),
         ],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
       ),
       child: Center(child: child),
     );

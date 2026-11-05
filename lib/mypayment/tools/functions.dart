@@ -35,12 +35,12 @@ Widget statusTagWidget(Color color, String text) {
   return Container(
     decoration: BoxDecoration(
       color: color.withValues(alpha: 0.2),
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: .circular(5),
     ),
-    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+    padding: const .symmetric(horizontal: 5, vertical: 2),
     child: Text(
       text,
-      style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 18),
+      style: TextStyle(color: color, fontWeight: .bold, fontSize: 18),
     ),
   );
 }

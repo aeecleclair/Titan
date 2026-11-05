@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/booking/ui/pages/admin_pages/add_edit_manager_page.dart'
     deferred as add_edit_manager_page;
@@ -32,7 +31,7 @@ class BookingRouter {
   static const String room = '/room';
   static final Module module = Module(
     name: "Réservation",
-    icon: const Left(HeroIcons.tableCells),
+    icon: const Left(.tableCells),
     root: BookingRouter.root,
     selected: false,
   );

@@ -50,17 +50,17 @@ class AssociationMembershipsPage extends HookConsumerWidget {
           await associationMembershipsNotifier.loadAssociationMemberships();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.associationsMemberships,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -122,7 +122,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                               children: [
                                 const Spacer(),
                                 HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.secondaryContainer,

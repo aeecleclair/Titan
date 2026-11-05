@@ -18,13 +18,13 @@ class NotificationTab extends HookConsumerWidget {
       children: [
         const SizedBox(height: 10),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               SettingsTextConstants.notifications,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 color: Theme.of(context).colorScheme.secondaryContainer,
               ),
             ),
@@ -42,13 +42,10 @@ class NotificationTab extends HookConsumerWidget {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 12,
-                ),
+                padding: const .symmetric(horizontal: 12, vertical: 12),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: .circular(10),
                   boxShadow: [
                     BoxShadow(
                       color: Theme.of(context).shadowColor,
@@ -60,7 +57,7 @@ class NotificationTab extends HookConsumerWidget {
                 child: Row(
                   children: [
                     HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onSecondary,
                       size: 20,
                     ),

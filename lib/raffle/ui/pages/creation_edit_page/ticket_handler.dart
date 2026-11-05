@@ -30,13 +30,13 @@ class TicketHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          padding: const .symmetric(horizontal: 30),
+          alignment: .centerLeft,
           child: const Text(
             "Tickets",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),
@@ -60,17 +60,17 @@ class TicketHandler extends HookConsumerWidget {
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(
+                    margin: const .only(
                       left: 12.0,
                       right: 12.0,
                       bottom: 12,
                       top: 8,
                     ),
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const .all(12.0),
                     height: 125,
                     width: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: .circular(30),
                       color: RaffleColorConstants.ticketBack,
                       boxShadow: [
                         BoxShadow(
@@ -83,11 +83,7 @@ class TicketHandler extends HookConsumerWidget {
                       ],
                     ),
                     child: const Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 50,
-                      ),
+                      child: HeroIcon(.plus, color: Colors.white, size: 50),
                     ),
                   ),
                 ),

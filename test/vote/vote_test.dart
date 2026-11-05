@@ -207,7 +207,7 @@ void main() {
         name: 'name',
         description: 'description',
         members: [],
-        listType: ListType.fake,
+        listType: .fake,
         section: Section.empty(),
         program: 'program',
       );
@@ -231,7 +231,7 @@ void main() {
       expect(newContender.description, 'description2');
       newContender = contender.copyWith(members: []);
       expect(newContender.members, []);
-      newContender = contender.copyWith(listType: ListType.fake);
+      newContender = contender.copyWith(listType: .fake);
       expect(newContender.listType, ListType.fake);
       newContender = contender.copyWith(section: Section.empty());
       expect(newContender.section, isA<Section>());
@@ -245,7 +245,7 @@ void main() {
         name: 'name',
         description: 'description',
         members: [],
-        listType: ListType.fake,
+        listType: .fake,
         section: Section.empty(),
         program: 'program',
       );
@@ -286,7 +286,7 @@ void main() {
         name: 'name',
         description: 'description',
         members: [],
-        listType: ListType.fake,
+        listType: .fake,
         section: Section.empty(),
         program: 'program',
       );

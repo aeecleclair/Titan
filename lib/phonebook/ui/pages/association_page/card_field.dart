@@ -15,10 +15,10 @@ class CardField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+      margin: const .symmetric(vertical: 5.0, horizontal: 10),
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             if (showLabel) ...[
               Text(label, style: const TextStyle(fontSize: 16)),
@@ -27,7 +27,7 @@ class CardField extends StatelessWidget {
             CopiabledText(
               value,
               maxLines: 1,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: const TextStyle(fontWeight: .bold, fontSize: 16),
             ),
           ],
         ),

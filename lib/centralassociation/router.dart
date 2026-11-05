@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/centralassociation/tools/constants.dart';
 import 'package:titan/centralassociation/ui/pages/main_page.dart'
     deferred as main_page;
@@ -14,7 +13,7 @@ class CentralassociationRouter {
   static const String root = '/centralassociation';
   static final Module module = Module(
     name: CentralassociationTextConstants.centralassociation,
-    icon: const Left(HeroIcons.atSymbol),
+    icon: const Left(.atSymbol),
     root: CentralassociationRouter.root,
     selected: false,
   );

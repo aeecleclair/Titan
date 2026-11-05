@@ -81,10 +81,10 @@ class AddEditButton extends HookConsumerWidget {
                       itemsQuantity: selected,
                       borrower: borrower,
                       caution: caution.text,
-                      end: DateTime.parse(processDateBack(end)),
+                      end: .parse(processDateBack(end)),
                       id: isEdit ? loan.id : "",
                       notes: note.text,
-                      start: DateTime.parse(processDateBack(start)),
+                      start: .parse(processDateBack(start)),
                       returned: false,
                     );
                     final value = isEdit
@@ -147,7 +147,7 @@ class AddEditButton extends HookConsumerWidget {
         style: TextStyle(
           color: Theme.of(context).colorScheme.onSecondary,
           fontSize: 25,
-          fontWeight: FontWeight.bold,
+          fontWeight: .bold,
         ),
       ),
     );

@@ -7,9 +7,9 @@ class TmdbButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const .all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: .circular(20),
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: child,

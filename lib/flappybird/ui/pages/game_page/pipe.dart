@@ -23,9 +23,7 @@ class PipeDisplay extends HookConsumerWidget {
         height: pipeHeight,
         width: 80,
         child: FittedBox(
-          alignment: isBottomPipe
-              ? Alignment.topCenter
-              : Alignment.bottomCenter,
+          alignment: isBottomPipe ? .topCenter : .bottomCenter,
           fit: BoxFit.fitWidth,
           clipBehavior: Clip.hardEdge,
           child: Transform.flip(

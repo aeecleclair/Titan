@@ -40,8 +40,8 @@ class BuyPackTicket extends HookConsumerWidget {
       },
       child: Container(
         width: 160,
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        margin: const .symmetric(horizontal: 5, vertical: 5),
+        padding: const .symmetric(vertical: 12),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -55,18 +55,18 @@ class BuyPackTicket extends HookConsumerWidget {
               RaffleColorConstants.gradient1,
               RaffleColorConstants.gradient2,
             ],
-            center: Alignment.topLeft,
+            center: .topLeft,
             radius: 1.5,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          borderRadius: const .all(.circular(20)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 17),
+              margin: const .symmetric(horizontal: 17),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Container(
                     width: 50,
@@ -80,7 +80,7 @@ class BuyPackTicket extends HookConsumerWidget {
                           offset: const Offset(1, 2),
                         ),
                       ],
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const .all(.circular(15)),
                     ),
                     child: Builder(
                       builder: (context) {
@@ -89,7 +89,7 @@ class BuyPackTicket extends HookConsumerWidget {
                             data: (data) {
                               if (data.isNotEmpty) {
                                 return ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderRadius: .circular(15.0),
                                   child: data.first,
                                 );
                               } else {
@@ -112,17 +112,15 @@ class BuyPackTicket extends HookConsumerWidget {
                                     );
                                   });
                                 });
-                                return const HeroIcon(
-                                  HeroIcons.cubeTransparent,
-                                );
+                                return const HeroIcon(.cubeTransparent);
                               }
                             },
                             loading: () => const CircularProgressIndicator(),
                             error: (Object error, StackTrace? stackTrace) =>
-                                const HeroIcon(HeroIcons.cubeTransparent),
+                                const HeroIcon(.cubeTransparent),
                           );
                         } else {
-                          return const HeroIcon(HeroIcons.cubeTransparent);
+                          return const HeroIcon(.cubeTransparent);
                         }
                       },
                     ),
@@ -132,7 +130,7 @@ class BuyPackTicket extends HookConsumerWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ],
@@ -144,13 +142,13 @@ class BuyPackTicket extends HookConsumerWidget {
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.8),
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
             ),
             const Spacer(),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              margin: const .symmetric(horizontal: 12),
+              padding: const .symmetric(vertical: 10, horizontal: 10),
               width: 150,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -160,10 +158,10 @@ class BuyPackTicket extends HookConsumerWidget {
                           RaffleColorConstants.redGradient2,
                         ]
                       : [Colors.white, Colors.white],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: .topLeft,
+                  end: .bottomRight,
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                borderRadius: const .all(.circular(15)),
               ),
               child: FittedBox(
                 fit: BoxFit.fitWidth,
@@ -177,7 +175,7 @@ class BuyPackTicket extends HookConsumerWidget {
                     color: raffle.raffleStatusType != RaffleStatusType.open
                         ? Colors.white
                         : RaffleColorConstants.gradient2,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),

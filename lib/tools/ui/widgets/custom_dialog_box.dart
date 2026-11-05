@@ -41,26 +41,26 @@ class CustomDialogBox extends StatelessWidget {
           onTap: () {},
           child: Dialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: .all(.circular(20.0)),
             ),
             elevation: 0.0,
-            insetPadding: const EdgeInsets.all(20.0),
+            insetPadding: const .all(20.0),
             backgroundColor: Colors.transparent,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  padding: const .only(
                     top: Consts.avatarRadius + Consts.padding,
                     bottom: Consts.padding,
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: const EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: const .only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -70,24 +70,24 @@ class CustomDialogBox extends StatelessWidget {
                     ],
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min, // To make the card compact
+                    mainAxisSize: .min, // To make the card compact
                     children: <Widget>[
                       Text(
                         title,
                         style: const TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                         ),
                       ),
                       const SizedBox(height: 12.0),
                       Text(
                         descriptions,
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                         style: const TextStyle(fontSize: 16.0),
                       ),
                       const SizedBox(height: 30.0),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -97,9 +97,9 @@ class CustomDialogBox extends StatelessWidget {
                             },
                             child: Container(
                               width: 100,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const .symmetric(vertical: 16),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                                 color: Theme.of(context).colorScheme.secondary,
                                 boxShadow: [
                                   BoxShadow(
@@ -116,7 +116,7 @@ class CustomDialogBox extends StatelessWidget {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onSecondary,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               ),
@@ -134,9 +134,9 @@ class CustomDialogBox extends StatelessWidget {
                             ).colorScheme.onPrimary,
                             builder: (child) => Container(
                               width: 100,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const .symmetric(vertical: 16),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: .circular(10),
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.secondaryFixed,
@@ -153,7 +153,7 @@ class CustomDialogBox extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 yesText ?? "Confirmer",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: .bold),
                               ),
                             ),
                           ),
@@ -172,8 +172,8 @@ class CustomDialogBox extends StatelessWidget {
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
                         colors: [Consts.redGradient1, Consts.redGradient2],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -185,7 +185,7 @@ class CustomDialogBox extends StatelessWidget {
                     ),
                     child: const Center(
                       child: HeroIcon(
-                        HeroIcons.exclamationCircle,
+                        .exclamationCircle,
                         size: 60,
                         color: Colors.white,
                       ),

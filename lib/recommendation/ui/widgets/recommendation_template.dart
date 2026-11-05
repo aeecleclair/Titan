@@ -11,7 +11,7 @@ class RecommendationTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         children: [
           const TopBar(
             title: RecommendationTextConstants.recommendation,

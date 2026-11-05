@@ -109,15 +109,15 @@ class Order {
     return Order(
       id: '',
       deliveryName: '',
-      orderingDate: DateTime.now(),
-      deliveryDate: DateTime.now(),
+      orderingDate: .now(),
+      deliveryDate: .now(),
       productsDetail: [],
       productsQuantity: [],
       deliveryId: '',
       products: [],
       amount: 0,
       lastAmount: 0,
-      collectionSlot: CollectionSlot.midDay,
+      collectionSlot: .midDay,
       expanded: false,
       user: SimpleUser.empty(),
     );

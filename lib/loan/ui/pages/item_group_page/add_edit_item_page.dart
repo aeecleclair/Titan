@@ -54,11 +54,11 @@ class AddEditItemPage extends HookConsumerWidget {
                 isEdit
                     ? LoanTextConstants.editItem
                     : LoanTextConstants.addObject,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const .symmetric(horizontal: 30),
                 color: Theme.of(context).colorScheme.tertiary,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
@@ -158,7 +158,7 @@ class AddEditItemPage extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ),

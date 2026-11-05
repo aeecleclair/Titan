@@ -41,7 +41,7 @@ class Loan {
       ),
       returned = json['returned'],
       returnedDate = json['returned_date'] != null
-          ? DateTime.parse(json['returned_date'])
+          ? .parse(json['returned_date'])
           : null;
 
   Map<String, dynamic> toJson() {
@@ -91,8 +91,8 @@ class Loan {
       borrower = SimpleUser.empty(),
       loaner = Loaner.empty(),
       notes = '',
-      start = DateTime.now(),
-      end = DateTime.now(),
+      start = .now(),
+      end = .now(),
       caution = '',
       itemsQuantity = [],
       returned = false,

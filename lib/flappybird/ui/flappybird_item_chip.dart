@@ -35,9 +35,9 @@ class FlappyBirdItemChip extends HookConsumerWidget {
                   "assets/images/logo_flappybird.svg",
                   width: 20,
                   height: 20,
-                  colorFilter: ColorFilter.mode(
+                  colorFilter: .mode(
                     Theme.of(context).colorScheme.onSecondary,
-                    BlendMode.srcIn,
+                    .srcIn,
                   ),
                 ),
               ),

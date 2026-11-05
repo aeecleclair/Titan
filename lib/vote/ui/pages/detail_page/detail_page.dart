@@ -25,14 +25,14 @@ class DetailPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Colors.grey.shade50,
                       boxShadow: [
                         BoxShadow(
@@ -46,11 +46,11 @@ class DetailPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 50),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          alignment: Alignment.center,
+                          padding: const .symmetric(horizontal: 30.0),
+                          alignment: .center,
                           width: double.infinity,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: .center,
                             children: [
                               const SizedBox(height: 30),
                               if (contenderLogos[contender.id] == null)
@@ -72,7 +72,7 @@ class DetailPage extends HookConsumerWidget {
                                           },
                                         );
                                         return const HeroIcon(
-                                          HeroIcons.userCircle,
+                                          .userCircle,
                                           size: 40,
                                         );
                                       }
@@ -100,7 +100,7 @@ class DetailPage extends HookConsumerWidget {
                                     errorBuilder: (error, stack) =>
                                         const Center(
                                           child: HeroIcon(
-                                            HeroIcons.exclamationCircle,
+                                            .exclamationCircle,
                                             size: 40,
                                           ),
                                         ),
@@ -111,15 +111,12 @@ class DetailPage extends HookConsumerWidget {
                                 contender.section.name,
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               AlignLeftText(
                                 contender.description,
-                                padding: const EdgeInsets.only(
-                                  top: 15,
-                                  bottom: 20,
-                                ),
+                                padding: const .only(top: 15, bottom: 20),
                               ),
                             ],
                           ),
@@ -136,7 +133,7 @@ class DetailPage extends HookConsumerWidget {
                             : const SizedBox(),
                         const SizedBox(height: 20),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          padding: const .symmetric(horizontal: 30.0),
                           child: Text(
                             contender.program,
                             style: const TextStyle(fontSize: 15),
@@ -151,7 +148,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(child: ContenderCard(contender: contender)),
             ),
           ],

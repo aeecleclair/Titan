@@ -54,7 +54,7 @@ class AssociationPage extends HookConsumerWidget {
           );
         },
         child: Align(
-          alignment: Alignment.topCenter,
+          alignment: .topCenter,
           child: Stack(
             children: [
               Column(
@@ -137,18 +137,15 @@ class AssociationPage extends HookConsumerWidget {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
+                      padding: const .symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         gradient: RadialGradient(
                           colors: [
                             Theme.of(context).colorScheme.tertiary,
                             Theme.of(context).colorScheme.secondary,
                           ],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
@@ -164,7 +161,7 @@ class AssociationPage extends HookConsumerWidget {
                         ],
                       ),
                       child: HeroIcon(
-                        HeroIcons.envelope,
+                        .envelope,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
@@ -183,18 +180,15 @@ class AssociationPage extends HookConsumerWidget {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
+                      padding: const .symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         gradient: RadialGradient(
                           colors: [
                             Theme.of(context).colorScheme.tertiary,
                             Theme.of(context).colorScheme.secondary,
                           ],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
@@ -210,7 +204,7 @@ class AssociationPage extends HookConsumerWidget {
                         ],
                       ),
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),

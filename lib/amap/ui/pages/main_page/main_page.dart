@@ -77,19 +77,19 @@ class AmapMainPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const .symmetric(horizontal: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const .symmetric(vertical: 8),
                     child: AsyncChild(
                       value: balance,
                       builder: (context, s) => Text(
                         "${AMAPTextConstants.amount} : ${(s.balance / 100).toStringAsFixed(2)}€",
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           color: AMAPColors(isDarkTheme).lightGradientSecondary,
                         ),
                       ),
@@ -164,12 +164,12 @@ class AmapMainPage extends HookConsumerWidget {
                           AMAPColors(isDarkTheme).textOnSecondary,
                           AMAPColors(isDarkTheme).greenGradientPrimary,
                         ],
-                        center: Alignment.topRight,
+                        center: .topRight,
                         radius: 1.5,
                       ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
+                      borderRadius: const .only(
+                        topLeft: .circular(50),
+                        topRight: .circular(50),
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -186,9 +186,9 @@ class AmapMainPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 20),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const .symmetric(horizontal: 30),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               AlignLeftText(
                                 AMAPTextConstants.addOrder,
@@ -198,7 +198,7 @@ class AmapMainPage extends HookConsumerWidget {
                               ),
                               IconButton(
                                 icon: HeroIcon(
-                                  HeroIcons.xMark,
+                                  .xMark,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSecondary,
@@ -214,13 +214,13 @@ class AmapMainPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 50),
+                          padding: const .symmetric(horizontal: 50),
                           child: Container(
                             height: 70,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(
+                              borderRadius: .circular(25),
+                              border: .all(
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onSecondary,
@@ -257,10 +257,10 @@ class AmapMainPage extends HookConsumerWidget {
                             }
                           },
                           builder: (child) => Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 30),
+                            margin: const .symmetric(horizontal: 30),
                             height: 70,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: .circular(25),
                               gradient: LinearGradient(
                                 colors: [
                                   AMAPColors(
@@ -268,8 +268,8 @@ class AmapMainPage extends HookConsumerWidget {
                                   ).greenGradientSecondary,
                                   AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                                begin: .topLeft,
+                                end: .bottomRight,
                               ),
                               boxShadow: [
                                 BoxShadow(
@@ -285,14 +285,14 @@ class AmapMainPage extends HookConsumerWidget {
                             child: child,
                           ),
                           child: Container(
-                            padding: const EdgeInsets.only(bottom: 5),
+                            padding: const .only(bottom: 5),
                             width: double.infinity,
                             child: Center(
                               child: Text(
                                 AMAPTextConstants.nextStep,
                                 style: TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: .w900,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSecondary,

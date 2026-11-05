@@ -39,12 +39,10 @@ class StartDateEntry extends HookConsumerWidget {
             } else {
               endNotifier.setEnd("");
             }
-            initialDateNotifier.setDate(DateTime.parse(processDateBack(date)));
+            initialDateNotifier.setDate(.parse(processDateBack(date)));
           });
         },
-        initialDate: start.isNotEmpty
-            ? DateTime.parse(processDateBack(start))
-            : now,
+        initialDate: start.isNotEmpty ? .parse(processDateBack(start)) : now,
         firstDate: DateTime(now.year - 1, now.month, now.day),
       ),
       label: LoanTextConstants.beginDate,

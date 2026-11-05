@@ -25,9 +25,9 @@ class MemberDetailPage extends HookConsumerWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              padding: const .symmetric(horizontal: 30, vertical: 30),
               child: CardLayout(
-                margin: EdgeInsets.zero,
+                margin: .zero,
                 child: Column(
                   children: [
                     ElementField(
@@ -70,10 +70,7 @@ class MemberDetailPage extends HookConsumerWidget {
                 memberProvider.memberships.length == 1
                     ? PhonebookTextConstants.association
                     : PhonebookTextConstants.associations,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: const TextStyle(fontWeight: .bold, fontSize: 20),
               ),
             const SizedBox(height: 20),
             AsyncChild(

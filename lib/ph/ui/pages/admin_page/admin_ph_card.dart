@@ -21,18 +21,18 @@ class AdminPhCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: CardLayout(
-        margin: const EdgeInsets.all(5),
+        margin: const .all(5),
         child: Row(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Row(
                   children: [
                     const Text(
                       PhTextConstants.nameField,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: .bold),
+                      textAlign: .left,
                     ),
                     Text(shortenText(ph.name, 28)),
                   ],
@@ -41,8 +41,8 @@ class AdminPhCard extends StatelessWidget {
                   children: [
                     const Text(
                       PhTextConstants.dateField,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: .bold),
+                      textAlign: .left,
                     ),
                     Text(shortenText(phFormatDate(ph.date), 28)),
                   ],
@@ -58,7 +58,7 @@ class AdminPhCard extends StatelessWidget {
                   Theme.of(context).colorScheme.secondaryFixed,
                 ],
                 child: HeroIcon(
-                  HeroIcons.pencil,
+                  .pencil,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -75,7 +75,7 @@ class AdminPhCard extends StatelessWidget {
                   context,
                 ).colorScheme.primaryFixed.withValues(alpha: 0.2),
                 child: HeroIcon(
-                  HeroIcons.trash,
+                  .trash,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),

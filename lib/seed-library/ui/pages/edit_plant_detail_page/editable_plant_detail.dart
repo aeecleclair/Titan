@@ -42,18 +42,18 @@ class EditablePlantDetail extends HookConsumerWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      padding: const EdgeInsets.all(30),
-      margin: const EdgeInsets.all(10),
+      padding: const .all(30),
+      margin: const .all(10),
       decoration: BoxDecoration(
         color: Colors.lightGreen.withAlpha(50),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: .circular(10),
       ),
       child: SingleChildScrollView(
         child: Column(
           children: [
             Text(
               SeedLibraryTextConstants.plantDetail,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: .bold),
             ),
             TextEntry(controller: name, label: SeedLibraryTextConstants.name),
             const SizedBox(height: 20),
@@ -72,7 +72,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               style: const TextStyle(fontSize: 16),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 Text(
                   SeedLibraryTextConstants.difficulty,
@@ -128,13 +128,11 @@ class EditablePlantDetail extends HookConsumerWidget {
               WaitingButton(
                 onTap: () {
                   plantNotifier.updatePlant(
-                    plant.copyWith(plantingDate: DateTime.now()),
+                    plant.copyWith(plantingDate: .now()),
                   );
-                  plantationDate.text = processDate(DateTime.now());
+                  plantationDate.text = processDate(.now());
                   myPlantsNotifier.updatePlantInList(
-                    plant
-                        .copyWith(plantingDate: DateTime.now())
-                        .toPlantSimple(),
+                    plant.copyWith(plantingDate: .now()).toPlantSimple(),
                   );
                   return Future.value();
                 },
@@ -167,7 +165,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                           final result = await plantNotifier.updatePlant(
                             plant.copyWith(
                               state: function.State.consumed,
-                              plantingDate: DateTime.now(),
+                              plantingDate: .now(),
                             ),
                           );
                           if (result) {
@@ -179,11 +177,11 @@ class EditablePlantDetail extends HookConsumerWidget {
                               plant
                                   .copyWith(
                                     state: function.State.consumed,
-                                    plantingDate: DateTime.now(),
+                                    plantingDate: .now(),
                                   )
                                   .toPlantSimple(),
                             );
-                            plantationDate.text = processDate(DateTime.now());
+                            plantationDate.text = processDate(.now());
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
@@ -221,8 +219,8 @@ class EditablePlantDetail extends HookConsumerWidget {
                   context,
                   plantationDate,
                   firstDate: plant.borrowingDate,
-                  lastDate: DateTime.now(),
-                  initialDate: DateTime.now(),
+                  lastDate: .now(),
+                  initialDate: .now(),
                 );
                 plantNotifier.updatePlant(
                   plant.copyWith(

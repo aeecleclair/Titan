@@ -74,7 +74,7 @@ class HistoryPage extends HookConsumerWidget {
                         currentYear.toString(),
                         style: TextStyle(
                           color: selected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     );

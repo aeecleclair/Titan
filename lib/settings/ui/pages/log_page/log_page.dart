@@ -38,7 +38,7 @@ class LogPage extends HookConsumerWidget {
           await notificationLogsNotifier.getLogs();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const .symmetric(horizontal: 30.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -57,7 +57,7 @@ class LogPage extends HookConsumerWidget {
                         color: logTab == item
                             ? Theme.of(context).colorScheme.onSecondary
                             : Theme.of(context).colorScheme.onSurface,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),

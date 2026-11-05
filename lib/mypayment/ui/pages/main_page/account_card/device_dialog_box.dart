@@ -38,26 +38,26 @@ class DeviceDialogBox extends ConsumerWidget {
           onTap: () {},
           child: Dialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: .all(.circular(20.0)),
             ),
             elevation: 0.0,
-            insetPadding: const EdgeInsets.all(20.0),
+            insetPadding: const .all(20.0),
             backgroundColor: Colors.transparent,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  padding: const .only(
                     top: Consts.avatarRadius + Consts.padding,
                     bottom: Consts.padding,
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: const EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: const .only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(Consts.padding),
+                    borderRadius: .circular(Consts.padding),
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).shadowColor,
@@ -67,24 +67,24 @@ class DeviceDialogBox extends ConsumerWidget {
                     ],
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min, // To make the card compact
+                    mainAxisSize: .min, // To make the card compact
                     children: <Widget>[
                       Text(
                         title,
                         style: const TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                         ),
                       ),
                       const SizedBox(height: 12.0),
                       Text(
                         descriptions,
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                         style: const TextStyle(fontSize: 16.0),
                       ),
                       const SizedBox(height: 30.0),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           if (buttonText != null)
                             GestureDetector(
@@ -96,11 +96,9 @@ class DeviceDialogBox extends ConsumerWidget {
                                 width:
                                     MediaQuery.of(context).size.width -
                                     4 * Consts.padding,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
+                                padding: const .symmetric(vertical: 16),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: .circular(10),
                                   gradient: LinearGradient(
                                     colors: [
                                       Theme.of(
@@ -108,8 +106,8 @@ class DeviceDialogBox extends ConsumerWidget {
                                       ).colorScheme.secondaryContainer,
                                       Theme.of(context).colorScheme.secondary,
                                     ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    begin: .topLeft,
+                                    end: .bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -126,7 +124,7 @@ class DeviceDialogBox extends ConsumerWidget {
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.onSecondary,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: .bold,
                                     ),
                                   ),
                                 ),
@@ -150,8 +148,8 @@ class DeviceDialogBox extends ConsumerWidget {
                           MyPaymentColors(isDarkTheme).redGradient1,
                           MyPaymentColors(isDarkTheme).redGradient2,
                         ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: .topLeft,
+                        end: .bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -165,7 +163,7 @@ class DeviceDialogBox extends ConsumerWidget {
                     ),
                     child: Center(
                       child: HeroIcon(
-                        HeroIcons.exclamationCircle,
+                        .exclamationCircle,
                         size: 60,
                         color: MyPaymentColors.onGradient,
                       ),

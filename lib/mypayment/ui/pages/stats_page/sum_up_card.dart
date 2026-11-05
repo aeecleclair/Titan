@@ -23,13 +23,13 @@ class SumUpCard extends StatelessWidget {
       width: 90,
       child: Container(
         height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        margin: const EdgeInsets.only(bottom: 60),
+        padding: const .symmetric(horizontal: 10, vertical: 8),
+        margin: const .only(bottom: 60),
         decoration: ShapeDecoration(
           shape: const MessageBorder(),
           gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+            begin: .centerLeft,
+            end: .centerRight,
             colors: [secondaryColor, color, secondaryColor],
           ),
           shadows: [
@@ -42,13 +42,13 @@ class SumUpCard extends StatelessWidget {
           ],
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
           children: [
             Text(
               title,
               style: TextStyle(
                 color: MyPaymentColors.onGradient.withValues(alpha: 0.8),
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: 13,
               ),
             ),
@@ -57,7 +57,7 @@ class SumUpCard extends StatelessWidget {
               amount,
               style: const TextStyle(
                 color: MyPaymentColors.onGradient,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: 15,
               ),
             ),

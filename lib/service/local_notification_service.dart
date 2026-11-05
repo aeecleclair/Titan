@@ -49,8 +49,8 @@ class LocalNotificationService {
           getTitanPackageName(),
           "TitanNotification",
           channelDescription: "Notifications channel for Titan",
-          importance: Importance.max,
-          priority: Priority.max,
+          importance: .max,
+          priority: .max,
           playSound: true,
         );
     const DarwinNotificationDetails darwinNotificationDetails =
@@ -88,7 +88,7 @@ class LocalNotificationService {
       repeatInterval,
       getNotificationDetails(),
       payload: payload,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: .exactAllowWhileIdle,
     );
   }
 
@@ -115,8 +115,8 @@ class LocalNotificationService {
           getTitanPackageName(),
           "TitanNotification",
           channelDescription: "Notifications channel for Titan",
-          importance: Importance.max,
-          priority: Priority.max,
+          importance: .max,
+          priority: .max,
           styleInformation: bigPictureStyleInformation,
           playSound: true,
         );

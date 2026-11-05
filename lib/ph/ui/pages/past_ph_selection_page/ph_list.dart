@@ -23,7 +23,7 @@ class PhList extends HookConsumerWidget {
             .where(
               (ph) =>
                   selectedYear.contains(ph.date.year) &&
-                  ph.date.isBefore(DateTime.now()),
+                  ph.date.isBefore(.now()),
             )
             .toList();
         list.sort((a, b) => b.date.compareTo(a.date));

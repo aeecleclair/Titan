@@ -20,7 +20,7 @@ class HistoryRefund {
     return 'HistoryRefund {total: $total, creation: $creation}';
   }
 
-  HistoryRefund.empty() : total = 0, creation = DateTime.now();
+  HistoryRefund.empty() : total = 0, creation = .now();
 
   HistoryRefund copyWith({int? total, DateTime? creation}) {
     return HistoryRefund(

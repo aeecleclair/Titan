@@ -35,10 +35,10 @@ class AdminSessionCard extends HookConsumerWidget {
       child: Container(
         width: 155,
         height: 300,
-        margin: const EdgeInsets.all(8),
+        margin: const .all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: .circular(18),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -49,7 +49,7 @@ class AdminSessionCard extends HookConsumerWidget {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: .circular(18),
           child: Column(
             children: [
               SizedBox(
@@ -63,32 +63,25 @@ class AdminSessionCard extends HookConsumerWidget {
                       sessionPosterNotifier.getLogo(sessionId),
                   dataBuilder: (context, data) =>
                       Image(image: data.first.image, fit: BoxFit.cover),
-                  errorBuilder: (error, stack) => const Center(
-                    child: HeroIcon(HeroIcons.exclamationCircle),
-                  ),
+                  errorBuilder: (error, stack) =>
+                      const Center(child: HeroIcon(.exclamationCircle)),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 7,
-                ),
+                padding: const .symmetric(horizontal: 10, vertical: 7),
                 height: 95,
                 child: Column(
                   children: [
                     AutoSizeText(
                       session.name,
                       maxLines: 2,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(fontSize: 15, fontWeight: .bold),
                     ),
                     const Spacer(),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: .spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: onEdit,
@@ -96,7 +89,7 @@ class AdminSessionCard extends HookConsumerWidget {
                             color: Theme.of(context).shadowColor,
                             shadowColor: Theme.of(context).shadowColor,
                             child: HeroIcon(
-                              HeroIcons.pencil,
+                              .pencil,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           ),
@@ -108,7 +101,7 @@ class AdminSessionCard extends HookConsumerWidget {
                             child: child,
                           ),
                           child: HeroIcon(
-                            HeroIcons.trash,
+                            .trash,
                             color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),

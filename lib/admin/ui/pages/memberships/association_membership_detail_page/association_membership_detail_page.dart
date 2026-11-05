@@ -41,17 +41,17 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
               .loadAssociationMembershipMembers(associationMembership.id);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           child: Column(
             children: [
               const SizedBox(height: 20),
               Container(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   "${AdminTextConstants.associationMembership} ${associationMembership.name}",
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: .w700,
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
@@ -64,7 +64,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     AdminTextConstants.members,
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
@@ -73,7 +73,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     "(${associationMembershipFilteredList.length} ${AdminTextConstants.members})",
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
@@ -83,7 +83,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: .circular(10),
                         color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                       child: child,
@@ -103,7 +103,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       );
                     },
                     child: HeroIcon(
-                      HeroIcons.plus,
+                      .plus,
                       size: 30,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),

@@ -29,19 +29,19 @@ class AppSignIn extends HookConsumerWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const .all(20.0),
         child: Column(
           children: [
             Expanded(
               flex: 3,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   "MyECL",
                   style: GoogleFonts.elMessiri(
                     textStyle: TextStyle(
                       fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
@@ -90,7 +90,7 @@ class AppSignIn extends HookConsumerWidget {
                           },
                           color: LoginColors(isDarkTheme).background2,
                           icon: HeroIcon(
-                            HeroIcons.arrowRight,
+                            .arrowRight,
                             color: LoginColors(isDarkTheme).background2,
                             size: 35.0,
                           ),

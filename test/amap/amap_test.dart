@@ -51,14 +51,12 @@ void main() {
       expect(newCash.balance, 1);
       newCash = cash.copyWith(user: SimpleUser.empty().copyWith(name: 'Name'));
       expect(newCash.user.name, 'Name');
-      newCash = cash.copyWith(lastOrderDate: DateTime.parse('2025-01-01'));
+      newCash = cash.copyWith(lastOrderDate: .parse('2025-01-01'));
       expect(newCash.lastOrderDate, DateTime.parse("2025-01-01"));
     });
 
     test('Should print properly', () async {
-      final cash = Cash.empty().copyWith(
-        lastOrderDate: DateTime.parse('2025-01-01'),
-      );
+      final cash = Cash.empty().copyWith(lastOrderDate: .parse('2025-01-01'));
       expect(
         cash.toString(),
         'Cash{balance: 0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}, lastOrderDate: 2025-01-01 00:00:00.000}',
@@ -139,7 +137,7 @@ void main() {
       final delivery = Delivery.empty();
       final newProduct = Product.empty().copyWith(name: 'New name');
       Delivery newDelivery = delivery.copyWith(
-        deliveryDate: DateTime.parse('2021-01-01'),
+        deliveryDate: .parse('2021-01-01'),
       );
       expect(newDelivery.deliveryDate, DateTime.parse('2021-01-01'));
       newDelivery = delivery.copyWith(products: [newProduct]);
@@ -156,7 +154,7 @@ void main() {
 
     test('Should print properly', () async {
       final delivery = Delivery.empty().copyWith(
-        deliveryDate: DateTime.parse('2021-01-01'),
+        deliveryDate: .parse('2021-01-01'),
         name: "Livraison",
         products: [Product.empty().copyWith(name: 'Name')],
         id: 'id',
@@ -213,15 +211,15 @@ void main() {
       expect(newOrder.products, [newProduct]);
       expect(newOrder.productsDetail, ['id']);
       expect(newOrder.productsQuantity, [1]);
-      newOrder = order.copyWith(collectionSlot: CollectionSlot.midDay);
+      newOrder = order.copyWith(collectionSlot: .midDay);
       expect(newOrder.collectionSlot, CollectionSlot.midDay);
       newOrder = order.copyWith(
         user: SimpleUser.empty().copyWith(name: 'Name'),
       );
       expect(newOrder.user.name, 'Name');
-      newOrder = order.copyWith(orderingDate: DateTime.parse('2021-01-01'));
+      newOrder = order.copyWith(orderingDate: .parse('2021-01-01'));
       expect(newOrder.orderingDate, DateTime.parse('2021-01-01'));
-      newOrder = order.copyWith(deliveryDate: DateTime.parse('2021-01-01'));
+      newOrder = order.copyWith(deliveryDate: .parse('2021-01-01'));
       expect(newOrder.deliveryDate, DateTime.parse('2021-01-01'));
       newOrder = order.copyWith(deliveryName: "Livraison");
       expect(newOrder.deliveryName, "Livraison");
@@ -241,10 +239,10 @@ void main() {
             quantity: 0,
           ),
         ],
-        collectionSlot: CollectionSlot.midDay,
+        collectionSlot: .midDay,
         user: SimpleUser.empty().copyWith(name: 'Name'),
-        orderingDate: DateTime.parse('2021-01-01'),
-        deliveryDate: DateTime.parse('2021-01-01'),
+        orderingDate: .parse('2021-01-01'),
+        deliveryDate: .parse('2021-01-01'),
       );
       expect(
         order.toString(),

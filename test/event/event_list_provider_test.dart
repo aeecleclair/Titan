@@ -4,7 +4,6 @@ import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_list_provider.dart';
 import 'package:titan/event/repositories/event_repository.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/tools/functions.dart';
 
 class MockEventRepository extends Mock implements EventRepository {}
 
@@ -76,7 +75,7 @@ void main() {
       final event = Event.empty().copyWith(
         id: '1',
         name: 'Event 1',
-        decision: Decision.approved,
+        decision: .approved,
       );
       when(
         () => eventRepository.confirmEvent(event),

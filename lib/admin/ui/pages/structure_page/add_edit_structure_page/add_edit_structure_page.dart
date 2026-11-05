@@ -67,7 +67,7 @@ class AddEditStructurePage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const .symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
@@ -80,7 +80,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                   isEdit
                       ? AdminTextConstants.editStructure
                       : AdminTextConstants.addStructure,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: .bold),
                 ),
                 const SizedBox(height: 20),
                 TextEntry(controller: name, label: AdminTextConstants.name),
@@ -98,7 +98,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                 const SizedBox(height: 30),
                 Text(
                   AdminTextConstants.siegeAddress,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: .bold),
                 ),
                 const SizedBox(height: 10),
                 TextEntry(
@@ -145,7 +145,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 Text(
                   AdminTextConstants.structureBankInformation,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: .bold),
                 ),
                 const SizedBox(height: 20),
                 TextEntry(
@@ -197,7 +197,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                               color: selected
                                   ? Theme.of(context).colorScheme.onSecondary
                                   : Theme.of(context).colorScheme.onPrimary,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         );
@@ -216,7 +216,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                                 context,
                               ).colorScheme.primaryContainer,
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -227,7 +227,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                                 context,
                               ).colorScheme.primaryContainer,
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -311,7 +311,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                     isEdit ? AdminTextConstants.edit : AdminTextConstants.add,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: .w600,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),

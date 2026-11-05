@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/providers/barcode_provider.dart';
 import 'package:titan/mypayment/providers/ongoing_transaction.dart';
@@ -44,7 +43,7 @@ class StoreCard extends HookConsumerWidget {
         if (store.canBank)
           MainCardButton(
             colors: buttonGradient,
-            icon: HeroIcons.viewfinderCircle,
+            icon: .viewfinderCircle,
             title: "Scanner",
             onPressed: () async {
               showModalBottomSheet(
@@ -65,7 +64,7 @@ class StoreCard extends HookConsumerWidget {
         if (store.canManageSellers)
           MainCardButton(
             colors: buttonGradient,
-            icon: HeroIcons.userGroup,
+            icon: .userGroup,
             onPressed: () async {
               // storeAdminListNotifier.getStoreAdminList(store.id);
               QR.to(PaymentRouter.root + PaymentRouter.storeAdmin);
@@ -75,7 +74,7 @@ class StoreCard extends HookConsumerWidget {
         if (store.canSeeHistory)
           MainCardButton(
             colors: buttonGradient,
-            icon: HeroIcons.wallet,
+            icon: .wallet,
             onPressed: () async {
               QR.to(PaymentRouter.root + PaymentRouter.storeStats);
             },
@@ -84,7 +83,7 @@ class StoreCard extends HookConsumerWidget {
         if (store.structure.managerUser.id == me.id)
           MainCardButton(
             colors: buttonGradient,
-            icon: HeroIcons.users,
+            icon: .users,
             onPressed: () async {
               QR.to(PaymentRouter.root + PaymentRouter.transferStructure);
             },
@@ -96,7 +95,7 @@ class StoreCard extends HookConsumerWidget {
           store.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
+          textAlign: .center,
           style: const TextStyle(
             color: MyPaymentColors.onGradient,
             fontSize: 50,

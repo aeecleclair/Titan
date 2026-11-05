@@ -16,9 +16,9 @@ class AddDeviceButton extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     final secondaryGreen = MyPaymentColors(isDarkTheme).secondaryGreen;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      padding: const .symmetric(vertical: 10, horizontal: 30),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        borderRadius: const .all(.circular(25)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
@@ -26,7 +26,7 @@ class AddDeviceButton extends ConsumerWidget {
               context,
             ).colorScheme.secondaryFixed.withValues(alpha: 0.5),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 WaitingButton(
                   onTap: onTap,
@@ -42,7 +42,7 @@ class AddDeviceButton extends ConsumerWidget {
                         clipBehavior: Clip.none,
                         children: [
                           HeroIcon(
-                            HeroIcons.devicePhoneMobile,
+                            .devicePhoneMobile,
                             color: secondaryGreen,
                             size: 30,
                           ),
@@ -55,10 +55,10 @@ class AddDeviceButton extends ConsumerWidget {
                                     .colorScheme
                                     .secondaryFixed
                                     .withValues(alpha: 0.9),
-                                borderRadius: BorderRadius.circular(50),
+                                borderRadius: .circular(50),
                               ),
                               child: HeroIcon(
-                                HeroIcons.plus,
+                                .plus,
                                 color: secondaryGreen,
                                 size: 13,
                               ),
@@ -72,7 +72,7 @@ class AddDeviceButton extends ConsumerWidget {
                         style: TextStyle(
                           color: secondaryGreen,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                       Spacer(),

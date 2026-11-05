@@ -19,7 +19,7 @@ class AdminEntry extends StatelessWidget {
         labelText: name,
         floatingLabelStyle: TextStyle(
           color: Theme.of(context).colorScheme.onPrimary,
-          fontWeight: FontWeight.bold,
+          fontWeight: .bold,
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(

@@ -40,14 +40,14 @@ class PrizeHandler extends HookConsumerWidget {
           return Dialog(
             child: Container(
               height: 100 + winningTickets.length * 35.0,
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   Text(
                     "Gagnant${winningTickets.length > 1 ? 's' : ''}",
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       color: RaffleColorConstants.textDark,
                     ),
                   ),
@@ -57,13 +57,13 @@ class PrizeHandler extends HookConsumerWidget {
                     itemCount: winningTickets.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const .symmetric(vertical: 8.0),
                         child: Center(
                           child: Text(
                             winningTickets[index].user.getName(),
                             style: const TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               color: RaffleColorConstants.textDark,
                             ),
                           ),
@@ -82,13 +82,13 @@ class PrizeHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          padding: const .symmetric(horizontal: 30),
+          alignment: .centerLeft,
           child: const Text(
             "Lots",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),
@@ -112,18 +112,18 @@ class PrizeHandler extends HookConsumerWidget {
                     );
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(left: 5.0, bottom: 10),
-                    padding: const EdgeInsets.all(12.0),
+                    margin: const .only(left: 5.0, bottom: 10),
+                    padding: const .all(12.0),
                     child: Container(
                       width: 100,
                       height: 125,
                       decoration: BoxDecoration(
                         gradient: const RadialGradient(
                           colors: [Color(0xff0193a5), Color(0xff004a59)],
-                          center: Alignment.topLeft,
+                          center: .topLeft,
                           radius: 1.2,
                         ),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: .circular(30),
                         boxShadow: [
                           BoxShadow(
                             color: RaffleColorConstants.textDark.withValues(
@@ -136,11 +136,7 @@ class PrizeHandler extends HookConsumerWidget {
                         ],
                       ),
                       child: const Center(
-                        child: HeroIcon(
-                          HeroIcons.plus,
-                          color: Colors.white,
-                          size: 50,
-                        ),
+                        child: HeroIcon(.plus, color: Colors.white, size: 50),
                       ),
                     ),
                   ),

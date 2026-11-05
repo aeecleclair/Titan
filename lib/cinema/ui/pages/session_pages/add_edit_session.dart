@@ -74,7 +74,7 @@ class AddEditSessionPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const .symmetric(horizontal: 30),
           child: Form(
             key: key,
             child: Column(
@@ -96,7 +96,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                       fontSize: 20,
                     ),
                     suffixIcon: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const .all(10),
                       child: WaitingButton(
                         onTap: () async {
                           if (tmdbUrl.text.isEmpty) {
@@ -149,7 +149,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                         },
                         builder: (child) => TmdbButton(child: child),
                         child: HeroIcon(
-                          HeroIcons.arrowRight,
+                          .arrowRight,
                           size: 22,
                           color: Theme.of(
                             context,
@@ -166,7 +166,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                 (logo.value == null)
                     ? logoFile.value == null
                           ? Container(
-                              padding: const EdgeInsets.symmetric(
+                              padding: const .symmetric(
                                 vertical: 50,
                                 horizontal: 30,
                               ),
@@ -174,10 +174,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.secondaryFixed,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: .circular(20),
                               ),
                               child: HeroIcon(
-                                HeroIcons.camera,
+                                .camera,
                                 size: 100,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),
@@ -337,7 +337,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSecondary,
                       fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                     ),
                   ),
                 ),

@@ -19,37 +19,37 @@ class RollbackPage extends HookConsumerWidget {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const .symmetric(horizontal: 30),
         child: Column(
           children: [
             const Spacer(flex: 2),
-            const HeroIcon(HeroIcons.rocketLaunch, size: 100),
+            const HeroIcon(.rocketLaunch, size: 100),
             const SizedBox(height: 50),
             Center(
               child: Text(
                 getAppFlavor() == "dev"
                     ? OthersTextConstants.tooRecentVersionDevFlavor
                     : OthersTextConstants.tooRecentVersion,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(fontSize: 20),
               ),
             ),
             const Spacer(flex: 3),
             Text(
               "${OthersTextConstants.version} $titanVersion, flavor ${getAppFlavor()}",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 15, fontWeight: .w500),
             ),
             const SizedBox(height: 20),
             Text(
               "${OthersTextConstants.minimalHyperionVersion} : $minimalHyperionVersion",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 15, fontWeight: .w500),
             ),
             const SizedBox(height: 20),
             Text(
               "${OthersTextConstants.hyperionVersion} (${Repository.host}) : ${versionVerifier.whenOrNull(data: (value) {
                 return value.version;
               })}",
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 15, fontWeight: .w500),
             ),
             const SizedBox(height: 20),
           ],

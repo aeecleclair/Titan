@@ -19,12 +19,12 @@ class MonthSectionSummary extends StatelessWidget {
     return Container(
       height: 60,
       width: 100,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const .symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: .circular(8),
         gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+          begin: .centerLeft,
+          end: .centerRight,
 
           colors: [secondaryColor, color, secondaryColor],
         ),
@@ -38,13 +38,13 @@ class MonthSectionSummary extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
         children: [
           Text(
             title,
             style: TextStyle(
               color: MyPaymentColors.onGradient.withValues(alpha: 0.8),
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               fontSize: 13,
             ),
           ),
@@ -52,7 +52,7 @@ class MonthSectionSummary extends StatelessWidget {
             amount,
             style: const TextStyle(
               color: MyPaymentColors.onGradient,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               fontSize: 15,
             ),
           ),

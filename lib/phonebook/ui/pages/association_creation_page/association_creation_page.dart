@@ -47,14 +47,14 @@ class AssociationCreationPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: .centerLeft,
                   child: Text(
                     PhonebookTextConstants.addAssociation,
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: .w700,
                       color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
@@ -67,10 +67,10 @@ class AssociationCreationPage extends HookConsumerWidget {
                 restrictToManaged: !isPhonebookAdmin,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const .symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
-                    Container(margin: const EdgeInsets.symmetric(vertical: 10)),
+                    Container(margin: const .symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
                       label: AdminTextConstants.name,
@@ -148,7 +148,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                         AdminTextConstants.add,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Theme.of(
                             context,
                           ).colorScheme.onPrimaryContainer,

@@ -18,10 +18,10 @@ class SectionChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        margin: const .symmetric(horizontal: 10.0),
+        padding: const .symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: .circular(30.0),
           color: selected ? Colors.black : Colors.grey.shade200,
         ),
         child: Row(
@@ -30,13 +30,13 @@ class SectionChip extends StatelessWidget {
               label,
               style: TextStyle(
                 color: selected ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
                 fontSize: 18.0,
               ),
             ),
             if (isAdmin && selected)
               Container(
-                margin: const EdgeInsets.only(left: 10.0),
+                margin: const .only(left: 10.0),
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: onDelete,

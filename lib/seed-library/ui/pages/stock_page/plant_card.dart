@@ -22,10 +22,10 @@ class PlantCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: onClicked,
       child: Card(
-        margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        margin: const .all(10),
+        shape: RoundedRectangleBorder(borderRadius: .circular(15)),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const .all(10),
           child: Row(
             children: [
               SizedBox(
@@ -34,15 +34,12 @@ class PlantCard extends HookConsumerWidget {
                   children: [
                     AutoSizeText(
                       plantSpecies.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      textAlign: .center,
+                      style: const TextStyle(fontWeight: .bold, fontSize: 16),
                     ),
                     AutoSizeText(
                       plant.nickname ?? plant.plantReference,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                       minFontSize: 10,
                       maxLines: 1,
                     ),
@@ -54,9 +51,9 @@ class PlantCard extends HookConsumerWidget {
                 width: 100,
                 child: Column(
                   children: [
-                    Text(plantSpecies.type.name, textAlign: TextAlign.center),
+                    Text(plantSpecies.type.name, textAlign: .center),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: List.generate(plantSpecies.difficulty, (index) {
                         return Icon(
                           Icons.star,
@@ -77,12 +74,12 @@ class PlantCard extends HookConsumerWidget {
                   children: [
                     Text(
                       "${SeedLibraryTextConstants.type} ${plant.propagationMethod.name}",
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                     plant.propagationMethod == PropagationMethod.graine
                         ? Text(
                             "(${plant.nbSeedsEnvelope.toString()} ${plant.nbSeedsEnvelope > 1 ? SeedLibraryTextConstants.seeds : SeedLibraryTextConstants.seed})",
-                            textAlign: TextAlign.center,
+                            textAlign: .center,
                           )
                         : const SizedBox(),
                   ],

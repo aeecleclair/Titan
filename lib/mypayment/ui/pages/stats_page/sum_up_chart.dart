@@ -118,7 +118,7 @@ class SumUpChart extends HookConsumerWidget {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: .spaceEvenly,
                           children: [
                             GestureDetector(
                               onTap: () {
@@ -172,7 +172,7 @@ class SumUpChart extends HookConsumerWidget {
               )
             : Container(
                 height: 300,
-                alignment: Alignment.center,
+                alignment: .center,
                 child: Text(
                   "Aucune transaction pour ce mois",
                   style: TextStyle(

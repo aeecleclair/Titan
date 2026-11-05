@@ -37,13 +37,13 @@ class PhCard extends HookConsumerWidget {
         QR.to(PhRouter.root + PhRouter.past_ph_selection + PhRouter.view_ph);
       },
       child: CardLayout(
-        padding: const EdgeInsets.all(0),
-        margin: const EdgeInsets.all(6),
+        padding: const .all(0),
+        margin: const .all(6),
         color: Colors.transparent,
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: .circular(24),
               child: AsyncChild(
                 value: phCover,
                 builder: (context, value) => Image.memory(value),
@@ -68,13 +68,13 @@ class PhCard extends HookConsumerWidget {
                           name: ph.name,
                           bytes: pdfBytes,
                           ext: "pdf",
-                          mimeType: MimeType.pdf,
+                          mimeType: .pdf,
                         )
                       : await FileSaver.instance.saveAs(
                           name: ph.name,
                           bytes: pdfBytes,
                           ext: "pdf",
-                          mimeType: MimeType.pdf,
+                          mimeType: .pdf,
                         );
 
                   if (path != null) {
@@ -85,11 +85,11 @@ class PhCard extends HookConsumerWidget {
                   }
                 },
                 child: CardButton(
-                  borderRadius: const BorderRadius.all(Radius.circular(10000)),
+                  borderRadius: const .all(.circular(10000)),
                   size: 60,
                   color: Theme.of(context).shadowColor,
                   child: HeroIcon(
-                    HeroIcons.arrowDownTray,
+                    .arrowDownTray,
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),

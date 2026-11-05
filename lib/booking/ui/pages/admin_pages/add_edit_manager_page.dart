@@ -38,19 +38,19 @@ class AddEditManagerPage extends HookConsumerWidget {
 
     return BookingTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const .symmetric(horizontal: 30),
         child: Column(
           children: [
             const SizedBox(height: 50),
             Align(
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: Text(
                 isEdit
                     ? BookingTextConstants.editManager
                     : BookingTextConstants.addManager,
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
@@ -85,7 +85,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                               color: selected
                                   ? Theme.of(context).colorScheme.onSecondary
                                   : Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                             ),
                           ),
                         );

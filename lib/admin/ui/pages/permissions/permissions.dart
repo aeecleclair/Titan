@@ -21,7 +21,7 @@ class PermissionsPage extends HookConsumerWidget {
     final accountTypes = ref.watch(allAccountTypesListProvider);
     return AdminTemplate(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const .symmetric(horizontal: 20),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -30,12 +30,12 @@ class PermissionsPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         AdminTextConstants.modifyModuleVisibility,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: .w700,
                           color: Theme.of(context).colorScheme.primaryContainer,
                         ),
                       ),

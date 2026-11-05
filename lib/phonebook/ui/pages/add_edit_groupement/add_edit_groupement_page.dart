@@ -36,17 +36,17 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        padding: .symmetric(horizontal: 30.0),
         child: Column(
           children: [
             const SizedBox(height: 30),
             Align(
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: Text(
                 associationGroupement.id.isNotEmpty
                     ? PhonebookTextConstants.editAssociationGroupement
                     : PhonebookTextConstants.addAssociationGroupement,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 20, fontWeight: .w700),
               ),
             ),
             const SizedBox(height: 30),
@@ -59,7 +59,7 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
             AlignLeftText(
               PhonebookTextConstants.selectManagerGroup,
               fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontWeight: .w500,
             ),
             AsyncChild(
               value: groups,

@@ -16,7 +16,7 @@ class CinemaTemplate extends HookConsumerWidget {
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         children: [
           TopBar(
             title: CinemaTextConstants.cinema,

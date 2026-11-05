@@ -12,7 +12,7 @@ class CentralassociationTemplate extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             const TopBar(
               title: CentralassociationTextConstants.centralassociation,

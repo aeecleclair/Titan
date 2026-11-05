@@ -8,9 +8,9 @@ class AdminButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
+      margin: const .symmetric(vertical: 20),
+      padding: const .symmetric(vertical: 15),
+      alignment: .center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -28,7 +28,7 @@ class AdminButton extends StatelessWidget {
             spreadRadius: 2,
           ),
         ],
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: .circular(15),
       ),
       child: child,
     );

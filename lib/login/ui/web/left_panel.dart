@@ -32,26 +32,20 @@ class LeftPanel extends HookConsumerWidget {
                 flex: 3,
                 child: Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       Image.asset(getTitanLogo(), width: 70, height: 70),
                       const SizedBox(width: 20),
                       const Text(
                         'MyECL',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 30, fontWeight: .bold),
                       ),
                       const SizedBox(width: 15),
                       const Text("-", style: TextStyle(fontSize: 25)),
                       const SizedBox(width: 15),
                       const Text(
                         "L'application de l'associatif centralien",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                       ),
                     ],
                   ),
@@ -63,7 +57,7 @@ class LeftPanel extends HookConsumerWidget {
         ),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: .center,
             children: [
               const Spacer(),
               Expanded(
@@ -106,10 +100,10 @@ class LeftPanel extends HookConsumerWidget {
                         LoginColors.gradientVariant1,
                         LoginColors.gradientVariant2,
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      begin: .topLeft,
+                      end: .bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: .circular(20),
                     boxShadow: [
                       BoxShadow(
                         color: LoginColors.gradientVariant2.withValues(
@@ -124,21 +118,21 @@ class LeftPanel extends HookConsumerWidget {
                   child: child,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     Text(
                       LoginTextConstants.signIn,
                       style: TextStyle(
                         fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 20),
+                      margin: const .only(left: 20),
                       child: isLoading
                           ? Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: const .all(12.0),
                               child: CircularProgressIndicator(
                                 color: Theme.of(
                                   context,
@@ -146,7 +140,7 @@ class LeftPanel extends HookConsumerWidget {
                               ),
                             )
                           : HeroIcon(
-                              HeroIcons.arrowRight,
+                              .arrowRight,
                               color: Theme.of(
                                 context,
                               ).colorScheme.onPrimaryContainer,

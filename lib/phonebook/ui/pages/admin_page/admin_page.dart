@@ -54,10 +54,7 @@ class AdminPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(30),
-              child: AssociationResearchBar(),
-            ),
+            const Padding(padding: .all(30), child: AssociationResearchBar()),
             const SizedBox(height: 10),
             Async2Children(
               values: Tuple2(associationList, associationGroupementList),
@@ -86,7 +83,7 @@ class AdminPage extends HookConsumerWidget {
                                 }
                               : null,
                           child: CardLayout(
-                            margin: const EdgeInsets.only(
+                            margin: const .only(
                               bottom: 10,
                               top: 20,
                               left: 40,
@@ -101,7 +98,7 @@ class AdminPage extends HookConsumerWidget {
                                 : Theme.of(context).colorScheme.tertiary,
                             child: Center(
                               child: HeroIcon(
-                                HeroIcons.plus,
+                                .plus,
                                 size: 40,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),
@@ -127,9 +124,7 @@ class AdminPage extends HookConsumerWidget {
                               }
                             }
                             return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
+                              padding: const .symmetric(horizontal: 20),
                               child: EditableAssociationCard(
                                 association: association,
                                 associationGroupement:

@@ -45,7 +45,7 @@ class SectionBar extends HookConsumerWidget {
                   VoteRouter.root + VoteRouter.admin + VoteRouter.addSection,
                 );
               },
-              child: const HeroIcon(HeroIcons.plus, color: Colors.black),
+              child: const HeroIcon(.plus, color: Colors.black),
             )
           : null,
       itemBuilder: (context, key, i) => SectionChip(

@@ -23,9 +23,9 @@ class MemberResults extends HookConsumerWidget {
         children: value
             .map(
               (e) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const .symmetric(vertical: 8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     Expanded(
                       child: Text(
@@ -46,7 +46,7 @@ class MemberResults extends HookConsumerWidget {
                             context,
                           ).colorScheme.primaryContainer,
                           builder: (child) => child,
-                          child: const HeroIcon(HeroIcons.plus),
+                          child: const HeroIcon(.plus),
                         ),
                       ],
                     ),

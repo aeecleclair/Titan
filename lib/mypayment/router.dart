@@ -1,7 +1,6 @@
 import 'package:either_dart/either.dart';
 // import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/drawer/class/module.dart';
 import 'package:titan/mypayment/providers/is_payment_admin.dart';
 import 'package:titan/mypayment/ui/pages/structure_admin_page/structure_admin_page.dart'
@@ -49,7 +48,7 @@ class PaymentRouter {
   static const String administrators = '/administrators';
   static final Module module = Module(
     name: "MyECLPay",
-    icon: const Left(HeroIcons.creditCard),
+    icon: const Left(.creditCard),
     root: PaymentRouter.root,
     selected: false,
   );

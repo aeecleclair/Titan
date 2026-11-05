@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
 class InfoCard extends StatelessWidget {
-  final HeroIcons icons;
+  final HeroIcons icon;
   final String title;
   final String value;
   const InfoCard({
     super.key,
-    required this.icons,
+    required this.icon,
     required this.title,
     required this.value,
   });
@@ -19,19 +19,19 @@ class InfoCard extends StatelessWidget {
         // The QR Code background MUST be white.
         // So the whole modal has hard-coded colors.
         // See confirm_button.dart
-        padding: const EdgeInsets.all(20),
+        padding: const .all(20),
         decoration: BoxDecoration(
           color: Colors.grey.shade200.withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: .circular(20),
         ),
         child: Column(
           children: [
-            HeroIcon(icons, color: Colors.black, size: 35),
+            HeroIcon(icon, color: Colors.black, size: 35),
             const SizedBox(height: 10),
             Text(title, style: const TextStyle(fontSize: 13)),
             Text(
               value,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: const TextStyle(fontWeight: .bold, fontSize: 18),
             ),
           ],
         ),

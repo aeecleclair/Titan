@@ -17,17 +17,17 @@ class BottomModalTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: .min,
+      crossAxisAlignment: .stretch,
       children: [
         Center(
           child: Container(
-            margin: const EdgeInsets.only(bottom: 12),
+            margin: const .only(bottom: 12),
             width: 120,
             height: 4,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: .circular(2),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
@@ -43,18 +43,18 @@ class BottomModalTemplate extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              borderRadius: .vertical(top: .circular(30)),
             ),
-            padding: EdgeInsets.all(20),
+            padding: .all(20),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: .min,
+              crossAxisAlignment: .center,
               children: [
                 Text(
                   title,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: .w900,
                     color: Theme.of(context).colorScheme.secondaryContainer,
                   ),
                 ),

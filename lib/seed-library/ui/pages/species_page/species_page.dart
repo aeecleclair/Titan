@@ -43,15 +43,12 @@ class SpeciesPage extends HookConsumerWidget {
           await speciesListNotifier.loadSpecies();
         },
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const .all(5.0),
           child: Column(
             children: [
               Text(
                 SeedLibraryTextConstants.speciesPlural,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontSize: 20, fontWeight: .bold),
               ),
               const SizedBox(height: 20),
               GestureDetector(
@@ -68,18 +65,13 @@ class SpeciesPage extends HookConsumerWidget {
                   );
                 },
                 child: CardLayout(
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                  ),
+                  margin: const .only(bottom: 10, top: 20, left: 20, right: 20),
                   width: double.infinity,
                   height: 100,
                   color: Colors.white,
                   child: Center(
                     child: HeroIcon(
-                      HeroIcons.plus,
+                      .plus,
                       size: 40,
                       color: Colors.grey.shade500,
                     ),
@@ -92,10 +84,7 @@ class SpeciesPage extends HookConsumerWidget {
                 builder: (context, speciesList) => speciesList.isEmpty
                     ? const Text(
                         SeedLibraryTextConstants.noSpecies,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 20, fontWeight: .bold),
                       )
                     : Column(
                         children: [

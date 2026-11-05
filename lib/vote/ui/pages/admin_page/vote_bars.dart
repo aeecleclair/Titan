@@ -72,14 +72,14 @@ class VoteBars extends HookConsumerWidget {
 
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const .only(top: 10),
         child: BarChart(
           BarChartData(
             gridData: const FlGridData(show: false),
             barTouchData: BarTouchData(
               touchTooltipData: BarTouchTooltipData(
-                tooltipBorderRadius: BorderRadius.circular(20),
-                tooltipPadding: const EdgeInsets.only(
+                tooltipBorderRadius: .circular(20),
+                tooltipPadding: const .only(
                   left: 10,
                   right: 10,
                   top: 12,
@@ -93,7 +93,7 @@ class VoteBars extends HookConsumerWidget {
                     rod.toY.toInt().toString(),
                     const TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: .bold,
                       fontSize: 18,
                     ),
                   );
@@ -126,7 +126,7 @@ class VoteBars extends HookConsumerWidget {
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 12.0),
+                      padding: const .only(top: 12.0),
                       child: Column(
                         children: [
                           Text(
@@ -141,7 +141,7 @@ class VoteBars extends HookConsumerWidget {
                             '${((voteValue[sectionIds[value.toInt()]] ?? 0) / total * 100).toStringAsFixed(2)}%',
                             style: const TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               fontSize: 12,
                             ),
                           ),
@@ -150,7 +150,7 @@ class VoteBars extends HookConsumerWidget {
                             '${voteValue[sectionIds[value.toInt()]] ?? 0} ${VoteTextConstants.votes}',
                             style: const TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: .bold,
                               fontSize: 12,
                             ),
                           ),

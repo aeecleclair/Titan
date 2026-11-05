@@ -34,7 +34,7 @@ class PlantDetailPage extends HookConsumerWidget {
         children: [
           Text(
             SeedLibraryTextConstants.plantDetail,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: .bold, fontSize: 20),
           ),
           AsyncChild(
             value: plant,
@@ -44,20 +44,17 @@ class PlantDetailPage extends HookConsumerWidget {
               );
               return Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
+                padding: const .all(10),
+                margin: const .all(10),
                 decoration: BoxDecoration(
                   color: Colors.lightGreen.withAlpha(100),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: .circular(10),
                 ),
                 child: Column(
                   children: [
                     Text(
                       '${SeedLibraryTextConstants.reference} ${plantComplete.plantReference}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                      style: TextStyle(fontWeight: .bold, fontSize: 20),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -69,7 +66,7 @@ class PlantDetailPage extends HookConsumerWidget {
                       style: const TextStyle(fontSize: 15),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
                           SeedLibraryTextConstants.difficulty,
@@ -181,7 +178,7 @@ class PlantDetailPage extends HookConsumerWidget {
                         SeedLibraryTextConstants.borrowPlant,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),

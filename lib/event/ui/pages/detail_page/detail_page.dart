@@ -26,14 +26,14 @@ class DetailPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const .all(30.0),
               child: Column(
                 children: [
                   const SizedBox(height: 80),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: .circular(20),
                       color: Colors.grey.shade50,
                       boxShadow: [
                         BoxShadow(
@@ -47,16 +47,16 @@ class DetailPage extends HookConsumerWidget {
                       children: [
                         const SizedBox(height: 60),
                         Container(
-                          padding: const EdgeInsets.all(30.0),
-                          alignment: Alignment.centerLeft,
+                          padding: const .all(30.0),
+                          alignment: .centerLeft,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               Text(
                                 event.organizer,
                                 style: const TextStyle(
                                   fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -64,7 +64,7 @@ class DetailPage extends HookConsumerWidget {
                                 event.description,
                                 style: const TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                               const SizedBox(height: 20),
@@ -124,11 +124,10 @@ class DetailPage extends HookConsumerWidget {
                                           child: Container(
                                             width: 80,
                                             height: 80,
-                                            padding: const EdgeInsets.all(15.0),
+                                            padding: const .all(15.0),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              border: Border.all(
+                                              borderRadius: .circular(30),
+                                              border: .all(
                                                 color: Colors.black,
                                                 width: 2,
                                               ),
@@ -144,7 +143,7 @@ class DetailPage extends HookConsumerWidget {
                                               ],
                                             ),
                                             child: const HeroIcon(
-                                              HeroIcons.phone,
+                                              .phone,
                                               color: Colors.black,
                                             ),
                                           ),
@@ -170,11 +169,10 @@ class DetailPage extends HookConsumerWidget {
                                           child: Container(
                                             width: 80,
                                             height: 80,
-                                            padding: const EdgeInsets.all(15.0),
+                                            padding: const .all(15.0),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              border: Border.all(
+                                              borderRadius: .circular(30),
+                                              border: .all(
                                                 color: Colors.black,
                                                 width: 2,
                                               ),
@@ -190,8 +188,7 @@ class DetailPage extends HookConsumerWidget {
                                               ],
                                             ),
                                             child: const HeroIcon(
-                                              HeroIcons
-                                                  .chatBubbleBottomCenterText,
+                                              .chatBubbleBottomCenterText,
                                               color: Colors.black,
                                             ),
                                           ),
@@ -212,7 +209,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const .all(20.0),
               child: Center(child: EventUi(event: event, isDetailPage: true)),
             ),
           ],

@@ -25,7 +25,7 @@ class PresentationPage extends HookConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          padding: const EdgeInsets.only(bottom: 30, left: 20, right: 30),
+          padding: const .only(bottom: 30, left: 20, right: 30),
           child: AsyncChild(
             value: information,
             builder: (context, info) => Column(
@@ -38,7 +38,7 @@ class PresentationPage extends HookConsumerWidget {
                         text: info.description,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           foreground: Paint()
                             ..shader =
                                 RadialGradient(
@@ -48,7 +48,7 @@ class PresentationPage extends HookConsumerWidget {
                                     ).greenGradientPrimary,
                                     AMAPColors(isDarkTheme).textOnPrimary,
                                   ],
-                                  center: Alignment.topLeft,
+                                  center: .topLeft,
                                   radius: 10,
                                 ).createShader(
                                   const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
@@ -60,7 +60,7 @@ class PresentationPage extends HookConsumerWidget {
                         text: info.link,
                         style: const TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           decoration: TextDecoration.underline,
                           color: Colors.blue,
                         ),
@@ -84,7 +84,7 @@ class PresentationPage extends HookConsumerWidget {
                         text: AMAPTextConstants.contactUs,
                         style: TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: .w600,
                           foreground: Paint()
                             ..shader =
                                 RadialGradient(
@@ -94,7 +94,7 @@ class PresentationPage extends HookConsumerWidget {
                                     ).greenGradientPrimary,
                                     AMAPColors(isDarkTheme).textOnPrimary,
                                   ],
-                                  center: Alignment.topLeft,
+                                  center: .topLeft,
                                   radius: 10,
                                 ).createShader(
                                   const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
@@ -109,7 +109,7 @@ class PresentationPage extends HookConsumerWidget {
                   "${AMAPTextConstants.contact}${info.manager}	",
                   style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: .w600,
                     color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),

@@ -53,22 +53,19 @@ class EventUi extends ConsumerWidget {
         }
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: isDetailPage ? 20 : 40.0,
-          vertical: 10,
-        ),
+        margin: .symmetric(horizontal: isDetailPage ? 20 : 40.0, vertical: 10),
         width: 250,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
             colors: event.end.compareTo(now) < 0
                 ? [Colors.grey.shade700, Colors.grey.shade800]
                 : event.start.compareTo(now) <= 0
                 ? [ColorConstants.gradient1, ColorConstants.gradient2]
                 : [Colors.white, Colors.white],
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: .circular(20),
           boxShadow: [
             BoxShadow(
               color: event.end.compareTo(now) < 0
@@ -83,12 +80,12 @@ class EventUi extends ConsumerWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
+          padding: const .symmetric(horizontal: 15.0, vertical: 12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Expanded(
                     child: AutoSizeText(
@@ -98,7 +95,7 @@ class EventUi extends ConsumerWidget {
                       style: TextStyle(
                         color: textColor,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: .bold,
                       ),
                     ),
                   ),
@@ -108,10 +105,7 @@ class EventUi extends ConsumerWidget {
                         eventNotifier.setEvent(event);
                         QR.to(EventRouter.root + EventRouter.detail);
                       },
-                      child: HeroIcon(
-                        HeroIcons.informationCircle,
-                        color: textColor,
-                      ),
+                      child: HeroIcon(.informationCircle, color: textColor),
                     ),
                 ],
               ),
@@ -119,7 +113,7 @@ class EventUi extends ConsumerWidget {
               Container(
                 constraints: const BoxConstraints(maxHeight: 38),
                 child: Scrollbar(
-                  radius: const Radius.circular(8),
+                  radius: const .circular(8),
                   child: SingleChildScrollView(
                     child: Text(
                       formatRecurrenceRule(
@@ -138,7 +132,7 @@ class EventUi extends ConsumerWidget {
               ),
               const SizedBox(height: 5),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Expanded(
                     child: AutoSizeText(
@@ -173,14 +167,14 @@ class EventUi extends ConsumerWidget {
               ),
               const SizedBox(height: 5),
               Align(
-                alignment: Alignment.center,
+                alignment: .center,
                 child: Text(
                   decisionToString(event.decision),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: textColor,
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: .bold,
                   ),
                 ),
               ),
@@ -213,7 +207,7 @@ class EventUi extends ConsumerWidget {
                                   style: TextStyle(
                                     color: textColor,
                                     fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                                 ),
                               ),
@@ -269,7 +263,7 @@ class EventUi extends ConsumerWidget {
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: .bold,
                                 ),
                               ),
                             ),
@@ -286,7 +280,7 @@ class EventUi extends ConsumerWidget {
                     GestureDetector(
                       onTap: onEdit,
                       child: const CardButton(
-                        child: HeroIcon(HeroIcons.pencil, color: Colors.black),
+                        child: HeroIcon(.pencil, color: Colors.black),
                       ),
                     ),
                     const Spacer(),
@@ -295,7 +289,7 @@ class EventUi extends ConsumerWidget {
                       child: const CardButton(
                         color: Colors.black,
                         child: HeroIcon(
-                          HeroIcons.documentDuplicate,
+                          .documentDuplicate,
                           color: Colors.white,
                         ),
                       ),
@@ -313,10 +307,7 @@ class EventUi extends ConsumerWidget {
                                   ? Colors.black
                                   : Colors.transparent
                             : Colors.transparent,
-                        child: const HeroIcon(
-                          HeroIcons.check,
-                          color: Colors.black,
-                        ),
+                        child: const HeroIcon(.check, color: Colors.black),
                       ),
                     ),
                     const Spacer(),
@@ -333,10 +324,7 @@ class EventUi extends ConsumerWidget {
                                   ? Colors.white
                                   : Colors.transparent
                             : Colors.transparent,
-                        child: const HeroIcon(
-                          HeroIcons.xMark,
-                          color: Colors.white,
-                        ),
+                        child: const HeroIcon(.xMark, color: Colors.white),
                       ),
                     ),
                   ],

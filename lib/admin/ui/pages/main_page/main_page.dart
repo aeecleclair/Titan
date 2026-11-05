@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/tools/constants.dart';
@@ -20,7 +19,7 @@ class AdminMainPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(40),
+        padding: const .all(40),
         child: GridView(
           controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -40,7 +39,7 @@ class AdminMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.permissions,
-                icon: HeroIcons.lockOpen,
+                icon: .lockOpen,
               ),
             ),
             GestureDetector(
@@ -49,7 +48,7 @@ class AdminMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.groups,
-                icon: HeroIcons.users,
+                icon: .users,
               ),
             ),
             GestureDetector(
@@ -58,7 +57,7 @@ class AdminMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.schools,
-                icon: HeroIcons.academicCap,
+                icon: .academicCap,
               ),
             ),
             GestureDetector(
@@ -67,7 +66,7 @@ class AdminMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.myPayment,
-                icon: HeroIcons.creditCard,
+                icon: .creditCard,
               ),
             ),
             GestureDetector(
@@ -76,7 +75,7 @@ class AdminMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.memberships,
-                icon: HeroIcons.link,
+                icon: .link,
               ),
             ),
           ],

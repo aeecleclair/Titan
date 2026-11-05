@@ -16,18 +16,18 @@ class NoInternetPage extends HookConsumerWidget {
     final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const .all(30),
         height: MediaQuery.of(context).size.height * 0.90,
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
-              const HeroIcon(HeroIcons.signalSlash, size: 150),
+              const HeroIcon(.signalSlash, size: 150),
               const SizedBox(height: 20),
               Center(
                 child: Text(
                   "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -44,7 +44,7 @@ class NoInternetPage extends HookConsumerWidget {
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(top: 12, bottom: 15),
+                  padding: const .only(top: 12, bottom: 15),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -52,8 +52,8 @@ class NoInternetPage extends HookConsumerWidget {
                         Theme.of(context).colorScheme.primaryContainer,
                         Theme.of(context).colorScheme.primaryFixed,
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                      begin: .topLeft,
+                      end: .bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -64,13 +64,13 @@ class NoInternetPage extends HookConsumerWidget {
                         offset: const Offset(0, 5),
                       ),
                     ],
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: .circular(15),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: .spaceEvenly,
                     children: [
                       HeroIcon(
-                        HeroIcons.arrowPath,
+                        .arrowPath,
                         size: 35,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
@@ -81,7 +81,7 @@ class NoInternetPage extends HookConsumerWidget {
                           color: Theme.of(
                             context,
                           ).colorScheme.onPrimaryContainer,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                         ),
                       ),
                     ],

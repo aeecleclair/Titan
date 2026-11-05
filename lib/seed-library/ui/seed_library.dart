@@ -25,7 +25,7 @@ class SeedLibraryTemplate extends StatelessWidget {
                       );
                     },
                     icon: const HeroIcon(
-                      HeroIcons.informationCircle,
+                      .informationCircle,
                       color: Colors.black,
                       size: 40,
                     ),

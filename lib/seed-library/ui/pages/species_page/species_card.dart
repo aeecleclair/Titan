@@ -20,10 +20,10 @@ class SpeciesCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
-      margin: const EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      margin: const .all(10),
+      shape: RoundedRectangleBorder(borderRadius: .circular(15)),
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const .all(10),
         child: Row(
           children: [
             SizedBox(width: 10),
@@ -31,8 +31,8 @@ class SpeciesCard extends HookConsumerWidget {
               width: 100,
               child: Column(
                 children: [
-                  Text(species.name, textAlign: TextAlign.center),
-                  Text(species.prefix, textAlign: TextAlign.center),
+                  Text(species.name, textAlign: .center),
+                  Text(species.prefix, textAlign: .center),
                 ],
               ),
             ),
@@ -41,9 +41,9 @@ class SpeciesCard extends HookConsumerWidget {
               width: 100,
               child: Column(
                 children: [
-                  Text(species.type.name, textAlign: TextAlign.center),
+                  Text(species.type.name, textAlign: .center),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       ...List.generate(species.difficulty, (index) {
                         return Icon(

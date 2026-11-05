@@ -13,13 +13,13 @@ class WinningTicketHandler extends HookConsumerWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          padding: const .symmetric(horizontal: 30),
+          alignment: .centerLeft,
           child: const Text(
             "Tickets gagnants",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
               color: RaffleColorConstants.textDark,
             ),
           ),

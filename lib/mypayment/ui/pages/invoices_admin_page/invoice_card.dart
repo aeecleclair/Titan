@@ -30,7 +30,7 @@ class InvoiceCard extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const .symmetric(vertical: 5),
       child: GestureDetector(
         onTap: () => showCustomBottomModal(
           context: context,
@@ -51,13 +51,13 @@ class InvoiceCard extends HookConsumerWidget {
                           name: invoice.reference,
                           bytes: pdfBytes,
                           ext: "pdf",
-                          mimeType: MimeType.pdf,
+                          mimeType: .pdf,
                         )
                       : await FileSaver.instance.saveAs(
                           name: invoice.reference,
                           bytes: pdfBytes,
                           ext: "pdf",
-                          mimeType: MimeType.pdf,
+                          mimeType: .pdf,
                         );
                   if (path != null) {
                     displayToastWithContext(
@@ -159,20 +159,17 @@ class InvoiceCard extends HookConsumerWidget {
           ),
         ),
         child: CardLayout(
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          margin: const .symmetric(vertical: 5, horizontal: 20),
           shadowColor: Theme.of(context).shadowColor,
           child: Row(
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     Text(
                       invoice.reference,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: .w600),
                     ),
                     const SizedBox(height: 5),
                     Text(
@@ -185,17 +182,14 @@ class InvoiceCard extends HookConsumerWidget {
               Expanded(
                 flex: kIsWeb ? 2 : 1,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     if (kIsWeb)
                       Column(
                         children: [
                           Text(
                             '${(invoice.total / 100).toStringAsFixed(2)} €',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: TextStyle(fontSize: 16, fontWeight: .w500),
                           ),
                           AutoSizeText(
                             "Du ${processDate(invoice.startDate)} au ${processDate(invoice.endDate)}",
@@ -212,7 +206,7 @@ class InvoiceCard extends HookConsumerWidget {
                           : "En attente",
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: .w500,
                         // It's ok to leave these hard-coded: not used anywhere else, only seen by one user (the bank account holder)
                         color: invoice.received
                             ? Colors.green
@@ -221,7 +215,7 @@ class InvoiceCard extends HookConsumerWidget {
                             : Colors.orange,
                       ),
                     ),
-                    const HeroIcon(HeroIcons.chevronRight),
+                    const HeroIcon(.chevronRight),
                   ],
                 ),
               ),

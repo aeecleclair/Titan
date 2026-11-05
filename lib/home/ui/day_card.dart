@@ -28,24 +28,19 @@ class DayCard extends HookConsumerWidget {
         onTap();
       },
       child: Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.only(
-          left: 8.0,
-          right: 8.0,
-          top: 10.0,
-          bottom: 15,
-        ),
+        alignment: .center,
+        margin: const .only(left: 8.0, right: 8.0, top: 10.0, bottom: 15),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(70),
-          border: Border.all(
+          borderRadius: .circular(70),
+          border: .all(
             color: (selectedDay == index && !isToday)
                 ? Theme.of(context).colorScheme.onPrimary
                 : Colors.transparent,
             width: 2,
           ),
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: .topLeft,
+            end: .bottomRight,
             colors: isToday
                 ? [
                     Theme.of(context).colorScheme.primaryContainer,
@@ -80,12 +75,12 @@ class DayCard extends HookConsumerWidget {
               height: 35,
               child: Text(
                 day.day.toString(),
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(
                   color: isToday
                       ? Theme.of(context).colorScheme.onPrimaryContainer
                       : Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   fontSize: 30,
                 ),
               ),
@@ -96,12 +91,12 @@ class DayCard extends HookConsumerWidget {
                 HomeTextConstants.translateDayShort[DateFormat(
                   'E',
                 ).format(day)]!,
-                textAlign: TextAlign.center,
+                textAlign: .center,
                 style: TextStyle(
                   color: isToday
                       ? Theme.of(context).colorScheme.onPrimaryContainer
                       : Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   fontSize: 12,
                 ),
               ),
@@ -110,7 +105,7 @@ class DayCard extends HookConsumerWidget {
               height: 25,
               child: numberOfEvent < 6
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         for (int i = 0; i < numberOfEvent; i++)
                           SizedBox(
@@ -128,14 +123,14 @@ class DayCard extends HookConsumerWidget {
                       ],
                     )
                   : Container(
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: Text(
                         "$numberOfEvent",
                         style: TextStyle(
                           color: isToday
                               ? Theme.of(context).colorScheme.onPrimaryContainer
                               : Theme.of(context).colorScheme.onPrimary,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: .bold,
                           fontSize: 12,
                         ),
                       ),

@@ -40,8 +40,8 @@ class AdminPage extends HookConsumerWidget {
                 child: const CardLayout(
                   width: 155,
                   height: 300,
-                  margin: EdgeInsets.all(8),
-                  child: Center(child: HeroIcon(HeroIcons.plus, size: 50)),
+                  margin: .all(8),
+                  child: Center(child: HeroIcon(.plus, size: 50)),
                 ),
               ),
               ...data.map(
