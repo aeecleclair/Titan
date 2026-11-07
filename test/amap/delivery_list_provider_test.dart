@@ -10,42 +10,37 @@ class MockDeliveryListRepository extends Mock
 
 void main() {
   group('DeliveryListNotifier', () {
-    test(
-      'loadDeliveriesList should return the list of deliveries from the repository',
-      () async {
-        // Arrange
-        final mockRepository = MockDeliveryListRepository();
-        final deliveries = [Delivery.empty(), Delivery.empty()];
-        when(
-          () => mockRepository.getDeliveryList(),
-        ).thenAnswer((_) async => deliveries);
-        final notifier = DeliveryListNotifier(
-          deliveriesListRepository: mockRepository,
-        );
+    test('loadDeliveriesList should return the list of deliveries from the repository', () async {
+      // Arrange
+      final mockRepository = MockDeliveryListRepository();
+      final deliveries = [Delivery.empty(), Delivery.empty()];
+      when(() => mockRepository.getDeliveryList())
+          .thenAnswer((_) async => deliveries);
+      final notifier = DeliveryListNotifier(
+        deliveriesListRepository: mockRepository,
+      );
 
-        // Act
-        final result = await notifier.loadDeliveriesList();
+      // Act
+      final result = await notifier.loadDeliveriesList();
 
-        // Assert
-        expect(
-          result.when(
-            data: (data) => data,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          deliveries,
-        );
-      },
-    );
+      // Assert
+      expect(
+        result.when(
+          data: (data) => data,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        deliveries,
+      );
+    });
 
     test('addDelivery should add a new delivery to the list', () async {
       // Arrange
       final mockRepository = MockDeliveryListRepository();
       final delivery = Delivery.empty();
       final deliveries = [Delivery.empty(), Delivery.empty()];
-      when(
-        () => mockRepository.createDelivery(delivery),
-      ).thenAnswer((_) async => delivery);
+      when(() => mockRepository.createDelivery(delivery))
+          .thenAnswer((_) async => delivery);
       final notifier = DeliveryListNotifier(
         deliveriesListRepository: mockRepository,
       );
@@ -66,9 +61,8 @@ void main() {
         final delivery = Delivery.empty();
         final updatedDelivery = delivery.copyWith(expanded: true);
         final deliveries = [delivery];
-        when(
-          () => mockRepository.updateDelivery(updatedDelivery),
-        ).thenAnswer((_) async => true);
+        when(() => mockRepository.updateDelivery(updatedDelivery))
+            .thenAnswer((_) async => true);
         final notifier = DeliveryListNotifier(
           deliveriesListRepository: mockRepository,
         );
@@ -96,9 +90,8 @@ void main() {
         // Arrange
         final mockRepository = MockDeliveryListRepository();
         final delivery = Delivery.empty();
-        when(
-          () => mockRepository.openDelivery(delivery),
-        ).thenAnswer((_) async => true);
+        when(() => mockRepository.openDelivery(delivery))
+            .thenAnswer((_) async => true);
         final deliveries = [delivery];
         final notifier = DeliveryListNotifier(
           deliveriesListRepository: mockRepository,
@@ -131,9 +124,8 @@ void main() {
         final mockRepository = MockDeliveryListRepository();
         final delivery = Delivery.empty();
         final deliveries = [delivery];
-        when(
-          () => mockRepository.lockDelivery(delivery),
-        ).thenAnswer((_) async => true);
+        when(() => mockRepository.lockDelivery(delivery))
+            .thenAnswer((_) async => true);
         final notifier = DeliveryListNotifier(
           deliveriesListRepository: mockRepository,
         );
@@ -165,9 +157,8 @@ void main() {
         final mockRepository = MockDeliveryListRepository();
         final delivery = Delivery.empty();
         final deliveries = [delivery];
-        when(
-          () => mockRepository.deliverDelivery(delivery),
-        ).thenAnswer((_) async => true);
+        when(() => mockRepository.deliverDelivery(delivery))
+            .thenAnswer((_) async => true);
         final notifier = DeliveryListNotifier(
           deliveriesListRepository: mockRepository,
         );
@@ -197,9 +188,8 @@ void main() {
       final mockRepository = MockDeliveryListRepository();
       final delivery = Delivery.empty();
       final deliveries = [delivery];
-      when(
-        () => mockRepository.archiveDelivery(delivery.id),
-      ).thenAnswer((_) async => true);
+      when(() => mockRepository.archiveDelivery(delivery.id))
+          .thenAnswer((_) async => true);
       final notifier = DeliveryListNotifier(
         deliveriesListRepository: mockRepository,
       );
@@ -225,9 +215,8 @@ void main() {
       final mockRepository = MockDeliveryListRepository();
       final delivery = Delivery.empty().copyWith(id: '1');
       final deliveries = [delivery];
-      when(
-        () => mockRepository.deleteDelivery(delivery.id),
-      ).thenAnswer((_) async => true);
+      when(() => mockRepository.deleteDelivery(delivery.id))
+          .thenAnswer((_) async => true);
       final notifier = DeliveryListNotifier(
         deliveriesListRepository: mockRepository,
       );

@@ -41,9 +41,10 @@ List<Association> sortedAssociationByKind(
   }
   for (List<Association> list in sortedByGroupement.values) {
     list.sort(
-      (a, b) => removeDiacritics(
-        a.name,
-      ).toLowerCase().compareTo(removeDiacritics(b.name).toLowerCase()),
+      (a, b) =>
+          removeDiacritics(a.name)
+              .toLowerCase()
+              .compareTo(removeDiacritics(b.name).toLowerCase()),
     );
   }
   // Flatten the sorted map values into a single list

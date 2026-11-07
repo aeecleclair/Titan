@@ -13,9 +13,8 @@ void main() {
     test('Should load rooms', () async {
       final mockRecommendationRepository = MockRecommendationRepository();
       final newRecommendation = Recommendation.empty().copyWith(id: "1");
-      when(
-        () => mockRecommendationRepository.getRecommendationList(),
-      ).thenAnswer((_) async => [newRecommendation]);
+      when(() => mockRecommendationRepository.getRecommendationList())
+          .thenAnswer((_) async => [newRecommendation]);
       final recommendationListProvider = RecommendationListNotifier(
         recommendationRepository: mockRecommendationRepository,
       );
@@ -33,9 +32,8 @@ void main() {
     test('Should add a recommendation', () async {
       final mockRecommendationRepository = MockRecommendationRepository();
       final newRecommendation = Recommendation.empty().copyWith(id: "1");
-      when(
-        () => mockRecommendationRepository.getRecommendationList(),
-      ).thenAnswer((_) async => [Recommendation.empty()]);
+      when(() => mockRecommendationRepository.getRecommendationList())
+          .thenAnswer((_) async => [Recommendation.empty()]);
       when(
         () => mockRecommendationRepository.createRecommendation(
           newRecommendation,
@@ -54,9 +52,8 @@ void main() {
     test('Should update a recommendation', () async {
       final mockRecommendationRepository = MockRecommendationRepository();
       final newRecommendation = Recommendation.empty().copyWith(id: "1");
-      when(
-        () => mockRecommendationRepository.getRecommendationList(),
-      ).thenAnswer((_) async => [Recommendation.empty(), newRecommendation]);
+      when(() => mockRecommendationRepository.getRecommendationList())
+          .thenAnswer((_) async => [Recommendation.empty(), newRecommendation]);
       when(
         () => mockRecommendationRepository.updateRecommendation(
           newRecommendation,
@@ -75,9 +72,8 @@ void main() {
     test('Should delete a recommendation', () async {
       final mockRecommendationRepository = MockRecommendationRepository();
       final newRecommendation = Recommendation.empty().copyWith(id: "1");
-      when(
-        () => mockRecommendationRepository.getRecommendationList(),
-      ).thenAnswer((_) async => [Recommendation.empty(), newRecommendation]);
+      when(() => mockRecommendationRepository.getRecommendationList())
+          .thenAnswer((_) async => [Recommendation.empty(), newRecommendation]);
       when(
         () => mockRecommendationRepository.deleteRecommendation(
           newRecommendation.id!,

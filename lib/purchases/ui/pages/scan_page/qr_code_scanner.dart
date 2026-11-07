@@ -50,8 +50,7 @@ class QRCodeScannerScreenState extends ConsumerState<QRCodeScannerScreen>
           context: context,
           builder: (context) => CustomDialogBox(
             title: 'Permission caméra requise',
-            descriptions:
-                'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+            descriptions: 'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
             onYes: () async {
               Navigator.of(context).pop();
               await openAppSettings();

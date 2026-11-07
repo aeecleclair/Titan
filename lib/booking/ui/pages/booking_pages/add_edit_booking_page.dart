@@ -200,9 +200,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                               Text(
                                 BookingTextConstants.recurrenceDays,
                                 style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimary,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary,
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -228,12 +228,12 @@ class AddEditBookingPage extends HookConsumerWidget {
                                               ),
                                             ),
                                             Checkbox(
-                                              checkColor: Theme.of(
-                                                context,
-                                              ).colorScheme.onSecondary,
-                                              activeColor: Theme.of(
-                                                context,
-                                              ).colorScheme.secondary,
+                                              checkColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSecondary,
+                                              activeColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
                                               value: selectedDays.contains(e),
                                               onChanged: (value) {
                                                 selectedDaysNotifier.toggle(e);
@@ -249,9 +249,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                               Text(
                                 BookingTextConstants.interval,
                                 style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimary,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary,
                                 ),
                               ),
                               const SizedBox(height: 10),

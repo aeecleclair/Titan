@@ -12,9 +12,8 @@ class AssociationMemberRepository extends Repository {
     String year,
   ) async {
     return List<CompleteMember>.from(
-      (await getList(
-        suffix: "$associationId/members/$year",
-      )).map((x) => CompleteMember.fromJson(x)),
+      (await getList(suffix: "$associationId/members/$year"))
+          .map((x) => CompleteMember.fromJson(x)),
     );
   }
 

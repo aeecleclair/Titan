@@ -92,9 +92,9 @@ class RightPanel extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       if (screenShot.title.isNotEmpty)
@@ -103,9 +103,9 @@ class RightPanel extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       Expanded(
@@ -115,9 +115,9 @@ class RightPanel extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       ),
@@ -213,9 +213,9 @@ class RightPanel extends HookConsumerWidget {
                     count: screenShots.length,
                     effect: WormEffect(
                       dotColor: Theme.of(context).colorScheme.primary,
-                      activeDotColor: Theme.of(
-                        context,
-                      ).colorScheme.secondaryContainer,
+                      activeDotColor: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer,
                       dotWidth: 20,
                       dotHeight: 20,
                     ),

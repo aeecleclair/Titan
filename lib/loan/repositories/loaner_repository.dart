@@ -16,9 +16,8 @@ class LoanerRepository extends Repository {
 
   Future<List<Loaner>> getMyLoaner() async {
     return List<Loaner>.from(
-      (await getList(
-        suffix: "users/me/loaners",
-      )).map((x) => Loaner.fromJson(x)),
+      (await getList(suffix: "users/me/loaners"))
+          .map((x) => Loaner.fromJson(x)),
     );
   }
 

@@ -117,8 +117,7 @@ class AccountCard extends HookConsumerWidget {
                       builder: (context) {
                         return DeviceDialogBox(
                           title: 'Appareil non enregistré',
-                          descriptions:
-                              'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
+                          descriptions: 'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
                           buttonText: 'Accéder à la page',
                           onClick: () {
                             QR.to(PaymentRouter.root + PaymentRouter.devices);
@@ -140,8 +139,7 @@ class AccountCard extends HookConsumerWidget {
                         builder: (context) {
                           return DeviceDialogBox(
                             title: 'Appareil non activé',
-                            descriptions:
-                                'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
+                            descriptions: 'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
                             buttonText: 'Accéder à la page',
                             onClick: () {
                               QR.to(PaymentRouter.root + PaymentRouter.devices);
@@ -155,8 +153,7 @@ class AccountCard extends HookConsumerWidget {
                         builder: (context) {
                           return DeviceDialogBox(
                             title: 'Appareil révoqué',
-                            descriptions:
-                                'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
+                            descriptions: 'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
                             buttonText: 'Accéder à la page',
                             onClick: () {
                               QR.to(PaymentRouter.root + PaymentRouter.devices);

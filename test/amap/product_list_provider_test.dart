@@ -12,9 +12,8 @@ void main() {
     test('loadProductList', () async {
       final mockProductListRepository = MockProductListRepository();
       final productList = [Product.empty().copyWith(id: "1")];
-      when(
-        () => mockProductListRepository.getProductList(),
-      ).thenAnswer((_) async => productList);
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => productList);
       final productListNotifier = ProductListNotifier(
         productListRepository: mockProductListRepository,
       );
@@ -33,12 +32,10 @@ void main() {
     test('createProduct', () async {
       final mockProductListRepository = MockProductListRepository();
       final product = Product.empty().copyWith(id: "1");
-      when(
-        () => mockProductListRepository.getProductList(),
-      ).thenAnswer((_) async => [product]);
-      when(
-        () => mockProductListRepository.createProduct(product),
-      ).thenAnswer((_) async => product);
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.createProduct(product))
+          .thenAnswer((_) async => product);
       final productListNotifier = ProductListNotifier(
         productListRepository: mockProductListRepository,
       );
@@ -50,12 +47,10 @@ void main() {
     test('updateProduct', () async {
       final mockProductListRepository = MockProductListRepository();
       final product = Product.empty().copyWith(id: "1");
-      when(
-        () => mockProductListRepository.getProductList(),
-      ).thenAnswer((_) async => [product]);
-      when(
-        () => mockProductListRepository.updateProduct(product),
-      ).thenAnswer((_) async => true);
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.updateProduct(product))
+          .thenAnswer((_) async => true);
       final productListNotifier = ProductListNotifier(
         productListRepository: mockProductListRepository,
       );
@@ -67,12 +62,10 @@ void main() {
     test('deleteProduct', () async {
       final mockProductListRepository = MockProductListRepository();
       final product = Product.empty().copyWith(id: "1");
-      when(
-        () => mockProductListRepository.getProductList(),
-      ).thenAnswer((_) async => [product]);
-      when(
-        () => mockProductListRepository.deleteProduct(product.id),
-      ).thenAnswer((_) async => true);
+      when(() => mockProductListRepository.getProductList())
+          .thenAnswer((_) async => [product]);
+      when(() => mockProductListRepository.deleteProduct(product.id))
+          .thenAnswer((_) async => true);
       final productListNotifier = ProductListNotifier(
         productListRepository: mockProductListRepository,
       );

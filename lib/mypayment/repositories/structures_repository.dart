@@ -39,9 +39,8 @@ class StructuresRepository extends Repository {
 
   Future<List<Store>> getStructureStores(String structureId) async {
     return List<Store>.from(
-      (await getList(
-        suffix: "/$structureId/stores",
-      )).map((e) => Store.fromJson(e)),
+      (await getList(suffix: "/$structureId/stores"))
+          .map((e) => Store.fromJson(e)),
     );
   }
 

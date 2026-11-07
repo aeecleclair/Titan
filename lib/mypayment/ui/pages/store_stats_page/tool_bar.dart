@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'dart:typed_data';
 
 import 'package:file_saver/file_saver.dart';
@@ -35,9 +36,8 @@ class ToolBar extends ConsumerWidget {
     Widget builder(BuildContext context, Widget? child) {
       return Theme(
         data: Theme.of(context).copyWith(
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-            primary: MyPaymentColors(isDarkTheme).gradient1,
-          ),
+          colorScheme: Theme.of(context).colorScheme
+              .copyWith(primary: MyPaymentColors(isDarkTheme).gradient1),
         ),
         child: child!,
       );
@@ -77,9 +77,8 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: MyPaymentColors(
-                          isDarkTheme,
-                        ).gradient1.withAlpha(50),
+                        color: MyPaymentColors(isDarkTheme).gradient1
+                            .withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -114,9 +113,8 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: MyPaymentColors(
-                          isDarkTheme,
-                        ).gradient1.withAlpha(50),
+                        color: MyPaymentColors(isDarkTheme).gradient1
+                            .withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -168,9 +166,8 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: MyPaymentColors(
-                          isDarkTheme,
-                        ).gradient1.withAlpha(50),
+                        color: MyPaymentColors(isDarkTheme).gradient1
+                            .withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -205,9 +202,8 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: MyPaymentColors(
-                          isDarkTheme,
-                        ).gradient1.withAlpha(50),
+                        color: MyPaymentColors(isDarkTheme).gradient1
+                            .withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(

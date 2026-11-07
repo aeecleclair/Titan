@@ -188,9 +188,9 @@ class SessionCard extends HookConsumerWidget {
                                     (selected &&
                                         session.start.isAfter(DateTime.now()))
                                     ? Border.all(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onPrimary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                         width: 3,
                                       )
                                     : null,
@@ -205,9 +205,9 @@ class SessionCard extends HookConsumerWidget {
                                   width: 80,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.secondary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary,
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(30),
                                       bottomLeft: Radius.circular(30),
@@ -217,9 +217,9 @@ class SessionCard extends HookConsumerWidget {
                                     child: HeroIcon(
                                       HeroIcons.bell,
                                       size: 30,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primaryFixed,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryFixed,
                                     ),
                                   ),
                                 ),

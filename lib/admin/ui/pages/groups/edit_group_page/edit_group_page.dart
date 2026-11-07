@@ -74,9 +74,9 @@ class EditGroupPage extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: TextEntry(
                             controller: name,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer,
                             label: AdminTextConstants.name,
                             suffixIcon: const HeroIcon(HeroIcons.pencil),
                             enabledColor: Colors.transparent,
@@ -87,9 +87,9 @@ class EditGroupPage extends HookConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: TextEntry(
                             controller: description,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer,
                             label: AdminTextConstants.description,
                             suffixIcon: const HeroIcon(HeroIcons.pencil),
                             enabledColor: Colors.transparent,
@@ -130,9 +130,9 @@ class EditGroupPage extends HookConsumerWidget {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onPrimaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                             ),
                           ),
                         ),

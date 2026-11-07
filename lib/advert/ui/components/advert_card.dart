@@ -180,9 +180,9 @@ class AdvertCard extends HookConsumerWidget {
                                       maxLines: 1,
                                       minFontSize: 15,
                                       style: TextStyle(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSurface,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                       ),
                                     ),
                                   ),
@@ -196,9 +196,9 @@ class AdvertCard extends HookConsumerWidget {
                                 minFontSize: 13,
                                 maxFontSize: 15,
                                 style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface,
                                   fontSize: 15,
                                 ),
                               ),
@@ -244,9 +244,9 @@ class AdvertCard extends HookConsumerWidget {
                                   DateFormat('dd').format(advert.date),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     height: 1.0,
@@ -259,9 +259,9 @@ class AdvertCard extends HookConsumerWidget {
                                       1],
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface,
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     height: 1.0,

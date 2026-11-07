@@ -275,9 +275,8 @@ class EditUserPage extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryFixed.withValues(alpha: 0.5),
+                              color: Theme.of(context).colorScheme.primaryFixed
+                                  .withValues(alpha: 0.5),
                               spreadRadius: 1,
                               blurRadius: 7,
                               offset: const Offset(0, 3),
@@ -288,9 +287,9 @@ class EditUserPage extends HookConsumerWidget {
                         child: HeroIcon(
                           HeroIcons.calendar,
                           size: 25,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -328,9 +327,9 @@ class EditUserPage extends HookConsumerWidget {
                         },
                         style: TextStyle(
                           fontSize: 16,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.secondaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondaryContainer,
                         ),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -339,17 +338,17 @@ class EditUserPage extends HookConsumerWidget {
                           isDense: true,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                             ),
                           ),
                           label: Text(
                             SettingsTextConstants.floor,
                             style: TextStyle(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               height: 0.5,
                               fontWeight: FontWeight.bold,
                             ),

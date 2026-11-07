@@ -103,9 +103,9 @@ class DeviceDialogBox extends ConsumerWidget {
                                   borderRadius: BorderRadius.circular(10),
                                   gradient: LinearGradient(
                                     colors: [
-                                      Theme.of(
-                                        context,
-                                      ).colorScheme.secondaryContainer,
+                                      Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
                                       Theme.of(context).colorScheme.secondary,
                                     ],
                                     begin: Alignment.topLeft,
@@ -123,9 +123,9 @@ class DeviceDialogBox extends ConsumerWidget {
                                   child: Text(
                                     buttonText!,
                                     style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSecondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -155,9 +155,8 @@ class DeviceDialogBox extends ConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: MyPaymentColors(
-                            isDarkTheme,
-                          ).redGradient2.withValues(alpha: 0.3),
+                          color: MyPaymentColors(isDarkTheme).redGradient2
+                              .withValues(alpha: 0.3),
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),

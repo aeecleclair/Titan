@@ -136,8 +136,7 @@ class DevicesPage extends HookConsumerWidget {
                                   return DeviceDialogBox(
                                     title:
                                         'Demande d\'activation de l\'appareil',
-                                    descriptions:
-                                        "La demande d'activation est prise en compte, veuillez consulter votre boite mail pour finaliser la démarche",
+                                    descriptions: "La demande d'activation est prise en compte, veuillez consulter votre boite mail pour finaliser la démarche",
                                     buttonText: "Ok",
                                     onClick: () {
                                       Navigator.of(context).pop();
@@ -167,8 +166,7 @@ class DevicesPage extends HookConsumerWidget {
                             builder: (context) {
                               return CustomDialogBox(
                                 title: "Révoquer l'appareil ?",
-                                descriptions:
-                                    "Vous ne pourrez plus utiliser cet appareil pour les paiements",
+                                descriptions: "Vous ne pourrez plus utiliser cet appareil pour les paiements",
                                 onYes: () async {
                                   tokenExpireWrapper(ref, () async {
                                     final value = await devicesNotifier
@@ -229,9 +227,8 @@ class DevicesPage extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
-                                color: MyPaymentColors(
-                                  isDarkTheme,
-                                ).gradient1.withValues(alpha: 0.2),
+                                color: MyPaymentColors(isDarkTheme).gradient1
+                                    .withValues(alpha: 0.2),
                                 spreadRadius: 1,
                                 blurRadius: 3,
                                 offset: const Offset(
@@ -284,8 +281,7 @@ class DevicesPage extends HookConsumerWidget {
                                 builder: (context) {
                                   return CustomDialogBox(
                                     title: "Révoquer l'appareil ?",
-                                    descriptions:
-                                        "Vous ne pourrez plus utiliser cet appareil pour les paiements",
+                                    descriptions: "Vous ne pourrez plus utiliser cet appareil pour les paiements",
                                     onYes: () async {
                                       tokenExpireWrapper(ref, () async {
                                         final value = await devicesNotifier

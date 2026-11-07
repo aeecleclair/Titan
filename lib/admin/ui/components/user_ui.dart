@@ -38,9 +38,8 @@ class UserUi extends HookConsumerWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.secondaryContainer.withValues(alpha: 0.4),
+                    color: Theme.of(context).colorScheme.secondaryContainer
+                        .withValues(alpha: 0.4),
                     offset: const Offset(2, 3),
                     blurRadius: 5,
                   ),

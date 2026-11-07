@@ -43,9 +43,8 @@ class PresentationPage extends HookConsumerWidget {
                             ..shader =
                                 RadialGradient(
                                   colors: [
-                                    AMAPColors(
-                                      isDarkTheme,
-                                    ).greenGradientPrimary,
+                                    AMAPColors(isDarkTheme)
+                                        .greenGradientPrimary,
                                     AMAPColors(isDarkTheme).textOnPrimary,
                                   ],
                                   center: Alignment.topLeft,
@@ -89,9 +88,8 @@ class PresentationPage extends HookConsumerWidget {
                             ..shader =
                                 RadialGradient(
                                   colors: [
-                                    AMAPColors(
-                                      isDarkTheme,
-                                    ).greenGradientPrimary,
+                                    AMAPColors(isDarkTheme)
+                                        .greenGradientPrimary,
                                     AMAPColors(isDarkTheme).textOnPrimary,
                                   ],
                                   center: Alignment.topLeft,

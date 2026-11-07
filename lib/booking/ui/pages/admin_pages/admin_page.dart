@@ -109,9 +109,9 @@ class AdminPage extends HookConsumerWidget {
                               child: Text(
                                 capitalize(e.name),
                                 style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -183,9 +183,9 @@ class AdminPage extends HookConsumerWidget {
                               child: Text(
                                 e.name,
                                 style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

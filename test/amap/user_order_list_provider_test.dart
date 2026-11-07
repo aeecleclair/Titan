@@ -32,9 +32,8 @@ void main() {
         Order.empty().copyWith(id: '1'),
         Order.empty().copyWith(id: '2'),
       ];
-      when(
-        () => userRepository.getOrderList(userId),
-      ).thenAnswer((_) async => orders);
+      when(() => userRepository.getOrderList(userId))
+          .thenAnswer((_) async => orders);
 
       final result = await notifier.loadOrderList(userId);
 
@@ -54,9 +53,8 @@ void main() {
         Order.empty().copyWith(id: '1'),
         Order.empty().copyWith(id: '2'),
       ];
-      when(
-        () => orderListRepository.getDeliveryOrderList(deliveryId),
-      ).thenAnswer((_) async => orders);
+      when(() => orderListRepository.getDeliveryOrderList(deliveryId))
+          .thenAnswer((_) async => orders);
 
       final result = await notifier.loadDeliveryOrderList(deliveryId);
 
@@ -73,9 +71,8 @@ void main() {
     test('addOrder', () async {
       final order = Order.empty().copyWith(id: '1');
       notifier.state = AsyncValue.data([order]);
-      when(
-        () => orderListRepository.createOrder(order),
-      ).thenAnswer((_) async => order);
+      when(() => orderListRepository.createOrder(order))
+          .thenAnswer((_) async => order);
 
       final result = await notifier.addOrder(order);
 
@@ -85,9 +82,8 @@ void main() {
     test('updateOrder', () async {
       final order = Order.empty().copyWith(id: '1');
       notifier.state = AsyncValue.data([order]);
-      when(
-        () => orderListRepository.updateOrder(order),
-      ).thenAnswer((_) async => true);
+      when(() => orderListRepository.updateOrder(order))
+          .thenAnswer((_) async => true);
 
       final result = await notifier.updateOrder(order);
 
@@ -97,9 +93,8 @@ void main() {
     test('deleteOrder', () async {
       final order = Order.empty().copyWith(id: '1');
       notifier.state = AsyncValue.data([order]);
-      when(
-        () => orderListRepository.deleteOrder(order.id),
-      ).thenAnswer((_) async => true);
+      when(() => orderListRepository.deleteOrder(order.id))
+          .thenAnswer((_) async => true);
 
       final result = await notifier.deleteOrder(order);
 

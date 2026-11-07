@@ -35,9 +35,8 @@ void main() {
           listType: ListType.blank,
         ),
       ];
-      when(
-        () => contenderListNotifier.contenderRepository.getContenders(),
-      ).thenAnswer((_) async => contenders);
+      when(() => contenderListNotifier.contenderRepository.getContenders())
+          .thenAnswer((_) async => contenders);
       await contenderListNotifier.loadContenderList();
       expect(
         contenderListNotifier.state.when(

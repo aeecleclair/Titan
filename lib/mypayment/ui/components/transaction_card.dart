@@ -24,9 +24,7 @@ class TransactionCard extends ConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final HeroIcons icon;
     final isDarkTheme = ref.watch(themeProvider);
-    final canceledColor = const Color(
-      0xffcc4619,
-    ); // It's OK to hard-code this one: a single-occurrence, renders well in both themes
+    final canceledColor = const Color(0xffcc4619); // It's OK to hard-code this one: a single-occurrence, renders well in both themes
 
     switch (transaction.type) {
       case HistoryType.given:
@@ -153,9 +151,8 @@ class TransactionCard extends ConsumerWidget {
                         transaction.status == TransactionStatus.refunded)
                     ? TextDecoration.none
                     : TextDecoration.lineThrough,
-                decorationColor: MyPaymentColors(
-                  isDarkTheme,
-                ).secondaryGreen.withValues(alpha: 0.8),
+                decorationColor: MyPaymentColors(isDarkTheme).secondaryGreen
+                    .withValues(alpha: 0.8),
                 decorationThickness: 2.85,
               ),
             ),

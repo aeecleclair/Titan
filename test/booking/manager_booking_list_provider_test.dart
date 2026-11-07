@@ -12,9 +12,8 @@ void main() {
   group('BookingListProvider', () {
     test('Should load manager bookings', () async {
       final mockBookingRepository = MockBookingRepository();
-      when(
-        () => mockBookingRepository.getUserManageBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), Booking.empty()]);
+      when(() => mockBookingRepository.getUserManageBookingList())
+          .thenAnswer((_) async => [Booking.empty(), Booking.empty()]);
       final managerBookingListProvider = ManagerBookingListProvider(
         bookingRepository: mockBookingRepository,
       );
@@ -30,12 +29,10 @@ void main() {
     test('Should update a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(
-        () => mockBookingRepository.getUserManageBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(
-        () => mockBookingRepository.updateBooking(newBooking),
-      ).thenAnswer((_) async => true);
+      when(() => mockBookingRepository.getUserManageBookingList())
+          .thenAnswer((_) async => [Booking.empty(), newBooking]);
+      when(() => mockBookingRepository.updateBooking(newBooking))
+          .thenAnswer((_) async => true);
       final bookingListProvider = ManagerBookingListProvider(
         bookingRepository: mockBookingRepository,
       );
@@ -49,9 +46,8 @@ void main() {
       () async {
         final mockBookingRepository = MockBookingRepository();
         final newBooking = Booking.empty().copyWith(id: "1");
-        when(
-          () => mockBookingRepository.getUserManageBookingList(),
-        ).thenAnswer((_) async => [Booking.empty(), newBooking]);
+        when(() => mockBookingRepository.getUserManageBookingList())
+            .thenAnswer((_) async => [Booking.empty(), newBooking]);
         when(
           () => mockBookingRepository.confirmBooking(
             newBooking,

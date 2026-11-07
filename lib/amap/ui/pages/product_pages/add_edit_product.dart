@@ -110,9 +110,8 @@ class AddEditProduct extends HookConsumerWidget {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: AMAPColors(
-                                isDarkTheme,
-                              ).greenGradientSecondary,
+                              color: AMAPColors(isDarkTheme)
+                                  .greenGradientSecondary,
                             ),
                           ),
                         ),

@@ -12,9 +12,8 @@ void main() {
     test('Should load rooms', () async {
       final mockRoomRepository = MockRoomRepository();
       final newRoom = Room.empty().copyWith(id: "1");
-      when(
-        () => mockRoomRepository.getRoomList(),
-      ).thenAnswer((_) async => [newRoom]);
+      when(() => mockRoomRepository.getRoomList())
+          .thenAnswer((_) async => [newRoom]);
       final roomListProvider = RoomListNotifier(
         roomRepository: mockRoomRepository,
       );
@@ -26,12 +25,10 @@ void main() {
     test('Should add a room', () async {
       final mockRoomRepository = MockRoomRepository();
       final newRoom = Room.empty().copyWith(id: "1");
-      when(
-        () => mockRoomRepository.getRoomList(),
-      ).thenAnswer((_) async => [Room.empty()]);
-      when(
-        () => mockRoomRepository.createRoom(newRoom),
-      ).thenAnswer((_) async => newRoom);
+      when(() => mockRoomRepository.getRoomList())
+          .thenAnswer((_) async => [Room.empty()]);
+      when(() => mockRoomRepository.createRoom(newRoom))
+          .thenAnswer((_) async => newRoom);
       final roomListProvider = RoomListNotifier(
         roomRepository: mockRoomRepository,
       );
@@ -43,12 +40,10 @@ void main() {
     test('Should update a room', () async {
       final mockRoomRepository = MockRoomRepository();
       final newRoom = Room.empty().copyWith(id: "1");
-      when(
-        () => mockRoomRepository.getRoomList(),
-      ).thenAnswer((_) async => [Room.empty(), newRoom]);
-      when(
-        () => mockRoomRepository.updateRoom(newRoom),
-      ).thenAnswer((_) async => true);
+      when(() => mockRoomRepository.getRoomList())
+          .thenAnswer((_) async => [Room.empty(), newRoom]);
+      when(() => mockRoomRepository.updateRoom(newRoom))
+          .thenAnswer((_) async => true);
       final roomListProvider = RoomListNotifier(
         roomRepository: mockRoomRepository,
       );
@@ -60,12 +55,10 @@ void main() {
     test('Should delete a room', () async {
       final mockRoomRepository = MockRoomRepository();
       final newRoom = Room.empty().copyWith(id: "1");
-      when(
-        () => mockRoomRepository.getRoomList(),
-      ).thenAnswer((_) async => [Room.empty(), newRoom]);
-      when(
-        () => mockRoomRepository.deleteRoom(newRoom.id),
-      ).thenAnswer((_) async => true);
+      when(() => mockRoomRepository.getRoomList())
+          .thenAnswer((_) async => [Room.empty(), newRoom]);
+      when(() => mockRoomRepository.deleteRoom(newRoom.id))
+          .thenAnswer((_) async => true);
       final roomListProvider = RoomListNotifier(
         roomRepository: mockRoomRepository,
       );

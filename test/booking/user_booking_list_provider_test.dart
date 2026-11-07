@@ -26,9 +26,8 @@ void main() {
         Booking.empty().copyWith(id: '1'),
         Booking.empty().copyWith(id: '2'),
       ];
-      when(
-        () => bookingRepository.getUserBookingList(),
-      ).thenAnswer((_) async => bookings);
+      when(() => bookingRepository.getUserBookingList())
+          .thenAnswer((_) async => bookings);
 
       final result = await provider.loadUserBookings();
 
@@ -39,12 +38,10 @@ void main() {
     test('Should add a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(
-        () => mockBookingRepository.getUserBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), Booking.empty()]);
-      when(
-        () => mockBookingRepository.createBooking(newBooking),
-      ).thenAnswer((_) async => newBooking);
+      when(() => mockBookingRepository.getUserBookingList())
+          .thenAnswer((_) async => [Booking.empty(), Booking.empty()]);
+      when(() => mockBookingRepository.createBooking(newBooking))
+          .thenAnswer((_) async => newBooking);
       final bookingListProvider = UserBookingListProvider(
         bookingRepository: mockBookingRepository,
       );
@@ -56,12 +53,10 @@ void main() {
     test('Should update a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(
-        () => mockBookingRepository.getUserBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(
-        () => mockBookingRepository.updateBooking(newBooking),
-      ).thenAnswer((_) async => true);
+      when(() => mockBookingRepository.getUserBookingList())
+          .thenAnswer((_) async => [Booking.empty(), newBooking]);
+      when(() => mockBookingRepository.updateBooking(newBooking))
+          .thenAnswer((_) async => true);
       final bookingListProvider = UserBookingListProvider(
         bookingRepository: mockBookingRepository,
       );
@@ -73,12 +68,10 @@ void main() {
     test('Should delete a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(
-        () => mockBookingRepository.getUserBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(
-        () => mockBookingRepository.deleteBooking(newBooking.id),
-      ).thenAnswer((_) async => true);
+      when(() => mockBookingRepository.getUserBookingList())
+          .thenAnswer((_) async => [Booking.empty(), newBooking]);
+      when(() => mockBookingRepository.deleteBooking(newBooking.id))
+          .thenAnswer((_) async => true);
       final bookingListProvider = UserBookingListProvider(
         bookingRepository: mockBookingRepository,
       );

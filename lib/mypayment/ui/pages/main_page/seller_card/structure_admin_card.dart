@@ -39,9 +39,8 @@ class StructureAdminCard extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 27,
-                  backgroundColor: MyPaymentColors(
-                    isDarkTheme,
-                  ).backgroundGradient1,
+                  backgroundColor: MyPaymentColors(isDarkTheme)
+                      .backgroundGradient1,
                 ),
                 SizedBox(width: 15),
                 Expanded(

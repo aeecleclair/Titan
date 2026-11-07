@@ -25,9 +25,8 @@ void main() {
         user: user,
         lastOrderDate: DateTime(2025),
       );
-      when(
-        () => mockRepository.getCashByUser('123'),
-      ).thenAnswer((_) async => cash);
+      when(() => mockRepository.getCashByUser('123'))
+          .thenAnswer((_) async => cash);
 
       final result = await notifier.loadCashByUser(user.id);
 

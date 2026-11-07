@@ -31,9 +31,8 @@ void main() {
           minimalTitanVersion: 1,
           ready: true,
         );
-        when(
-          () => versionRepository.getVersion(),
-        ).thenAnswer((_) async => version);
+        when(() => versionRepository.getVersion())
+            .thenAnswer((_) async => version);
 
         final result = await versionVerifierNotifier.loadVersion();
 
@@ -53,18 +52,15 @@ void main() {
       },
     );
 
-    test(
-      'should call getVersion method of VersionRepository when loadVersion is called',
-      () async {
-        when(() => versionRepository.getVersion()).thenAnswer(
-          (_) async =>
-              Version(version: '1.0.0', minimalTitanVersion: 1, ready: true),
-        );
+    test('should call getVersion method of VersionRepository when loadVersion is called', () async {
+      when(() => versionRepository.getVersion()).thenAnswer(
+        (_) async =>
+            Version(version: '1.0.0', minimalTitanVersion: 1, ready: true),
+      );
 
-        await versionVerifierNotifier.loadVersion();
+      await versionVerifierNotifier.loadVersion();
 
-        verify(() => versionRepository.getVersion()).called(1);
-      },
-    );
+      verify(() => versionRepository.getVersion()).called(1);
+    });
   });
 }

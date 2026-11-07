@@ -15,9 +15,8 @@ void main() {
         Booking.empty().copyWith(id: '1'),
         Booking.empty().copyWith(id: '2'),
       ];
-      when(
-        () => mockRepository.getConfirmedBookingList(),
-      ).thenAnswer((_) async => bookings);
+      when(() => mockRepository.getConfirmedBookingList())
+          .thenAnswer((_) async => bookings);
 
       final provider = ConfirmedBookingListProvider(
         bookingRepository: mockRepository,
@@ -37,9 +36,8 @@ void main() {
         Booking.empty().copyWith(id: '2'),
       ];
       final newBooking = Booking.empty().copyWith(id: '3');
-      when(
-        () => mockRepository.getConfirmedBookingList(),
-      ).thenAnswer((_) async => bookings.sublist(0));
+      when(() => mockRepository.getConfirmedBookingList())
+          .thenAnswer((_) async => bookings.sublist(0));
 
       final provider = ConfirmedBookingListProvider(
         bookingRepository: mockRepository,
@@ -61,9 +59,8 @@ void main() {
         Booking.empty().copyWith(id: '2'),
       ];
       final booking = bookings.first;
-      when(
-        () => mockRepository.getConfirmedBookingList(),
-      ).thenAnswer((_) async => bookings.sublist(0));
+      when(() => mockRepository.getConfirmedBookingList())
+          .thenAnswer((_) async => bookings.sublist(0));
 
       final provider = ConfirmedBookingListProvider(
         bookingRepository: mockRepository,
@@ -85,9 +82,8 @@ void main() {
         Booking.empty().copyWith(id: '2'),
       ];
       final booking = bookings.first.copyWith(reason: 'Updated');
-      when(
-        () => mockRepository.getConfirmedBookingList(),
-      ).thenAnswer((_) async => bookings.sublist(0));
+      when(() => mockRepository.getConfirmedBookingList())
+          .thenAnswer((_) async => bookings.sublist(0));
 
       final provider = ConfirmedBookingListProvider(
         bookingRepository: mockRepository,

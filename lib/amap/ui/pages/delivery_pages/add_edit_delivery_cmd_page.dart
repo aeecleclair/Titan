@@ -223,9 +223,8 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      loaderColor: AMAPColors(
-                        isDarkTheme,
-                      ).greenGradientSecondary,
+                      loaderColor: AMAPColors(isDarkTheme)
+                          .greenGradientSecondary,
                     ),
                     const SizedBox(height: 40),
                   ],

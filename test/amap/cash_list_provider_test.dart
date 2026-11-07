@@ -18,9 +18,8 @@ void main() {
         final mockRepository = MockCashRepository();
         final cashProvider = CashListProvider(cashRepository: mockRepository);
 
-        when(
-          () => mockRepository.getCashList(),
-        ).thenAnswer((_) async => [Cash.empty().copyWith(balance: 100)]);
+        when(() => mockRepository.getCashList())
+            .thenAnswer((_) async => [Cash.empty().copyWith(balance: 100)]);
 
         final result = await cashProvider.loadCashList();
 
@@ -72,9 +71,8 @@ void main() {
         final cash = Cash.empty().copyWith(balance: 100);
         cashProvider.state = AsyncData([cash]);
 
-        when(
-          () => mockRepository.updateCash(cash),
-        ).thenAnswer((_) async => true);
+        when(() => mockRepository.updateCash(cash))
+            .thenAnswer((_) async => true);
 
         final result = await cashProvider.updateCash(cash, 50);
 
@@ -151,9 +149,8 @@ void main() {
           ),
         ];
 
-        when(
-          () => mockRepository.getCashList(),
-        ).thenAnswer((_) async => cashList);
+        when(() => mockRepository.getCashList())
+            .thenAnswer((_) async => cashList);
         await cashProvider.loadCashList();
 
         final result1 = await cashProvider.filterCashList('j');
@@ -252,9 +249,8 @@ void main() {
       final cashProvider = CashListProvider(cashRepository: mockRepository);
       final cashList = [Cash.empty().copyWith(balance: 100)];
 
-      when(
-        () => mockRepository.getCashList(),
-      ).thenAnswer((_) async => cashList);
+      when(() => mockRepository.getCashList())
+          .thenAnswer((_) async => cashList);
 
       final result = await cashProvider.loadCashList();
       final result4 = await cashProvider.filterCashList('smith');

@@ -24,9 +24,8 @@ void main() {
         Loaner.empty().copyWith(id: '1', name: 'John'),
         Loaner.empty().copyWith(id: '2', name: 'Jane'),
       ];
-      when(
-        () => loanerRepository.getLoanerList(),
-      ).thenAnswer((_) async => loanerList);
+      when(() => loanerRepository.getLoanerList())
+          .thenAnswer((_) async => loanerList);
 
       final result = await loanerListNotifier.loadLoanerList();
 
@@ -42,9 +41,8 @@ void main() {
 
     test('addLoaner', () async {
       final loaner = Loaner.empty().copyWith(id: '1', name: 'John');
-      when(
-        () => loanerRepository.createLoaner(loaner),
-      ).thenAnswer((_) async => loaner);
+      when(() => loanerRepository.createLoaner(loaner))
+          .thenAnswer((_) async => loaner);
       loanerListNotifier.state = AsyncValue.data([Loaner.empty()]);
 
       final result = await loanerListNotifier.addLoaner(loaner);
@@ -54,9 +52,8 @@ void main() {
 
     test('updateLoaner', () async {
       final loaner = Loaner.empty().copyWith(id: '1', name: 'John');
-      when(
-        () => loanerRepository.updateLoaner(loaner),
-      ).thenAnswer((_) async => true);
+      when(() => loanerRepository.updateLoaner(loaner))
+          .thenAnswer((_) async => true);
       loanerListNotifier.state = AsyncValue.data([loaner]);
 
       final result = await loanerListNotifier.updateLoaner(loaner);
@@ -66,9 +63,8 @@ void main() {
 
     test('deleteLoaner', () async {
       final loaner = Loaner.empty().copyWith(id: '1', name: 'John');
-      when(
-        () => loanerRepository.deleteLoaner(loaner.id),
-      ).thenAnswer((_) async => true);
+      when(() => loanerRepository.deleteLoaner(loaner.id))
+          .thenAnswer((_) async => true);
       loanerListNotifier.state = AsyncValue.data([loaner]);
 
       final result = await loanerListNotifier.deleteLoaner(loaner);

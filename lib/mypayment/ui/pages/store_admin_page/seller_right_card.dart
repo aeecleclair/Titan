@@ -180,9 +180,8 @@ class SellerRightCard extends ConsumerWidget {
                                 Text(
                                   labels[i],
                                   style: TextStyle(
-                                    color: MyPaymentColors(
-                                      isDarkTheme,
-                                    ).gradient3,
+                                    color: MyPaymentColors(isDarkTheme)
+                                        .gradient3,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -190,9 +189,8 @@ class SellerRightCard extends ConsumerWidget {
                                 if (canEdit && i < 4)
                                   Checkbox(
                                     value: sellerRights[i],
-                                    activeColor: MyPaymentColors(
-                                      isDarkTheme,
-                                    ).gradient3,
+                                    activeColor: MyPaymentColors(isDarkTheme)
+                                        .gradient3,
                                     visualDensity: const VisualDensity(
                                       horizontal: -4,
                                       vertical: -4,
@@ -244,8 +242,7 @@ class SellerRightCard extends ConsumerWidget {
                               context: context,
                               builder: (context) => CustomDialogBox(
                                 title: "Supprimer le vendeur",
-                                descriptions:
-                                    "Voulez-vous vraiment supprimer ce vendeur ?",
+                                descriptions: "Voulez-vous vraiment supprimer ce vendeur ?",
                                 onYes: () {
                                   tokenExpireWrapper(ref, () async {
                                     final value = await sellerStoreNotifier

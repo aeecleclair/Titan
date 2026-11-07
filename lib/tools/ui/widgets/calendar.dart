@@ -125,9 +125,9 @@ class Calendar extends HookConsumerWidget {
                         ),
                         shape: BoxShape.rectangle,
                       ),
-                      todayHighlightColor: Theme.of(
-                        context,
-                      ).colorScheme.secondary,
+                      todayHighlightColor: Theme.of(context)
+                          .colorScheme
+                          .secondary,
                       todayTextStyle: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary,
                         fontWeight: FontWeight.bold,

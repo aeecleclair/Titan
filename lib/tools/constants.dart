@@ -114,9 +114,8 @@ class ThemeConstants {
       onError: Colors.white,
     ),
     textTheme: GoogleFonts.latoTextTheme(
-      Theme.of(
-        context,
-      ).textTheme.apply(bodyColor: Colors.black, displayColor: Colors.black),
+      Theme.of(context).textTheme
+          .apply(bodyColor: Colors.black, displayColor: Colors.black),
     ),
   );
   ThemeData get darkTheme => ThemeData(
@@ -141,9 +140,8 @@ class ThemeConstants {
       onError: Colors.white,
     ),
     textTheme: GoogleFonts.latoTextTheme(
-      Theme.of(
-        context,
-      ).textTheme.apply(bodyColor: Colors.white, displayColor: Colors.white),
+      Theme.of(context).textTheme
+          .apply(bodyColor: Colors.white, displayColor: Colors.white),
     ),
   );
 }

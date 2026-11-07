@@ -12,7 +12,9 @@ import 'package:titan/auth/repository/openid_repository.dart';
 import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
+
 import 'dart:convert';
+
 import 'package:titan/tools/web-window-callback/web_window_with_callback.dart';
 
 final authTokenProvider =

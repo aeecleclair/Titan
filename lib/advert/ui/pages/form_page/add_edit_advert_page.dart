@@ -158,9 +158,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                     : HeroIcon(
                                         HeroIcons.photo,
                                         size: 160,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.tertiary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
                                       ),
                               ),
                             ),
@@ -193,9 +193,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                     boxShadow: formFieldState.hasError
                         ? [
                             BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               spreadRadius: 3,
                               blurRadius: 3,
                               offset: const Offset(2, 2),

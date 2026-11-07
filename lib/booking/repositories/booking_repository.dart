@@ -17,9 +17,8 @@ class BookingRepository extends Repository {
 
   Future<List<Booking>> getUserManageBookingList() async {
     return List<Booking>.from(
-      (await getList(
-        suffix: "/users/me/manage",
-      )).map((x) => Booking.fromJson(x)),
+      (await getList(suffix: "/users/me/manage"))
+          .map((x) => Booking.fromJson(x)),
     );
   }
 
@@ -51,9 +50,8 @@ class BookingRepository extends Repository {
 
   Future<List<Booking>> getUserManageConfirmedBookingList() async {
     return List<Booking>.from(
-      (await getList(
-        suffix: "/confirmed/users/me/manage",
-      )).map((x) => Booking.fromJson(x)),
+      (await getList(suffix: "/confirmed/users/me/manage"))
+          .map((x) => Booking.fromJson(x)),
     );
   }
 }

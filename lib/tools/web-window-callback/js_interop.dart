@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:web/web.dart';
+
 import 'dart:js_interop';
 
 void webWindowWithCallback(

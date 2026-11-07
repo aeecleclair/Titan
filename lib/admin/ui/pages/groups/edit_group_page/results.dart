@@ -75,9 +75,9 @@ class MemberResults extends HookConsumerWidget {
                               });
                             }
                           },
-                          waitingColor: Theme.of(
-                            context,
-                          ).colorScheme.primaryContainer,
+                          waitingColor: Theme.of(context)
+                              .colorScheme
+                              .primaryContainer,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),

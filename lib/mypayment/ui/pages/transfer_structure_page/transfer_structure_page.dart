@@ -49,9 +49,8 @@ class TransferStructurePage extends HookConsumerWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: MyPaymentColors(
-                          isDarkTheme,
-                        ).backgroundGradient2.withValues(alpha: 0.2),
+                        color: MyPaymentColors(isDarkTheme).backgroundGradient2
+                            .withValues(alpha: 0.2),
                         offset: const Offset(2, 3),
                         blurRadius: 5,
                       ),

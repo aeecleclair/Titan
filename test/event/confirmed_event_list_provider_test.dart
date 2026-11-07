@@ -24,9 +24,8 @@ void main() {
     final event3 = Event.empty().copyWith(id: '3', name: 'Event 3');
 
     test('loadConfirmedEvent returns AsyncValue with list of events', () async {
-      when(
-        () => mockEventRepository.getConfirmedEventList(),
-      ).thenAnswer((_) async => [event1, event2, event3]);
+      when(() => mockEventRepository.getConfirmedEventList())
+          .thenAnswer((_) async => [event1, event2, event3]);
 
       final result = await confirmedEventListProvider.loadConfirmedEvent();
 

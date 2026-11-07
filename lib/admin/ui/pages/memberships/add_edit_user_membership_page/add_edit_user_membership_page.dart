@@ -133,9 +133,8 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   }
 
                   tokenExpireWrapper(ref, () async {
-                    if (DateTime.parse(
-                      processDateBack(start.text),
-                    ).isAfter(DateTime.parse(processDateBack(end.text)))) {
+                    if (DateTime.parse(processDateBack(start.text))
+                        .isAfter(DateTime.parse(processDateBack(end.text)))) {
                       displayToastWithContext(
                         TypeMsg.error,
                         AdminTextConstants.dateError,

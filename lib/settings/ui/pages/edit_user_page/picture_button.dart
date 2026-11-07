@@ -23,9 +23,8 @@ class PictureButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(
-              context,
-            ).colorScheme.primaryFixed.withValues(alpha: 0.3),
+            color: Theme.of(context).colorScheme.primaryFixed
+                .withValues(alpha: 0.3),
             spreadRadius: 2,
             blurRadius: 4,
             offset: const Offset(2, 3),

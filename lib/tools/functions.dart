@@ -384,9 +384,8 @@ Future getOnlyDayDate(
     lastDate,
   );
 
-  dateController.text = DateFormat(
-    'dd/MM/yyyy',
-  ).format(date ?? initialDate ?? now);
+  dateController.text = DateFormat('dd/MM/yyyy')
+      .format(date ?? initialDate ?? now);
 }
 
 Future getOnlyDayDateFunction(
@@ -415,9 +414,8 @@ Future getOnlyHourDate(
   final DateTime now = DateTime.now();
   final TimeOfDay? time = await _getTime(context);
 
-  dateController.text = DateFormat(
-    'HH:mm',
-  ).format(DateTimeField.combine(now, time));
+  dateController.text = DateFormat('HH:mm')
+      .format(DateTimeField.combine(now, time));
 }
 
 Future getFullDate(
@@ -434,15 +432,13 @@ Future getFullDate(
     if (date != null && context.mounted) {
       _getTime(context).then((TimeOfDay? time) {
         if (time != null) {
-          dateController.text = DateFormat(
-            'dd/MM/yyyy HH:mm',
-          ).format(DateTimeField.combine(date, time));
+          dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+              .format(DateTimeField.combine(date, time));
         }
       });
     } else {
-      dateController.text = DateFormat(
-        'dd/MM/yyyy HH:mm',
-      ).format(initialDate ?? now);
+      dateController.text = DateFormat('dd/MM/yyyy HH:mm')
+          .format(initialDate ?? now);
     }
   });
 }

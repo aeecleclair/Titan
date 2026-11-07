@@ -44,9 +44,8 @@ void main() {
         Product.empty().copyWith(id: '2', name: 'Product 2'),
       ];
 
-      when(
-        () => productListRepository.createProduct('deliveryId', product),
-      ).thenAnswer((_) async => product);
+      when(() => productListRepository.createProduct('deliveryId', product))
+          .thenAnswer((_) async => product);
 
       notifier.state = AsyncValue.data(products.sublist(0));
       final result = await notifier.addProduct(product, 'deliveryId');
@@ -75,9 +74,8 @@ void main() {
 
         notifier.state = AsyncValue.data([product1]);
 
-        when(
-          () => productListRepository.updateProduct('deliveryId', product2),
-        ).thenAnswer((_) async => true);
+        when(() => productListRepository.updateProduct('deliveryId', product2))
+            .thenAnswer((_) async => true);
 
         final result = await notifier.updateProduct(product2, 'deliveryId');
 

@@ -35,9 +35,8 @@ void main() {
     test('getLogo returns Image', () async {
       const id = '123';
       final image = Image.network('https://example.com/image.png');
-      when(
-        () => repository.getContenderLogo(id),
-      ).thenAnswer((_) async => image);
+      when(() => repository.getContenderLogo(id))
+          .thenAnswer((_) async => image);
 
       final result = await provider.getLogo(id);
 
@@ -48,9 +47,8 @@ void main() {
       const id = '123';
       Uint8List bytes = Uint8List(0);
       final image = Image.network('https://example.com/image.png');
-      when(
-        () => repository.addContenderLogo(bytes, id),
-      ).thenAnswer((_) async => image);
+      when(() => repository.addContenderLogo(bytes, id))
+          .thenAnswer((_) async => image);
 
       final result = await provider.updateLogo(id, bytes);
 

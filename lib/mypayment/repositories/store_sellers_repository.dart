@@ -16,9 +16,8 @@ class SellerStoreRepository extends Repository {
 
   Future<List<Seller>> getSellers(String storeId) async {
     return List<Seller>.from(
-      (await getList(
-        suffix: "/$storeId/sellers",
-      )).map((e) => Seller.fromJson(e)),
+      (await getList(suffix: "/$storeId/sellers"))
+          .map((e) => Seller.fromJson(e)),
     );
   }
 

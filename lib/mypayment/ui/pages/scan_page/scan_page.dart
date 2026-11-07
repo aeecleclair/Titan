@@ -73,21 +73,21 @@ class ScanPage extends HookConsumerWidget {
                                 children: [
                                   Checkbox(
                                     value: !bypass,
-                                    checkColor: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimary,
+                                    checkColor: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     side: BorderSide(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSecondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
                                       width: 1.5,
                                     ),
-                                    activeColor: Theme.of(
-                                      context,
-                                    ).colorScheme.surface,
+                                    activeColor: Theme.of(context)
+                                        .colorScheme
+                                        .surface,
                                     onChanged: (value) {
                                       bypassNotifier.setBypass(!bypass);
                                     },
@@ -101,9 +101,9 @@ class ScanPage extends HookConsumerWidget {
                                                 .colorScheme
                                                 .onSecondary
                                                 .withValues(alpha: 0.5)
-                                          : Theme.of(
-                                              context,
-                                            ).colorScheme.onSecondary,
+                                          : Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary,
                                       fontSize: 15,
                                     ),
                                   ),
@@ -118,9 +118,9 @@ class ScanPage extends HookConsumerWidget {
                               child: HeroIcon(
                                 HeroIcons.xMark,
                                 size: 20,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondary,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondary,
                               ),
                             ),
                           ],
@@ -180,9 +180,9 @@ class ScanPage extends HookConsumerWidget {
                                               "Montant",
                                               style: TextStyle(
                                                 fontSize: 13,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSecondary,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondary,
                                               ),
                                             ),
                                             Text(
@@ -190,9 +190,9 @@ class ScanPage extends HookConsumerWidget {
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 25,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSecondary,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondary,
                                               ),
                                             ),
                                           ],
@@ -224,9 +224,9 @@ class ScanPage extends HookConsumerWidget {
                                           (error as AppException).message,
                                           style: TextStyle(
                                             fontSize: 15,
-                                            color: Theme.of(
-                                              context,
-                                            ).colorScheme.onSecondary,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary,
                                           ),
                                         ),
                                       );
@@ -239,12 +239,12 @@ class ScanPage extends HookConsumerWidget {
                                       decoration: BoxDecoration(
                                         gradient: RadialGradient(
                                           colors: [
-                                            Theme.of(
-                                              context,
-                                            ).colorScheme.onSecondary,
-                                            Theme.of(
-                                              context,
-                                            ).colorScheme.secondaryFixed,
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary,
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .secondaryFixed,
                                           ],
                                           center: Alignment.topLeft,
                                           radius: 2,
@@ -270,9 +270,9 @@ class ScanPage extends HookConsumerWidget {
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
-                                            color: Theme.of(
-                                              context,
-                                            ).colorScheme.onSecondary,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary,
                                           ),
                                         ),
                                       );
@@ -300,16 +300,15 @@ class ScanPage extends HookConsumerWidget {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.surface.withValues(alpha: 0.8),
+                                  color: Theme.of(context).colorScheme.surface
+                                      .withValues(alpha: 0.8),
                                 ),
                                 child: Text(
                                   'Suivant',
                                   style: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
@@ -403,9 +402,9 @@ class ScanPage extends HookConsumerWidget {
                                       child: Text(
                                         'Suivant',
                                         style: TextStyle(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.onPrimary,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
                                         ),

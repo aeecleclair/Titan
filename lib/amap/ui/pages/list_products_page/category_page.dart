@@ -102,9 +102,8 @@ class CategoryPage extends HookConsumerWidget {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: AMAPColors(
-                                  isDarkTheme,
-                                ).background2.withValues(alpha: 0.5),
+                                color: AMAPColors(isDarkTheme).background2
+                                    .withValues(alpha: 0.5),
                               ),
                               child: Column(children: listWidgetProduct),
                             ),
@@ -135,9 +134,8 @@ class CategoryPage extends HookConsumerWidget {
                                   gradient: LinearGradient(
                                     colors: [
                                       AMAPColors(isDarkTheme).primaryFixedGreen,
-                                      AMAPColors(
-                                        isDarkTheme,
-                                      ).secondaryFixedGreen,
+                                      AMAPColors(isDarkTheme)
+                                          .secondaryFixedGreen,
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -169,9 +167,8 @@ class CategoryPage extends HookConsumerWidget {
                                       AMAPTextConstants.seeMore,
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: AMAPColors(
-                                          isDarkTheme,
-                                        ).background,
+                                        color: AMAPColors(isDarkTheme)
+                                            .background,
                                       ),
                                     ),
                                   ],
@@ -190,9 +187,8 @@ class CategoryPage extends HookConsumerWidget {
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AMAPColors(
-                            isDarkTheme,
-                          ).background2.withValues(alpha: 0.5),
+                          color: AMAPColors(isDarkTheme).background2
+                              .withValues(alpha: 0.5),
                         ),
                         child: Column(children: listWidgetProduct),
                       ),

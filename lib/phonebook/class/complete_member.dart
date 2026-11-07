@@ -1,5 +1,6 @@
 import 'package:titan/admin/class/account_type.dart';
 import 'package:titan/phonebook/class/membership.dart';
+
 import 'member.dart';
 
 class CompleteMember {

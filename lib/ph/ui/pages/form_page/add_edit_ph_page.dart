@@ -121,9 +121,8 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                     data: (list) {
                                       ref
                                           .read(
-                                            phPdfProvider(
-                                              list.last.id,
-                                            ).notifier,
+                                            phPdfProvider(list.last.id)
+                                                .notifier,
                                           )
                                           .updatePhPdf(
                                             Uint8List.fromList(phSendPdf),

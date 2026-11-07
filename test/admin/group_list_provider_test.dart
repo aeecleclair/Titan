@@ -15,9 +15,8 @@ void main() {
   group('GroupListNotifier', () {
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty()]);
+      when(() => mockGroup.getGroupList())
+          .thenAnswer((_) async => [SimpleGroup.empty()]);
       final GroupListNotifier groupNotifier = GroupListNotifier(
         groupRepository: mockGroup,
       );
@@ -88,12 +87,10 @@ void main() {
     test('Should create a group', () async {
       final mockGroup = MockGroupRepository();
       final newGroup = SimpleGroup.empty().copyWith(id: "2");
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty()]);
-      when(
-        () => mockGroup.createGroup(newGroup),
-      ).thenAnswer((_) async => newGroup);
+      when(() => mockGroup.getGroupList())
+          .thenAnswer((_) async => [SimpleGroup.empty()]);
+      when(() => mockGroup.createGroup(newGroup))
+          .thenAnswer((_) async => newGroup);
       final GroupListNotifier groupNotifier = GroupListNotifier(
         groupRepository: mockGroup,
       );
@@ -105,9 +102,8 @@ void main() {
     test('Should update a group', () async {
       final mockGroup = MockGroupRepository();
       final newGroup = SimpleGroup.empty().copyWith(id: "2");
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
+      when(() => mockGroup.getGroupList())
+          .thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
       when(() => mockGroup.updateGroup(newGroup)).thenAnswer((_) async => true);
       final GroupListNotifier groupNotifier = GroupListNotifier(
         groupRepository: mockGroup,
@@ -119,9 +115,8 @@ void main() {
     test('Should delete a group', () async {
       final mockGroup = MockGroupRepository();
       final newGroup = SimpleGroup.empty().copyWith(id: "2");
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
+      when(() => mockGroup.getGroupList())
+          .thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
       when(() => mockGroup.deleteGroup("2")).thenAnswer((_) async => true);
       final GroupListNotifier groupNotifier = GroupListNotifier(
         groupRepository: mockGroup,
@@ -133,9 +128,8 @@ void main() {
     test('Should return a group', () async {
       final mockGroup = MockGroupRepository();
       final newGroup = SimpleGroup.empty().copyWith(id: "2");
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
+      when(() => mockGroup.getGroupList())
+          .thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
       when(() => mockGroup.updateGroup(newGroup)).thenAnswer((_) async => true);
       final GroupListNotifier groupNotifier = GroupListNotifier(
         groupRepository: mockGroup,
