@@ -1,6 +1,5 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
 }
@@ -27,10 +26,10 @@ if (flutterVersionName == null) {
 // App bundle signing
 // https://docs.flutter.dev/deployment/android
 def keystoreProperties = new Properties()
-   def keystorePropertiesFile = rootProject.file('key.properties')
-   if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   }
+    def keystorePropertiesFile = rootProject.file('key.properties')
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
 
 android {
     compileSdk flutter.compileSdkVersion
@@ -43,12 +42,12 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     defaultConfig {
@@ -69,35 +68,36 @@ android {
     }
     buildTypes {
         release {
-           signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 
-	flavorDimensions "default"
+    flavorDimensions "default"
 
-	productFlavors {
-		prod {
-			dimension "default"
-			resValue "string", "app_name", "MyECL"
-            resValue "string", "flavor_url_scheme", "titan"
+    productFlavors {
+        prod {
+            dimension "default"
             manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan']
-		}
-		alpha {
-			dimension "default"
-			resValue "string", "app_name", "MyECL Alpha"
-            resValue "string", "flavor_url_scheme", "titan.alpha"
-			applicationIdSuffix ".alpha"
+        }
+        alpha {
+            dimension "default"
+            applicationIdSuffix ".alpha"
             manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.alpha']
-		}
-		dev {
-			dimension "default"
-			resValue "string", "app_name", "MyECL Dev"
-            resValue "string", "flavor_url_scheme", "titan.dev"
-			applicationIdSuffix ".dev"
+        }
+        dev {
+            dimension "default"
+            applicationIdSuffix ".dev"
             manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.dev']
-		}
-	}
+        }
+    }
 }
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
 
 flutter {
     source '../..'
@@ -106,10 +106,4 @@ flutter {
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     implementation platform('com.google.firebase:firebase-bom:32.7.4')
-}
-
-android {
-    defaultConfig {
-        minSdk flutter.minSdkVersion
-    }
 }

@@ -7,8 +7,8 @@ version: 2.4.0+172
 minimal_hyperion_version: 5.0.2
 
 environment:
-  sdk: ^3.10.0
-  flutter: ^3.41.2
+  sdk: ^3.12.0
+  flutter: 3.44.9
 
 dependencies:
   app_links: ^6.4.0
@@ -18,10 +18,10 @@ dependencies:
   crypto: ^3.0.2
   cryptography_plus: ^2.0.0
   datetime_picker_formfield: ^2.0.1
-  device_info_plus: ^11.4.0
+  device_info_plus: ^13.3.0
   diacritic: ^0.1.5
   either_dart: ^1.0.0
-  file_picker: ^10.1.2
+  file_picker: ^12.0.0
   file_saver: ^0.2.12
   firebase_core: ^3.9.0
   firebase_messaging: ^15.2.2
@@ -29,7 +29,7 @@ dependencies:
   flash: ^3.1.1
   flutter:
     sdk: flutter
-  flutter_appauth: ^9.0.0
+  flutter_appauth: ^13.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.21.2
   flutter_lints: ^6.0.0
@@ -46,7 +46,7 @@ dependencies:
   http: ^1.0.0
   http_parser: ^4.0.2
   image: ^4.0.15
-  image_cropper: ^9.0.0
+  image_cropper: ^12.2.1
   image_picker: ^1.0.0
   intl: ^0.20.2
   jwt_decoder: ^2.0.1
@@ -56,7 +56,7 @@ dependencies:
   local_auth_darwin: ^1.4.1
   mobile_scanner: ^7.0.1
   numberpicker: ^2.1.1
-  package_info_plus: ^8.3.0
+  package_info_plus: ^10.2.2
   path: ^1.8.2
   path_provider: ^2.0.11
   pdfx: ^2.9.1
