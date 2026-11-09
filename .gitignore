@@ -63,3 +63,5 @@ coverage/
 
 # Platforms not supported by this project
 /windows/
+/macos/
+/linux/

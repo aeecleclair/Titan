@@ -36,7 +36,7 @@ class LocalNotificationService {
           linux: initializationSettingsLinux,
         );
     _localNotificationService.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
       onDidReceiveBackgroundNotificationResponse:
           onDidReceiveBackgroundNotificationResponse,
@@ -65,10 +65,10 @@ class LocalNotificationService {
   Future showNotification(message_class.Message message) async {
     final notificationDetails = getNotificationDetails();
     _localNotificationService.show(
-      generateIntFromString(const Uuid().toString()),
-      message.title,
-      message.content,
-      notificationDetails,
+      id: generateIntFromString(const Uuid().toString()),
+      title: message.title,
+      body: message.content,
+      notificationDetails: notificationDetails,
       payload: json.encode(message.toJson()),
     );
     return;
@@ -82,11 +82,11 @@ class LocalNotificationService {
     RepeatInterval repeatInterval,
   ) async {
     await _localNotificationService.periodicallyShow(
-      generateIntFromString(id),
-      title,
-      body,
-      repeatInterval,
-      getNotificationDetails(),
+      id: generateIntFromString(id),
+      title: title,
+      body: body,
+      repeatInterval: repeatInterval,
+      notificationDetails: getNotificationDetails(),
       payload: payload,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
@@ -124,10 +124,10 @@ class LocalNotificationService {
       android: androidPlatformChannelSpecifics,
     );
     await _localNotificationService.show(
-      generateIntFromString(id),
-      title,
-      body,
-      platformChannelSpecifics,
+      id: generateIntFromString(id),
+      title: title,
+      body: body,
+      notificationDetails: platformChannelSpecifics,
       payload: payload,
     );
   }
@@ -172,10 +172,10 @@ class LocalNotificationService {
       NotificationDetails groupNotificationDetailsPlatformSpecifics =
           NotificationDetails(android: groupNotificationDetails);
       await _localNotificationService.show(
-        0,
-        '',
-        '',
-        groupNotificationDetailsPlatformSpecifics,
+        id: 0,
+        title: '',
+        body: '',
+        notificationDetails: groupNotificationDetailsPlatformSpecifics,
       );
     }
   }
@@ -194,7 +194,7 @@ class LocalNotificationService {
   }
 
   Future<void> cancelNotificationById(String id) async {
-    await _localNotificationService.cancel(generateIntFromString(id));
+    await _localNotificationService.cancel(id: generateIntFromString(id));
   }
 
   Future<void> cancelAllNotifications() async {
