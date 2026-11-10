@@ -19,10 +19,10 @@ jobs:
       matrix:
         include:
           - target: "apk --debug --flavor=dev"
-            name: "APK"
+            name: APK
             path: build/app/outputs/flutter-apk/app-dev-debug.apk
           - target: "web --dart-define=flavor=dev"
-            name: "Web"
+            name: Web
             path: build/web/
 
     steps:
@@ -41,11 +41,11 @@ jobs:
 
       - name: Setup Java
         if: matrix.name == 'APK'
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
-          distribution: "temurin"
-          java-version: "23.x"
-          cache: "gradle"
+          distribution: temurin
+          java-version: 17
+          cache: gradle
 
       # Remove ^ to fix flutter version parsing
       - name: Fix Flutter Version in Pubspec
@@ -55,7 +55,7 @@ jobs:
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: stable
           flutter-version-file: pubspec.yaml
           cache: true
 
