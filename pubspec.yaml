@@ -90,26 +90,14 @@ flutter:
   assets:
     - .env
     - pubspec.yaml
-    - assets/images/logo_prod.png
-    - assets/images/logo_alpha.png
-    - assets/images/logo_dev.png
-    - assets/images/gift.png
-    - assets/images/soli.png
-    - assets/images/eclair.png
-    - assets/images/login.svg
-    - assets/web/back.webp
-    - assets/web/AMAP.webp
-    - assets/web/Calendrier.webp
-    - assets/web/Cine.webp
-    - assets/web/Parametres.webp
-    - assets/web/Pret.webp
-    - assets/web/Tombola.webp
-    - assets/web/Vote.webp
-    - assets/my_document.pdf
-    - assets/images/bird.png
-    - assets/images/pipe_day.png
-    - assets/images/pipe_night.png
-    - assets/images/logo_flappybird.svg
-    - assets/images/helloasso.svg
+    - assets/images/
+    - path: assets/web/
+      platforms: [web]
+    - path: assets/logo_flavors/logo_alpha.png
+      flavors: [alpha]
+    - path: assets/logo_flavors/logo_dev.png
+      flavors: [dev]
+    - path: assets/logo_flavors/logo_prod.png
+      flavors: [prod]
 
   uses-material-design: true

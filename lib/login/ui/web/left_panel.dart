@@ -69,7 +69,7 @@ class LeftPanel extends HookConsumerWidget {
               Expanded(
                 flex: 5,
                 child: SvgPicture.asset(
-                  'assets/images/login.svg',
+                  'assets/web/login.svg',
                   width: 350,
                   height: double.infinity,
                 ),
