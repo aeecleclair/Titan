@@ -85,9 +85,8 @@ class BookingCard extends ConsumerWidget {
       primaryIconBackgroundColor = Theme.of(context).colorScheme.surface;
       bigTextColor = Theme.of(context).colorScheme.onSurface;
     } else {
-      smallTextColor = Theme.of(
-        context,
-      ).colorScheme.onSecondary.withValues(alpha: 0.8);
+      smallTextColor = Theme.of(context).colorScheme.onSecondary
+          .withValues(alpha: 0.8);
       cardBoxShadow = secondaryIconBackgroundColor;
       primaryIconBackgroundColor = Theme.of(context).colorScheme.secondaryFixed;
       bigTextColor = Theme.of(context).colorScheme.onSecondary;

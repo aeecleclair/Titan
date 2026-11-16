@@ -153,9 +153,9 @@ class DetailBookingPage extends HookConsumerWidget {
                                     child: ContactButton(
                                       child: HeroIcon(
                                         HeroIcons.phone,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSurface,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                       ),
                                     ),
                                   ),
@@ -180,9 +180,9 @@ class DetailBookingPage extends HookConsumerWidget {
                                     child: ContactButton(
                                       child: HeroIcon(
                                         HeroIcons.chatBubbleBottomCenterText,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSurface,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                       ),
                                     ),
                                   ),

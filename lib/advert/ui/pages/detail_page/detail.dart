@@ -66,9 +66,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Theme.of(
-                        context,
-                      ).colorScheme.primary.withValues(alpha: 0.85),
+                      Theme.of(context).colorScheme.primary
+                          .withValues(alpha: 0.85),
                       Theme.of(context).colorScheme.primary,
                     ],
                     stops: const [0.0, 0.65, 1.0],
@@ -107,9 +106,11 @@ class AdvertDetailPage extends HookConsumerWidget {
                       height: 35,
                       horizontalSpace: 30,
                       items: inTagChipsList,
-                      itemBuilder:
-                          (BuildContext context, String item, int index) =>
-                              TagChip(tagName: item),
+                      itemBuilder: (
+                        BuildContext context,
+                        String item,
+                        int index,
+                      ) => TagChip(tagName: item),
                     ),
                     const SizedBox(height: 15),
                     Container(
@@ -138,9 +139,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.surface.withValues(alpha: 0.75),
+                      color: Theme.of(context).colorScheme.surface
+                          .withValues(alpha: 0.75),
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
@@ -164,9 +164,8 @@ class AdvertDetailPage extends HookConsumerWidget {
                     horizontal: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.surface.withValues(alpha: 0.75),
+                    color: Theme.of(context).colorScheme.surface
+                        .withValues(alpha: 0.75),
                     borderRadius: BorderRadius.circular(18),
                     boxShadow: [
                       BoxShadow(

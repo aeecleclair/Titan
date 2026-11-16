@@ -93,9 +93,8 @@ class AmapMainPage extends HookConsumerWidget {
                           color: AMAPColors(isDarkTheme).lightGradientSecondary,
                         ),
                       ),
-                      loaderColor: AMAPColors(
-                        isDarkTheme,
-                      ).lightGradientSecondary,
+                      loaderColor: AMAPColors(isDarkTheme)
+                          .lightGradientSecondary,
                     ),
                   ),
                   if (isAdmin)
@@ -173,9 +172,8 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AMAPColors(
-                            isDarkTheme,
-                          ).textOnPrimary.withValues(alpha: 0.3),
+                          color: AMAPColors(isDarkTheme).textOnPrimary
+                              .withValues(alpha: 0.3),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
@@ -192,16 +190,16 @@ class AmapMainPage extends HookConsumerWidget {
                             children: [
                               AlignLeftText(
                                 AMAPTextConstants.addOrder,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondary,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondary,
                               ),
                               IconButton(
                                 icon: HeroIcon(
                                   HeroIcons.xMark,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSecondary,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary,
                                   size: 30,
                                 ),
                                 onPressed: () {
@@ -221,9 +219,9 @@ class AmapMainPage extends HookConsumerWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondary,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondary,
                                 width: 2,
                               ),
                             ),
@@ -263,9 +261,8 @@ class AmapMainPage extends HookConsumerWidget {
                               borderRadius: BorderRadius.circular(25),
                               gradient: LinearGradient(
                                 colors: [
-                                  AMAPColors(
-                                    isDarkTheme,
-                                  ).greenGradientSecondary,
+                                  AMAPColors(isDarkTheme)
+                                      .greenGradientSecondary,
                                   AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
                                 begin: Alignment.topLeft,
@@ -273,9 +270,8 @@ class AmapMainPage extends HookConsumerWidget {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AMAPColors(
-                                    isDarkTheme,
-                                  ).textOnPrimary.withValues(alpha: 0.3),
+                                  color: AMAPColors(isDarkTheme).textOnPrimary
+                                      .withValues(alpha: 0.3),
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   offset: const Offset(2, 5),
@@ -293,9 +289,9 @@ class AmapMainPage extends HookConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w900,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSecondary,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary,
                                 ),
                               ),
                             ),

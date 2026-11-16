@@ -140,16 +140,16 @@ class LeftPanel extends HookConsumerWidget {
                           ? Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: CircularProgressIndicator(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onPrimaryContainer,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
                               ),
                             )
                           : HeroIcon(
                               HeroIcons.arrowRight,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onPrimaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                               size: 35.0,
                             ),
                     ),

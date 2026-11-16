@@ -53,9 +53,9 @@ class User {
         ? json['phone']
         : null;
     createdOn = processDateFromAPI(json['created_on']);
-    groups = List.from(
-      json['groups'],
-    ).map((e) => SimpleGroup.fromJson(e)).toList();
+    groups = List.from(json['groups'])
+        .map((e) => SimpleGroup.fromJson(e))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {

@@ -212,9 +212,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Text(
                             AdminTextConstants.manager,
                             style: TextStyle(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -223,9 +223,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Text(
                             structureManager.getName(),
                             style: TextStyle(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),

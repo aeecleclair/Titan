@@ -113,9 +113,9 @@ class CustomDialogBox extends StatelessWidget {
                                 child: Text(
                                   noText ?? "Annuler",
                                   style: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSecondary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -129,17 +129,17 @@ class CustomDialogBox extends StatelessWidget {
                               }
                               await onYes();
                             },
-                            waitingColor: Theme.of(
-                              context,
-                            ).colorScheme.onPrimary,
+                            waitingColor: Theme.of(context)
+                                .colorScheme
+                                .onPrimary,
                             builder: (child) => Container(
                               width: 100,
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryFixed,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryFixed,
                                 boxShadow: [
                                   BoxShadow(
                                     color: Theme.of(context).shadowColor,

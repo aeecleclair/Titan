@@ -50,13 +50,13 @@ class InvoiceCard extends HookConsumerWidget {
                       ? await FileSaver.instance.saveFile(
                           name: invoice.reference,
                           bytes: pdfBytes,
-                          ext: "pdf",
+                          fileExtension: "pdf",
                           mimeType: MimeType.pdf,
                         )
                       : await FileSaver.instance.saveAs(
                           name: invoice.reference,
                           bytes: pdfBytes,
-                          ext: "pdf",
+                          fileExtension: "pdf",
                           mimeType: MimeType.pdf,
                         );
                   if (path != null) {

@@ -56,9 +56,8 @@ class AdminAdvertCard extends HookConsumerWidget {
                         Theme.of(context).colorScheme.primaryContainer,
                         Theme.of(context).colorScheme.primaryFixed,
                       ],
-                      shadowColor: Theme.of(
-                        context,
-                      ).colorScheme.primaryFixed.withValues(alpha: 0.2),
+                      shadowColor: Theme.of(context).colorScheme.primaryFixed
+                          .withValues(alpha: 0.2),
                       child: child,
                     ),
                     child: HeroIcon(

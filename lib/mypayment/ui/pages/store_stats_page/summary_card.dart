@@ -104,9 +104,8 @@ class SummaryCard extends ConsumerWidget {
               color: MyPaymentColors(isDarkTheme).secondaryGreen,
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              decorationColor: MyPaymentColors(
-                isDarkTheme,
-              ).secondaryGreen.withValues(alpha: 0.8),
+              decorationColor: MyPaymentColors(isDarkTheme).secondaryGreen
+                  .withValues(alpha: 0.8),
               decorationThickness: 2.85,
             ),
           ),

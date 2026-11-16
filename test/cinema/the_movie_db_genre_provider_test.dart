@@ -14,9 +14,8 @@ void main() {
     late TheMovieDBGenreNotifier notifier;
     test('loadMovie returns AsyncValue with movie data', () async {
       theMovieDBRepository = MockTheMovieDBRepository();
-      when(
-        () => theMovieDBRepository.getMovie(any()),
-      ).thenAnswer((_) async => TheMovieDBMovie.empty());
+      when(() => theMovieDBRepository.getMovie(any()))
+          .thenAnswer((_) async => TheMovieDBMovie.empty());
       notifier = TheMovieDBGenreNotifier(
         theMoviesDBRepository: theMovieDBRepository,
       );

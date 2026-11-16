@@ -89,9 +89,8 @@ class DetailPage extends HookConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Theme.of(
-                        context,
-                      ).colorScheme.secondaryFixed.withValues(alpha: 0.85),
+                      Theme.of(context).colorScheme.secondaryFixed
+                          .withValues(alpha: 0.85),
                       Theme.of(context).colorScheme.secondaryFixed,
                     ],
                     stops: const [0.0, 0.65, 1.0],
@@ -137,9 +136,9 @@ class DetailPage extends HookConsumerWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.secondaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondaryContainer,
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Text(
@@ -244,9 +243,8 @@ class DetailPage extends HookConsumerWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Theme.of(
-                      context,
-                    ).colorScheme.secondaryFixed.withValues(alpha: 0.85),
+                    Theme.of(context).colorScheme.secondaryFixed
+                        .withValues(alpha: 0.85),
                     Theme.of(context).colorScheme.secondaryFixed,
                   ],
                   stops: const [0.0, 0.25, 1.0],
@@ -324,9 +322,9 @@ class DetailPage extends HookConsumerWidget {
                                   ? 'Supprimer le rappel '
                                   : 'Ajouter un rappel',
                               style: TextStyle(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondary,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondary,
                                 fontSize: 20,
                               ),
                             ),

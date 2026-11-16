@@ -56,9 +56,8 @@ void main() {
 
     test('deleteLoan returns true', () async {
       final loan = Loan.empty().copyWith(id: '1');
-      when(
-        () => loanRepository.deleteLoan(loan.id),
-      ).thenAnswer((_) async => true);
+      when(() => loanRepository.deleteLoan(loan.id))
+          .thenAnswer((_) async => true);
       loanListNotifier.state = AsyncValue.data([loan]);
       final result = await loanListNotifier.deleteLoan(loan);
 
@@ -67,9 +66,8 @@ void main() {
 
     test('returnLoan returns true', () async {
       final loan = Loan.empty().copyWith(id: '1');
-      when(
-        () => loanRepository.returnLoan(loan.id),
-      ).thenAnswer((_) async => true);
+      when(() => loanRepository.returnLoan(loan.id))
+          .thenAnswer((_) async => true);
       loanListNotifier.state = AsyncValue.data([loan]);
       final result = await loanListNotifier.returnLoan(loan);
 

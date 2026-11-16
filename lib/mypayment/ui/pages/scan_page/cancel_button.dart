@@ -51,21 +51,18 @@ class CancelButton extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                         gradient: RadialGradient(
                           colors: [
-                            MyPaymentColors(
-                              isDarkTheme,
-                            ).redGradient1.withValues(alpha: 0.8),
-                            MyPaymentColors(
-                              isDarkTheme,
-                            ).redGradient2.withValues(alpha: 0.8),
+                            MyPaymentColors(isDarkTheme).redGradient1
+                                .withValues(alpha: 0.8),
+                            MyPaymentColors(isDarkTheme).redGradient2
+                                .withValues(alpha: 0.8),
                           ],
                           center: Alignment.topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: MyPaymentColors(
-                              isDarkTheme,
-                            ).redGradient2.withValues(alpha: 0.3),
+                            color: MyPaymentColors(isDarkTheme).redGradient2
+                                .withValues(alpha: 0.3),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(3, 3),

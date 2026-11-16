@@ -57,9 +57,8 @@ class NoInternetPage extends HookConsumerWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.primaryContainer.withValues(alpha: 0.2),
+                        color: Theme.of(context).colorScheme.primaryContainer
+                            .withValues(alpha: 0.2),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -78,9 +77,9 @@ class NoInternetPage extends HookConsumerWidget {
                         OthersTextConstants.retry,
                         style: TextStyle(
                           fontSize: 25,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

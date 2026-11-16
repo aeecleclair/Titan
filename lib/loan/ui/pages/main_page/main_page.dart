@@ -100,9 +100,9 @@ class LoanMainPage extends HookConsumerWidget {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.secondaryFixed,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryFixed,
                                   ),
                                 ),
                               ),

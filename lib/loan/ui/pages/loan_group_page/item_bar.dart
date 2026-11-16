@@ -89,9 +89,9 @@ class ItemBar extends HookConsumerWidget {
                                   HeroIcons.minus,
                                   color: currentValue == 0
                                       ? Theme.of(context).colorScheme.tertiary
-                                      : Theme.of(
-                                          context,
-                                        ).colorScheme.onSecondary,
+                                      : Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
                                 ),
                                 onTap: () {
                                   if (currentValue > 0) {
@@ -155,9 +155,9 @@ class ItemBar extends HookConsumerWidget {
                                       currentValue ==
                                           e.totalQuantity - e.loanedQuantity
                                       ? Theme.of(context).colorScheme.tertiary
-                                      : Theme.of(
-                                          context,
-                                        ).colorScheme.onSecondary,
+                                      : Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
                                 ),
                                 onTap: () {
                                   if (currentValue <

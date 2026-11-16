@@ -86,9 +86,8 @@ class SearchResult extends HookConsumerWidget {
                               Navigator.pop(context);
                             }
                           },
-                          waitingColor: MyPaymentColors(
-                            isDarkTheme,
-                          ).backgroundGradient2,
+                          waitingColor: MyPaymentColors(isDarkTheme)
+                              .backgroundGradient2,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),

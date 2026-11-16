@@ -115,8 +115,7 @@ class TicketHandler extends HookConsumerWidget {
                                 context: context,
                                 builder: (context) => CustomDialogBox(
                                   title: "Supprimer le ticket",
-                                  descriptions:
-                                      "Voulez-vous vraiment supprimer ce ticket?",
+                                  descriptions: "Voulez-vous vraiment supprimer ce ticket?",
                                   onYes: () {
                                     tokenExpireWrapper(ref, () async {
                                       final value = await packTicketsNotifier

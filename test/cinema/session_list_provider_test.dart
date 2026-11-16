@@ -11,9 +11,8 @@ void main() {
   group('SessionListNotifier', () {
     test('Should return a list of Session', () async {
       final sessionRepository = MockSessionRepository();
-      when(
-        () => sessionRepository.getAllSessions(),
-      ).thenAnswer((_) async => [Session.empty()]);
+      when(() => sessionRepository.getAllSessions())
+          .thenAnswer((_) async => [Session.empty()]);
       final sessionListNotifier = SessionListNotifier(
         sessionRepository: sessionRepository,
       );
@@ -34,12 +33,10 @@ void main() {
     test('Should create a Session', () async {
       final sessionRepository = MockSessionRepository();
       final newSession = Session.empty();
-      when(
-        () => sessionRepository.getAllSessions(),
-      ).thenAnswer((_) async => [Session.empty()]);
-      when(
-        () => sessionRepository.addSession(newSession),
-      ).thenAnswer((_) async => newSession);
+      when(() => sessionRepository.getAllSessions())
+          .thenAnswer((_) async => [Session.empty()]);
+      when(() => sessionRepository.addSession(newSession))
+          .thenAnswer((_) async => newSession);
       final sessionListNotifier = SessionListNotifier(
         sessionRepository: sessionRepository,
       );
@@ -51,12 +48,10 @@ void main() {
     test('Should update a Session', () async {
       final sessionRepository = MockSessionRepository();
       final newSession = Session.empty();
-      when(
-        () => sessionRepository.getAllSessions(),
-      ).thenAnswer((_) async => [newSession]);
-      when(
-        () => sessionRepository.updateSession(newSession),
-      ).thenAnswer((_) async => true);
+      when(() => sessionRepository.getAllSessions())
+          .thenAnswer((_) async => [newSession]);
+      when(() => sessionRepository.updateSession(newSession))
+          .thenAnswer((_) async => true);
       final sessionListNotifier = SessionListNotifier(
         sessionRepository: sessionRepository,
       );
@@ -68,12 +63,10 @@ void main() {
     test('Should delete a Session', () async {
       final sessionRepository = MockSessionRepository();
       final newSession = Session.empty();
-      when(
-        () => sessionRepository.getAllSessions(),
-      ).thenAnswer((_) async => [newSession]);
-      when(
-        () => sessionRepository.deleteSession(newSession.id),
-      ).thenAnswer((_) async => true);
+      when(() => sessionRepository.getAllSessions())
+          .thenAnswer((_) async => [newSession]);
+      when(() => sessionRepository.deleteSession(newSession.id))
+          .thenAnswer((_) async => true);
       final sessionListNotifier = SessionListNotifier(
         sessionRepository: sessionRepository,
       );

@@ -52,9 +52,9 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                     SizedBox(
                       child: TextFormField(
                         controller: name,
-                        cursorColor: Theme.of(
-                          context,
-                        ).colorScheme.primaryContainer,
+                        cursorColor: Theme.of(context)
+                            .colorScheme
+                            .primaryContainer,
                         decoration: InputDecoration(
                           labelText: AdminTextConstants.name,
                           labelStyle: const TextStyle(
@@ -70,9 +70,9 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                             ),
                           ),
                         ),

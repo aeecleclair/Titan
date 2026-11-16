@@ -73,80 +73,71 @@ void main() {
   });
 
   group('Testing MapNotifier : addE', () {
-    test(
-      'Should returns true and updates state on success when value is AsyncData',
-      () async {
-        final notifier = MockMapNotifier();
-        final key = MockT();
-        final data = <MockT, AsyncValue<List<MockE>>>{
-          MockT(): const AsyncLoading(),
-          key: const AsyncValue.data(<MockE>[]),
-        };
-        notifier.state = data;
-        final newData = MockE();
-        final newDataList = [newData];
-        notifier.testAddE(key, newData);
-        expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
-        expect(
-          notifier.state[key]!.when(
-            data: (d) => d,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          newDataList,
-        );
-      },
-    );
+    test('Should returns true and updates state on success when value is AsyncData', () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncValue.data(<MockE>[]),
+      };
+      notifier.state = data;
+      final newData = MockE();
+      final newDataList = [newData];
+      notifier.testAddE(key, newData);
+      expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
+      expect(
+        notifier.state[key]!.when(
+          data: (d) => d,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        newDataList,
+      );
+    });
 
-    test(
-      'Should returns true and updates state on success when value is AsyncLoading',
-      () async {
-        final notifier = MockMapNotifier();
-        final key = MockT();
-        final data = <MockT, AsyncValue<List<MockE>>>{
-          MockT(): const AsyncLoading(),
-          key: const AsyncLoading(),
-        };
-        notifier.state = data;
-        final newData = MockE();
-        final newDataList = [newData];
-        notifier.testAddE(key, newData);
-        expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
-        expect(
-          notifier.state[key]!.when(
-            data: (d) => d,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          newDataList,
-        );
-      },
-    );
+    test('Should returns true and updates state on success when value is AsyncLoading', () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: const AsyncLoading(),
+      };
+      notifier.state = data;
+      final newData = MockE();
+      final newDataList = [newData];
+      notifier.testAddE(key, newData);
+      expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
+      expect(
+        notifier.state[key]!.when(
+          data: (d) => d,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        newDataList,
+      );
+    });
 
-    test(
-      'Should returns true and updates state on success when value is AsyncError',
-      () async {
-        final notifier = MockMapNotifier();
-        final key = MockT();
-        final data = <MockT, AsyncValue<List<MockE>>>{
-          MockT(): const AsyncLoading(),
-          key: AsyncError("test", StackTrace.current),
-        };
-        notifier.state = data;
-        final newData = MockE();
-        final newDataList = [newData];
-        notifier.testAddE(key, newData);
-        expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
-        expect(
-          notifier.state[key]!.when(
-            data: (d) => d,
-            error: (e, s) => [],
-            loading: () => [],
-          ),
-          newDataList,
-        );
-      },
-    );
+    test('Should returns true and updates state on success when value is AsyncError', () async {
+      final notifier = MockMapNotifier();
+      final key = MockT();
+      final data = <MockT, AsyncValue<List<MockE>>>{
+        MockT(): const AsyncLoading(),
+        key: AsyncError("test", StackTrace.current),
+      };
+      notifier.state = data;
+      final newData = MockE();
+      final newDataList = [newData];
+      notifier.testAddE(key, newData);
+      expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
+      expect(
+        notifier.state[key]!.when(
+          data: (d) => d,
+          error: (e, s) => [],
+          loading: () => [],
+        ),
+        newDataList,
+      );
+    });
   });
 
   group('Testing MapNotifier : deleteT', () {

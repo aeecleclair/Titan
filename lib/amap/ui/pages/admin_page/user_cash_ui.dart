@@ -140,9 +140,8 @@ class UserCashUi extends HookConsumerWidget {
                                 keyboardType: TextInputType.number,
                                 isDouble: true,
                                 color: AMAPColors(isDarkTheme).secondaryGreen,
-                                enabledColor: AMAPColors(
-                                  isDarkTheme,
-                                ).primaryGreen,
+                                enabledColor: AMAPColors(isDarkTheme)
+                                    .primaryGreen,
                                 suffix: '€',
                                 isNegative: true,
                               ),

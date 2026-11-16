@@ -72,9 +72,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 SizedBox(
                                   child: TextFormField(
                                     controller: name,
-                                    cursorColor: Theme.of(
-                                      context,
-                                    ).colorScheme.primaryContainer,
+                                    cursorColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
                                     decoration: InputDecoration(
                                       labelText:
                                           PhonebookTextConstants.namePure,
@@ -93,9 +93,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primaryContainer,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
                                         ),
                                       ),
                                     ),
@@ -120,9 +120,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 SizedBox(
                                   child: TextFormField(
                                     controller: description,
-                                    cursorColor: Theme.of(
-                                      context,
-                                    ).colorScheme.primaryContainer,
+                                    cursorColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
                                     decoration: InputDecoration(
                                       labelText:
                                           PhonebookTextConstants.description,
@@ -141,9 +141,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primaryContainer,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
                                         ),
                                       ),
                                     ),
@@ -198,9 +198,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onPrimaryContainer,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
                               ),
                             ),
                           ),
@@ -274,9 +274,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     horizontal: 20,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary,
                                     boxShadow: [
                                       BoxShadow(
                                         color: Theme.of(context).shadowColor,

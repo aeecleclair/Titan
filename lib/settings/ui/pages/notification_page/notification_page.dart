@@ -46,9 +46,9 @@ class NotificationPage extends HookConsumerWidget {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondaryContainer,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                 ),
                               ),
                               LoadSwitch(
@@ -68,9 +68,9 @@ class NotificationPage extends HookConsumerWidget {
                                             .colorScheme
                                             .primaryContainer
                                             .withValues(alpha: 0.3)
-                                      : Theme.of(
-                                          context,
-                                        ).colorScheme.secondaryFixed,
+                                      : Theme.of(context)
+                                            .colorScheme
+                                            .secondaryFixed,
                                   borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
@@ -91,9 +91,9 @@ class NotificationPage extends HookConsumerWidget {
                                   ],
                                 ),
                                 spinColor: (value) => value
-                                    ? Theme.of(
-                                        context,
-                                      ).colorScheme.primaryContainer
+                                    ? Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer
                                     : Theme.of(context).colorScheme.tertiary,
                                 spinStrokeWidth: 2,
                                 thumbDecoration: (value, _) => BoxDecoration(

@@ -94,9 +94,9 @@ class SellerRightDialog extends ConsumerWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryFixed,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryFixed,
                                 boxShadow: [
                                   BoxShadow(
                                     color: Theme.of(context).shadowColor,

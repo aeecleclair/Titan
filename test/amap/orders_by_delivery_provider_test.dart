@@ -12,9 +12,8 @@ void main() {
     test('Should load delivery order list', () async {
       final mockOrderByDeliveryListRepository = MockOrderListRepository();
       final orderByDeliveryList = [Order.empty().copyWith(id: "1")];
-      when(
-        () => mockOrderByDeliveryListRepository.getDeliveryOrderList(""),
-      ).thenAnswer((_) async => orderByDeliveryList);
+      when(() => mockOrderByDeliveryListRepository.getDeliveryOrderList(""))
+          .thenAnswer((_) async => orderByDeliveryList);
       final orderByDeliveryListNotifier = OrderByDeliveryListNotifier(
         orderListRepository: mockOrderByDeliveryListRepository,
       );

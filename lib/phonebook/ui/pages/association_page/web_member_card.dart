@@ -118,9 +118,9 @@ class WebMemberCard extends HookConsumerWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.tertiary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiary,
                                   ),
                                 ),
                               ],

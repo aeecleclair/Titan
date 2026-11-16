@@ -361,12 +361,10 @@ class DeliveryUi extends HookConsumerWidget {
                       boxShadow: [
                         BoxShadow(
                           color: !(delivery.status == DeliveryStatus.creation)
-                              ? AMAPColors(
-                                  isDarkTheme,
-                                ).redGradientSecondary.withValues(alpha: 0.5)
-                              : AMAPColors(
-                                  isDarkTheme,
-                                ).greenGradientSecondary.withValues(alpha: 0.5),
+                              ? AMAPColors(isDarkTheme).redGradientSecondary
+                                    .withValues(alpha: 0.5)
+                              : AMAPColors(isDarkTheme).greenGradientSecondary
+                                    .withValues(alpha: 0.5),
                           blurRadius: 10,
                           offset: const Offset(2, 3),
                         ),

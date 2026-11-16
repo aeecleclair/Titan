@@ -132,9 +132,8 @@ class ConfirmFundButton extends ConsumerWidget {
         decoration: BoxDecoration(
           color: (minValidFundAmount && maxValidFundAmount)
               ? Theme.of(context).colorScheme.surface
-              : Theme.of(
-                  context,
-                ).colorScheme.secondaryFixed.withValues(alpha: 0.8),
+              : Theme.of(context).colorScheme.secondaryFixed
+                    .withValues(alpha: 0.8),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,

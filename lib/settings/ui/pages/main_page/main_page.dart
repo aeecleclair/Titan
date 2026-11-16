@@ -59,9 +59,8 @@ class SettingsMainPage extends HookConsumerWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onPrimary.withValues(alpha: 0.3),
+                              color: Theme.of(context).colorScheme.onPrimary
+                                  .withValues(alpha: 0.3),
                               spreadRadius: 6,
                               blurRadius: 10,
                               offset: const Offset(0, 2),

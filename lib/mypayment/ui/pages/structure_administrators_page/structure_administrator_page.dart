@@ -81,9 +81,8 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primaryFixed.withValues(alpha: 0.4),
+                              color: Theme.of(context).colorScheme.primaryFixed
+                                  .withValues(alpha: 0.4),
                               offset: const Offset(2, 3),
                               blurRadius: 5,
                             ),
@@ -95,9 +94,9 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                         child: HeroIcon(
                           !add.value ? HeroIcons.plus : HeroIcons.xMark,
                           size: 20,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
                         ),
                       ),
                     ),

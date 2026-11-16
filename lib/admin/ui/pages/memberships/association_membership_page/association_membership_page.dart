@@ -123,9 +123,9 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                 const Spacer(),
                                 HeroIcon(
                                   HeroIcons.plus,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondaryContainer,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                   size: 40,
                                 ),
                                 const Spacer(),

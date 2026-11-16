@@ -86,9 +86,9 @@ class GroupsPage extends HookConsumerWidget {
                                 const Spacer(),
                                 HeroIcon(
                                   HeroIcons.plus,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.secondaryContainer,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
                                   size: 40,
                                 ),
                                 const Spacer(),
@@ -112,9 +112,9 @@ class GroupsPage extends HookConsumerWidget {
                                     children: [
                                       HeroIcon(
                                         HeroIcons.buildingLibrary,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.secondaryContainer,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondaryContainer,
                                         size: 40,
                                       ),
                                       Positioned(
@@ -123,9 +123,9 @@ class GroupsPage extends HookConsumerWidget {
                                         child: HeroIcon(
                                           HeroIcons.plus,
                                           size: 15,
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.secondaryContainer,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondaryContainer,
                                         ),
                                       ),
                                     ],

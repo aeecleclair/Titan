@@ -12,9 +12,8 @@ class AssociationMembershipUserRepository extends Repository {
   Future<List<UserAssociationMembership>>
   getPersonalAssociationMembershipList() async {
     return List<UserAssociationMembership>.from(
-      (await getList(
-        suffix: "me",
-      )).map((x) => UserAssociationMembership.fromJson(x)),
+      (await getList(suffix: "me"))
+          .map((x) => UserAssociationMembership.fromJson(x)),
     );
   }
 
@@ -22,9 +21,8 @@ class AssociationMembershipUserRepository extends Repository {
     String userId,
   ) async {
     return List<UserAssociationMembership>.from(
-      (await getList(
-        suffix: userId,
-      )).map((x) => UserAssociationMembership.fromJson(x)),
+      (await getList(suffix: userId))
+          .map((x) => UserAssociationMembership.fromJson(x)),
     );
   }
 

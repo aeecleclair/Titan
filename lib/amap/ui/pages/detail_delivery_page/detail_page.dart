@@ -134,9 +134,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                     )
                   : AsyncChild(
                       value: orders,
-                      loaderColor: AMAPColors(
-                        isDarkTheme,
-                      ).greenGradientSecondary,
+                      loaderColor: AMAPColors(isDarkTheme)
+                          .greenGradientSecondary,
                       builder: (context, data) {
                         if (data.isEmpty) {
                           return Container(
@@ -148,9 +147,8 @@ class DetailDeliveryPage extends HookConsumerWidget {
                         }
                         return AsyncChild(
                           value: cash,
-                          loaderColor: AMAPColors(
-                            isDarkTheme,
-                          ).greenGradientSecondary,
+                          loaderColor: AMAPColors(isDarkTheme)
+                              .greenGradientSecondary,
                           builder: (context, cash) {
                             return Wrap(
                               spacing: 20,

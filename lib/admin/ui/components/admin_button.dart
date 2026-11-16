@@ -20,9 +20,8 @@ class AdminButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(
-              context,
-            ).colorScheme.primaryFixed.withValues(alpha: 0.5),
+            color: Theme.of(context).colorScheme.primaryFixed
+                .withValues(alpha: 0.5),
             blurRadius: 5,
             offset: const Offset(2, 2),
             spreadRadius: 2,

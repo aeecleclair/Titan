@@ -93,9 +93,9 @@ class AddLoanerPage extends HookConsumerWidget {
                                               HeroIcon(
                                                 HeroIcons.plus,
                                                 size: 25,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onPrimary,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary,
                                               ),
                                             ],
                                           ),

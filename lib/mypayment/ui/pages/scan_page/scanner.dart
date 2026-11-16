@@ -48,8 +48,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       builder: (context) {
         return CustomDialogBox(
           title: "Pas d'adhésion",
-          descriptions:
-              "Ce produit n'est pas disponnible pour les non-adhérents. Confirmer l'encaissement ?",
+          descriptions: "Ce produit n'est pas disponnible pour les non-adhérents. Confirmer l'encaissement ?",
           onYes: () async {
             tokenExpireWrapper(ref, () async {
               onYes.call();
@@ -136,8 +135,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
           context: context,
           builder: (context) => CustomDialogBox(
             title: 'Permission caméra requise',
-            descriptions:
-                'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+            descriptions: 'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
             onYes: () async {
               Navigator.of(context).pop();
               await openAppSettings();

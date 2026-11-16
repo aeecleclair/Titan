@@ -151,9 +151,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                         child: HeroIcon(
                           HeroIcons.arrowRight,
                           size: 22,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -171,9 +171,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 horizontal: 30,
                               ),
                               decoration: BoxDecoration(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryFixed,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryFixed,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: HeroIcon(

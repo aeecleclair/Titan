@@ -12,7 +12,6 @@ class UserAssociationMembership extends UserAssociationMembershipBase {
   });
   late final SimpleUser user;
 
-  @override
   UserAssociationMembership.fromJson(super.json)
     : user = SimpleUser.fromJson(json['user']),
       super.fromJson();

@@ -16,8 +16,8 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
   DateTime getEndTime(int index) => appointments![index].end;
 
   @override
-  Color getColor(int index) =>
-      generateColor(appointments![index].room.name).withValues(
+  Color getColor(int index) => generateColor(appointments![index].room.name)
+      .withValues(
         alpha: appointments![index].decision == Decision.pending ? 0.3 : 1.0,
       );
 

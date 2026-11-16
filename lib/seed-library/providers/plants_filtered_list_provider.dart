@@ -39,9 +39,8 @@ List<Species> filterSpeciesWithFilters(
       .where(
         (species) => searchFilter == ""
             ? true
-            : removeDiacritics(
-                species.name.toLowerCase(),
-              ).contains(removeDiacritics(searchFilter.toLowerCase())),
+            : removeDiacritics(species.name.toLowerCase())
+                  .contains(removeDiacritics(searchFilter.toLowerCase())),
       )
       .toList();
   filteredSpecies = filteredSpecies
@@ -50,9 +49,8 @@ List<Species> filterSpeciesWithFilters(
             ? true
             : species.startSeason == null
             ? true
-            : getMonthsBySeason(
-                seasonsTypeFilter,
-              ).contains(species.startSeason!.month),
+            : getMonthsBySeason(seasonsTypeFilter)
+                  .contains(species.startSeason!.month),
       )
       .toList();
   filteredSpecies = filteredSpecies

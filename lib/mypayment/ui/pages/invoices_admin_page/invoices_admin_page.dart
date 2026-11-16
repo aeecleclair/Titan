@@ -135,12 +135,12 @@ class InvoicesAdminPage extends HookConsumerWidget {
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: structure.id == e.id
-                                                    ? Theme.of(
-                                                        context,
-                                                      ).colorScheme.onSecondary
-                                                    : Theme.of(
-                                                        context,
-                                                      ).colorScheme.onSurface,
+                                                    ? Theme.of(context)
+                                                          .colorScheme
+                                                          .onSecondary
+                                                    : Theme.of(context)
+                                                          .colorScheme
+                                                          .onSurface,
                                               ),
                                             ),
                                           ),

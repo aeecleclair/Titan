@@ -52,9 +52,8 @@ class DeliveryListRepository extends Repository {
     String orderId,
   ) async {
     return List<Product>.from(
-      (await getList(
-        suffix: "/$deliveryId/orders/$orderId/products",
-      )).map((x) => Product.fromJson(x)),
+      (await getList(suffix: "/$deliveryId/orders/$orderId/products"))
+          .map((x) => Product.fromJson(x)),
     );
   }
 }

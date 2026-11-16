@@ -20,9 +20,9 @@ class VoteCount extends HookConsumerWidget {
       group: stats,
       notifier: statsNotifier,
       mapKey: section,
-      loader: (section) async => (await sectionVoteNotifier.loadCount(
-        section.id,
-      )).maybeWhen(data: (data) => data, orElse: () => -1),
+      loader: (section) async =>
+          (await sectionVoteNotifier.loadCount(section.id))
+              .maybeWhen(data: (data) => data, orElse: () => -1),
       dataBuilder: (context, data) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),

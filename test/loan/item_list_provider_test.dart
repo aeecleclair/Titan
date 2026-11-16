@@ -23,9 +23,8 @@ void main() {
         Item.empty().copyWith(id: '1', name: 'item1'),
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
-      when(
-        () => itemRepository.getItemList(loanerId),
-      ).thenAnswer((_) async => items);
+      when(() => itemRepository.getItemList(loanerId))
+          .thenAnswer((_) async => items);
 
       final result = await itemListNotifier.loadItemList(loanerId);
 
@@ -46,9 +45,8 @@ void main() {
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(
-        () => itemRepository.createItem(loanerId, item),
-      ).thenAnswer((_) async => item);
+      when(() => itemRepository.createItem(loanerId, item))
+          .thenAnswer((_) async => item);
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.addItem(item, loanerId);
@@ -63,9 +61,8 @@ void main() {
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(
-        () => itemRepository.updateItem(loanerId, item),
-      ).thenAnswer((_) async => true);
+      when(() => itemRepository.updateItem(loanerId, item))
+          .thenAnswer((_) async => true);
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.updateItem(item, loanerId);
@@ -80,9 +77,8 @@ void main() {
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(
-        () => itemRepository.deleteItem(loanerId, item.id),
-      ).thenAnswer((_) async => true);
+      when(() => itemRepository.deleteItem(loanerId, item.id))
+          .thenAnswer((_) async => true);
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.deleteItem(item, loanerId);
